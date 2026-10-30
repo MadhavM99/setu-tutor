@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t(outcome_key) }}</h1>
+<p class="letter-big">{{ te(unit.telugu) }}</p>
+<p>{{ t("learn.twin_is", twin=unit.label) }}</p>
+<p><a class="button" href="{{ act.path }}">{{ t("btn.next") }}</a></p>
+{% endblock %}

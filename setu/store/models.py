@@ -320,6 +320,36 @@ class Letter(Base):
     )
 
 
+class Akshara(Base):
+    """L1 aksharas (migration 0009): vowel-sign forms, ం/ః, doubles and conjuncts. Learners see one only when it
+    and every letter in it are approved (`learner_akshara`)."""
+
+    __tablename__ = "akshara"
+    id = Column(Text, primary_key=True)
+    telugu = Column(Text, nullable=False, unique=True)
+    devanagari = Column(Text, nullable=False)
+    twin_label_hi = Column(Text, nullable=False)
+    kind = Column(Text, nullable=False)
+    family = Column(Text, nullable=False)
+    akshara_group = Column(Text, nullable=False)
+    group_hi = Column(Text, nullable=False)
+    letters = Column(JSONB, nullable=False)
+    unit_order = Column(Integer, nullable=False, unique=True)
+    note_hi = Column(Text)
+    review_status = Column(Text, nullable=False, server_default="draft")
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
+    content_hash = Column(Text)
+    __table_args__ = (
+        one_of("kind", "sign", "double", "conjunct"),
+        one_of("family", "vowel_signs", "nasal_visarga", "doubles", "conjuncts"),
+        one_of("review_status", *REVIEW),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("telugu", "devanagari", "twin_label_hi", "group_hi", "note_hi"),
+    )
+
+
 class Lexeme(Base):
     __tablename__ = "lexeme"
     id = Column(Text, primary_key=True)

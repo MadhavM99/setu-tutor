@@ -37,6 +37,7 @@ class ImportResult:
     scenes_written: int = 0
     data_sources_written: int = 0
     letters_written: int = 0
+    aksharas_written: int = 0
     skills_written: int = 0
     unchanged: int = 0
 
@@ -78,6 +79,7 @@ def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = No
         for ds in tree.data_sources:
             _data_source(c, ds, result)
         _letters_and_script_skills(c, tree.letters_l0, result)
+        _aksharas_and_skills(c, tree.aksharas, tree.letters_l0, result)
         for rule in tree.rules:
             _skill(c, result, rule_skill_id(rule), band=rule["band"], family="rule", target=rule["rule_id"],
                    modality="PR", direction=rule["direction"])
@@ -317,5 +319,52 @@ def _letters_and_script_skills(c, letters, result):
                            "note_hi = :note, provenance = CAST(:prov AS jsonb), content_hash = :h WHERE id = :id"),
                       values)
             result.letters_written += 1
+        else:
+            result.unchanged += 1
+
+
+# ---------------------------------------------------------------- L1 aksharas (slice S2)
+
+# family -> families whose recognition it needs (beyond every L0 row's recognition)
+L1_FAMILIES = {"vowel_signs": (), "nasal_visarga": ("vowel_signs",), "doubles": ("vowel_signs",),
+               "conjuncts": ("doubles",)}
+
+
+def akshara_skill_id(family: str, modality: str) -> str:
+    return f"L1.akshara.{family}.{modality}"
+
+
+def _aksharas_and_skills(c, aksharas, letters, result):
+    if not aksharas:
+        return
+    l0_rows = list(dict.fromkeys(x["group"] for x in sorted(letters, key=lambda x: x["varnamala_order"])))
+    for family, needs in L1_FAMILIES.items():
+        rec = akshara_skill_id(family, "REC")
+        requires = [script_skill_id(g, "REC") for g in l0_rows] + [akshara_skill_id(n, "REC") for n in needs]
+        _skill(c, result, rec, band="L1", family="akshara", target=family, modality="REC", direction="HI->TE",
+               requires=requires)
+        _skill(c, result, akshara_skill_id(family, "RCL"), band="L1", family="akshara", target=family,
+               modality="RCL", direction="HI->TE", requires=[rec])
+    for unit in aksharas:
+        digest = sha256_of(unit)
+        row = c.execute(text("SELECT content_hash, review_status FROM akshara WHERE id = :i"), {"i": unit["id"]}).first()
+        values = {"id": unit["id"], "te": unit["telugu"], "dv": unit["devanagari"], "label": unit["twin_label_hi"],
+                  "kind": unit["kind"], "fam": unit["family"], "grp": unit["group"], "grp_hi": unit["group_hi"],
+                  "letters": _j(unit["letters"]), "ord": unit["order"], "note": unit.get("note_hi"),
+                  "prov": _j(unit["provenance"]), "h": digest}
+        if row is None:
+            c.execute(text("INSERT INTO akshara (id, telugu, devanagari, twin_label_hi, kind, family, akshara_group, "
+                           "group_hi, letters, unit_order, note_hi, review_status, provenance, content_hash) VALUES "
+                           "(:id, :te, :dv, :label, :kind, :fam, :grp, :grp_hi, CAST(:letters AS jsonb), :ord, :note, "
+                           "'draft', CAST(:prov AS jsonb), :h)"), values)
+            result.aksharas_written += 1
+        elif row.content_hash != digest:
+            if row.review_status != "draft":
+                raise ImportRefused(f"{unit['id']}: akshara is '{row.review_status}'; edit it in the teacher console")
+            c.execute(text("UPDATE akshara SET telugu = :te, devanagari = :dv, twin_label_hi = :label, kind = :kind, "
+                           "family = :fam, akshara_group = :grp, group_hi = :grp_hi, letters = CAST(:letters AS jsonb), "
+                           "unit_order = :ord, note_hi = :note, provenance = CAST(:prov AS jsonb), content_hash = :h "
+                           "WHERE id = :id"), values)
+            result.aksharas_written += 1
         else:
             result.unchanged += 1

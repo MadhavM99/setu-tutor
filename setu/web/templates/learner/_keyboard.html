@@ -1,0 +1,28 @@
+{# The on-screen keyboard. Letters: each key is the answer. Aksharas: keys build the answer on the server. #}
+{% if act.compose %}
+<p class="answer-so-far" aria-live="polite">{{ t("learn.your_answer") }}
+  <span class="letter-big">{% if telugu %}{{ te(buffer) if buffer else "—" }}{% else %}{{ buffer or "—" }}{% endif %}</span></p>
+<form method="post" action="{{ act.path }}/key" class="keys">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <input type="hidden" name="buffer" value="{{ buffer }}">
+  {% for k in keys %}<button type="submit" name="key" value="{{ k }}" class="key">{% if telugu %}{{ te(k) }}{% else %}{{ k }}{% endif %}</button>{% endfor %}
+  <button type="submit" name="erase" value="1" class="key">{{ t("btn.erase") }}</button>
+</form>
+<form method="post" action="{{ act.path }}/answer">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <input type="hidden" name="buffer" value="{{ buffer }}">
+  <input type="hidden" name="built" value="1">
+  <button type="submit"{% if not buffer %} disabled{% endif %}>{{ t("btn.check") }}</button>
+</form>
+{% else %}
+<form method="post" action="{{ act.path }}/answer" class="keys">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  {% for k in keys %}<button type="submit" name="key" value="{{ k }}" class="key">{% if telugu %}{{ te(k) }}{% else %}{{ k }}{% endif %}</button>{% endfor %}
+</form>
+{% endif %}
+<form method="post" action="{{ act.path }}/answer" class="stack">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <label for="typed">{{ t("learn.or_type") }}</label>
+  <input id="typed" name="typed" maxlength="12" autocomplete="off">
+  <button type="submit">{{ t("btn.check") }}</button>
+</form>

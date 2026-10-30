@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ meta.group_hi if act.intro_per_group else t("learn.new_letter") }}</h1>
+<p class="letter-big">{{ te(unit.telugu) }}</p>
+<p>{{ t("learn.twin_is", twin=unit.label) }}</p>
+{% if meta.note_hi %}<p>{{ meta.note_hi }}</p>{% endif %}
+<form method="post" action="{{ act.path }}/continue">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <button type="submit">{{ t("btn.next") }}</button>
+</form>
+{% endblock %}

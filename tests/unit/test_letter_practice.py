@@ -77,3 +77,55 @@ def test_due_reviews_come_before_new_letters_and_new_letters_are_capped():
 
 def test_no_approved_letters_means_no_task():
     assert LP.next_task(letters=[], cards=[], pending=None, now=T0, new_today=0, seed=1) is None
+
+
+# ---------------------------------------------------------------- L1 aksharas (slice S2)
+
+from setu.content import aksharas as A
+
+AKSHARAS = [LP.UnitView(x["id"], x["telugu"], x["devanagari"], x["twin_label_hi"], x["group"], x["order"],
+                        confusable=x["letters"][0]) for x in A.build_aksharas()]
+AKSH = {x.id: x for x in AKSHARAS}
+
+
+def test_aksharas_have_bridge_twins_and_known_letters():
+    built = A.build_aksharas()
+    assert len({x["id"] for x in built}) == len(built) == 489
+    assert all(x["devanagari"] == "".join(TELU_TO_DEVA[ch] for ch in x["telugu"]) for x in built)
+    letters = {x["telugu"] for x in L.build_letters()}
+    assert all(set(x["letters"]) <= letters for x in built)
+    by = {x["telugu"]: x for x in built}
+    assert by["కా"]["devanagari"] == "का" and by["కె"]["devanagari"] == "कॆ" and by["కం"]["family"] == "nasal_visarga"
+    assert by["క్క"]["kind"] == "double" and by["క్ష"]["letters"] == ["క", "ష"]
+    assert not any(ch in x["telugu"] for x in built for ch in "ఙఞఱ")
+    assert [x["order"] for x in built] == list(range(1, 490)) and built[0]["group"] == "sign-aa"
+
+
+def test_the_committed_aksharas_file_matches_the_generator_and_validates():
+    tree = validate.load_tree(CONTENT)
+    assert tree.aksharas == A.build_aksharas()
+    assert [e.detail for e in validate.validate_tree(tree).errors if e.detail.startswith("te-akshara:")] == []
+
+
+def test_an_akshara_with_a_wrong_twin_or_unknown_letter_is_rejected():
+    bad = copy.deepcopy(validate.load_tree(CONTENT))
+    bad.aksharas[0]["devanagari"] = "की"
+    bad.aksharas[1]["letters"] = ["ఌ"]
+    errors = [e.detail for e in validate.validate_tree(bad).errors]
+    assert any(e.startswith(bad.aksharas[0]["id"]) for e in errors)
+    assert any(e.startswith(bad.aksharas[1]["id"]) for e in errors)
+
+
+def test_only_the_first_akshara_of_a_sign_gets_an_intro():
+    first = LP.next_task(letters=AKSHARAS, cards=[], pending=None, now=T0, new_today=0, seed=1, intro_per_group=True)
+    assert (first.type, first.letter_id) == ("intro", "te-akshara:కా")
+    seen = [LP.CardView("te-akshara:కా", "RCL", T0 + dt.timedelta(days=1))]
+    nxt = LP.next_task(letters=AKSHARAS, cards=seen, pending=None, now=T0, new_today=1, seed=1, intro_per_group=True)
+    assert (nxt.type, nxt.letter_id, nxt.chain) == ("choice", "te-akshara:ఖా", ("recognise", "recall"))
+
+
+def test_akshara_distractors_are_the_same_consonant_with_other_signs():
+    t = LP.next_task(letters=AKSHARAS, cards=[], pending=LP.Task("intro", "te-akshara:కి", chain=("choice",)),
+                     now=T0, new_today=0, seed=5)
+    assert "te-akshara:కి" in t.options and len(t.options) == 4
+    assert all(AKSH[o].confusable == "క" for o in t.options)

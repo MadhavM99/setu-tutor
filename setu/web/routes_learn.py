@@ -1,6 +1,9 @@
-"""L0 script orientation and letter practice (slice S1). Every answer goes through the checker and the
-OutcomeWriter; the page only shows approved letters (`learner_letter`) and keeps the pending task on the server, so
-a learner cannot re-roll a task (E-13)."""
+"""Script practice: L0 letters (slice S1) and L1 aksharas (slice S2). Every answer goes through the checker and the
+OutcomeWriter; pages show only approved units (`learner_letter`, `learner_akshara`) and keep the pending task on the
+server, so a learner cannot re-roll a task (E-13). Aksharas are offered only once the learner has recalled every
+letter in them without help (X-PERS-04). Akshara answers are built on an on-screen keyboard that works without
+JavaScript: each key is a round trip that only rebuilds the page (R-INPUT, cue-free)."""
+import dataclasses
 import datetime as dt
 import json
 import random
@@ -10,43 +13,82 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import text
 
+from setu.content.aksharas import SIGNS, VIRAMA
 from setu.domain import checker
 from setu.domain import letter_practice as LP
+from setu.domain.normalise import TELU_TO_DEVA
 from setu.store.outcome_writer import CardTarget, SkillTarget
 
 from .routes_ui import form_data, optional_user, render
 
 router = APIRouter()
-SESSION_CONFIG = {"activity": "letters", "planner": "letter-practice-1", "new_cap": 5}
+MAX_BUFFER = 12
+TELUGU_SIGNS = tuple(s for _, s, _, _ in SIGNS) + (VIRAMA,)
 
 
-def _letters(c) -> list[LP.LetterView]:
-    rows = c.execute(text("SELECT id, telugu, devanagari, twin_label_hi, letter_group, varnamala_order "
-                          "FROM learner_letter ORDER BY varnamala_order")).all()
-    return [LP.LetterView(r.id, r.telugu, r.devanagari, r.twin_label_hi, r.letter_group, r.varnamala_order)
-            for r in rows]
+@dataclasses.dataclass(frozen=True)
+class Activity:
+    name: str
+    card_kind: str
+    units_sql: str
+    new_cap: int
+    intro_per_group: bool
+    compose: bool
+    skill: str  # format string over the unit's skill key
+
+    @property
+    def path(self) -> str:
+        return f"/learn/{self.name}"
 
 
-def _session(c, learner_id) -> tuple:
+LETTERS = Activity(
+    "letters", "letter", "SELECT id, telugu, devanagari, twin_label_hi AS label, letter_group AS grp, "
+    "varnamala_order AS ord, NULL AS confusable, letter_group AS skill_key, note_hi, group_hi, kind "
+    "FROM learner_letter ORDER BY varnamala_order", 5, False, False, "L0.script.{}")
+AKSHARAS = Activity(
+    "aksharas", "akshara", "SELECT a.id, a.telugu, a.devanagari, a.twin_label_hi AS label, a.akshara_group AS grp, "
+    "a.unit_order AS ord, a.letters->>0 AS confusable, a.family AS skill_key, a.note_hi, a.group_hi, a.kind "
+    "FROM learner_akshara a WHERE NOT EXISTS (SELECT 1 FROM jsonb_array_elements_text(a.letters) AS l(ch) "
+    "WHERE NOT EXISTS (SELECT 1 FROM learner_letter x JOIN learner_lexeme_card c ON c.card_kind = 'letter' "
+    "AND c.card_ref = x.id AND c.modality = 'RCL' AND c.learner_id = :l JOIN fsrs_review_log r ON r.card_id = c.id "
+    "AND r.rating >= 3 AND r.cue_level = 0 WHERE x.telugu = l.ch)) ORDER BY a.unit_order", 10, True, True,
+    "L1.akshara.{}")
+ACTIVITIES = {a.name: a for a in (LETTERS, AKSHARAS)}
+
+
+def _units(c, act: Activity, learner_id):
+    rows = c.execute(text(act.units_sql), {"l": learner_id}).all()
+    views = [LP.UnitView(r.id, r.telugu, r.devanagari, r.label, r.grp, r.ord, r.confusable) for r in rows]
+    return views, {r.id: r for r in rows}
+
+
+def _any_approved(c, act: Activity) -> bool:
+    table = "learner_letter" if act is LETTERS else "learner_akshara"
+    return c.execute(text(f"SELECT EXISTS (SELECT 1 FROM {table})")).scalar_one()
+
+
+def _session(c, act: Activity, learner_id):
     today = dt.datetime.now(dt.UTC).date()
     row = c.execute(text("SELECT id, seed FROM session WHERE learner_id = :l AND mode = 'learn' AND ended_at IS NULL "
-                         "AND config_snapshot->>'activity' = 'letters' AND started_at::date = :d "
-                         "ORDER BY started_at DESC LIMIT 1"), {"l": learner_id, "d": today}).first()
+                         "AND config_snapshot->>'activity' = :a AND started_at::date = :d "
+                         "ORDER BY started_at DESC LIMIT 1"), {"l": learner_id, "a": act.name, "d": today}).first()
     if row:
         return row.id, row.seed
     seed = random.SystemRandom().randrange(2**31)
+    cfg = {"activity": act.name, "planner": "letter-practice-1", "new_cap": act.new_cap,
+           "intro_per_group": act.intro_per_group}
     sid = c.execute(text("INSERT INTO session (learner_id, mode, config_snapshot, seed) VALUES (:l, 'learn', "
                          "CAST(:cfg AS jsonb), :s) RETURNING id"),
-                    {"l": learner_id, "cfg": json.dumps(SESSION_CONFIG), "s": seed}).scalar_one()
+                    {"l": learner_id, "cfg": json.dumps(cfg), "s": seed}).scalar_one()
     return sid, seed
 
 
-def _last_exchange(c, learner_id):
+def _last_exchange(c, act: Activity, learner_id):
     return c.execute(text(
         "SELECT e.id, e.task, a.id AS attempt_id, v.outcome FROM exchange e JOIN session s ON s.id = e.session_id "
         "LEFT JOIN attempt a ON a.exchange_id = e.id LEFT JOIN verdict v ON v.attempt_id = a.id "
-        "WHERE s.learner_id = :l AND e.task->>'activity' = 'letters' ORDER BY e.created_at DESC LIMIT 1"),
-        {"l": learner_id}).first()
+        "WHERE s.learner_id = :l AND e.task->>'activity' = :a ORDER BY e.created_at DESC LIMIT 1"),
+        {"l": learner_id, "a": act.name}).first()
 
 
 def _task(task_json) -> LP.Task:
@@ -54,23 +96,41 @@ def _task(task_json) -> LP.Task:
                    tuple(task_json.get("chain", ())), bool(task_json.get("revealed")))
 
 
-def _create_exchange(c, session_id, task: LP.Task) -> uuid.UUID:
-    payload = {"activity": "letters", "type": task.type, "letter_id": task.letter_id, "options": list(task.options),
-               "chain": list(task.chain), "revealed": task.revealed}
+def _create_exchange(c, act: Activity, session_id, task: LP.Task) -> uuid.UUID:
+    payload = {"activity": act.name, "type": task.type, "letter_id": task.letter_id, "options": list(task.options),
+               "chain": list(task.chain), "revealed": task.revealed, "new": task.new}
     kind = "learn" if task.type == "intro" else "review"
     return c.execute(text("INSERT INTO exchange (session_id, kind, source, task) VALUES (:s, :k, 'bank', "
                           "CAST(:t AS jsonb)) RETURNING id"),
                      {"s": session_id, "k": kind, "t": json.dumps(payload, ensure_ascii=False)}).scalar_one()
 
 
-def _page(request, user, exchange_id, task: LP.Task, letters):
-    by_id = {x.id: x for x in letters}
-    letter = by_id[task.letter_id]
-    telugu_keys = [x.telugu for x in letters]
-    deva_keys = list(dict.fromkeys(x.devanagari for x in letters))
-    return render(request, f"learner/letter_{task.type}.html", title_key="page.letters", user=user,
-                  exchange_id=exchange_id, letter=letter, options=[by_id[o] for o in task.options if o in by_id],
-                  telugu_keys=telugu_keys, deva_keys=deva_keys)
+def _keys(c, act: Activity, views, task: LP.Task):
+    """The on-screen keys. Letters: one key per letter. Aksharas: every approved consonant plus every sign, in the
+    target script, so the keyboard never narrows the answer down."""
+    if not act.compose:
+        return [v.devanagari for v in views] if task.type == "recognise" else [v.telugu for v in views]
+    consonants = c.execute(text("SELECT telugu FROM learner_letter WHERE kind = 'consonant' "
+                                "ORDER BY varnamala_order")).scalars().all()
+    keys = list(consonants) + list(TELUGU_SIGNS)
+    if task.type == "recognise":
+        keys = [TELU_TO_DEVA[k] for k in keys]
+    return keys
+
+
+def _page(request, user, act, exchange_id, task, views, meta, keys, buffer=""):
+    by_id = {x.id: x for x in views}
+    return render(request, f"learner/practice_{task.type}.html", title_key=f"page.{act.name}", user=user, act=act,
+                  exchange_id=exchange_id, unit=by_id[task.letter_id], meta=meta[task.letter_id],
+                  options=[by_id[o] for o in task.options if o in by_id], keys=keys, buffer=buffer)
+
+
+def _message(request, user, act, key):
+    return render(request, "learner/message.html", title_key=f"page.{act.name}", user=user, message_key=key)
+
+
+def _activity(name) -> Activity | None:
+    return ACTIVITIES.get(name)
 
 
 @router.get("/learn", response_class=HTMLResponse)
@@ -79,101 +139,139 @@ def learn_home(request: Request):
     if user is None:
         return RedirectResponse("/login", status_code=303)
     with request.app.state.db.tx() as c:
-        letters = _letters(c)
-    if not letters:
-        return render(request, "learner/message.html", title_key="page.letters", user=user,
-                      message_key="learn.not_ready")
+        ready = _any_approved(c, LETTERS)
+    if not ready:
+        return _message(request, user, LETTERS, "learn.not_ready")
     return render(request, "learner/script_intro.html", title_key="page.letters", user=user)
 
 
-@router.get("/learn/letters", response_class=HTMLResponse)
-def letter_task(request: Request):
-    user = optional_user(request)
+@router.get("/learn/{name}", response_class=HTMLResponse)
+def practice(request: Request, name: str):
+    act, user = _activity(name), optional_user(request)
+    if act is None:
+        return RedirectResponse("/learn", status_code=303)
     if user is None:
         return RedirectResponse("/login", status_code=303)
     now = dt.datetime.now(dt.UTC)
     with request.app.state.db.tx() as c:
-        letters = _letters(c)
-        if not letters:
-            return render(request, "learner/message.html", title_key="page.letters", user=user,
-                          message_key="learn.not_ready")
-        last = _last_exchange(c, user.learner_id)
-        if last is not None and last.attempt_id is None:  # still open: show the same task again (no re-roll)
-            return _page(request, user, last.id, _task(last.task), letters)
-        pending = None
-        if last is not None:
-            pending = LP.after_answer(_task(last.task), last.outcome or "correct")
+        if not _any_approved(c, act):
+            return _message(request, user, act, "learn.not_ready")
+        views, meta = _units(c, act, user.learner_id)
+        last = _last_exchange(c, act, user.learner_id)
+        if last is not None and last.attempt_id is None and last.task["letter_id"] in meta:
+            task = _task(last.task)  # still open: show the same task again (no re-roll)
+            return _page(request, user, act, last.id, task, views, meta, _keys(c, act, views, task))
+        if not views:
+            return _message(request, user, act, "learn.letters_first")
+        pending = LP.after_answer(_task(last.task), last.outcome or "correct") if last is not None else None
         cards = [LP.CardView(r.card_ref, r.modality, r.due) for r in c.execute(text(
-            "SELECT card_ref, modality, due FROM learner_lexeme_card WHERE learner_id = :l AND card_kind = 'letter'"),
-            {"l": user.learner_id})]
+            "SELECT card_ref, modality, due FROM learner_lexeme_card WHERE learner_id = :l AND card_kind = :k"),
+            {"l": user.learner_id, "k": act.card_kind})]
         new_today = c.execute(text(
             "SELECT count(*) FROM exchange e JOIN session s ON s.id = e.session_id WHERE s.learner_id = :l "
-            "AND e.task->>'activity' = 'letters' AND e.task->>'type' = 'intro' AND e.created_at::date = :d"),
-            {"l": user.learner_id, "d": now.date()}).scalar_one()
-        session_id, seed = _session(c, user.learner_id)
-        task = LP.next_task(letters=letters, cards=cards, pending=pending, now=now, new_today=new_today,
-                            seed=seed, new_cap=SESSION_CONFIG["new_cap"])
+            "AND e.task->>'activity' = :a AND (e.task->>'new')::boolean AND e.created_at::date = :d"), {"l": user.learner_id, "a": act.name, "d": now.date()}).scalar_one()
+        session_id, seed = _session(c, act, user.learner_id)
+        task = LP.next_task(letters=views, cards=cards, pending=pending, now=now, new_today=new_today, seed=seed,
+                            new_cap=act.new_cap, intro_per_group=act.intro_per_group)
         if task is None:
-            return render(request, "learner/message.html", title_key="page.letters", user=user,
-                          message_key="learn.done_today")
-        exchange_id = _create_exchange(c, session_id, task)
-    return _page(request, user, exchange_id, task, letters)
+            return _message(request, user, act, "learn.done_today")
+        exchange_id = _create_exchange(c, act, session_id, task)
+        keys = _keys(c, act, views, task)
+    return _page(request, user, act, exchange_id, task, views, meta, keys)
 
 
-@router.post("/learn/letters/continue")
-async def letter_continue(request: Request):
+@router.post("/learn/{name}/continue")
+async def practice_continue(request: Request, name: str):
     """The intro card has no answer: moving on creates the next step of the chain without any attempt or verdict."""
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
+    act, user = _activity(name), optional_user(request)
+    if act is None or user is None:
+        return RedirectResponse("/learn" if act is None else "/login", status_code=303)
     data = await form_data(request)
     with request.app.state.db.tx() as c:
-        last = _last_exchange(c, user.learner_id)
+        last = _last_exchange(c, act, user.learner_id)
         if last is None or str(last.id) != str(data.get("exchange_id")) or last.task["type"] != "intro":
-            return RedirectResponse("/learn/letters", status_code=303)
-        letters = _letters(c)
-        session_id, seed = _session(c, user.learner_id)
-        task = LP.next_task(letters=letters, cards=[], pending=_task(last.task), now=dt.datetime.now(dt.UTC),
+            return RedirectResponse(act.path, status_code=303)
+        views, _ = _units(c, act, user.learner_id)
+        session_id, seed = _session(c, act, user.learner_id)
+        task = LP.next_task(letters=views, cards=[], pending=_task(last.task), now=dt.datetime.now(dt.UTC),
                             new_today=0, seed=seed)
         if task is not None:
-            _create_exchange(c, session_id, task)
-    return RedirectResponse("/learn/letters", status_code=303)
+            _create_exchange(c, act, session_id, task)
+    return RedirectResponse(act.path, status_code=303)
 
 
-@router.post("/learn/letters/answer", response_class=HTMLResponse)
-async def letter_answer(request: Request):
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
+def _open_exchange(c, user, exchange_id):
+    return c.execute(text(
+        "SELECT e.id, e.task, a.id AS attempt_id FROM exchange e JOIN session s ON s.id = e.session_id "
+        "LEFT JOIN attempt a ON a.exchange_id = e.id WHERE e.id = :e AND s.learner_id = :l"),
+        {"e": exchange_id, "l": user.learner_id}).first()
+
+
+@router.post("/learn/{name}/key", response_class=HTMLResponse)
+async def practice_key(request: Request, name: str):
+    """One key on the compose keyboard: rebuilds the page with the answer so far. Writes nothing."""
+    act, user = _activity(name), optional_user(request)
+    if act is None or user is None or not act.compose:
+        return RedirectResponse("/learn" if user else "/login", status_code=303)
     data = await form_data(request)
     try:
         exchange_id = uuid.UUID(str(data.get("exchange_id")))
     except ValueError:
-        return RedirectResponse("/learn/letters", status_code=303)
+        return RedirectResponse(act.path, status_code=303)
     with request.app.state.db.tx() as c:
-        row = c.execute(text(
-            "SELECT e.id, e.task, a.id AS attempt_id FROM exchange e JOIN session s ON s.id = e.session_id "
-            "LEFT JOIN attempt a ON a.exchange_id = e.id WHERE e.id = :e AND s.learner_id = :l"),
-            {"e": exchange_id, "l": user.learner_id}).first()
-        letters = {x.id: x for x in _letters(c)}
-    if row is None or row.task is None or row.task["type"] == "intro" or row.task["letter_id"] not in letters:
-        return RedirectResponse("/learn/letters", status_code=303)
-    task, letter = _task(row.task), letters[row.task["letter_id"]]
+        row = _open_exchange(c, user, exchange_id)
+        if row is None or row.attempt_id is not None or row.task.get("activity") != act.name:
+            return RedirectResponse(act.path, status_code=303)
+        task = _task(row.task)
+        views, meta = _units(c, act, user.learner_id)
+        if task.letter_id not in meta or task.type not in ("recognise", "recall"):
+            return RedirectResponse(act.path, status_code=303)
+        keys = _keys(c, act, views, task)
+    buffer = str(data.get("buffer", ""))[:MAX_BUFFER]
+    if data.get("erase"):
+        buffer = buffer[:-1]
+    elif str(data.get("key", "")) in keys:
+        buffer = (buffer + str(data["key"]))[:MAX_BUFFER]
+    return _page(request, user, act, exchange_id, task, views, meta, keys, buffer=buffer)
+
+
+@router.post("/learn/{name}/answer", response_class=HTMLResponse)
+async def practice_answer(request: Request, name: str):
+    act, user = _activity(name), optional_user(request)
+    if act is None or user is None:
+        return RedirectResponse("/learn" if act is None else "/login", status_code=303)
+    data = await form_data(request)
+    try:
+        exchange_id = uuid.UUID(str(data.get("exchange_id")))
+    except ValueError:
+        return RedirectResponse(act.path, status_code=303)
+    with request.app.state.db.tx() as c:
+        row = _open_exchange(c, user, exchange_id)
+        _, meta = _units(c, act, user.learner_id)
+    if (row is None or row.task is None or row.task.get("activity") != act.name or row.task["type"] == "intro"
+            or row.task["letter_id"] not in meta):
+        return RedirectResponse(act.path, status_code=303)
+    task, unit = _task(row.task), meta[row.task["letter_id"]]
     if row.attempt_id is not None:  # already answered: show the same feedback (idempotent)
         with request.app.state.db.tx() as c:
             outcome = c.execute(text("SELECT outcome FROM verdict WHERE attempt_id = :a"),
                                 {"a": row.attempt_id}).scalar()
-        return _feedback(request, user, letter, outcome)
+        return _feedback(request, user, act, unit, outcome)
 
     attempt_id = uuid.uuid4()
     if task.type == "choice":
         chosen = str(data.get("choice", ""))
-        result = checker.check_choice(attempt_id=attempt_id, chosen=chosen, correct=letter.id)
+        result = checker.check_choice(attempt_id=attempt_id, chosen=chosen, correct=unit.id)
         raw, mode, cue, aids, normalised = chosen, "multiple_choice", 1, ["choices"], None
     else:
         key, typed = str(data.get("key", "")), str(data.get("typed", ""))
-        raw, mode = (key, "onscreen_keyboard") if key else (typed[:40], "typed")
-        target, accepted = ("devanagari", [letter.devanagari]) if task.type == "recognise" else ("telugu", [letter.telugu])
+        if act.compose:
+            raw, mode = (str(data.get("buffer", ""))[:MAX_BUFFER], "onscreen_keyboard") if data.get("built") \
+                else (typed[:40], "typed")
+        else:
+            raw, mode = (key, "onscreen_keyboard") if key else (typed[:40], "typed")
+        target, accepted = (("devanagari", [unit.devanagari]) if task.type == "recognise"
+                            else ("telugu", [unit.telugu]))
         result = checker.check_recall(attempt_id=attempt_id, raw=raw, accepted=accepted, target_script=target,
                                       response_mode=mode, closed=True)
         cue, aids, normalised = 0, [], result.normalised
@@ -186,15 +284,17 @@ async def letter_answer(request: Request):
              "script": normalised.input_script if normalised else None, "mode": mode, "cue": cue,
              "aids": json.dumps(aids), "ar": task.revealed, "k": f"{exchange_id}:1"}).scalar()
     if inserted is None:  # a concurrent duplicate submission: show its feedback
-        return RedirectResponse("/learn/letters", status_code=303)
+        return RedirectResponse(act.path, status_code=303)
     modality = LP.MODALITY[task.type]
+    band = act.skill.split(".", 1)[0]
     request.app.state.writer.record_verdict(
-        result.verdict, card=CardTarget("letter", letter.id, modality),
-        skill=SkillTarget(f"L0.script.{letter.group}.{modality}", "L0", item_ref=letter.id, task_type=task.type))
-    return _feedback(request, user, letter, result.verdict.outcome)
+        result.verdict, card=CardTarget(act.card_kind, unit.id, modality),
+        skill=SkillTarget(f"{act.skill.format(unit.skill_key)}.{modality}", band, item_ref=unit.id,
+                          task_type=task.type))
+    return _feedback(request, user, act, unit, result.verdict.outcome)
 
 
-def _feedback(request, user, letter, outcome):
+def _feedback(request, user, act, unit, outcome):
     key = {"correct": "fb.correct", "unsure": "fb.unsure"}.get(outcome, "fb.wrong")
-    return render(request, "learner/letter_feedback.html", title_key="page.letters", user=user, letter=letter,
-                  outcome_key=key, correct=outcome == "correct")
+    return render(request, "learner/practice_feedback.html", title_key=f"page.{act.name}", user=user, act=act,
+                  unit=unit, outcome_key=key, correct=outcome == "correct")

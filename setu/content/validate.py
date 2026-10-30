@@ -50,6 +50,7 @@ class ContentTree:
     letters: list
     word_units: list
     letters_l0: list = dataclasses.field(default_factory=list)
+    aksharas: list = dataclasses.field(default_factory=list)
     root: Path | None = None
 
 
@@ -86,6 +87,8 @@ def load_tree(root: Path) -> ContentTree:
         letters=[_yaml(p) for p in sorted((root / "hi-te/letters").glob("*.yaml"))],
         word_units=[_yaml(p) for p in sorted((root / "hi-te/word_units").glob("*.yaml"))],
         letters_l0=(_yaml(root / "hi-te/script/letters.yaml") or []) if (root / "hi-te/script/letters.yaml").exists()
+        else [],
+        aksharas=(_yaml(root / "hi-te/script/aksharas.yaml") or []) if (root / "hi-te/script/aksharas.yaml").exists()
         else [],
         root=root,
     )
@@ -322,6 +325,33 @@ def _validate_letter(letter, seen) -> Result:
     return res
 
 
+def _validate_akshara(unit, seen, letters) -> Result:
+    from setu.content.aksharas import twin
+
+    res = Result([], {})
+    aid = unit.get("id", "?")
+    if aid in seen:
+        res.add(aid, _err("duplicate_akshara"))
+    seen.add(aid)
+    _approval_claims(res, aid, unit, status_field="review_status", allowed=IMPORTABLE["review_status"])
+    te = unit.get("telugu", "")
+    try:
+        ok_twin = unit.get("devanagari") == twin(te)
+    except KeyError:
+        res.add(aid, _err("bad_akshara", repr(te)))
+    else:
+        if not ok_twin:
+            res.add(aid, _err("twin_mismatch", f"{te} -> {unit.get('devanagari')}"))
+    missing = [ch for ch in unit.get("letters") or [] if f"te-letter:{ch}" not in letters]
+    if not unit.get("letters") or missing:
+        res.add(aid, _err("unknown_letters", "".join(missing)))
+    for field in ("twin_label_hi", "note_hi", "group_hi"):
+        _check_l1_text(res, aid, field, unit.get(field), "HI->TE")
+    if not unit.get("provenance"):
+        res.add(aid, _err("missing_provenance"))
+    return res
+
+
 def validate_tree(tree: ContentTree) -> Result:
     res = Result([], {})
     rule_ids, item_owner, sentences = set(), {}, {}
@@ -364,6 +394,9 @@ def validate_tree(tree: ContentTree) -> Result:
     seen_letters = set()
     for letter in tree.letters_l0:
         res.merge(_validate_letter(letter, seen_letters))
+    seen_aksharas = set()
+    for unit in tree.aksharas:
+        res.merge(_validate_akshara(unit, seen_aksharas, seen_letters))
     for unit in tree.letters + tree.word_units:
         uid = unit.get("unit_id", "?")
         _approval_claims(res, uid, unit, status_field="review_status", allowed=IMPORTABLE["review_status"])

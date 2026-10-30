@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ t("learn.choice_prompt", twin=letter.label) }}</h1>
-<form method="post" action="/learn/letters/answer" class="keys">
+<h1>{{ t("learn.choice_prompt", twin=unit.label) }}</h1>
+<form method="post" action="{{ act.path }}/answer" class="keys">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   {% for o in options %}<button type="submit" name="choice" value="{{ o.id }}" class="key">{{ te(o.telugu) }}</button>{% endfor %}
 </form>

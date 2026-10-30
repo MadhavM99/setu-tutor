@@ -103,7 +103,14 @@ PLAN_V5["setu_writer"] += [("letter", "SELECT", None)]
 VIEW_GRANTS_V2 = {**VIEW_GRANTS, "learner_letter": VIEW_GRANTS["learner_rule_version"],
                   "classmate_vl": ("setu_read", "setu_app", "setu_writer")}
 
-GRANT_PLAN = PLAN_V5  # the current plan
+# Plan V6 (migration 0009, slice S2): aksharas, like letters.
+PLAN_V6 = {role: list(specs) for role, specs in PLAN_V5.items()}
+PLAN_V6["setu_content"] += [("akshara", "SELECT, INSERT, UPDATE", None)]
+PLAN_V6["setu_app"] += [("akshara", "SELECT", None)]
+PLAN_V6["setu_writer"] += [("akshara", "SELECT", None)]
+VIEW_GRANTS_V3 = {**VIEW_GRANTS_V2, "learner_akshara": VIEW_GRANTS["learner_rule_version"]}
+
+GRANT_PLAN = PLAN_V6  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}

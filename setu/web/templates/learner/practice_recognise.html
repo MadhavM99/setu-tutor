@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("learn.recognise_prompt") }}</h1>
+<p class="letter-big">{{ te(unit.telugu) }}</p>
+{% set telugu = false %}{% include "learner/_keyboard.html" %}
+{% endblock %}
