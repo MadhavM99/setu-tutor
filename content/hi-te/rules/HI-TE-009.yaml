@@ -1,0 +1,240 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-009
+direction: HI->TE
+contrast_area: respect
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas:
+  - - మీరు
+    - मीरु
+    - आप
+  - - आदर
+    - इज़्ज़त
+    - इज्जत
+    - बहुवचन
+    - रु
+    - ారు
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: మీరు నా మాట వినరు
+  note: -ru agreement with miiru confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/4
+    record_sha256: bfb96c42536927d9e123cda96d87782dd928e7438f21a88dfa4bc81d4c66540b
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: miiru naamaaTa winaru
+      gloss: You (respectful/plural) do not listen to my word.
+      telugu_draft: మీరు నా మాట వినరు
+      rules:
+      - HI-TE-009
+      - HI-TE-005
+      note: -ru agreement with miiru confirmed
+needs_rewrite:
+  title_l1: 'आदर: మీరు (आप) के साथ verb भी आदर वाला'
+  explanation_l1: '''आप'' = మీరు, और verb भी आदर वाले रूप में: వస్తారా (आ रहे हैं?), తింటారు (खाते हैं) — వస్తావా/తింటావు
+    ''तुम'' के लिए है।'
+dev_notes:
+  name_en: 'Respect: మీరు takes the plural -āru ending'
+  title_en: 'Respect: మీరు takes a plural ending'
+  l1_habit_en: Hindi आप takes plural verb; learner keeps singular -āvu/-āvā after మీరు
+  transfer: unclear
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - meeru
+  - respect
+  - plural
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /8
+  record_sha256: 613267649988765633068e0416748069fe118474b6c1467322cfb2eedf02206a
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-009
+    name: 'Respect: మీరు takes the plural -āru ending'
+    category: respect
+    l1_habit: Hindi आप takes plural verb; learner keeps singular -āvu/-āvā after మీరు
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-009-a
+      english: Sir, are you coming?
+      hindi: आप आ रहे हैं?
+      accepted:
+      - మీరు వస్తారా
+      planted_error: మీరు వస్తావా
+      wrong_regex:
+      - ^మీరు \S*ావా$
+      fix_regex:
+      - ^మీరు వస్తారా$
+    - item_id: HI-TE-009-b
+      english: Sir, you eat.
+      hindi: आप खाते हैं।
+      accepted:
+      - మీరు తింటారు
+      planted_error: మీరు తింటావు
+      wrong_regex:
+      - ^మీరు \S*ావు$
+      fix_regex:
+      - ^మీరు తింటారు$
+    title: 'Respect: మీరు takes a plural ending'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/8
+  record_sha256: 74b2472190b89de8924ea05accb988deb310cea688a10481083c2de3946eadc5
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-009
+    name: 'Respect: మీరు takes the plural -āru ending'
+    category: respect
+    l1_habit: Hindi आप takes plural verb; learner keeps singular -āvu/-āvā after మీరు
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-009-a
+      english: Sir, are you coming?
+      hindi: आप आ रहे हैं?
+      accepted:
+      - మీరు వస్తారా
+      planted_error: మీరు వస్తావా
+      wrong_regex:
+      - ^మీరు \S*ావా$
+      fix_regex:
+      - ^మీరు వస్తారా$
+    - item_id: HI-TE-009-b
+      english: Sir, you eat.
+      hindi: आप खाते हैं।
+      accepted:
+      - మీరు తింటారు
+      planted_error: మీరు తింటావు
+      wrong_regex:
+      - ^మీరు \S*ావు$
+      fix_regex:
+      - ^మీరు తింటారు$
+    title: 'Respect: మీరు takes a plural ending'
+    title_hi: 'आदर: మీరు (आप) के साथ verb भी आदर वाला'
+    explain_hi: '''आप'' = మీరు, और verb भी आदर वाले रूप में: వస్తారా (आ रहे हैं?), తింటారు (खाते हैं) — వస్తావా/తింటావు
+      ''तुम'' के लिए है।'
+    key_ideas:
+    - - మీరు
+      - मीरु
+      - आप
+      - meeru
+    - - आदर
+      - इज़्ज़त
+      - इज्जत
+      - respect
+      - बहुवचन
+      - plural
+      - रु
+      - ారు
+    status: draft_unverified
+items:
+- item_id: HI-TE-009-a
+  l1_meaning: आप आ रहे हैं?
+  correct_form: మీరు వస్తారా
+  wrong_form: మీరు వస్తావా
+  accepted_variants: []
+  accept_patterns:
+  - ^మీరు వస్తారా$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^మీరు \S*ావా$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Sir, are you coming?
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /8/items/0
+    record_sha256: d0edb7cf3d06f6b8eb9387ad6707199bd0e9417cbed08d2ca970e130c644015a
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/8/items/0
+    record_sha256: d0edb7cf3d06f6b8eb9387ad6707199bd0e9417cbed08d2ca970e130c644015a
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-009-b
+  l1_meaning: आप खाते हैं।
+  correct_form: మీరు తింటారు
+  wrong_form: మీరు తింటావు
+  accepted_variants: []
+  accept_patterns:
+  - ^మీరు తింటారు$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^మీరు \S*ావు$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Sir, you eat.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /8/items/1
+    record_sha256: e1a327a111ea6af2ae080588dcf8c03d41fefe778b22cc0a4b9ecd4de65208bc
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/8/items/1
+    record_sha256: e1a327a111ea6af2ae080588dcf8c03d41fefe778b22cc0a4b9ecd4de65208bc
+    description: sub-record; the raw record is embedded in the parent's provenance

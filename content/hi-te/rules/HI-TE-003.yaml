@@ -1,0 +1,260 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-003
+direction: HI->TE
+contrast_area: possession
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''मेरे पास है'' = ''मुझको है'' (నాకు … ఉంది)'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - నాకు
+    - नाकु
+    - मुझे
+    - मुझको
+    - నీకు
+    - नीकु
+  - - నేను
+    - नेनु
+    - मैं
+    - को
+    - पास
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite:
+  explanation_l1: 'Telugu में ''मेरे पास किताब है'' ऐसे कहते हैं: ''मुझको (నాకు) एक किताब है (ఉంది)''। नेनु (నేను
+    = मैं) नहीं, नाकु (నాకు = मुझको)।'
+dev_notes:
+  name_en: 'Possession with dative: ''to me is a book'''
+  title_en: ‘I have’ is ‘to me there is’ (నాకు … ఉంది)
+  l1_habit_en: Hindi मेरे पास / मुझे; learner uses nominative 'I' + ఉంది
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - naaku
+  - naku
+  - nenu
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /2
+  record_sha256: 4ea6a3baf20881e09534e35ed4f62c4f217d2b5ab321e42f3771c8be234f064d
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-003
+    name: 'Possession with dative: ''to me is a book'''
+    category: possession
+    l1_habit: Hindi मेरे पास / मुझे; learner uses nominative 'I' + ఉంది
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-003-a
+      english: I have a book.
+      hindi: मेरे पास एक किताब है।
+      accepted:
+      - నాకు ఒక పుస్తకం ఉంది
+      - నా దగ్గర ఒక పుస్తకం ఉంది
+      planted_error: నేను ఒక పుస్తకం ఉంది
+      wrong_regex:
+      - ^నేను .* ఉంది$
+      fix_regex:
+      - ^(నాకు|నా దగ్గర) ఒక పుస్తకం ఉంది$
+    - item_id: HI-TE-003-b
+      english: You have a pen.
+      hindi: तुम्हारे पास एक कलम है।
+      accepted:
+      - నీకు ఒక పెన్ను ఉంది
+      - నీ దగ్గర ఒక పెన్ను ఉంది
+      planted_error: నువ్వు ఒక పెన్ను ఉంది
+      wrong_regex:
+      - ^నువ్వు .* ఉంది$
+      fix_regex:
+      - ^(నీకు|నీ దగ్గర) ఒక పెన్ను ఉంది$
+    title: ‘I have’ is ‘to me there is’ (నాకు … ఉంది)
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/2
+  record_sha256: 06a46062a57e8769bb092c0ca32c87f38311c44c200e9714c37f9a14482d2e5e
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-003
+    name: 'Possession with dative: ''to me is a book'''
+    category: possession
+    l1_habit: Hindi मेरे पास / मुझे; learner uses nominative 'I' + ఉంది
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-003-a
+      english: I have a book.
+      hindi: मेरे पास एक किताब है।
+      accepted:
+      - నాకు ఒక పుస్తకం ఉంది
+      - నా దగ్గర ఒక పుస్తకం ఉంది
+      planted_error: నేను ఒక పుస్తకం ఉంది
+      wrong_regex:
+      - ^నేను .* ఉంది$
+      fix_regex:
+      - ^(నాకు|నా దగ్గర) ఒక పుస్తకం ఉంది$
+    - item_id: HI-TE-003-b
+      english: You have a pen.
+      hindi: तुम्हारे पास एक कलम है।
+      accepted:
+      - నీకు ఒక పెన్ను ఉంది
+      - నీ దగ్గర ఒక పెన్ను ఉంది
+      planted_error: నువ్వు ఒక పెన్ను ఉంది
+      wrong_regex:
+      - ^నువ్వు .* ఉంది$
+      fix_regex:
+      - ^(నీకు|నీ దగ్గర) ఒక పెన్ను ఉంది$
+    title: ‘I have’ is ‘to me there is’ (నాకు … ఉంది)
+    title_hi: '''मेरे पास है'' = ''मुझको है'' (నాకు … ఉంది)'
+    explain_hi: 'Telugu में ''मेरे पास किताब है'' ऐसे कहते हैं: ''मुझको (నాకు) एक किताब है (ఉంది)''। नेनु (నేను
+      = मैं) नहीं, नाकु (నాకు = मुझको)।'
+    key_ideas:
+    - - నాకు
+      - नाकु
+      - मुझे
+      - मुझको
+      - naaku
+      - naku
+      - నీకు
+      - नीकु
+    - - నేను
+      - नेनु
+      - मैं
+      - nenu
+      - को
+      - पास
+    status: draft_unverified
+items:
+- item_id: HI-TE-003-a
+  l1_meaning: मेरे पास एक किताब है।
+  correct_form: నాకు ఒక పుస్తకం ఉంది
+  wrong_form: నేను ఒక పుస్తకం ఉంది
+  accepted_variants:
+  - form: నా దగ్గర ఒక పుస్తకం ఉంది
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /2/items/0/accepted/1
+      record_sha256: b544d53c36829d5150ff6459d391d2884116fa934bf5336d78c794109047b77d
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/2/items/0/accepted/1
+      record_sha256: b544d53c36829d5150ff6459d391d2884116fa934bf5336d78c794109047b77d
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(నాకు|నా దగ్గర) ఒక పుస్తకం ఉంది$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^నేను .* ఉంది$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I have a book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /2/items/0
+    record_sha256: 72aed5c37a1f05827e7e098705177568bf74e1e897c8dc88c91abee3bbee27de
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/2/items/0
+    record_sha256: 72aed5c37a1f05827e7e098705177568bf74e1e897c8dc88c91abee3bbee27de
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-003-b
+  l1_meaning: तुम्हारे पास एक कलम है।
+  correct_form: నీకు ఒక పెన్ను ఉంది
+  wrong_form: నువ్వు ఒక పెన్ను ఉంది
+  accepted_variants:
+  - form: నీ దగ్గర ఒక పెన్ను ఉంది
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /2/items/1/accepted/1
+      record_sha256: 59c6a718c416feaefce8795fcfda02378305265acb3a36ac8197a5267533afc8
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/2/items/1/accepted/1
+      record_sha256: 59c6a718c416feaefce8795fcfda02378305265acb3a36ac8197a5267533afc8
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(నీకు|నీ దగ్గర) ఒక పెన్ను ఉంది$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^నువ్వు .* ఉంది$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: You have a pen.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /2/items/1
+    record_sha256: e9aef16e095514c9a5ec36015d7420dc3fa9270bf5a3ce2b2bf1152d7653c11a
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/2/items/1
+    record_sha256: e9aef16e095514c9a5ec36015d7420dc3fa9270bf5a3ce2b2bf1152d7653c11a
+    description: sub-record; the raw record is embedded in the parent's provenance

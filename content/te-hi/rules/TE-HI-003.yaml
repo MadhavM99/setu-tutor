@@ -1,0 +1,138 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-003
+direction: TE->HI
+contrast_area: gender
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: First-person verbs show the speaker's gender
+  title_en: A woman says जाती हूँ, a man जाता हूँ
+  l1_habit_en: Telugu వెళ్తున్నాను is the same for a man or a woman; Hindi जाता/जाती हूँ shows who speaks
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /2
+  record_sha256: 4970d8691de59712a2d65c35e67f758b14cc93066955bd8d5df31338e188bd61
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-003
+    name: First-person verbs show the speaker's gender
+    category: gender
+    l1_habit: Telugu వెళ్తున్నాను is the same for a man or a woman; Hindi जाता/जाती हूँ shows who speaks
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-003-a
+      english: I (a woman) am going.
+      telugu: నేను వెళ్తున్నాను
+      accepted:
+      - मैं जा रही हूँ
+      - मैं जाती हूँ
+      planted_error: मैं जा रहा हूँ
+      wrong_regex:
+      - ^मैं जा रहा हूँ$
+      fix_regex:
+      - ^मैं (जा रही|जाती) हूँ$
+    - item_id: TE-HI-003-b
+      english: I (a woman) will come tomorrow.
+      telugu: నేను రేపు వస్తాను
+      accepted:
+      - मैं कल आऊँगी
+      planted_error: मैं कल आऊँगा
+      wrong_regex:
+      - ^मैं कल आऊँगा$
+      fix_regex:
+      - ^मैं कल आऊँगी$
+    title: A woman says जाती हूँ, a man जाता हूँ
+items:
+- item_id: TE-HI-003-a
+  l1_meaning: నేను వెళ్తున్నాను
+  correct_form: मैं जा रही हूँ
+  wrong_form: मैं जा रहा हूँ
+  accepted_variants:
+  - form: मैं जाती हूँ
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /2/items/0/accepted/1
+      record_sha256: 6df436052875c0496428a29c76c403252a025b9fc61fe53ff5dac7c99c443fb9
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^मैं (जा रही|जाती) हूँ$
+  wrong_patterns:
+  - ^मैं जा रहा हूँ$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I (a woman) am going.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /2/items/0
+    record_sha256: 81bc61a1b4f10ed94e074a350f649acb9917452f221686c664690d309c7ad595
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-003-b
+  l1_meaning: నేను రేపు వస్తాను
+  correct_form: मैं कल आऊँगी
+  wrong_form: मैं कल आऊँगा
+  accepted_variants: []
+  accept_patterns:
+  - ^मैं कल आऊँगी$
+  wrong_patterns:
+  - ^मैं कल आऊँगा$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I (a woman) will come tomorrow.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /2/items/1
+    record_sha256: 5bf447720c5e3a931ab1622891027194ad4c4533cc23b05a7ecc36fa6bb7c73c
+    description: sub-record; the raw record is embedded in the parent's provenance

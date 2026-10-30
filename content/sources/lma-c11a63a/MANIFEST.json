@@ -1,0 +1,13 @@
+{
+  "repo": "LMA---Reverse-learning-Tutor",
+  "remote": "https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git",
+  "commit": "c11a63a30f7c20311f3fb1e1318427a8cf63b304",
+  "source_dir": "data/",
+  "note": "Verbatim copies taken with `git show <commit>:data/<path>`; do not edit. Team-owned; reuse recorded in ADR-0001.",
+  "sha256": {
+    "l1-hi_l2-te/book_examples.jsonl": "deb86a1cec3d90d76b1564cc5fb99df55422352308a49ece416ebc8726d6e107",
+    "l1-hi_l2-te/rules.json": "9cd01dd321d61de61cb03f4d55464485f9f56cfcbc04269181b70b70f7d4f62a",
+    "l1-te_l2-hi/README.md": "ca25d9d292cf0d204cef390c277e7d7d1e563be87e2b1861c5c6f412b4241f7c",
+    "l1-te_l2-hi/rules.json": "9738daca3029963d74577e78161b831129c84c71360b9c3f87b1284775092ca0"
+  }
+}

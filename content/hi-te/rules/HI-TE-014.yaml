@@ -1,0 +1,230 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-014
+direction: HI->TE
+contrast_area: postposition
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''के लिए'' = కోసం, शब्द के बाद'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - కోసం
+    - कोसं
+    - लिए
+  - - बाद
+    - पीछे
+    - आख़िर
+    - आखिर
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: నేను ఉద్యోగం కోసం వెళ్లాను
+  note: koosam after the noun confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/3
+    record_sha256: 56a920f6d1a052200ce6ac27ca864853c3a8e67b9fa37ee70751611753f6c650
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: neenu udyoogam koosam weLLEEnu
+      gloss: I went for a job.
+      telugu_draft: నేను ఉద్యోగం కోసం వెళ్లాను
+      rules:
+      - HI-TE-014
+      note: koosam after the noun confirmed
+needs_rewrite:
+  explanation_l1: '''तुम्हारे लिए'' = నీ కోసం। जैसे Hindi में ''लिए'' बाद में आता है, Telugu में भी కోసం बाद में
+    आता है।'
+dev_notes:
+  name_en: '''For'': కోసం comes after the noun'
+  title_en: '‘For’: కోసం comes after the word'
+  l1_habit_en: Hindi के लिए follows the noun, but learner puts కోసం first like an English preposition
+  transfer: unclear
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - kosam
+  - after
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /13
+  record_sha256: f98bb6de9c40fdc7b10b3ab969b89ce73e1ea018f0cae406f5086ee6d77b8db8
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-014
+    name: '''For'': కోసం comes after the noun'
+    category: postposition
+    l1_habit: Hindi के लिए follows the noun, but learner puts కోసం first like an English preposition
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-014-a
+      english: This is for you.
+      hindi: यह तुम्हारे लिए है।
+      accepted:
+      - ఇది నీ కోసం
+      planted_error: ఇది కోసం నీ
+      wrong_regex:
+      - '^ఇది కోసం '
+      fix_regex:
+      - ^ఇది నీ కోసం$
+    - item_id: HI-TE-014-b
+      english: This is for me.
+      hindi: यह मेरे लिए है।
+      accepted:
+      - ఇది నా కోసం
+      planted_error: ఇది కోసం నా
+      wrong_regex:
+      - '^ఇది కోసం '
+      fix_regex:
+      - ^ఇది నా కోసం$
+    title: '‘For’: కోసం comes after the word'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/13
+  record_sha256: 723776be7a2f50a7d0a139b75a4bf1ca9fd23ff27c7057775be513e40a4645ab
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-014
+    name: '''For'': కోసం comes after the noun'
+    category: postposition
+    l1_habit: Hindi के लिए follows the noun, but learner puts కోసం first like an English preposition
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-014-a
+      english: This is for you.
+      hindi: यह तुम्हारे लिए है।
+      accepted:
+      - ఇది నీ కోసం
+      planted_error: ఇది కోసం నీ
+      wrong_regex:
+      - '^ఇది కోసం '
+      fix_regex:
+      - ^ఇది నీ కోసం$
+    - item_id: HI-TE-014-b
+      english: This is for me.
+      hindi: यह मेरे लिए है।
+      accepted:
+      - ఇది నా కోసం
+      planted_error: ఇది కోసం నా
+      wrong_regex:
+      - '^ఇది కోసం '
+      fix_regex:
+      - ^ఇది నా కోసం$
+    title: '‘For’: కోసం comes after the word'
+    title_hi: '''के लिए'' = కోసం, शब्द के बाद'
+    explain_hi: '''तुम्हारे लिए'' = నీ కోసం। जैसे Hindi में ''लिए'' बाद में आता है, Telugu में भी కోసం बाद में आता
+      है।'
+    key_ideas:
+    - - కోసం
+      - कोसं
+      - kosam
+      - लिए
+    - - बाद
+      - पीछे
+      - after
+      - आख़िर
+      - आखिर
+    status: draft_unverified
+items:
+- item_id: HI-TE-014-a
+  l1_meaning: यह तुम्हारे लिए है।
+  correct_form: ఇది నీ కోసం
+  wrong_form: ఇది కోసం నీ
+  accepted_variants: []
+  accept_patterns:
+  - ^ఇది నీ కోసం$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: '^ఇది కోసం '
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is for you.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /13/items/0
+    record_sha256: 4adee65be27f30c80b112319e4fe017a166e13904536de37625ca9b4886c5346
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/13/items/0
+    record_sha256: 4adee65be27f30c80b112319e4fe017a166e13904536de37625ca9b4886c5346
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-014-b
+  l1_meaning: यह मेरे लिए है।
+  correct_form: ఇది నా కోసం
+  wrong_form: ఇది కోసం నా
+  accepted_variants: []
+  accept_patterns:
+  - ^ఇది నా కోసం$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: '^ఇది కోసం '
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is for me.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /13/items/1
+    record_sha256: ee589749329ce5dade0d6e4c53ec61b02c08cb6398319bc2802dfe9f8d1251ba
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/13/items/1
+    record_sha256: ee589749329ce5dade0d6e4c53ec61b02c08cb6398319bc2802dfe9f8d1251ba
+    description: sub-record; the raw record is embedded in the parent's provenance

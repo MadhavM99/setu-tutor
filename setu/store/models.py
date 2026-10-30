@@ -59,6 +59,19 @@ MODALITIES = ("REC", "RCL", "RD", "LS", "SP", "EX", "PR")
 REVIEW = ("draft", "in_review", "approved", "rejected")
 CUE_LEVEL = "cue_level BETWEEN 0 AND 3"
 
+
+def no_latin(*columns):
+    """Learner-facing text holds Devanagari or Telugu only (X-NOENG); enforced in the database (migration 0003)."""
+    return tuple(CheckConstraint(f"setu_no_latin({c})", name=f"{c}_no_latin") for c in columns)
+
+
+def provenance():
+    return Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+
+
+def issues():
+    return Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+
 # ---------------------------------------------------------------- identity and consent
 
 
@@ -221,9 +234,12 @@ class Lexeme(Base):
     audio_asset_id = fk("audio_asset.id", nullable=True)
     source_id = fk("data_source.id", nullable=True)
     review_status = Column(Text, nullable=False, server_default="draft")
+    provenance = provenance()
+    content_hash = Column(Text)
     __table_args__ = (
         one_of("review_status", *REVIEW),
         CheckConstraint("NOT false_friend OR false_friend_note_hi IS NOT NULL", name="false_friend_has_note"),
+        *no_latin("telugu", "hindi_gloss", "false_friend_note_hi", "cognate_of"),
     )
 
 
@@ -267,8 +283,9 @@ class RuleVersion(Base):
     id = uuid_pk()
     rule_id = fk("rule.id")
     version = Column(Integer, nullable=False)
-    title_hi = Column(Text, nullable=False)
-    l1_explanation_hi = Column(Text, nullable=False)
+    # Learner-L1 text: Hindi for HI->TE rules, Telugu for TE->HI rules (the column names predate TE->HI content).
+    title_hi = Column(Text)
+    l1_explanation_hi = Column(Text)
     concept_key = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
     band = Column(Text, nullable=False)
     target_skill_id = fk("skill.id", nullable=True)
@@ -286,6 +303,9 @@ class RuleVersion(Base):
     observed_errors = Column(Integer, nullable=False, server_default=text("0"))
     supersedes_version = fk("rule_version.id", nullable=True)
     change_note = Column(Text)
+    provenance = provenance()
+    validation_issues = issues()
+    content_hash = Column(Text)
     created_at = now()
     __table_args__ = (
         UniqueConstraint("rule_id", "version", name="uq_rule_version_rule_id_version"),
@@ -305,6 +325,11 @@ class RuleVersion(Base):
                         name="lifecycle_verified_needs_validity"),
         CheckConstraint("opportunities >= 0 AND observed_errors >= 0 AND observed_errors <= opportunities",
                         name="error_rate_counts"),
+        # migration 0003: a rule cannot be verified (or active) without learner text and with open issues
+        CheckConstraint("lifecycle NOT IN ('verified', 'active') OR (title_hi IS NOT NULL "
+                        "AND l1_explanation_hi IS NOT NULL)", name="verified_needs_l1_text"),
+        CheckConstraint("validity <> 'verified' OR validation_issues = '[]'::jsonb", name="verified_has_no_issues"),
+        *no_latin("title_hi", "l1_explanation_hi"),
     )
 
 
@@ -337,6 +362,9 @@ class ItemVersion(Base):
     leveler_version = Column(Text)
     pool = Column(Text, nullable=False)
     review_status = Column(Text, nullable=False, server_default="draft")
+    provenance = provenance()
+    validation_issues = issues()
+    content_hash = Column(Text)
     created_at = now()
     __table_args__ = (
         UniqueConstraint("item_id", "version", name="uq_item_version_item_id_version"),
@@ -347,6 +375,11 @@ class ItemVersion(Base):
         CheckConstraint("band IS NULL OR band IN ('L0','L1','L2','L3','L4','L5')", name="band_values"),
         one_of("pool", "practice", "test_heldout", "diagnostic"),
         one_of("review_status", *REVIEW),
+        CheckConstraint("review_status <> 'approved' OR validation_issues = '[]'::jsonb",
+                        name="approved_has_no_issues"),
+        CheckConstraint("setu_patterns_anchored(accept_patterns) AND setu_patterns_anchored(wrong_patterns)",
+                        name="patterns_anchored"),
+        *no_latin("template", "hindi_meaning", "wrong_form", "correct_form", "no_error_equivalent"),
     )
 
 
@@ -359,7 +392,9 @@ class AcceptedVariant(Base):
     region = Column(Text)
     status = Column(Text, nullable=False, server_default="proposed")
     approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
     __table_args__ = (
+        *no_latin("form"),
         one_of("register", "written", "spoken"),
         one_of("status", "proposed", "approved", "rejected"),
         CheckConstraint("jsonb_typeof(approvals) = 'array'", name="approvals_is_array"),
@@ -413,6 +448,7 @@ class Hint(Base):
         one_of("type", "recast", "l1_rule", "contrast"),
         one_of("status", *REVIEW),
         CheckConstraint("status <> 'approved' OR validated_no_answer", name="approved_hint_validated"),
+        *no_latin("text_hi"),
     )
 
 
@@ -422,7 +458,9 @@ class Scene(Base):
     title_hi = Column(Text, nullable=False)
     setup_hi = Column(Text, nullable=False)
     review_status = Column(Text, nullable=False, server_default="draft")
-    __table_args__ = (one_of("review_status", *REVIEW),)
+    provenance = provenance()
+    content_hash = Column(Text)
+    __table_args__ = (one_of("review_status", *REVIEW), *no_latin("title_hi", "setup_hi"))
 
 
 class SceneLine(Base):
@@ -437,6 +475,7 @@ class SceneLine(Base):
     __table_args__ = (
         UniqueConstraint("scene_id", "n", name="uq_scene_line_scene_id_n"),
         one_of("review_status", *REVIEW),
+        *no_latin("telugu"),
     )
 
 
@@ -448,7 +487,7 @@ class OwnTask(Base):
     frames = Column(ARRAY(Text), nullable=False)
     slot_lexicon = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
     review_status = Column(Text, nullable=False, server_default="draft")
-    __table_args__ = (one_of("review_status", *REVIEW),)
+    __table_args__ = (one_of("review_status", *REVIEW), *no_latin("goal_hi"))
 
 
 class ContentProposal(Base):
@@ -516,6 +555,7 @@ class VisualAsset(Base):
         one_of("review_status", *REVIEW, "retired"),
         CheckConstraint("review_status <> 'approved' OR (ocr_text_found = false AND contrast_ok "
                         "AND alt_text_hi IS NOT NULL AND licence IS NOT NULL)", name="approved_is_checked"),
+        *no_latin("alt_text_hi"),
     )
 
 
@@ -548,6 +588,7 @@ class MemoryAid(Base):
         CheckConstraint("review_status <> 'retired' OR retired_reason IS NOT NULL", name="retired_has_reason"),
         CheckConstraint("visual_asset_id IS NULL OR review_status NOT IN ('approved') OR alt_text_hi IS NOT NULL",
                         name="visual_aid_has_alt_text"),
+        *no_latin("text_hi", "alt_text_hi"),
     )
 
 

@@ -1,0 +1,110 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+- id: hi-te-scene-01
+  title_hi: ऑटो स्टैंड
+  setup_hi: 'आप हैदराबाद में नए हो। स्टेशन के बाहर ऑटो वाले से बात करनी है: कहाँ जाना है, आ रहे हो या नहीं, यह क्या
+    है।'
+  review_status: draft
+  dev_notes:
+    legacy_rule_units: &id001
+    - HI-TE-001
+    - HI-TE-002
+    - HI-TE-015
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/course.json
+    pointer: /chapters/2/modules/0
+    record_sha256: 6a99d614deece071a6de966559006d10a15c602220bdc612e6bed6fba7671e15
+    description: course module '🛺 ऑटो स्टैंड'
+    original:
+      title: 🛺 ऑटो स्टैंड
+      scene: 'आप हैदराबाद में नए हो। स्टेशन के बाहर ऑटो वाले से बात करनी है: कहाँ जाना है, आ रहे हो या नहीं, यह
+        क्या है।'
+      units: *id001
+- id: hi-te-scene-02
+  title_hi: मेस में
+  setup_hi: हॉस्टल की मेस। खाना चल रहा है, किसी के पास प्लेट नहीं है, कोई आने वाला नहीं है।
+  review_status: draft
+  dev_notes:
+    legacy_rule_units: &id002
+    - HI-TE-013
+    - HI-TE-005
+    - HI-TE-003
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/course.json
+    pointer: /chapters/2/modules/1
+    record_sha256: 4a1a80e2322f2c86191702b5397892cf251fac953ed2dd42c2dfa8316f887f61
+    description: course module '🍛 मेस में'
+    original:
+      title: 🍛 मेस में
+      scene: हॉस्टल की मेस। खाना चल रहा है, किसी के पास प्लेट नहीं है, कोई आने वाला नहीं है।
+      units: *id002
+- id: hi-te-scene-03
+  title_hi: मकान-मालिक
+  setup_hi: आप कमरा देखने गए हो। मकान-मालिक बड़े हैं, इसलिए आदर से बात करनी है।
+  review_status: draft
+  dev_notes:
+    legacy_rule_units: &id003
+    - HI-TE-009
+    - HI-TE-006
+    - HI-TE-004
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/course.json
+    pointer: /chapters/2/modules/2
+    record_sha256: d0b87825af3017ba7e377d49def74e373c7b4236a864d25480fc32ac9fb72904
+    description: course module '🏠 मकान-मालिक'
+    original:
+      title: 🏠 मकान-मालिक
+      scene: आप कमरा देखने गए हो। मकान-मालिक बड़े हैं, इसलिए आदर से बात करनी है।
+      units: *id003
+- id: hi-te-scene-04
+  title_hi: घर-परिवार
+  setup_hi: 'दोस्त के घर पर: कौन टीचर है, कौन डॉक्टर, किसे बुलाया।'
+  review_status: draft
+  dev_notes:
+    legacy_rule_units: &id004
+    - HI-TE-007
+    - HI-TE-008
+    - HI-TE-012
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/course.json
+    pointer: /chapters/2/modules/3
+    record_sha256: aec36c0c48c5851e78565d04cdb372683357b92a5d5f16974f704aa0725fbfcb
+    description: course module '👨‍👩‍👧 घर-परिवार'
+    original:
+      title: 👨‍👩‍👧 घर-परिवार
+      scene: 'दोस्त के घर पर: कौन टीचर है, कौन डॉक्टर, किसे बुलाया।'
+      units: *id004
+- id: hi-te-scene-05
+  title_hi: कॉलेज
+  setup_hi: 'कॉलेज की लाइब्रेरी: किसने क्या पढ़ा, यह किताब किसके लिए है।'
+  review_status: draft
+  dev_notes:
+    legacy_rule_units: &id005
+    - HI-TE-011
+    - HI-TE-014
+    - HI-TE-010
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/course.json
+    pointer: /chapters/2/modules/4
+    record_sha256: 75fa1d6e9623e13677fe34e9948992f6c8469107306afad2e26f5a3a97ef8e97
+    description: course module '📚 कॉलेज'
+    original:
+      title: 📚 कॉलेज
+      scene: 'कॉलेज की लाइब्रेरी: किसने क्या पढ़ा, यह किताब किसके लिए है।'
+      units: *id005

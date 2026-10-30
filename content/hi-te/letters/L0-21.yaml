@@ -1,0 +1,82 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-21
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-21.json
+  pointer: ''
+  record_sha256: acdd31fde46c611903c33ba58954e8170e1255898c655567f55b7a340f83c71e
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-21
+    level: 0
+    title: 'मात्राएँ: ा ि ी → కా కి కీ'
+    tip: 'मात्राएँ Hindi जैसी ही जगह पर: ा दाएँ, ि ऊपर'
+    lesson:
+    - hindi: का
+      telugu: కా
+      note: ''
+      shape: క + ऊपर-दाएँ एक आड़ी लकीर
+      mnemonic: Hindi की ा भी दाईं ओर → కా
+      example: కాకి = कौआ
+      picture: 🐦‍⬛
+    - hindi: कि
+      telugu: కి
+      note: ''
+      shape: క + ऊपर एक छोटा फंदा
+      mnemonic: ि की तरह ऊपर घुमाव → కి
+      example: ''
+      picture: ''
+    - hindi: की
+      telugu: కీ
+      note: ''
+      shape: కి + फंदे में एक और घुमाव
+      mnemonic: लंबी ई = ज़्यादा घुमाव → కీ
+      example: ''
+      picture: ''
+    check:
+      item_id: L0-21-check
+      prompt: కీ
+      accepted:
+      - की
+      raju_wrong: कि
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-21-a
+      prompt: కా
+      accepted:
+      - का
+      raju_wrong: क
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-21-b
+      prompt: కి
+      accepted:
+      - कि
+      raju_wrong: की
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-21-c
+      prompt: కీ
+      accepted:
+      - की
+      raju_wrong: कि
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-20
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

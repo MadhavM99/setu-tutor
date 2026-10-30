@@ -1,0 +1,292 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-007
+direction: HI->TE
+contrast_area: pronouns
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''वह'' के दो शब्द: అతను (आदमी) और ఆమె (औरत)'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - అతను
+    - अतनु
+    - ఆమె
+    - आमे
+    - वह
+  - - औरत
+    - आदमी
+    - लड़की
+    - लड़का
+    - महिला
+    - पुरुष
+    - स्त्री
+    - शिक्षिका
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite:
+  explanation_l1: Hindi का 'वह' आदमी और औरत दोनों के लिए है। Telugu में आदमी के लिए అతను, औरत के लिए ఆమె।
+dev_notes:
+  name_en: '''He'' vs ''she'' pronouns (Hindi वह is gender-neutral)'
+  title_en: ‘He’ and ‘she’ are different words
+  l1_habit_en: Hindi वह covers he and she; Telugu uses అతను / ఆమె
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - atanu
+  - aame
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /6
+  record_sha256: 04b16fadb1e5325d47dca0e627686f670e422a623abd6a4ace60f3daba11211c
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-007
+    name: '''He'' vs ''she'' pronouns (Hindi वह is gender-neutral)'
+    category: pronouns
+    l1_habit: Hindi वह covers he and she; Telugu uses అతను / ఆమె
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-007-a
+      english: She is a teacher.
+      hindi: वह शिक्षिका है।
+      accepted:
+      - ఆమె టీచరు
+      - ఆమె టీచర్
+      planted_error: అతను టీచరు
+      wrong_regex:
+      - ^అతను (టీచరు|టీచర్)$
+      fix_regex:
+      - ^ఆమె (టీచరు|టీచర్)$
+    - item_id: HI-TE-007-b
+      english: He is a doctor.
+      hindi: वह डॉक्टर है।
+      accepted:
+      - అతను డాక్టరు
+      - అతను డాక్టర్
+      - వాడు డాక్టరు
+      - వాడు డాక్టర్
+      planted_error: ఆమె డాక్టరు
+      wrong_regex:
+      - ^ఆమె (డాక్టరు|డాక్టర్)$
+      fix_regex:
+      - ^(అతను|వాడు) (డాక్టరు|డాక్టర్)$
+    title: ‘He’ and ‘she’ are different words
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/6
+  record_sha256: 54fd6d9c5061b7eb9020539403d088b0158159eebda04f4c4aecd2489166a316
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-007
+    name: '''He'' vs ''she'' pronouns (Hindi वह is gender-neutral)'
+    category: pronouns
+    l1_habit: Hindi वह covers he and she; Telugu uses అతను / ఆమె
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-007-a
+      english: She is a teacher.
+      hindi: वह शिक्षिका है।
+      accepted:
+      - ఆమె టీచరు
+      - ఆమె టీచర్
+      planted_error: అతను టీచరు
+      wrong_regex:
+      - ^అతను (టీచరు|టీచర్)$
+      fix_regex:
+      - ^ఆమె (టీచరు|టీచర్)$
+    - item_id: HI-TE-007-b
+      english: He is a doctor.
+      hindi: वह डॉक्टर है।
+      accepted:
+      - అతను డాక్టరు
+      - అతను డాక్టర్
+      - వాడు డాక్టరు
+      - వాడు డాక్టర్
+      planted_error: ఆమె డాక్టరు
+      wrong_regex:
+      - ^ఆమె (డాక్టరు|డాక్టర్)$
+      fix_regex:
+      - ^(అతను|వాడు) (డాక్టరు|డాక్టర్)$
+    title: ‘He’ and ‘she’ are different words
+    title_hi: '''वह'' के दो शब्द: అతను (आदमी) और ఆమె (औरत)'
+    explain_hi: Hindi का 'वह' आदमी और औरत दोनों के लिए है। Telugu में आदमी के लिए అతను, औरत के लिए ఆమె।
+    key_ideas:
+    - - అతను
+      - अतनु
+      - ఆమె
+      - आमे
+      - atanu
+      - aame
+      - वह
+    - - औरत
+      - आदमी
+      - लड़की
+      - लड़का
+      - महिला
+      - पुरुष
+      - स्त्री
+      - शिक्षिका
+    status: draft_unverified
+items:
+- item_id: HI-TE-007-a
+  l1_meaning: वह शिक्षिका है।
+  correct_form: ఆమె టీచరు
+  wrong_form: అతను టీచరు
+  accepted_variants:
+  - form: ఆమె టీచర్
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /6/items/0/accepted/1
+      record_sha256: 3d6aae64a1ff2ce452823dae3f0e4efb6fa61717f436ba70f83764c65e5622ce
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/6/items/0/accepted/1
+      record_sha256: 3d6aae64a1ff2ce452823dae3f0e4efb6fa61717f436ba70f83764c65e5622ce
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^ఆమె (టీచరు|టీచర్)$
+  wrong_patterns:
+  - ^అతను (టీచరు|టీచర్)$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: She is a teacher.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /6/items/0
+    record_sha256: 7251ea69b207bc094832d017f92423da17b4dfea7ecd9b3f3a06ce9edc5a8c9a
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/6/items/0
+    record_sha256: 7251ea69b207bc094832d017f92423da17b4dfea7ecd9b3f3a06ce9edc5a8c9a
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-007-b
+  l1_meaning: वह डॉक्टर है।
+  correct_form: అతను డాక్టరు
+  wrong_form: ఆమె డాక్టరు
+  accepted_variants:
+  - form: అతను డాక్టర్
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /6/items/1/accepted/1
+      record_sha256: 50a190348dd47cdfab11fdfffa50901823515a9b0fa3af40ea5241fbff439e0f
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/6/items/1/accepted/1
+      record_sha256: 50a190348dd47cdfab11fdfffa50901823515a9b0fa3af40ea5241fbff439e0f
+      description: sub-record; the raw record is embedded in the parent's provenance
+  - form: వాడు డాక్టరు
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /6/items/1/accepted/2
+      record_sha256: 554b185cbcb3771ecaaef00f8987d1e1792b00181f04706d5cbdf53a19740b00
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/6/items/1/accepted/2
+      record_sha256: 554b185cbcb3771ecaaef00f8987d1e1792b00181f04706d5cbdf53a19740b00
+      description: sub-record; the raw record is embedded in the parent's provenance
+  - form: వాడు డాక్టర్
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /6/items/1/accepted/3
+      record_sha256: 919bc77cff376421d2a5d64c977bf4c0d902b84835480dffe95a9968c471b8f1
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/6/items/1/accepted/3
+      record_sha256: 919bc77cff376421d2a5d64c977bf4c0d902b84835480dffe95a9968c471b8f1
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(అతను|వాడు) (డాక్టరు|డాక్టర్)$
+  wrong_patterns:
+  - ^ఆమె (డాక్టరు|డాక్టర్)$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He is a doctor.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /6/items/1
+    record_sha256: f32779cd36b3c7993803bf7f67109dd34e9e349b7fcfea759916828dfe07ab9f
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/6/items/1
+    record_sha256: f32779cd36b3c7993803bf7f67109dd34e9e349b7fcfea759916828dfe07ab9f
+    description: sub-record; the raw record is embedded in the parent's provenance

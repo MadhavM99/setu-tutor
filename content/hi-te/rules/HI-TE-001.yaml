@@ -1,0 +1,232 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-001
+direction: HI->TE
+contrast_area: questions
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: 'हाँ/ना वाले सवाल: आख़िर में -आ (ా), ''क्या'' नहीं'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - क्या
+    - క్యా
+  - - आ
+    - अंत
+    - आख़िर
+    - आखिर
+    - पीछे
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite:
+  explanation_l1: 'Hindi में सवाल ''क्या'' से शुरू होता है। Telugu में ''क्या'' नहीं लगता — आख़िरी शब्द के अंत में
+    -आ (ా) जुड़ जाता है: వస్తావు (आओगे) → వస్తావా (आओगे?)।'
+dev_notes:
+  name_en: 'Polar question: -aa ending, no kya'
+  title_en: 'Questions: add -ā at the end, no ‘क्या’'
+  l1_habit_en: Hindi 'क्या' at the start; Telugu marks yes/no questions with -ā on the verb/noun
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - kya
+  - end
+  - last
+  - aa
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /0
+  record_sha256: c16d72bf2912e9bef2a3f0e82f1e29f143514ab64d82094819502f9a01138568
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-001
+    name: 'Polar question: -aa ending, no kya'
+    category: questions
+    l1_habit: Hindi 'क्या' at the start; Telugu marks yes/no questions with -ā on the verb/noun
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-001-a
+      english: Are you coming?
+      hindi: क्या तुम आ रहे हो?
+      accepted:
+      - నువ్వు వస్తావా
+      - నువ్వు వస్తున్నావా
+      planted_error: క్యా నువ్వు వస్తావు
+      wrong_regex:
+      - క్యా
+      fix_regex:
+      - ^నువ్వు (వస్తావా|వస్తున్నావా)$
+    - item_id: HI-TE-001-b
+      english: Is this a book?
+      hindi: क्या यह किताब है?
+      accepted:
+      - ఇది పుస్తకమా
+      planted_error: క్యా ఇది పుస్తకం
+      wrong_regex:
+      - క్యా
+      fix_regex:
+      - ^ఇది పుస్తకమా$
+    title: 'Questions: add -ā at the end, no ‘क्या’'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/0
+  record_sha256: e714abbe59dbeb4fca32bd2b907282a1ca0897cd0e78b12871ec46e1a15e35d4
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-001
+    name: 'Polar question: -aa ending, no kya'
+    category: questions
+    l1_habit: Hindi 'क्या' at the start; Telugu marks yes/no questions with -ā on the verb/noun
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-001-a
+      english: Are you coming?
+      hindi: क्या तुम आ रहे हो?
+      accepted:
+      - నువ్వు వస్తావా
+      - నువ్వు వస్తున్నావా
+      planted_error: క్యా నువ్వు వస్తావు
+      wrong_regex:
+      - క్యా
+      fix_regex:
+      - ^నువ్వు (వస్తావా|వస్తున్నావా)$
+    - item_id: HI-TE-001-b
+      english: Is this a book?
+      hindi: क्या यह किताब है?
+      accepted:
+      - ఇది పుస్తకమా
+      planted_error: క్యా ఇది పుస్తకం
+      wrong_regex:
+      - క్యా
+      fix_regex:
+      - ^ఇది పుస్తకమా$
+    title: 'Questions: add -ā at the end, no ‘क्या’'
+    title_hi: 'हाँ/ना वाले सवाल: आख़िर में -आ (ా), ''क्या'' नहीं'
+    explain_hi: 'Hindi में सवाल ''क्या'' से शुरू होता है। Telugu में ''क्या'' नहीं लगता — आख़िरी शब्द के अंत में
+      -आ (ా) जुड़ जाता है: వస్తావు (आओगे) → వస్తావా (आओगे?)।'
+    key_ideas:
+    - - क्या
+      - క్యా
+      - kya
+    - - आ
+      - अंत
+      - आख़िर
+      - आखिर
+      - पीछे
+      - end
+      - last
+      - aa
+    status: draft_unverified
+items:
+- item_id: HI-TE-001-a
+  l1_meaning: क्या तुम आ रहे हो?
+  correct_form: నువ్వు వస్తావా
+  wrong_form: క్యా నువ్వు వస్తావు
+  accepted_variants:
+  - form: నువ్వు వస్తున్నావా
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /0/items/0/accepted/1
+      record_sha256: f312ca48ae066c059f95f7a51b6dc3f07e6d4da099f06af7806db46b4b50f821
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/0/items/0/accepted/1
+      record_sha256: f312ca48ae066c059f95f7a51b6dc3f07e6d4da099f06af7806db46b4b50f821
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^నువ్వు (వస్తావా|వస్తున్నావా)$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: క్యా
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Are you coming?
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /0/items/0
+    record_sha256: 34c64514a63cbe5757edc71d3a010573402fc588587b555b61e824294312f8a4
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/0/items/0
+    record_sha256: 34c64514a63cbe5757edc71d3a010573402fc588587b555b61e824294312f8a4
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-001-b
+  l1_meaning: क्या यह किताब है?
+  correct_form: ఇది పుస్తకమా
+  wrong_form: క్యా ఇది పుస్తకం
+  accepted_variants: []
+  accept_patterns:
+  - ^ఇది పుస్తకమా$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: క్యా
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Is this a book?
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /0/items/1
+    record_sha256: e4ce4ccf0f633b184f5773919c0f20bb4ecec4357e5489db5e07960caeaef9cb
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/0/items/1
+    record_sha256: e4ce4ccf0f633b184f5773919c0f20bb4ecec4357e5489db5e07960caeaef9cb
+    description: sub-record; the raw record is embedded in the parent's provenance

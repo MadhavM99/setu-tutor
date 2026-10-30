@@ -1,0 +1,138 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-009
+direction: TE->HI
+contrast_area: copula
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Hindi needs है in 'X is Y'
+  title_en: Hindi needs है in ‘This is a book’
+  l1_habit_en: Telugu says ఇది పుస్తకం with no 'is'; Hindi needs है (the mirror of HI-TE-002)
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /8
+  record_sha256: d8eb2ccd05ace3751e841ea193d687202dd3000a084bc59f427400aef15797b3
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-009
+    name: Hindi needs है in 'X is Y'
+    category: copula
+    l1_habit: Telugu says ఇది పుస్తకం with no 'is'; Hindi needs है (the mirror of HI-TE-002)
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-009-a
+      english: This is a book.
+      telugu: ఇది పుస్తకం
+      accepted:
+      - यह किताब है
+      planted_error: यह किताब
+      wrong_regex:
+      - ^यह किताब$
+      fix_regex:
+      - ^यह किताब है$
+    - item_id: TE-HI-009-b
+      english: He is a teacher.
+      telugu: అతను టీచరు
+      accepted:
+      - वह टीचर है
+      - वह अध्यापक है
+      planted_error: वह टीचर
+      wrong_regex:
+      - ^वह टीचर$
+      fix_regex:
+      - ^वह (टीचर|अध्यापक) है$
+    title: Hindi needs है in ‘This is a book’
+items:
+- item_id: TE-HI-009-a
+  l1_meaning: ఇది పుస్తకం
+  correct_form: यह किताब है
+  wrong_form: यह किताब
+  accepted_variants: []
+  accept_patterns:
+  - ^यह किताब है$
+  wrong_patterns:
+  - ^यह किताब$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is a book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /8/items/0
+    record_sha256: 3188f639f6cdd1543f1f37e030e499f6dd3c2c0196782f2aa4ae2aad1bea5d79
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-009-b
+  l1_meaning: అతను టీచరు
+  correct_form: वह टीचर है
+  wrong_form: वह टीचर
+  accepted_variants:
+  - form: वह अध्यापक है
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /8/items/1/accepted/1
+      record_sha256: a001fe1164cce2a66fce61255548be757d66d03dbaccc7114fca2649d4fb483c
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^वह (टीचर|अध्यापक) है$
+  wrong_patterns:
+  - ^वह टीचर$
+  rejected_patterns: []
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He is a teacher.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /8/items/1
+    record_sha256: 4e61b4fafc494c89f15009866ed1b5307d8865488762609ce0d7315d8b37d178
+    description: sub-record; the raw record is embedded in the parent's provenance

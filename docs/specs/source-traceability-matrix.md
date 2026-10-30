@@ -589,3 +589,18 @@ Spec: [`classmate-output-contract.md`](classmate-output-contract.md). ADR-0006.
 | X-RAJU-04 | Prompt frames a constrained form-fill, not an assistant; no learner text; decoding limits | B | P | 4 | Prompt-content tests | TS-RAJU-16..17 |
 | X-RAJU-05 | Raju never knows more than the learner (state-limited competence) | P | V | 2 | P-CLS-05/10 | TS-CLS-* |
 | X-RAJU-06 | Calm adult-classmate persona; the legacy child persona and celebrations retired | B | P | 1 | Catalog review | TS-UI-CALM |
+
+## 25. Implementation status (updated per slice)
+
+Lifecycle: `built` = code exists; `tested` = acceptance tests pass against real Postgres where relevant;
+`evaluated` = measured against its metric or gate (none yet). Rows not listed are still `missing`.
+
+| Slice | Row IDs | Lifecycle | Evidence |
+|---|---|---|---|
+| 1.1 | E-09, X-RULES-02, P-EVAL-02 (CI defined, not yet run) | built, tested | `tests/unit/test_scaffold.py`; legacy suite kept |
+| 1.2 | P-ARCH-11 (schema), E-01, E-02, P-BANK-03, P-BANK-04, P-BANK-06, X-BANK-06, TS-DB-01..03, TS-AUTH-04 | built, tested | `tests/db/test_constraints.py`, `test_grants.py`, `test_ledger_and_immutability.py`, `test_real_logins_and_concurrency.py` |
+| 1.3 | P-SESS-11, X-RULES-06, X-CLS-NOTRUST, P8b-01 (state changes), P-ARCH-10 (queue, no update on unsure), M-06, M-17, TS-AUTH-01..03, 05 | built, tested | `tests/unit/test_authority.py`, `tests/db/test_outcome_writer.py` |
+| 1.4 | P-BANK-01, 02, 05 (only verified + approved content is learner-visible), 07 (versions per record), 09, 15, P-STAT-02, X-BANK-01..07, X-DSR, E-06, P-DATA-01/05/06 (register rows), X-NOENG (database backstop on learner-facing columns), DQ-04..07, DQ-11, DQ-13, DQ-15 | built, tested | `tests/unit/test_patterns.py`, `tests/unit/test_content.py`, `tests/db/test_content_import.py`; `python -m setu.content validate|import` run against the dev database |
+
+Still open from those rows: P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 (the UI lint arrives with slice 1.6).
+

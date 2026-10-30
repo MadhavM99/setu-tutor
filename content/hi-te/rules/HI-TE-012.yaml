@@ -1,0 +1,219 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-012
+direction: HI->TE
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: 'इंसान को: -ను जोड़ो (అమ్మను = माँ को)'
+explanation_l1: '''माँ को बुलाया'' = అమ్మను పిలిచాను। जब काम किसी इंसान पर हो, तो उसके नाम के साथ -ను (को) जुड़ता
+  है।'
+concept_key:
+  ideas:
+  - - ను
+    - नु
+    - को
+  - - इंसान
+    - व्यक्ति
+    - आदमी
+    - माँ
+    - पिता
+    - लोग
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Object with -ను when it is a person
+  title_en: Add -ను when the object is a person
+  l1_habit_en: Hindi को is optional-ish; learner drops Telugu -ను on animate objects
+  transfer: unclear
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - nu
+  - person
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /11
+  record_sha256: 6c1996663a7643a1a927dceb5cb46be7762129e1d64795ea0124733b9aafca15
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-012
+    name: Object with -ను when it is a person
+    category: case
+    l1_habit: Hindi को is optional-ish; learner drops Telugu -ను on animate objects
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-012-a
+      english: I called mother.
+      hindi: मैंने माँ को बुलाया।
+      accepted:
+      - నేను అమ్మను పిలిచాను
+      planted_error: నేను అమ్మ పిలిచాను
+      wrong_regex:
+      - ^నేను అమ్మ \S+$
+      fix_regex:
+      - అమ్మను
+    - item_id: HI-TE-012-b
+      english: I saw father.
+      hindi: मैंने पिताजी को देखा।
+      accepted:
+      - నేను నాన్నను చూశాను
+      planted_error: నేను నాన్న చూశాను
+      wrong_regex:
+      - ^నేను నాన్న \S+$
+      fix_regex:
+      - నాన్నను
+    title: Add -ను when the object is a person
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/11
+  record_sha256: c45a14f04ae5e108fc582c7fbe577420882dbfff553bec11d60fefa99df2218a
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-012
+    name: Object with -ను when it is a person
+    category: case
+    l1_habit: Hindi को is optional-ish; learner drops Telugu -ను on animate objects
+    transfer: unclear
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-012-a
+      english: I called mother.
+      hindi: मैंने माँ को बुलाया।
+      accepted:
+      - నేను అమ్మను పిలిచాను
+      planted_error: నేను అమ్మ పిలిచాను
+      wrong_regex:
+      - ^నేను అమ్మ \S+$
+      fix_regex:
+      - అమ్మను
+    - item_id: HI-TE-012-b
+      english: I saw father.
+      hindi: मैंने पिताजी को देखा।
+      accepted:
+      - నేను నాన్నను చూశాను
+      planted_error: నేను నాన్న చూశాను
+      wrong_regex:
+      - ^నేను నాన్న \S+$
+      fix_regex:
+      - నాన్నను
+    title: Add -ను when the object is a person
+    title_hi: 'इंसान को: -ను जोड़ो (అమ్మను = माँ को)'
+    explain_hi: '''माँ को बुलाया'' = అమ్మను పిలిచాను। जब काम किसी इंसान पर हो, तो उसके नाम के साथ -ను (को) जुड़ता
+      है।'
+    key_ideas:
+    - - ను
+      - नु
+      - nu
+      - को
+    - - इंसान
+      - व्यक्ति
+      - आदमी
+      - माँ
+      - पिता
+      - person
+      - लोग
+    status: draft_unverified
+items:
+- item_id: HI-TE-012-a
+  l1_meaning: मैंने माँ को बुलाया।
+  correct_form: నేను అమ్మను పిలిచాను
+  wrong_form: నేను అమ్మ పిలిచాను
+  accepted_variants: []
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: అమ్మను
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: ^నేను అమ్మ \S+$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I called mother.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /11/items/0
+    record_sha256: 7369c2e29e7ac799f6eeb1daf071ff20dd8dddc8cea4705f408fda064cc3c960
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/11/items/0
+    record_sha256: 7369c2e29e7ac799f6eeb1daf071ff20dd8dddc8cea4705f408fda064cc3c960
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-012-b
+  l1_meaning: मैंने पिताजी को देखा।
+  correct_form: నేను నాన్నను చూశాను
+  wrong_form: నేను నాన్న చూశాను
+  accepted_variants: []
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: నాన్నను
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: ^నేను నాన్న \S+$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I saw father.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /11/items/1
+    record_sha256: 16440e6913384315bae4b6a6aa1506adb983b1cb3681c834efcf796a55a82e4d
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/11/items/1
+    record_sha256: 16440e6913384315bae4b6a6aa1506adb983b1cb3681c834efcf796a55a82e4d
+    description: sub-record; the raw record is embedded in the parent's provenance

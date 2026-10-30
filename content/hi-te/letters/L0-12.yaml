@@ -1,0 +1,82 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-12
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-12.json
+  pointer: ''
+  record_sha256: d39d7452046d74bec01e8dfc3739bd21df11f8959a06124881f2f9bd3f5f726a
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-12
+    level: 0
+    title: ड ढ ण → డ ఢ ణ
+    tip: साँस वाला = साथी + नीचे छोटी लकीर
+    lesson:
+    - hindi: ड
+      telugu: డ
+      note: ''
+      shape: दो गोल पेट, ऊपर हुक
+      mnemonic: डफली के दो गोल → డ
+      example: డప్పు = ढोल
+      picture: 🥁
+    - hindi: ढ
+      telugu: ఢ
+      note: ''
+      shape: డ + नीचे छोटी लकीर (साँस)
+      mnemonic: డ ने साँस ली → ఢ
+      example: ఢంకా = डंका
+      picture: 📣
+    - hindi: ण
+      telugu: ణ
+      note: ''
+      shape: चौड़ा, नीचे दो गोल
+      mnemonic: बाण के निशान की तरह फैला → ణ
+      example: బాణం = बाण / तीर
+      picture: 🏹
+    check:
+      item_id: L0-12-check
+      prompt: ణ
+      accepted:
+      - ण
+      raju_wrong: न
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-12-a
+      prompt: డ
+      accepted:
+      - ड
+      raju_wrong: ढ
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-12-b
+      prompt: ఢ
+      accepted:
+      - ढ
+      raju_wrong: ड
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-12-c
+      prompt: ణ
+      accepted:
+      - ण
+      raju_wrong: न
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-11
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

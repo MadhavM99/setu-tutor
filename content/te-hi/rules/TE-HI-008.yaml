@@ -1,0 +1,146 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-008
+direction: TE->HI
+contrast_area: spelling
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Postpositions are written as separate words
+  title_en: Write में and को as separate words
+  l1_habit_en: Telugu writes case endings joined (ఇంట్లో, రవికి); Hindi writes में, को, से apart after nouns (घर
+    में, रवि को)
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /7
+  record_sha256: 667dc96cd09a46014a5dd2a9ada4f8b05f9c6fbe8ac88480d0ed075d8d9fb7da
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985; pronoun forms such as मुझको, उसने are correctly written joined
+  original:
+    rule_id: TE-HI-008
+    name: Postpositions are written as separate words
+    category: spelling
+    l1_habit: Telugu writes case endings joined (ఇంట్లో, రవికి); Hindi writes में, को, से apart after nouns (घर
+      में, रवि को)
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985; pronoun forms such as मुझको, उसने are correctly written joined
+    items:
+    - item_id: TE-HI-008-a
+      english: Ravi is at home.
+      telugu: రవి ఇంట్లో ఉన్నాడు
+      accepted:
+      - रवि घर में है
+      planted_error: रवि घरमें है
+      wrong_regex:
+      - घरमें
+      fix_regex:
+      - ^रवि घर में है$
+    - item_id: TE-HI-008-b
+      english: Give it to Ravi.
+      telugu: రవికి ఇవ్వు
+      accepted:
+      - रवि को दो
+      - रवि को दे दो
+      planted_error: रविको दो
+      wrong_regex:
+      - रविको
+      fix_regex:
+      - ^रवि को (दे )?दो$
+    title: Write में and को as separate words
+items:
+- item_id: TE-HI-008-a
+  l1_meaning: రవి ఇంట్లో ఉన్నాడు
+  correct_form: रवि घर में है
+  wrong_form: रवि घरमें है
+  accepted_variants: []
+  accept_patterns:
+  - ^रवि घर में है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: घरमें
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Ravi is at home.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /7/items/0
+    record_sha256: 61fd2c5e69786eed34e41805bb5b44d3ad2fba8571d68c879239dee918ed1abf
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-008-b
+  l1_meaning: రవికి ఇవ్వు
+  correct_form: रवि को दो
+  wrong_form: रविको दो
+  accepted_variants:
+  - form: रवि को दे दो
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /7/items/1/accepted/1
+      record_sha256: 376a4ae2f9763bba899f86898b93fc8973a02da7293b536e6e3e3d7139420dcd
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^रवि को (दे )?दो$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: रविको
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Give it to Ravi.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /7/items/1
+    record_sha256: 666ea9d8460c1b5a10c84d65b381695f7fa1664ae8fa04d2d0f03bfc75522bc2
+    description: sub-record; the raw record is embedded in the parent's provenance

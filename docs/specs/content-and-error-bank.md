@@ -108,3 +108,29 @@ The columns are in data-model.md. Value sets:
 New DQ entries:
 - **DQ-17:** the legacy tricks in `runs/ai/aids.json` must not be imported as approved; they enter only as drafts.
 - **DQ-18:** shape descriptions in the setu L0 cards were "checked against Noto Sans Telugu" by an AI. They need native and teacher review before they can serve as facts.
+
+## 8. Status after slice 1.4 (31 Oct 2026)
+
+Both banks are converted into `content/` (25 rules, 49 items, 28 words, 5 scenes, 24 letter units and
+6 word units kept verbatim) and import into Postgres as drafts. `python -m setu.content validate` reports 0 errors
+and 105 issues on 63 records:
+
+| Issue | Count | Meaning |
+|---|---|---|
+| `pattern_rejected` | 52 | Legacy answer patterns that are unanchored, over-broad or wrong (DQ-06, DQ-07); kept in `rejected_patterns` with reasons; 48 legacy patterns passed and were kept |
+| `missing_l1_text` | 33 | No learner-language title or explanation: all TE→HI rules, plus HI→TE explanations that mixed in Latin script |
+| `needs_rewrite` | 13 | Learner text that contained Latin script (for example "Hindi"/"Telugu"); kept verbatim for a reviewer to rewrite |
+| `more_than_one_error` | 7 | The planted sentence differs from the correction in more than one place (DQ-04 and similar); a reviewer decides |
+
+DQ register updates:
+
+| ID | Status |
+|---|---|
+| DQ-01 | Open: 25 rules / 49 items exist vs 250 planned |
+| DQ-04, DQ-05 | Flagged by the validator (`more_than_one_error`); awaiting speaker review |
+| DQ-06, DQ-07 | Fixed in data: unanchored and over-broad patterns are rejected and kept for review; the database refuses unanchored patterns |
+| DQ-08 | Open: answer-revealing titles are not yet detected automatically (needs `check_hint_has_no_answer`, slice 2.4) |
+| DQ-11 | Fixed: Latin terms dropped from concept keys and kept in `dev_notes.dropped_latin_concept_terms` |
+| DQ-13 | Fixed: legacy AI tricks and pictures stay only inside the verbatim letter-unit provenance; none imported |
+| DQ-15 | Resolved by design: item difficulty bands and ladder bands are separate; rules default to ladder band L4 with a recorded reason |
+

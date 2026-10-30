@@ -1,0 +1,132 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-004
+direction: TE->HI
+contrast_area: gender
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Feminine plural subjects take feminine verbs
+  title_en: 'Girls/women: आ रही हैं'
+  l1_habit_en: Telugu human plurals (వస్తున్నారు) do not mark gender; Hindi रहे हैं / रही हैं does
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /3
+  record_sha256: 606fe366fcf49088fd8c97e67fafb43eb531a6b3709c132d3ec69c4681d567e4
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-004
+    name: Feminine plural subjects take feminine verbs
+    category: gender
+    l1_habit: Telugu human plurals (వస్తున్నారు) do not mark gender; Hindi रहे हैं / रही हैं does
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-004-a
+      english: The girls are coming.
+      telugu: అమ్మాయిలు వస్తున్నారు
+      accepted:
+      - लड़कियाँ आ रही हैं
+      planted_error: लड़कियाँ आ रहे हैं
+      wrong_regex:
+      - लड़कियाँ आ रहे
+      fix_regex:
+      - ^लड़कियाँ आ रही हैं$
+    - item_id: TE-HI-004-b
+      english: My sisters live in Delhi.
+      telugu: నా చెల్లెళ్ళు ఢిల్లీలో ఉంటారు
+      accepted:
+      - मेरी बहनें दिल्ली में रहती हैं
+      planted_error: मेरी बहनें दिल्ली में रहते हैं
+      wrong_regex:
+      - बहनें दिल्ली में रहते
+      fix_regex:
+      - ^मेरी बहनें दिल्ली में रहती हैं$
+    title: 'Girls/women: आ रही हैं'
+items:
+- item_id: TE-HI-004-a
+  l1_meaning: అమ్మాయిలు వస్తున్నారు
+  correct_form: लड़कियाँ आ रही हैं
+  wrong_form: लड़कियाँ आ रहे हैं
+  accepted_variants: []
+  accept_patterns:
+  - ^लड़कियाँ आ रही हैं$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: लड़कियाँ आ रहे
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: The girls are coming.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /3/items/0
+    record_sha256: 42e83ba43d0f87e074b65b09fe40f186f93b387a547b5d1de2217397410b181c
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-004-b
+  l1_meaning: నా చెల్లెళ్ళు ఢిల్లీలో ఉంటారు
+  correct_form: मेरी बहनें दिल्ली में रहती हैं
+  wrong_form: मेरी बहनें दिल्ली में रहते हैं
+  accepted_variants: []
+  accept_patterns:
+  - ^मेरी बहनें दिल्ली में रहती हैं$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: बहनें दिल्ली में रहते
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: My sisters live in Delhi.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /3/items/1
+    record_sha256: fa5fab5ded85b69bdcaa7a7fdda35567687437afdfd2bfaa944b34e2b21fa668
+    description: sub-record; the raw record is embedded in the parent's provenance

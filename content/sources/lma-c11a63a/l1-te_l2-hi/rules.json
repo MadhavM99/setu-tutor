@@ -1,0 +1,470 @@
+[
+ {
+  "rule_id": "TE-HI-001",
+  "name": "Possessive agrees with the noun's gender (मेरा/मेरी)",
+  "category": "gender",
+  "l1_habit": "Telugu నా / నీ never change; Hindi मेरा/मेरी/मेरे follow the possessed noun's gender and number",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-001-a",
+    "english": "This is my book.",
+    "telugu": "ఇది నా పుస్తకం",
+    "accepted": [
+     "यह मेरी किताब है"
+    ],
+    "planted_error": "यह मेरा किताब है",
+    "wrong_regex": [
+     "मेरा किताब"
+    ],
+    "fix_regex": [
+     "^यह मेरी किताब है$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-001-b",
+    "english": "Your car is red.",
+    "telugu": "నీ కారు ఎర్రగా ఉంది",
+    "accepted": [
+     "तुम्हारी गाड़ी लाल है"
+    ],
+    "planted_error": "तुम्हारा गाड़ी लाल है",
+    "wrong_regex": [
+     "तुम्हारा गाड़ी"
+    ],
+    "fix_regex": [
+     "^तुम्हारी गाड़ी लाल है$"
+    ]
+   }
+  ],
+  "title": "मेरा/मेरी: match the noun's gender"
+ },
+ {
+  "rule_id": "TE-HI-002",
+  "name": "Inanimate nouns have gender (पानी ठंडा, चाय अच्छी)",
+  "category": "gender",
+  "l1_habit": "Telugu things are neuter; Hindi assigns every noun masculine or feminine, and adjectives/verbs agree",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-002-a",
+    "english": "The water is cold.",
+    "telugu": "నీళ్ళు చల్లగా ఉన్నాయి",
+    "accepted": [
+     "पानी ठंडा है"
+    ],
+    "planted_error": "पानी ठंडी है",
+    "wrong_regex": [
+     "पानी ठंडी"
+    ],
+    "fix_regex": [
+     "^पानी ठंडा है$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-002-b",
+    "english": "The tea is good.",
+    "telugu": "టీ బాగుంది",
+    "accepted": [
+     "चाय अच्छी है"
+    ],
+    "planted_error": "चाय अच्छा है",
+    "wrong_regex": [
+     "चाय अच्छा"
+    ],
+    "fix_regex": [
+     "^चाय अच्छी है$"
+    ]
+   }
+  ],
+  "title": "Things have gender in Hindi (पानी ठंडा)"
+ },
+ {
+  "rule_id": "TE-HI-003",
+  "name": "First-person verbs show the speaker's gender",
+  "category": "gender",
+  "l1_habit": "Telugu వెళ్తున్నాను is the same for a man or a woman; Hindi जाता/जाती हूँ shows who speaks",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-003-a",
+    "english": "I (a woman) am going.",
+    "telugu": "నేను వెళ్తున్నాను",
+    "accepted": [
+     "मैं जा रही हूँ",
+     "मैं जाती हूँ"
+    ],
+    "planted_error": "मैं जा रहा हूँ",
+    "wrong_regex": [
+     "^मैं जा रहा हूँ$"
+    ],
+    "fix_regex": [
+     "^मैं (जा रही|जाती) हूँ$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-003-b",
+    "english": "I (a woman) will come tomorrow.",
+    "telugu": "నేను రేపు వస్తాను",
+    "accepted": [
+     "मैं कल आऊँगी"
+    ],
+    "planted_error": "मैं कल आऊँगा",
+    "wrong_regex": [
+     "^मैं कल आऊँगा$"
+    ],
+    "fix_regex": [
+     "^मैं कल आऊँगी$"
+    ]
+   }
+  ],
+  "title": "A woman says जाती हूँ, a man जाता हूँ"
+ },
+ {
+  "rule_id": "TE-HI-004",
+  "name": "Feminine plural subjects take feminine verbs",
+  "category": "gender",
+  "l1_habit": "Telugu human plurals (వస్తున్నారు) do not mark gender; Hindi रहे हैं / रही हैं does",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-004-a",
+    "english": "The girls are coming.",
+    "telugu": "అమ్మాయిలు వస్తున్నారు",
+    "accepted": [
+     "लड़कियाँ आ रही हैं"
+    ],
+    "planted_error": "लड़कियाँ आ रहे हैं",
+    "wrong_regex": [
+     "लड़कियाँ आ रहे"
+    ],
+    "fix_regex": [
+     "^लड़कियाँ आ रही हैं$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-004-b",
+    "english": "My sisters live in Delhi.",
+    "telugu": "నా చెల్లెళ్ళు ఢిల్లీలో ఉంటారు",
+    "accepted": [
+     "मेरी बहनें दिल्ली में रहती हैं"
+    ],
+    "planted_error": "मेरी बहनें दिल्ली में रहते हैं",
+    "wrong_regex": [
+     "बहनें दिल्ली में रहते"
+    ],
+    "fix_regex": [
+     "^मेरी बहनें दिल्ली में रहती हैं$"
+    ]
+   }
+  ],
+  "title": "Girls/women: आ रही हैं"
+ },
+ {
+  "rule_id": "TE-HI-005",
+  "name": "ने with past transitive verbs",
+  "category": "case",
+  "l1_habit": "Telugu has no ergative marker: నేను అన్నం తిన్నాను keeps నేను; Hindi needs मैंने in the past of a transitive verb",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-005-a",
+    "english": "I ate food.",
+    "telugu": "నేను అన్నం తిన్నాను",
+    "accepted": [
+     "मैंने खाना खाया"
+    ],
+    "planted_error": "मैं खाना खाया",
+    "wrong_regex": [
+     "^मैं खाना खाया"
+    ],
+    "fix_regex": [
+     "^मैंने खाना खाया$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-005-b",
+    "english": "Ravi read the book.",
+    "telugu": "రవి పుస్తకం చదివాడు",
+    "accepted": [
+     "रवि ने किताब पढ़ी"
+    ],
+    "planted_error": "रवि किताब पढ़ी",
+    "wrong_regex": [
+     "^रवि किताब पढ़ी"
+    ],
+    "fix_regex": [
+     "^रवि ने किताब पढ़ी$"
+    ]
+   }
+  ],
+  "title": "Past tense: मैंने, not मैं"
+ },
+ {
+  "rule_id": "TE-HI-006",
+  "name": "With ने, the verb agrees with the object",
+  "category": "agreement",
+  "l1_habit": "In Telugu the verb agrees with the subject (చదివాడు = he read); in Hindi after ने it agrees with the object (किताब पढ़ी)",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-006-a",
+    "english": "I drank tea.",
+    "telugu": "నేను టీ తాగాను",
+    "accepted": [
+     "मैंने चाय पी"
+    ],
+    "planted_error": "मैंने चाय पिया",
+    "wrong_regex": [
+     "चाय पिया"
+    ],
+    "fix_regex": [
+     "^मैंने चाय पी$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-006-b",
+    "english": "He read a book.",
+    "telugu": "అతను ఒక పుస్తకం చదివాడు",
+    "accepted": [
+     "उसने एक किताब पढ़ी"
+    ],
+    "planted_error": "उसने एक किताब पढ़ा",
+    "wrong_regex": [
+     "किताब पढ़ा$"
+    ],
+    "fix_regex": [
+     "^उसने एक किताब पढ़ी$"
+    ]
+   }
+  ],
+  "title": "After ने the verb matches the object (चाय पी)"
+ },
+ {
+  "rule_id": "TE-HI-007",
+  "name": "Oblique form before a postposition (मेरे घर में, लड़के को)",
+  "category": "case",
+  "l1_habit": "Telugu adds the case ending to the noun; Hindi changes मेरा→मेरे, लड़का→लड़के before में, को, से",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-007-a",
+    "english": "Ravi is in my house.",
+    "telugu": "రవి మా ఇంట్లో ఉన్నాడు",
+    "accepted": [
+     "रवि मेरे घर में है"
+    ],
+    "planted_error": "रवि मेरा घर में है",
+    "wrong_regex": [
+     "मेरा घर में"
+    ],
+    "fix_regex": [
+     "^रवि मेरे घर में है$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-007-b",
+    "english": "Give it to the boy.",
+    "telugu": "అబ్బాయికి ఇవ్వు",
+    "accepted": [
+     "लड़के को दो",
+     "लड़के को दे दो"
+    ],
+    "planted_error": "लड़का को दो",
+    "wrong_regex": [
+     "लड़का को"
+    ],
+    "fix_regex": [
+     "^लड़के को (दे )?दो$"
+    ]
+   }
+  ],
+  "title": "मेरे घर में, लड़के को"
+ },
+ {
+  "rule_id": "TE-HI-008",
+  "name": "Postpositions are written as separate words",
+  "category": "spelling",
+  "l1_habit": "Telugu writes case endings joined (ఇంట్లో, రవికి); Hindi writes में, को, से apart after nouns (घर में, रवि को)",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985; pronoun forms such as मुझको, उसने are correctly written joined",
+  "items": [
+   {
+    "item_id": "TE-HI-008-a",
+    "english": "Ravi is at home.",
+    "telugu": "రవి ఇంట్లో ఉన్నాడు",
+    "accepted": [
+     "रवि घर में है"
+    ],
+    "planted_error": "रवि घरमें है",
+    "wrong_regex": [
+     "घरमें"
+    ],
+    "fix_regex": [
+     "^रवि घर में है$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-008-b",
+    "english": "Give it to Ravi.",
+    "telugu": "రవికి ఇవ్వు",
+    "accepted": [
+     "रवि को दो",
+     "रवि को दे दो"
+    ],
+    "planted_error": "रविको दो",
+    "wrong_regex": [
+     "रविको"
+    ],
+    "fix_regex": [
+     "^रवि को (दे )?दो$"
+    ]
+   }
+  ],
+  "title": "Write में and को as separate words"
+ },
+ {
+  "rule_id": "TE-HI-009",
+  "name": "Hindi needs है in 'X is Y'",
+  "category": "copula",
+  "l1_habit": "Telugu says ఇది పుస్తకం with no 'is'; Hindi needs है (the mirror of HI-TE-002)",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-009-a",
+    "english": "This is a book.",
+    "telugu": "ఇది పుస్తకం",
+    "accepted": [
+     "यह किताब है"
+    ],
+    "planted_error": "यह किताब",
+    "wrong_regex": [
+     "^यह किताब$"
+    ],
+    "fix_regex": [
+     "^यह किताब है$"
+    ]
+   },
+   {
+    "item_id": "TE-HI-009-b",
+    "english": "He is a teacher.",
+    "telugu": "అతను టీచరు",
+    "accepted": [
+     "वह टीचर है",
+     "वह अध्यापक है"
+    ],
+    "planted_error": "वह टीचर",
+    "wrong_regex": [
+     "^वह टीचर$"
+    ],
+    "fix_regex": [
+     "^वह (टीचर|अध्यापक) है$"
+    ]
+   }
+  ],
+  "title": "Hindi needs है in ‘This is a book’"
+ },
+ {
+  "rule_id": "TE-HI-010",
+  "name": "Relative clause with जो, not a Telugu-style participle",
+  "category": "clause",
+  "l1_habit": "Telugu puts the clause before the noun (నేను చదివిన పుస్తకం); Hindi usually uses जो (वह किताब जो मैंने पढ़ी) or पढ़ी हुई",
+  "transfer": "negative",
+  "status": "draft_unverified",
+  "evidence": "model_predicted",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn 1985",
+  "items": [
+   {
+    "item_id": "TE-HI-010-a",
+    "english": "This is the book I read.",
+    "telugu": "ఇది నేను చదివిన పుస్తకం",
+    "accepted": [
+     "यह वह किताब है जो मैंने पढ़ी",
+     "यह मेरी पढ़ी हुई किताब है"
+    ],
+    "planted_error": "यह मैंने पढ़ा किताब है",
+    "wrong_regex": [
+     "मैंने पढ़ा किताब"
+    ],
+    "fix_regex": [
+     "जो मैंने पढ़ी$",
+     "पढ़ी हुई किताब"
+    ]
+   },
+   {
+    "item_id": "TE-HI-010-b",
+    "english": "This is the house I bought.",
+    "telugu": "ఇది నేను కొన్న ఇల్లు",
+    "accepted": [
+     "यह वह घर है जो मैंने खरीदा",
+     "यह मेरा खरीदा हुआ घर है"
+    ],
+    "planted_error": "यह मैंने खरीदा घर है",
+    "wrong_regex": [
+     "मैंने खरीदा घर"
+    ],
+    "fix_regex": [
+     "जो मैंने खरीदा$",
+     "खरीदा हुआ घर"
+    ]
+   }
+  ],
+  "title": "‘The book I read’: use जो"
+ }
+]

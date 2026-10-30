@@ -1,0 +1,279 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-005
+direction: HI->TE
+contrast_area: negation
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas:
+  - - కాదు
+    - कादु
+  - - क्रिया
+    - रूप
+    - बदल
+    - రాను
+    - रानु
+    - రాడు
+    - राडु
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985, A Grammar of Modern Telugu (written for non-Telugu learners)
+  telugu_draft: వాడు గుడికి రాడు
+  note: book uses వాడు for 'he'; our items use అతను - add వాడు as accepted variant
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/0
+    record_sha256: 7969eccf6d173e11d2a7edebd7d755de3a8541510c8d86023095d449dbb9d5d3
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985, A Grammar of Modern Telugu (written for non-Telugu learners)
+      romanized: waaDu guDiki raaDu
+      gloss: He does not / will not come to the temple.
+      telugu_draft: వాడు గుడికి రాడు
+      rules:
+      - HI-TE-005
+      - HI-TE-015
+      note: book uses వాడు for 'he'; our items use అతను - add వాడు as accepted variant
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: మీరు నా మాట వినరు
+  note: -ru agreement with miiru confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/4
+    record_sha256: bfb96c42536927d9e123cda96d87782dd928e7438f21a88dfa4bc81d4c66540b
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: miiru naamaaTa winaru
+      gloss: You (respectful/plural) do not listen to my word.
+      telugu_draft: మీరు నా మాట వినరు
+      rules:
+      - HI-TE-009
+      - HI-TE-005
+      note: -ru agreement with miiru confirmed
+needs_rewrite:
+  title_l1: '''नहीं'' के लिए verb ही बदलता है: రాను = नहीं आऊँगा'
+  explanation_l1: 'Hindi में ''नहीं'' अलग शब्द है। Telugu में verb का रूप ही बदल जाता है: వస్తాను (आऊँगा) → రాను
+    (नहीं आऊँगा)। కాదు (नहीं है) यहाँ नहीं लगता।'
+dev_notes:
+  name_en: 'Negation: negative verb form, not ''not'' after verb'
+  title_en: 'Saying ‘not’: change the verb (రాను = I won''t come)'
+  l1_habit_en: Hindi नहीं before the verb; Telugu uses a negative verb form (రాను) or కాదు only for nouns
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - kaadu
+  - kadu
+  - verb
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /4
+  record_sha256: 6399709453b21c52480d4bee87251a5ffb7b32f18d7eb2ccb31825a449e3fd3d
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-005
+    name: 'Negation: negative verb form, not ''not'' after verb'
+    category: negation
+    l1_habit: Hindi नहीं before the verb; Telugu uses a negative verb form (రాను) or కాదు only for nouns
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-005-a
+      english: I will not come.
+      hindi: मैं नहीं आऊँगा।
+      accepted:
+      - నేను రాను
+      planted_error: నేను వస్తాను కాదు
+      wrong_regex:
+      - కాదు$
+      fix_regex:
+      - ^నేను రాను$
+    - item_id: HI-TE-005-b
+      english: He will not come.
+      hindi: वह नहीं आएगा।
+      accepted:
+      - అతను రాడు
+      - వాడు రాడు
+      planted_error: అతను వస్తాడు కాదు
+      wrong_regex:
+      - కాదు$
+      fix_regex:
+      - ^(అతను|వాడు) రాడు$
+    title: 'Saying ‘not’: change the verb (రాను = I won''t come)'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/4
+  record_sha256: f3e7b6a56d39e6331afaf44caf35bdaeea964fafc7e875bf5d4997735c7b04a7
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-005
+    name: 'Negation: negative verb form, not ''not'' after verb'
+    category: negation
+    l1_habit: Hindi नहीं before the verb; Telugu uses a negative verb form (రాను) or కాదు only for nouns
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-005-a
+      english: I will not come.
+      hindi: मैं नहीं आऊँगा।
+      accepted:
+      - నేను రాను
+      planted_error: నేను వస్తాను కాదు
+      wrong_regex:
+      - కాదు$
+      fix_regex:
+      - ^నేను రాను$
+    - item_id: HI-TE-005-b
+      english: He will not come.
+      hindi: वह नहीं आएगा।
+      accepted:
+      - అతను రాడు
+      - వాడు రాడు
+      planted_error: అతను వస్తాడు కాదు
+      wrong_regex:
+      - కాదు$
+      fix_regex:
+      - ^(అతను|వాడు) రాడు$
+    title: 'Saying ‘not’: change the verb (రాను = I won''t come)'
+    title_hi: '''नहीं'' के लिए verb ही बदलता है: రాను = नहीं आऊँगा'
+    explain_hi: 'Hindi में ''नहीं'' अलग शब्द है। Telugu में verb का रूप ही बदल जाता है: వస్తాను (आऊँगा) → రాను (नहीं
+      आऊँगा)। కాదు (नहीं है) यहाँ नहीं लगता।'
+    key_ideas:
+    - - కాదు
+      - कादु
+      - kaadu
+      - kadu
+    - - verb
+      - क्रिया
+      - रूप
+      - बदल
+      - రాను
+      - रानु
+      - రాడు
+      - राडु
+    status: draft_unverified
+items:
+- item_id: HI-TE-005-a
+  l1_meaning: मैं नहीं आऊँगा।
+  correct_form: నేను రాను
+  wrong_form: నేను వస్తాను కాదు
+  accepted_variants: []
+  accept_patterns:
+  - ^నేను రాను$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: కాదు$
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I will not come.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /4/items/0
+    record_sha256: ab912932c9f86f70eb1e83cd4b64fa215dc29acd785929411f26c9afeee2314a
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/4/items/0
+    record_sha256: ab912932c9f86f70eb1e83cd4b64fa215dc29acd785929411f26c9afeee2314a
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-005-b
+  l1_meaning: वह नहीं आएगा।
+  correct_form: అతను రాడు
+  wrong_form: అతను వస్తాడు కాదు
+  accepted_variants:
+  - form: వాడు రాడు
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /4/items/1/accepted/1
+      record_sha256: 1dfd1a5105b860b8e4ef4b1b37973cfa81eb514b27c74200d78fd268f5dda11e
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/4/items/1/accepted/1
+      record_sha256: 1dfd1a5105b860b8e4ef4b1b37973cfa81eb514b27c74200d78fd268f5dda11e
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(అతను|వాడు) రాడు$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: కాదు$
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He will not come.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /4/items/1
+    record_sha256: dddabe9a29872709f7804f1c89775c67ba59d103b354432c7089cacd9ef67682
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/4/items/1
+    record_sha256: dddabe9a29872709f7804f1c89775c67ba59d103b354432c7089cacd9ef67682
+    description: sub-record; the raw record is embedded in the parent's provenance

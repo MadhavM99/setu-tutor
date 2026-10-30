@@ -1,0 +1,144 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-007
+direction: TE->HI
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Oblique form before a postposition (मेरे घर में, लड़के को)
+  title_en: मेरे घर में, लड़के को
+  l1_habit_en: Telugu adds the case ending to the noun; Hindi changes मेरा→मेरे, लड़का→लड़के before में, को, से
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /6
+  record_sha256: d722e90bb25846601b43507fe969be0e5aadfe2a8b2d3b05f19860a10e586a0c
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-007
+    name: Oblique form before a postposition (मेरे घर में, लड़के को)
+    category: case
+    l1_habit: Telugu adds the case ending to the noun; Hindi changes मेरा→मेरे, लड़का→लड़के before में, को, से
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-007-a
+      english: Ravi is in my house.
+      telugu: రవి మా ఇంట్లో ఉన్నాడు
+      accepted:
+      - रवि मेरे घर में है
+      planted_error: रवि मेरा घर में है
+      wrong_regex:
+      - मेरा घर में
+      fix_regex:
+      - ^रवि मेरे घर में है$
+    - item_id: TE-HI-007-b
+      english: Give it to the boy.
+      telugu: అబ్బాయికి ఇవ్వు
+      accepted:
+      - लड़के को दो
+      - लड़के को दे दो
+      planted_error: लड़का को दो
+      wrong_regex:
+      - लड़का को
+      fix_regex:
+      - ^लड़के को (दे )?दो$
+    title: मेरे घर में, लड़के को
+items:
+- item_id: TE-HI-007-a
+  l1_meaning: రవి మా ఇంట్లో ఉన్నాడు
+  correct_form: रवि मेरे घर में है
+  wrong_form: रवि मेरा घर में है
+  accepted_variants: []
+  accept_patterns:
+  - ^रवि मेरे घर में है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: मेरा घर में
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Ravi is in my house.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /6/items/0
+    record_sha256: 6e45b87e3ead8f35a72ef4a0a10c5785c829287ca3e5432e2087900a3a1e74e2
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-007-b
+  l1_meaning: అబ్బాయికి ఇవ్వు
+  correct_form: लड़के को दो
+  wrong_form: लड़का को दो
+  accepted_variants:
+  - form: लड़के को दे दो
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /6/items/1/accepted/1
+      record_sha256: 9a90869edda4a52397ac68c3e3bde86f8b2c490ff4cefc8110dfdac0cfb86a92
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^लड़के को (दे )?दो$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: लड़का को
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Give it to the boy.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /6/items/1
+    record_sha256: bd9ab9b907f1a04f5e6fcf645aa322ace700b5bbe1b0ce3cd41e84a816ada10d
+    description: sub-record; the raw record is embedded in the parent's provenance

@@ -1,0 +1,315 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-006
+direction: HI->TE
+contrast_area: pronouns
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''हम'' के दो शब्द: మేము और మనం'
+explanation_l1: మేము = हम (सुनने वाला शामिल नहीं)। మనం = हम (तुम भी शामिल)। 'हम तुम्हारे बिना जा रहे हैं' → మేము;
+  'तुम और मैं जा रहे हैं' → మనం।
+concept_key:
+  ideas:
+  - - మేము
+    - मेमु
+    - మనం
+    - मनं
+  - - शामिल
+    - साथ
+    - तुम भी
+    - बिना
+    - सुनने
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: మేము / మనము
+  note: pronoun split confirmed (book lists meem/meemu and manam/manamu)
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/8
+    record_sha256: e4e330f556d9c1ee75d31442db9b33107a369ebe3c8666b254a535a37e0caec9
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: meemu / manamu
+      gloss: we (exclusive) / we (inclusive)
+      telugu_draft: మేము / మనము
+      rules:
+      - HI-TE-006
+      note: pronoun split confirmed (book lists meem/meemu and manam/manamu)
+needs_rewrite: {}
+dev_notes:
+  name_en: '''We'': మేము (without you) vs మనం (with you)'
+  title_en: 'Two words for ‘we’: మేము and మనం'
+  l1_habit_en: Hindi has one हम; Telugu splits inclusive and exclusive
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - memu
+  - manam
+  - include
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /5
+  record_sha256: ab4e11eaa53b843076d8d80cb4f39df3de1a02ea99d9eca5eab41e1384c82d8a
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-006
+    name: '''We'': మేము (without you) vs మనం (with you)'
+    category: pronouns
+    l1_habit: Hindi has one हम; Telugu splits inclusive and exclusive
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-006-a
+      english: We (but not you) are going.
+      hindi: हम (तुम्हारे बिना) जा रहे हैं।
+      accepted:
+      - మేము వెళ్తున్నాం
+      - మేము వెళ్తున్నాము
+      - మేము వెళ్తాం
+      planted_error: మనం వెళ్తున్నాం
+      wrong_regex:
+      - '^మనం '
+      fix_regex:
+      - ^మేము (వెళ్తున్నాం|వెళ్తున్నాము|వెళ్తాం)$
+    - item_id: HI-TE-006-b
+      english: We (you and I) are going.
+      hindi: हम (तुम और मैं) जा रहे हैं।
+      accepted:
+      - మనం వెళ్తున్నాం
+      - మనం వెళ్తాం
+      - మనం వెళ్దాం
+      planted_error: మేము వెళ్తున్నాం
+      wrong_regex:
+      - '^మేము '
+      fix_regex:
+      - ^మనం (వెళ్తున్నాం|వెళ్తాం|వెళ్దాం)$
+    title: 'Two words for ‘we’: మేము and మనం'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/5
+  record_sha256: f0553112a2d2d0c342778800f43917c0306c39e9786bdf247d51a37268a5e361
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-006
+    name: '''We'': మేము (without you) vs మనం (with you)'
+    category: pronouns
+    l1_habit: Hindi has one हम; Telugu splits inclusive and exclusive
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-006-a
+      english: We (but not you) are going.
+      hindi: हम (तुम्हारे बिना) जा रहे हैं।
+      accepted:
+      - మేము వెళ్తున్నాం
+      - మేము వెళ్తున్నాము
+      - మేము వెళ్తాం
+      planted_error: మనం వెళ్తున్నాం
+      wrong_regex:
+      - '^మనం '
+      fix_regex:
+      - ^మేము (వెళ్తున్నాం|వెళ్తున్నాము|వెళ్తాం)$
+    - item_id: HI-TE-006-b
+      english: We (you and I) are going.
+      hindi: हम (तुम और मैं) जा रहे हैं।
+      accepted:
+      - మనం వెళ్తున్నాం
+      - మనం వెళ్తాం
+      - మనం వెళ్దాం
+      planted_error: మేము వెళ్తున్నాం
+      wrong_regex:
+      - '^మేము '
+      fix_regex:
+      - ^మనం (వెళ్తున్నాం|వెళ్తాం|వెళ్దాం)$
+    title: 'Two words for ‘we’: మేము and మనం'
+    title_hi: '''हम'' के दो शब्द: మేము और మనం'
+    explain_hi: మేము = हम (सुनने वाला शामिल नहीं)। మనం = हम (तुम भी शामिल)। 'हम तुम्हारे बिना जा रहे हैं' → మేము;
+      'तुम और मैं जा रहे हैं' → మనం।
+    key_ideas:
+    - - మేము
+      - मेमु
+      - memu
+      - మనం
+      - मनं
+      - manam
+    - - शामिल
+      - साथ
+      - तुम भी
+      - बिना
+      - include
+      - सुनने
+    status: draft_unverified
+items:
+- item_id: HI-TE-006-a
+  l1_meaning: हम (तुम्हारे बिना) जा रहे हैं।
+  correct_form: మేము వెళ్తున్నాం
+  wrong_form: మనం వెళ్తున్నాం
+  accepted_variants:
+  - form: మేము వెళ్తున్నాము
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /5/items/0/accepted/1
+      record_sha256: b98224502264b3c25d7e5ea6e38bf1e03877fbf74cab4ac48fca3e799d7d397d
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/5/items/0/accepted/1
+      record_sha256: b98224502264b3c25d7e5ea6e38bf1e03877fbf74cab4ac48fca3e799d7d397d
+      description: sub-record; the raw record is embedded in the parent's provenance
+  - form: మేము వెళ్తాం
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /5/items/0/accepted/2
+      record_sha256: 2220ffa4e519321a1093c7cb302ce1187caf4f159c313174207ef47a6d8d6286
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/5/items/0/accepted/2
+      record_sha256: 2220ffa4e519321a1093c7cb302ce1187caf4f159c313174207ef47a6d8d6286
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^మేము (వెళ్తున్నాం|వెళ్తున్నాము|వెళ్తాం)$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: '^మనం '
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: We (but not you) are going.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /5/items/0
+    record_sha256: 07693b6eaf18af4df89b4052555fa6050d366302ba317486146f4d85500f29f0
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/5/items/0
+    record_sha256: 07693b6eaf18af4df89b4052555fa6050d366302ba317486146f4d85500f29f0
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-006-b
+  l1_meaning: हम (तुम और मैं) जा रहे हैं।
+  correct_form: మనం వెళ్తున్నాం
+  wrong_form: మేము వెళ్తున్నాం
+  accepted_variants:
+  - form: మనం వెళ్తాం
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /5/items/1/accepted/1
+      record_sha256: dd9d4f242a72c5924693c8b3135de732653e234744f0cfd12ab24bb98652b1fc
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/5/items/1/accepted/1
+      record_sha256: dd9d4f242a72c5924693c8b3135de732653e234744f0cfd12ab24bb98652b1fc
+      description: sub-record; the raw record is embedded in the parent's provenance
+  - form: మనం వెళ్దాం
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /5/items/1/accepted/2
+      record_sha256: 6ba4f455b9dbe86a6e7a112d9dfdb51fdb629d53a3c15e9ac2882d505bfd00f5
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/5/items/1/accepted/2
+      record_sha256: 6ba4f455b9dbe86a6e7a112d9dfdb51fdb629d53a3c15e9ac2882d505bfd00f5
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^మనం (వెళ్తున్నాం|వెళ్తాం|వెళ్దాం)$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: '^మేము '
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: We (you and I) are going.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /5/items/1
+    record_sha256: 3515c8be912f29115e79fd95a6fa764f680b5eced9134dda0717fe69ee10964c
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/5/items/1
+    record_sha256: 3515c8be912f29115e79fd95a6fa764f680b5eced9134dda0717fe69ee10964c
+    description: sub-record; the raw record is embedded in the parent's provenance

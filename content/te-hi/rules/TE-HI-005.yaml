@@ -1,0 +1,134 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-005
+direction: TE->HI
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: ने with past transitive verbs
+  title_en: 'Past tense: मैंने, not मैं'
+  l1_habit_en: 'Telugu has no ergative marker: నేను అన్నం తిన్నాను keeps నేను; Hindi needs मैंने in the past of
+    a transitive verb'
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /4
+  record_sha256: fe7567a9cadd6ca5059255afea2ad4a64540b11d207b50cac97924198609e77e
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-005
+    name: ने with past transitive verbs
+    category: case
+    l1_habit: 'Telugu has no ergative marker: నేను అన్నం తిన్నాను keeps నేను; Hindi needs मैंने in the past of a
+      transitive verb'
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-005-a
+      english: I ate food.
+      telugu: నేను అన్నం తిన్నాను
+      accepted:
+      - मैंने खाना खाया
+      planted_error: मैं खाना खाया
+      wrong_regex:
+      - ^मैं खाना खाया
+      fix_regex:
+      - ^मैंने खाना खाया$
+    - item_id: TE-HI-005-b
+      english: Ravi read the book.
+      telugu: రవి పుస్తకం చదివాడు
+      accepted:
+      - रवि ने किताब पढ़ी
+      planted_error: रवि किताब पढ़ी
+      wrong_regex:
+      - ^रवि किताब पढ़ी
+      fix_regex:
+      - ^रवि ने किताब पढ़ी$
+    title: 'Past tense: मैंने, not मैं'
+items:
+- item_id: TE-HI-005-a
+  l1_meaning: నేను అన్నం తిన్నాను
+  correct_form: मैंने खाना खाया
+  wrong_form: मैं खाना खाया
+  accepted_variants: []
+  accept_patterns:
+  - ^मैंने खाना खाया$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^मैं खाना खाया
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I ate food.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /4/items/0
+    record_sha256: d216c3a8241b40a929c992824eadeee9dedc3b916b566eb7a553365ab9b58173
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-005-b
+  l1_meaning: రవి పుస్తకం చదివాడు
+  correct_form: रवि ने किताब पढ़ी
+  wrong_form: रवि किताब पढ़ी
+  accepted_variants: []
+  accept_patterns:
+  - ^रवि ने किताब पढ़ी$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^रवि किताब पढ़ी
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Ravi read the book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /4/items/1
+    record_sha256: 9c4ed80948cbad72b1ff5d9d842ec97013cf72a30c69de3b603f37f2aea5d5e1
+    description: sub-record; the raw record is embedded in the parent's provenance

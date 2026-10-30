@@ -1,0 +1,174 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-010
+direction: HI->TE
+contrast_area: clauses
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''जो मैंने पढ़ी वो किताब'': बताने वाला हिस्सा पहले'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - जो
+    - జో
+  - - पहले
+    - आगे
+    - हुई
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: నేను చెప్పిన మాట
+  note: participle before the noun confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/5
+    record_sha256: 20296e42dad39f73037453ecf00facbfb5881e512bda02945c53b794d939df2c
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: neenu ceppina maaTa
+      gloss: the word that I said
+      telugu_draft: నేను చెప్పిన మాట
+      rules:
+      - HI-TE-010
+      note: participle before the noun confirmed
+needs_rewrite:
+  explanation_l1: 'Telugu में ''जो'' नहीं होता। ''मेरी पढ़ी हुई किताब'' जैसा कहते हैं: నేను చదివిన పుస్తకం — बताने
+    वाला हिस्सा संज्ञा (किताब) से पहले।'
+dev_notes:
+  name_en: 'Relative clause: participle before the noun, no ''jo'''
+  title_en: '‘The book I read’: the describing part comes first'
+  l1_habit_en: Hindi जो…वह clause after/before; Telugu uses a -ina participle before the noun
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - jo
+  - before
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /9
+  record_sha256: 537f450e54f418d41ba0b2d82b550b6ba504bc30a4b40008fe181faf626d3300
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-010
+    name: 'Relative clause: participle before the noun, no ''jo'''
+    category: clauses
+    l1_habit: Hindi जो…वह clause after/before; Telugu uses a -ina participle before the noun
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-010-a
+      english: This is the book that I read.
+      hindi: यह वह किताब है जो मैंने पढ़ी।
+      accepted:
+      - ఇది నేను చదివిన పుస్తకం
+      planted_error: ఇది జో పుస్తకం నేను చదివాను
+      wrong_regex:
+      - జో
+      fix_regex:
+      - చదివిన పుస్తకం
+    title: '‘The book I read’: the describing part comes first'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/9
+  record_sha256: 789d8ded4c10cb35d402ff5c8e1db1b98df350bdac2efd1b7743ddab9f4dd5b6
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-010
+    name: 'Relative clause: participle before the noun, no ''jo'''
+    category: clauses
+    l1_habit: Hindi जो…वह clause after/before; Telugu uses a -ina participle before the noun
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-010-a
+      english: This is the book that I read.
+      hindi: यह वह किताब है जो मैंने पढ़ी।
+      accepted:
+      - ఇది నేను చదివిన పుస్తకం
+      planted_error: ఇది జో పుస్తకం నేను చదివాను
+      wrong_regex:
+      - జో
+      fix_regex:
+      - చదివిన పుస్తకం
+    title: '‘The book I read’: the describing part comes first'
+    title_hi: '''जो मैंने पढ़ी वो किताब'': बताने वाला हिस्सा पहले'
+    explain_hi: 'Telugu में ''जो'' नहीं होता। ''मेरी पढ़ी हुई किताब'' जैसा कहते हैं: నేను చదివిన పుస్తకం — बताने
+      वाला हिस्सा संज्ञा (किताब) से पहले।'
+    key_ideas:
+    - - जो
+      - జో
+      - jo
+    - - पहले
+      - आगे
+      - before
+      - हुई
+    status: draft_unverified
+items:
+- item_id: HI-TE-010-a
+  l1_meaning: यह वह किताब है जो मैंने पढ़ी।
+  correct_form: ఇది నేను చదివిన పుస్తకం
+  wrong_form: ఇది జో పుస్తకం నేను చదివాను
+  accepted_variants: []
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: చదివిన పుస్తకం
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: జో
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is the book that I read.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /9/items/0
+    record_sha256: cbfc592551f5003a4690a5483c22b870d5f42bfbfb934d8b8b1450ac051c61ce
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/9/items/0
+    record_sha256: cbfc592551f5003a4690a5483c22b870d5f42bfbfb934d8b8b1450ac051c61ce
+    description: sub-record; the raw record is embedded in the parent's provenance

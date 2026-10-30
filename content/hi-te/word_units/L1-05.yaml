@@ -1,0 +1,76 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L1-05
+review_status: draft
+imported_to_database: false
+deferred_to: 'words: lexicon.yaml now; drill items: slice 3 (S3)'
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L1-05.json
+  pointer: ''
+  record_sha256: c7bb098228fc61a4c9a835d9bf1657785c87de34bd20ee765d9c8333ee11e5c1
+  description: shared Sanskrit-origin words (tatsama); team draft
+  original:
+    unit_id: L1-05
+    level: 1
+    title: 'Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    lesson:
+    - hindi: पुस्तक
+      telugu: పుస్తకం
+      note: Hindi शब्द + ం (बिंदु)
+    - hindi: समय
+      telugu: సమయం
+      note: वही नियम
+    - hindi: देश
+      telugu: దేశం
+      note: वही नियम
+    - hindi: पाठ
+      telugu: పాఠం
+      note: वही नियम
+    - hindi: अर्थ
+      telugu: అర్థం
+      note: वही नियम
+    - hindi: भाग
+      telugu: భాగం
+      note: वही नियम
+    check:
+      item_id: L1-05-check
+      prompt: समय
+      accepted:
+      - సమయం
+      raju_wrong: సమయ
+      answer_script: telugu
+      closed: true
+    items:
+    - item_id: L1-05-a
+      prompt: पुस्तक
+      accepted:
+      - పుస్తకం
+      raju_wrong: పుస్తక
+      answer_script: telugu
+      closed: true
+    - item_id: L1-05-b
+      prompt: देश
+      accepted:
+      - దేశం
+      raju_wrong: దేశ
+      answer_script: telugu
+      closed: true
+    - item_id: L1-05-c
+      prompt: पाठ
+      accepted:
+      - పాఠం
+      raju_wrong: పాఠ
+      answer_script: telugu
+      closed: true
+    requires:
+    - L1-04
+    status: draft_unverified
+    version: 1
+    reviewer: null
+    source: shared Sanskrit-origin words (tatsama); team draft

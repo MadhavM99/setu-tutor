@@ -1,0 +1,68 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-22
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-22.json
+  pointer: ''
+  record_sha256: de909f72792ab6ba36cda8ff1f008b23f793a648cd5474accacc01b4baadbfb8
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-22
+    level: 0
+    title: 'मात्राएँ: ु ू → కు కూ'
+    tip: ''
+    lesson:
+    - hindi: कु
+      telugu: కు
+      note: ''
+      shape: క + दाईं ओर एक हुक
+      mnemonic: ु की आवाज़ = दाईं ओर हुक → కు
+      example: ''
+      picture: ''
+    - hindi: कू
+      telugu: కూ
+      note: ''
+      shape: కు + हुक में एक और घुमाव
+      mnemonic: लंबी ऊ = ज़्यादा घुमाव → కూ
+      example: ''
+      picture: ''
+    check:
+      item_id: L0-22-check
+      prompt: కూ
+      accepted:
+      - कू
+      raju_wrong: कु
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-22-a
+      prompt: కు
+      accepted:
+      - कु
+      raju_wrong: कू
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-22-b
+      prompt: కూ
+      accepted:
+      - कू
+      raju_wrong: कु
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-21
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

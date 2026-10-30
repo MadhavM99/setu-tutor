@@ -53,7 +53,9 @@ def test_read_role_cannot_write_anything(conn, world):
         fails(conn, "UPDATE rule_version SET teacher_approved = true", match="permission denied")
         fails(conn, "DELETE FROM learner", match="permission denied")
         ok(conn, "SELECT state FROM classmate_rule_state")
-        ok(conn, "SELECT title_hi FROM rule_version")
+        # Since migration 0003 the read role sees content only through the learner views (approved content).
+        ok(conn, "SELECT title_hi FROM learner_rule_version")
+        fails(conn, "SELECT title_hi FROM rule_version", match="permission denied")
 
 
 def test_read_role_cannot_see_secrets_or_raw_learner_text(conn, world):

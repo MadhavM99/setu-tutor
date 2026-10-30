@@ -1,0 +1,132 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-001
+direction: TE->HI
+contrast_area: gender
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Possessive agrees with the noun's gender (मेरा/मेरी)
+  title_en: 'मेरा/मेरी: match the noun''s gender'
+  l1_habit_en: Telugu నా / నీ never change; Hindi मेरा/मेरी/मेरे follow the possessed noun's gender and number
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /0
+  record_sha256: 27ec07d536a00058a305688ed163f5b866e2b5ed9571cfb615c03f6b725fddc4
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-001
+    name: Possessive agrees with the noun's gender (मेरा/मेरी)
+    category: gender
+    l1_habit: Telugu నా / నీ never change; Hindi मेरा/मेरी/मेरे follow the possessed noun's gender and number
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-001-a
+      english: This is my book.
+      telugu: ఇది నా పుస్తకం
+      accepted:
+      - यह मेरी किताब है
+      planted_error: यह मेरा किताब है
+      wrong_regex:
+      - मेरा किताब
+      fix_regex:
+      - ^यह मेरी किताब है$
+    - item_id: TE-HI-001-b
+      english: Your car is red.
+      telugu: నీ కారు ఎర్రగా ఉంది
+      accepted:
+      - तुम्हारी गाड़ी लाल है
+      planted_error: तुम्हारा गाड़ी लाल है
+      wrong_regex:
+      - तुम्हारा गाड़ी
+      fix_regex:
+      - ^तुम्हारी गाड़ी लाल है$
+    title: 'मेरा/मेरी: match the noun''s gender'
+items:
+- item_id: TE-HI-001-a
+  l1_meaning: ఇది నా పుస్తకం
+  correct_form: यह मेरी किताब है
+  wrong_form: यह मेरा किताब है
+  accepted_variants: []
+  accept_patterns:
+  - ^यह मेरी किताब है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: मेरा किताब
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is my book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /0/items/0
+    record_sha256: ab8933fdb173e501cb8c746cd976e96063c4fee790f62e716a6c096e077c591b
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-001-b
+  l1_meaning: నీ కారు ఎర్రగా ఉంది
+  correct_form: तुम्हारी गाड़ी लाल है
+  wrong_form: तुम्हारा गाड़ी लाल है
+  accepted_variants: []
+  accept_patterns:
+  - ^तुम्हारी गाड़ी लाल है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: तुम्हारा गाड़ी
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: Your car is red.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /0/items/1
+    record_sha256: d4b0a35d974450a4d33bd7fe13e4010101c2cd21baae0ff04c5461799a618050
+    description: sub-record; the raw record is embedded in the parent's provenance

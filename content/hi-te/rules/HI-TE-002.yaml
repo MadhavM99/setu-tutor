@@ -1,0 +1,239 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-002
+direction: HI->TE
+contrast_area: copula
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''यह किताब है'' में ''है'' नहीं लगता'
+explanation_l1: null
+concept_key:
+  ideas:
+  - - है
+    - ఉంది
+    - उंदि
+  - - नहीं
+    - हटा
+    - बिना
+    - ज़रूरत
+    - जरूरत
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: వాడు మా తమ్ముడు
+  note: zero copula confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/1
+    record_sha256: 60789765d6a3583733e41dc686ce271620b7e61bff429473de749d3be448cf9a
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: waaDu maa tammuDu
+      gloss: He is my younger brother.
+      telugu_draft: వాడు మా తమ్ముడు
+      rules:
+      - HI-TE-002
+      note: zero copula confirmed
+needs_rewrite:
+  explanation_l1: '''यह किताब है'' = ఇది పుస్తకం — बस। ఉంది का मतलब ''मौजूद है/रखा है'', ''यह X है'' कहने के लिए
+    नहीं।'
+dev_notes:
+  name_en: 'Zero copula: no ''is'' between two nouns'
+  title_en: No word for ‘is’ in ‘This is a book’
+  l1_habit_en: Hindi है is always present; Telugu leaves it out in 'X is Y'
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - undi
+  - 'no'
+  - not
+  - nahi
+  - nahin
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /1
+  record_sha256: 5e410f0593663fa11248170f444f6c5783510516ec930db83c3a1732cdea90a7
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-002
+    name: 'Zero copula: no ''is'' between two nouns'
+    category: copula
+    l1_habit: Hindi है is always present; Telugu leaves it out in 'X is Y'
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-002-a
+      english: This is a book.
+      hindi: यह किताब है।
+      accepted:
+      - ఇది పుస్తకం
+      planted_error: ఇది పుస్తకం ఉంది
+      wrong_regex:
+      - ^(ఇది|అది) \S+ ఉంది$
+      fix_regex:
+      - ^ఇది పుస్తకం$
+    - item_id: HI-TE-002-b
+      english: That is a pen.
+      hindi: वह कलम है।
+      accepted:
+      - అది పెన్ను
+      planted_error: అది పెన్ను ఉంది
+      wrong_regex:
+      - ^(ఇది|అది) \S+ ఉంది$
+      fix_regex:
+      - ^అది పెన్ను$
+    title: No word for ‘is’ in ‘This is a book’
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/1
+  record_sha256: 42d17dd10d26b44cd4c7fbff58927f5290f901ffb516f953b99875bc550e32d9
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-002
+    name: 'Zero copula: no ''is'' between two nouns'
+    category: copula
+    l1_habit: Hindi है is always present; Telugu leaves it out in 'X is Y'
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-002-a
+      english: This is a book.
+      hindi: यह किताब है।
+      accepted:
+      - ఇది పుస్తకం
+      planted_error: ఇది పుస్తకం ఉంది
+      wrong_regex:
+      - ^(ఇది|అది) \S+ ఉంది$
+      fix_regex:
+      - ^ఇది పుస్తకం$
+    - item_id: HI-TE-002-b
+      english: That is a pen.
+      hindi: वह कलम है।
+      accepted:
+      - అది పెన్ను
+      planted_error: అది పెన్ను ఉంది
+      wrong_regex:
+      - ^(ఇది|అది) \S+ ఉంది$
+      fix_regex:
+      - ^అది పెన్ను$
+    title: No word for ‘is’ in ‘This is a book’
+    title_hi: '''यह किताब है'' में ''है'' नहीं लगता'
+    explain_hi: '''यह किताब है'' = ఇది పుస్తకం — बस। ఉంది का मतलब ''मौजूद है/रखा है'', ''यह X है'' कहने के लिए नहीं।'
+    key_ideas:
+    - - है
+      - ఉంది
+      - उंदि
+      - undi
+    - - नहीं
+      - हटा
+      - बिना
+      - ज़रूरत
+      - जरूरत
+      - 'no'
+      - not
+      - nahi
+      - nahin
+    status: draft_unverified
+items:
+- item_id: HI-TE-002-a
+  l1_meaning: यह किताब है।
+  correct_form: ఇది పుస్తకం
+  wrong_form: ఇది పుస్తకం ఉంది
+  accepted_variants: []
+  accept_patterns:
+  - ^ఇది పుస్తకం$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^(ఇది|అది) \S+ ఉంది$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is a book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /1/items/0
+    record_sha256: 16d52c4e837956599e7749424a28396a04eb09387cd939fa3ad645378fcb0605
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/1/items/0
+    record_sha256: 16d52c4e837956599e7749424a28396a04eb09387cd939fa3ad645378fcb0605
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-002-b
+  l1_meaning: वह कलम है।
+  correct_form: అది పెన్ను
+  wrong_form: అది పెన్ను ఉంది
+  accepted_variants: []
+  accept_patterns:
+  - ^అది పెన్ను$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^(ఇది|అది) \S+ ఉంది$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: That is a pen.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /1/items/1
+    record_sha256: 79edfe85344af6fcd000cb658357473a1ea2193c2cc81cd7d63eae8323bdab4f
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/1/items/1
+    record_sha256: 79edfe85344af6fcd000cb658357473a1ea2193c2cc81cd7d63eae8323bdab4f
+    description: sub-record; the raw record is embedded in the parent's provenance

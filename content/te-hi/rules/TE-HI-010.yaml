@@ -1,0 +1,174 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-010
+direction: TE->HI
+contrast_area: clause
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Relative clause with जो, not a Telugu-style participle
+  title_en: '‘The book I read’: use जो'
+  l1_habit_en: Telugu puts the clause before the noun (నేను చదివిన పుస్తకం); Hindi usually uses जो (वह किताब जो
+    मैंने पढ़ी) or पढ़ी हुई
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /9
+  record_sha256: abeea3e2077820bbd307aeb9c6c04c0b50e1e9d90622430148999f62e52a4cee
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-010
+    name: Relative clause with जो, not a Telugu-style participle
+    category: clause
+    l1_habit: Telugu puts the clause before the noun (నేను చదివిన పుస్తకం); Hindi usually uses जो (वह किताब जो मैंने
+      पढ़ी) or पढ़ी हुई
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-010-a
+      english: This is the book I read.
+      telugu: ఇది నేను చదివిన పుస్తకం
+      accepted:
+      - यह वह किताब है जो मैंने पढ़ी
+      - यह मेरी पढ़ी हुई किताब है
+      planted_error: यह मैंने पढ़ा किताब है
+      wrong_regex:
+      - मैंने पढ़ा किताब
+      fix_regex:
+      - जो मैंने पढ़ी$
+      - पढ़ी हुई किताब
+    - item_id: TE-HI-010-b
+      english: This is the house I bought.
+      telugu: ఇది నేను కొన్న ఇల్లు
+      accepted:
+      - यह वह घर है जो मैंने खरीदा
+      - यह मेरा खरीदा हुआ घर है
+      planted_error: यह मैंने खरीदा घर है
+      wrong_regex:
+      - मैंने खरीदा घर
+      fix_regex:
+      - जो मैंने खरीदा$
+      - खरीदा हुआ घर
+    title: '‘The book I read’: use जो'
+items:
+- item_id: TE-HI-010-a
+  l1_meaning: ఇది నేను చదివిన పుస్తకం
+  correct_form: यह वह किताब है जो मैंने पढ़ी
+  wrong_form: यह मैंने पढ़ा किताब है
+  accepted_variants:
+  - form: यह मेरी पढ़ी हुई किताब है
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /9/items/0/accepted/1
+      record_sha256: 36e63a9f7edebb86f70968b0ba2e7166e0583705040564a819376e0e50b2b263
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: जो मैंने पढ़ी$
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: पढ़ी हुई किताब
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: मैंने पढ़ा किताब
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is the book I read.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /9/items/0
+    record_sha256: aafc5752683948cfb1435e1d3e80124b054896a32915820be8700e390bff4993
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-010-b
+  l1_meaning: ఇది నేను కొన్న ఇల్లు
+  correct_form: यह वह घर है जो मैंने खरीदा
+  wrong_form: यह मैंने खरीदा घर है
+  accepted_variants:
+  - form: यह मेरा खरीदा हुआ घर है
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-te_l2-hi/rules.json
+      pointer: /9/items/1/accepted/1
+      record_sha256: adb7bc684336be4943f87cd4a35abffe4061fd7d180ccf3952aa10a03efd5634
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: जो मैंने खरीदा$
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: खरीदा हुआ घर
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: मैंने खरीदा घर
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: This is the house I bought.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /9/items/1
+    record_sha256: 59480fcdc36a3e1fa7dbe67b5ffe48041e5886e7dcf1ddbda6b2e043476079a3
+    description: sub-record; the raw record is embedded in the parent's provenance

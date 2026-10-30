@@ -267,3 +267,62 @@ CLASSMATE_GUARD_DOWN = [
     "DROP TRIGGER IF EXISTS classmate_rule_state_guard ON classmate_rule_state",
     "DROP FUNCTION IF EXISTS setu_classmate_guard()",
 ]
+
+# ---------------------------------------------------------------- migration 0003 (slice 1.4)
+
+CONTENT_FUNCTIONS = [
+    r"""
+CREATE FUNCTION setu_no_latin(t text) RETURNS boolean LANGUAGE sql IMMUTABLE AS $fn$
+  -- Learner-facing text is Devanagari or Telugu; Latin script never reaches learners (X-NOENG).
+  SELECT t IS NULL OR t !~ '[A-Za-z]'
+$fn$""",
+    r"""
+CREATE FUNCTION setu_patterns_anchored(ps text[]) RETURNS boolean LANGUAGE sql IMMUTABLE AS $fn$
+  -- Backstop for the Python validator: every pattern starts with ^ and ends with an unescaped $.
+  SELECT coalesce(bool_and(p ~ '^\^' AND p ~ '\$$' AND p !~ '\\\$$'), true) FROM unnest(ps) AS p
+$fn$""",
+]
+
+# Learner-visible content: only the newest version of each rule, and only if it is verified, active and
+# teacher-approved; items only if approved with no open validation issues and their rule is visible.
+LEARNER_VIEWS = [
+    """
+CREATE VIEW learner_rule_version AS
+SELECT rv.* FROM rule_version rv
+ WHERE rv.version = (SELECT max(x.version) FROM rule_version x WHERE x.rule_id = rv.rule_id)
+   AND rv.lifecycle = 'active' AND rv.validity = 'verified' AND rv.teacher_approved""",
+    """
+CREATE VIEW learner_item_version AS
+SELECT iv.* FROM item_version iv JOIN item i ON i.id = iv.item_id
+ WHERE iv.version = (SELECT max(x.version) FROM item_version x WHERE x.item_id = iv.item_id)
+   AND iv.review_status = 'approved' AND iv.validation_issues = '[]'::jsonb
+   AND EXISTS (SELECT 1 FROM learner_rule_version r WHERE r.rule_id = i.rule_id)""",
+    """
+CREATE VIEW learner_accepted_variant AS
+SELECT av.* FROM accepted_variant av JOIN learner_item_version iv ON iv.id = av.item_version_id
+ WHERE av.status = 'approved'""",
+    """
+CREATE VIEW learner_hint AS
+SELECT h.* FROM hint h JOIN learner_rule_version r ON r.id = h.rule_version_id
+ WHERE h.status = 'approved' AND h.validated_no_answer""",
+    "CREATE VIEW learner_lexeme AS SELECT * FROM lexeme WHERE review_status = 'approved'",
+    "CREATE VIEW learner_scene AS SELECT * FROM scene WHERE review_status = 'approved'",
+    """
+CREATE VIEW learner_scene_line AS
+SELECT l.* FROM scene_line l JOIN learner_scene s ON s.id = l.scene_id WHERE l.review_status = 'approved'""",
+    "CREATE VIEW learner_own_task AS SELECT * FROM own_task WHERE review_status = 'approved'",
+    """
+CREATE VIEW learner_memory_aid AS
+SELECT m.* FROM memory_aid m
+ WHERE m.review_status = 'approved'
+   AND (m.visual_asset_id IS NULL OR EXISTS (
+        SELECT 1 FROM visual_asset v WHERE v.id = m.visual_asset_id AND v.review_status = 'approved'))""",
+]
+
+LEARNER_VIEWS_DOWN = [
+    f"DROP VIEW IF EXISTS {v}" for v in (
+        "learner_memory_aid", "learner_own_task", "learner_scene_line", "learner_scene", "learner_lexeme",
+        "learner_hint", "learner_accepted_variant", "learner_item_version", "learner_rule_version")
+]
+CONTENT_FUNCTIONS_DOWN = ["DROP FUNCTION IF EXISTS setu_patterns_anchored(text[])",
+                          "DROP FUNCTION IF EXISTS setu_no_latin(text)"]

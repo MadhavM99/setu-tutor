@@ -1,0 +1,75 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L1-06
+review_status: draft
+imported_to_database: false
+deferred_to: 'words: lexicon.yaml now; drill items: slice 3 (S3)'
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L1-06.json
+  pointer: ''
+  record_sha256: d1e1d1f9602f6fb5eda24b9f5e0e5b143651bb00e468f9fbaed4c1c34fcf4b45
+  description: Hindi-Telugu false friends; team draft (cf. Kanojia et al. 2020 cognate/false-friend data)
+  original:
+    unit_id: L1-06
+    level: 1
+    title: 'धोखेबाज़ शब्द: दिखते Hindi जैसे, मतलब अलग'
+    lesson:
+    - hindi: ज़रूरत (अवसर नहीं!)
+      telugu: అవసరం
+      note: ⚠ Hindi 'अवसर' = मौका; Telugu అవసరం = ज़रूरत
+    - hindi: भाषण (उपन्यास नहीं!)
+      telugu: ఉపన్యాసం
+      note: ⚠ Hindi 'उपन्यास' = novel; Telugu = भाषण
+    - hindi: इतिहास (चरित्र नहीं!)
+      telugu: చరిత్ర
+      note: ⚠ Hindi 'चरित्र' = character; Telugu = इतिहास
+    - hindi: देर (आलस्य नहीं!)
+      telugu: ఆలస్యం
+      note: ⚠ Hindi 'आलस्य' = सुस्ती; Telugu = देर
+    check:
+      item_id: L1-06-check
+      prompt: చరిత్ర
+      accepted:
+      - इतिहास
+      raju_wrong: चरित्र
+      answer_script: devanagari
+      closed: false
+    items:
+    - item_id: L1-06-a
+      prompt: అవసరం
+      accepted:
+      - ज़रूरत
+      - जरूरत
+      - आवश्यकता
+      raju_wrong: अवसर
+      answer_script: devanagari
+      closed: false
+    - item_id: L1-06-b
+      prompt: ఉపన్యాసం
+      accepted:
+      - भाषण
+      - व्याख्यान
+      raju_wrong: उपन्यास
+      answer_script: devanagari
+      closed: false
+    - item_id: L1-06-c
+      prompt: ఆలస్యం
+      accepted:
+      - देर
+      - देरी
+      - विलंब
+      raju_wrong: आलस्य
+      answer_script: devanagari
+      closed: false
+    requires:
+    - L1-05
+    status: draft_unverified
+    version: 1
+    reviewer: null
+    source: Hindi-Telugu false friends; team draft (cf. Kanojia et al. 2020 cognate/false-friend data)

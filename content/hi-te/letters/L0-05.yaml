@@ -1,0 +1,54 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-05
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-05.json
+  pointer: ''
+  record_sha256: a6e5934a86492e7ae5509a19b7ab094df95d533686a28845c3c30d2402480c01
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-05
+    level: 0
+    title: 'स्वर: ऐ → ఐ'
+    tip: ''
+    lesson:
+    - hindi: ऐ
+      telugu: ఐ
+      note: ''
+      shape: ఎ जैसा पेट, ऊपर एक और लहर
+      mnemonic: ए के ऊपर एक और ए = ऐ → ఐ
+      example: ఐదు = पाँच
+      picture: ✋
+    check:
+      item_id: L0-05-check
+      prompt: ఐ
+      accepted:
+      - ऐ
+      raju_wrong: ए
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-05-a
+      prompt: ఐ
+      accepted:
+      - ऐ
+      raju_wrong: ए
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-04
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

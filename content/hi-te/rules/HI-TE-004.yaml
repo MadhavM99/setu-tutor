@@ -1,0 +1,209 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-004
+direction: HI->TE
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''में'' शब्द से चिपकता है: ఇంట్లో = घर में'
+explanation_l1: '''घर में'' = ఇల్లు + లో → ఇంట్లో (एक ही शब्द)। -లో (में) अलग शब्द नहीं, शब्द के साथ जुड़ता है।'
+concept_key:
+  ideas:
+  - - లో
+    - लो
+    - में
+  - - जुड़
+    - जुड
+    - चिपक
+    - साथ
+    - एक शब्द
+    - अलग नहीं
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Case endings attach to the noun (no separate 'in')
+  title_en: ‘in’ sticks to the word (ఇంట్లో = in the house)
+  l1_habit_en: Hindi में is a separate word; Telugu -lō is a suffix and the noun changes (ఇల్లు→ఇంట్లో)
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - lo
+  - join
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /3
+  record_sha256: 9866d5f1dd27b94606d900529815a692faf527ca4897f90e95102e10329aad8a
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-004
+    name: Case endings attach to the noun (no separate 'in')
+    category: case
+    l1_habit: Hindi में is a separate word; Telugu -lō is a suffix and the noun changes (ఇల్లు→ఇంట్లో)
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-004-a
+      english: I am in the house.
+      hindi: मैं घर में हूँ।
+      accepted:
+      - నేను ఇంట్లో ఉన్నాను
+      planted_error: నేను ఇల్లు లో ఉన్నాను
+      wrong_regex:
+      - ' లో( |$)'
+      fix_regex:
+      - ^నేను ఇంట్లో ఉన్నాను$
+    - item_id: HI-TE-004-b
+      english: I am in the room.
+      hindi: मैं कमरे में हूँ।
+      accepted:
+      - నేను గదిలో ఉన్నాను
+      planted_error: నేను గది లో ఉన్నాను
+      wrong_regex:
+      - ' లో( |$)'
+      fix_regex:
+      - ^నేను గదిలో ఉన్నాను$
+    title: ‘in’ sticks to the word (ఇంట్లో = in the house)
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/3
+  record_sha256: 324633fd359ec8f157f04c73186185fe47c776f8ffddb7ae5a4606a0309291a2
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-004
+    name: Case endings attach to the noun (no separate 'in')
+    category: case
+    l1_habit: Hindi में is a separate word; Telugu -lō is a suffix and the noun changes (ఇల్లు→ఇంట్లో)
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-004-a
+      english: I am in the house.
+      hindi: मैं घर में हूँ।
+      accepted:
+      - నేను ఇంట్లో ఉన్నాను
+      planted_error: నేను ఇల్లు లో ఉన్నాను
+      wrong_regex:
+      - ' లో( |$)'
+      fix_regex:
+      - ^నేను ఇంట్లో ఉన్నాను$
+    - item_id: HI-TE-004-b
+      english: I am in the room.
+      hindi: मैं कमरे में हूँ।
+      accepted:
+      - నేను గదిలో ఉన్నాను
+      planted_error: నేను గది లో ఉన్నాను
+      wrong_regex:
+      - ' లో( |$)'
+      fix_regex:
+      - ^నేను గదిలో ఉన్నాను$
+    title: ‘in’ sticks to the word (ఇంట్లో = in the house)
+    title_hi: '''में'' शब्द से चिपकता है: ఇంట్లో = घर में'
+    explain_hi: '''घर में'' = ఇల్లు + లో → ఇంట్లో (एक ही शब्द)। -లో (में) अलग शब्द नहीं, शब्द के साथ जुड़ता है।'
+    key_ideas:
+    - - లో
+      - लो
+      - lo
+      - में
+    - - जुड़
+      - जुड
+      - चिपक
+      - साथ
+      - एक शब्द
+      - अलग नहीं
+      - join
+    status: draft_unverified
+items:
+- item_id: HI-TE-004-a
+  l1_meaning: मैं घर में हूँ।
+  correct_form: నేను ఇంట్లో ఉన్నాను
+  wrong_form: నేను ఇల్లు లో ఉన్నాను
+  accepted_variants: []
+  accept_patterns:
+  - ^నేను ఇంట్లో ఉన్నాను$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ' లో( |$)'
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I am in the house.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /3/items/0
+    record_sha256: b44ac516bd29b87b81d599c09ee2fdb61fd572780ba89373ebe4a1a61144e4d1
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/3/items/0
+    record_sha256: b44ac516bd29b87b81d599c09ee2fdb61fd572780ba89373ebe4a1a61144e4d1
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-004-b
+  l1_meaning: मैं कमरे में हूँ।
+  correct_form: నేను గదిలో ఉన్నాను
+  wrong_form: నేను గది లో ఉన్నాను
+  accepted_variants: []
+  accept_patterns:
+  - ^నేను గదిలో ఉన్నాను$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ' లో( |$)'
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I am in the room.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /3/items/1
+    record_sha256: 25a683c0353b0b56c99f7cbdc17336d24f00dda83168a270a764b877384be24e
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/3/items/1
+    record_sha256: 25a683c0353b0b56c99f7cbdc17336d24f00dda83168a270a764b877384be24e
+    description: sub-record; the raw record is embedded in the parent's provenance

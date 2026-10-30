@@ -1,0 +1,258 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-015
+direction: HI->TE
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: कहीं जाना हो तो -కి (ఇంటికి), -లో नहीं
+explanation_l1: '''घर जा रहा हूँ'' = ఇంటికి వెళ్తున్నాను। जगह की तरफ़ जाने के लिए -కి (को/की तरफ़); -లో का मतलब
+  ''के अंदर''।'
+concept_key:
+  ideas:
+  - - కి
+    - कि
+  - - లో
+    - लो
+    - तरफ़
+    - तरफ
+    - जाना
+    - अंदर
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985, A Grammar of Modern Telugu (written for non-Telugu learners)
+  telugu_draft: వాడు గుడికి రాడు
+  note: book uses వాడు for 'he'; our items use అతను - add వాడు as accepted variant
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/0
+    record_sha256: 7969eccf6d173e11d2a7edebd7d755de3a8541510c8d86023095d449dbb9d5d3
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985, A Grammar of Modern Telugu (written for non-Telugu learners)
+      romanized: waaDu guDiki raaDu
+      gloss: He does not / will not come to the temple.
+      telugu_draft: వాడు గుడికి రాడు
+      rules:
+      - HI-TE-005
+      - HI-TE-015
+      note: book uses వాడు for 'he'; our items use అతను - add వాడు as accepted variant
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: నేను మా ఇంటికి వెళ్తాను
+  note: -ki for destination confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/2
+    record_sha256: 60ed8c3a17b085ce7b08a8244784d7cc6146f902171a0ea1b1265f590333d266
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: neenu maa iNTiki weLtaanu
+      gloss: I will go to our house.
+      telugu_draft: నేను మా ఇంటికి వెళ్తాను
+      rules:
+      - HI-TE-015
+      note: -ki for destination confirmed
+needs_rewrite: {}
+dev_notes:
+  name_en: 'Going to a place: -కి, not -లో'
+  title_en: 'Going somewhere: use -కి, not -లో'
+  l1_habit_en: Hindi में/को confusion; destination takes -కి
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - ki
+  - lo
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /14
+  record_sha256: 1e923585793a373801ae0b75c811a0c38b91895e52a162b7b06dc9bec2d90b03
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-015
+    name: 'Going to a place: -కి, not -లో'
+    category: case
+    l1_habit: Hindi में/को confusion; destination takes -కి
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-015-a
+      english: I am going home.
+      hindi: मैं घर जा रहा हूँ।
+      accepted:
+      - నేను ఇంటికి వెళ్తున్నాను
+      planted_error: నేను ఇంట్లో వెళ్తున్నాను
+      wrong_regex:
+      - ఇంట్లో వెళ్
+      fix_regex:
+      - ఇంటికి
+    - item_id: HI-TE-015-b
+      english: I go to school.
+      hindi: मैं स्कूल जाता हूँ।
+      accepted:
+      - నేను బడికి వెళ్తాను
+      planted_error: నేను బడిలో వెళ్తాను
+      wrong_regex:
+      - బడిలో వెళ్
+      fix_regex:
+      - బడికి
+    title: 'Going somewhere: use -కి, not -లో'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/14
+  record_sha256: bc8bd7b11bd590f02b4f32dcb73b710080639a06a98a609a3c02cc9845c10c6f
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-015
+    name: 'Going to a place: -కి, not -లో'
+    category: case
+    l1_habit: Hindi में/को confusion; destination takes -కి
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-015-a
+      english: I am going home.
+      hindi: मैं घर जा रहा हूँ।
+      accepted:
+      - నేను ఇంటికి వెళ్తున్నాను
+      planted_error: నేను ఇంట్లో వెళ్తున్నాను
+      wrong_regex:
+      - ఇంట్లో వెళ్
+      fix_regex:
+      - ఇంటికి
+    - item_id: HI-TE-015-b
+      english: I go to school.
+      hindi: मैं स्कूल जाता हूँ।
+      accepted:
+      - నేను బడికి వెళ్తాను
+      planted_error: నేను బడిలో వెళ్తాను
+      wrong_regex:
+      - బడిలో వెళ్
+      fix_regex:
+      - బడికి
+    title: 'Going somewhere: use -కి, not -లో'
+    title_hi: कहीं जाना हो तो -కి (ఇంటికి), -లో नहीं
+    explain_hi: '''घर जा रहा हूँ'' = ఇంటికి వెళ్తున్నాను। जगह की तरफ़ जाने के लिए -కి (को/की तरफ़); -లో का मतलब
+      ''के अंदर''।'
+    key_ideas:
+    - - కి
+      - कि
+      - ki
+    - - లో
+      - लो
+      - lo
+      - तरफ़
+      - तरफ
+      - जाना
+      - अंदर
+    status: draft_unverified
+items:
+- item_id: HI-TE-015-a
+  l1_meaning: मैं घर जा रहा हूँ।
+  correct_form: నేను ఇంటికి వెళ్తున్నాను
+  wrong_form: నేను ఇంట్లో వెళ్తున్నాను
+  accepted_variants: []
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ఇంటికి
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: ఇంట్లో వెళ్
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I am going home.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /14/items/0
+    record_sha256: 82c595c76ec0b9e0faef0da0a4784ee5843e23df1b90644fa587b08d42010aa0
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/14/items/0
+    record_sha256: 82c595c76ec0b9e0faef0da0a4784ee5843e23df1b90644fa587b08d42010aa0
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-015-b
+  l1_meaning: मैं स्कूल जाता हूँ।
+  correct_form: నేను బడికి వెళ్తాను
+  wrong_form: నేను బడిలో వెళ్తాను
+  accepted_variants: []
+  accept_patterns: []
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: బడికి
+    kind: accept
+    reasons:
+    - not_anchored
+  - pattern: బడిలో వెళ్
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I go to school.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /14/items/1
+    record_sha256: 8b5b70fa5765c48576a520e7b3aa5037fb68e848ee61f4986684a8c26d7b61d0
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/14/items/1
+    record_sha256: 8b5b70fa5765c48576a520e7b3aa5037fb68e848ee61f4986684a8c26d7b61d0
+    description: sub-record; the raw record is embedded in the parent's provenance

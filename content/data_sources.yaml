@@ -1,0 +1,148 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+- id: DS-01
+  name: Native speakers (team reviewers, teachers)
+  use: Rule validity, variants, naturalness, bands, audio
+  licence: Reviewer agreement form; audio consent
+  status: to-check
+  notes: 2 per language + a third · Small panel → κ reported [R-03]
+- id: DS-02
+  name: Krishnamurti & Gwynn 1985, *A Grammar of Modern Telugu*
+  use: Verify Telugu contrasts (polar -ā, two "we", verbless X-is-Y, ఇది for "she", negative verb, -కి, కోసం, -రు
+    with మీరు, participle relatives)
+  licence: Copyright; cite, do not reproduce
+  status: n/a
+  notes: Citations only · Example sentences are not copied into the product
+- id: DS-03
+  name: Chinnappa 1978 (PhD thesis)
+  use: Proxy evidence for TE→HI difficulty (gender 78%, ने 76%, complex sentences 73%)
+  licence: Citation
+  status: n/a
+  notes: Survey percentages · School students, 1978, difficulty not error counts → `proxy` only
+- id: DS-04
+  name: 'Telangana "simple Telugu" textbooks: Tenepalukulu (I–V), Vennela (VI–X)'
+  use: Order of topics and words for bands
+  licence: Government publication; **no copying of sentences without permission**
+  status: to-check
+  notes: Order only · FW-P24 needs written permission
+- id: DS-05
+  name: IndicCorp v2 (Doddapaneni et al. 2023)
+  use: Telugu word frequencies → top 1,000–2,000
+  licence: Check the dataset licence (CC-type, as published)
+  status: to-check
+  notes: Frequency counts only · Web text; frequency ≠ learner usefulness, so it is crossed with textbook order
+- id: DS-06
+  name: Kanojia et al. 2020, cognates and false friends
+  use: ~150 shared words; false-friend flags
+  licence: Check the LREC dataset licence
+  status: to-check
+  notes: ~150 pairs · Pairs need native review
+- id: DS-07
+  name: IndicGEC 2025 (BHASHA), Telugu
+  use: Checker robustness only (no false accept, no false reject of variation)
+  licence: Check the shared-task licence
+  status: to-check
+  notes: ~1,000 native pairs · **Not** Hindi-speaker learner evidence; quality issues (Vajjala 2025)
+- id: DS-08
+  name: LTRC Hindi–Telugu parallel corpus (Mujadia & Sharma 2022)
+  use: How contrasts are realised in translation; contrast examples
+  licence: '**Commercial use must be confirmed**'
+  status: to-check
+  notes: ~700K pairs; a few hundred simple pairs used · Translation ≠ learner error
+- id: DS-09
+  name: IndicXlit / Aksharantar (Madhani et al. 2023)
+  use: Romanised → Telugu normalisation
+  licence: Check the model licence
+  status: to-check
+  notes: Pretrained model · Never treated as automatically correct
+- id: DS-10
+  name: LTRC Telugu morphological analyser; Stanza (Qi et al. 2020)
+  use: Word forms in the checker
+  licence: 'Check the licences (Stanza: Apache-2.0)'
+  status: to-check
+  notes: Evaluate on 50 sentences first · Until evaluated, unseen forms → unsure
+- id: DS-11
+  name: WALS (Dryer & Haspelmath 2013), Grambank (Skirgård et al. 2023)
+  use: Typology leads
+  licence: CC-BY (as published)
+  status: to-check
+  notes: Features coded for both languages · Leads only; noisy Telugu coding
+- id: DS-12
+  name: HiLearners (Behera & Saluja 2025)
+  use: Contrast-validity test (Dravidian-L1 group)
+  licence: Check the licence; ask the authors for labels
+  status: to-check
+  notes: Public release lacks L1 labels · Dravidian languages unnamed → no Telugu claim
+- id: DS-13
+  name: Native recordings
+  use: Audio for the top 100 items
+  licence: Speaker consent + rights record
+  status: to-check
+  notes: 100 clips · Speaker review
+- id: DS-14
+  name: AI4Bharat IndicConformer (ASR), Indic Parler-TTS
+  use: Speech extension
+  licence: Check the model licences
+  status: to-check
+  notes: Models · Evaluate WER vs Whisper; never assume TTS is native
+- id: DS-15
+  name: Whisper (Radford et al. 2023)
+  use: ASR baseline
+  licence: MIT
+  status: to-check
+  notes: Model · Baseline only
+- id: DS-16
+  name: Gemma 3 12B (and 4B for dev / low cost)
+  use: Classmate, coach, friend (self-hosted)
+  licence: Gemma terms of use
+  status: to-check
+  notes: Model · Model swappable; per-direction bake-off
+- id: DS-17
+  name: Sarvam-M
+  use: '**Model comparison only**, not a content source'
+  licence: Check the licence
+  status: to-check
+  notes: Model · Never used to generate content
+- id: DS-18
+  name: Anonymised, consented adult learner writing (both directions)
+  use: Observed errors; TransferErrorBench
+  licence: Institutional permission + consent
+  status: to-check
+  notes: When permitted · No identifiable text to any external service
+- id: DS-19
+  name: Teacher-marked test cases
+  use: Stage A suite, ~150, 30% held out
+  licence: Team-owned
+  status: verified
+  notes: ~150 · Kept apart from build data
+- id: DS-20
+  name: Team rule bank and content (setu-tutor, LMA repo)
+  use: Draft rules and items, letters, lexicon
+  licence: Team-owned; **Claude-drafted, unreviewed**
+  status: verified
+  notes: 25 rules / 49 items + 45 units · Credit the LMA repo authors; record team consent (ADR-0001)
+- id: DS-21
+  name: V&S Publishers 2015, *Learn Telugu through Hindi*
+  use: Prior-art reference for the script bridge
+  licence: Copyright
+  status: n/a
+  notes: Citation · Not copied
+- id: DS-22
+  name: Google AI Studio (Gemini, Gemma 4, image models)
+  use: '**Removed from runtime.** Allowed only in the offline aid pipeline with concept-only prompts (ADR-0005)'
+  licence: Google terms
+  status: to-check
+  notes: — · Never receives learner data; outputs untrusted until OCR and teacher review
+- id: DS-23
+  name: Self-hosted open image model (preferred; choice made in the Phase 4 bake-off)
+  use: Text-free educational illustrations
+  licence: Model licence must permit educational and commercial use
+  status: to-check
+  notes: ≤ 3 candidates per concept · Text artefacts are common, so OCR plus review is mandatory
+- id: DS-24
+  name: Local OCR models for Devanagari, Telugu and Latin
+  use: Image text detection
+  licence: Check the licence
+  status: to-check
+  notes: — · Recall measured on a seeded test set

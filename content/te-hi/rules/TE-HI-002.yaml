@@ -1,0 +1,132 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-002
+direction: TE->HI
+contrast_area: gender
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: Inanimate nouns have gender (पानी ठंडा, चाय अच्छी)
+  title_en: Things have gender in Hindi (पानी ठंडा)
+  l1_habit_en: Telugu things are neuter; Hindi assigns every noun masculine or feminine, and adjectives/verbs agree
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /1
+  record_sha256: fe937265ca018b1fc676f799d2a785d74c2f913e3b1f737b80efab6ffdc8ecd0
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-002
+    name: Inanimate nouns have gender (पानी ठंडा, चाय अच्छी)
+    category: gender
+    l1_habit: Telugu things are neuter; Hindi assigns every noun masculine or feminine, and adjectives/verbs agree
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-002-a
+      english: The water is cold.
+      telugu: నీళ్ళు చల్లగా ఉన్నాయి
+      accepted:
+      - पानी ठंडा है
+      planted_error: पानी ठंडी है
+      wrong_regex:
+      - पानी ठंडी
+      fix_regex:
+      - ^पानी ठंडा है$
+    - item_id: TE-HI-002-b
+      english: The tea is good.
+      telugu: టీ బాగుంది
+      accepted:
+      - चाय अच्छी है
+      planted_error: चाय अच्छा है
+      wrong_regex:
+      - चाय अच्छा
+      fix_regex:
+      - ^चाय अच्छी है$
+    title: Things have gender in Hindi (पानी ठंडा)
+items:
+- item_id: TE-HI-002-a
+  l1_meaning: నీళ్ళు చల్లగా ఉన్నాయి
+  correct_form: पानी ठंडा है
+  wrong_form: पानी ठंडी है
+  accepted_variants: []
+  accept_patterns:
+  - ^पानी ठंडा है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: पानी ठंडी
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: The water is cold.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /1/items/0
+    record_sha256: 653134a184434d5fad463915d9aa2e14121650834376beb0fbf3cf87ae1cba29
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-002-b
+  l1_meaning: టీ బాగుంది
+  correct_form: चाय अच्छी है
+  wrong_form: चाय अच्छा है
+  accepted_variants: []
+  accept_patterns:
+  - ^चाय अच्छी है$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: चाय अच्छा
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: The tea is good.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /1/items/1
+    record_sha256: e2a503f2e73cbf96ffb03b99772f36e1f581050921ccbb4270bfb9c64fc742c3
+    description: sub-record; the raw record is embedded in the parent's provenance

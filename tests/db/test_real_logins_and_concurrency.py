@@ -45,8 +45,9 @@ def test_read_login_user_cannot_write_or_see_secrets(engine, login_as):
     _denied(reader, "UPDATE classmate_rule_state SET state = 'taught'")
     _denied(reader, "SELECT passphrase_hash FROM learner")
     _denied(reader, "CREATE TABLE sneaky (x int)")
+    _denied(reader, "SELECT title_hi FROM rule_version")  # drafts are invisible to the read role (0003)
     with reader.connect() as c:
-        c.execute(text("SELECT title_hi FROM rule_version"))
+        c.execute(text("SELECT title_hi FROM learner_rule_version"))
     reader.dispose()
 
 

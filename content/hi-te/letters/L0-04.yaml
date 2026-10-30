@@ -1,0 +1,69 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-04
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-04.json
+  pointer: ''
+  record_sha256: 78894c8f1cb8f060a0debaaa0b44142c7e0457e294810850d51244307f204594
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-04
+    level: 0
+    title: 'स्वर: छोटा ए, ए → ఎ ఏ'
+    tip: 'Telugu में ए दो तरह का: छोटा (నయా) और लंबा (Hindi वाला)'
+    lesson:
+    - hindi: ऎ
+      telugu: ఎ
+      note: ''
+      shape: एक गोल पेट, ऊपर कुछ नहीं
+      mnemonic: नई आवाज़! 'ए' जल्दी से बोलो, बिना खींचे → ఎ
+      example: ఎలుక = चूहा
+      picture: 🐭
+    - hindi: ए
+      telugu: ఏ
+      note: ''
+      shape: ఎ + ऊपर-बाएँ एक हुक (टोपी)
+      mnemonic: 'टोपी पहनी तो आवाज़ लंबी: Hindi वाला ए → ఏ'
+      example: ఏనుగు = हाथी
+      picture: 🐘
+    check:
+      item_id: L0-04-check
+      prompt: ఏ
+      accepted:
+      - ए
+      raju_wrong: ऎ
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-04-a
+      prompt: ఎ
+      accepted:
+      - ऎ
+      - छोटा ए
+      raju_wrong: ए
+      answer_script: any
+      closed: true
+    - item_id: L0-04-b
+      prompt: ఏ
+      accepted:
+      - ए
+      raju_wrong: ऎ
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-03
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

@@ -1,0 +1,249 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-013
+direction: HI->TE
+contrast_area: tense
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: '''आ रहा हूँ'' एक शब्द: వస్తున్నాను'
+explanation_l1: '''खा रहा हूँ'' = తింటున్నాను (एक ही शब्द)। తింటాను (खाऊँगा) + ఉన్నాను (हूँ) अलग-अलग नहीं जोड़ते।'
+concept_key:
+  ideas:
+  - - एक शब्द
+    - एक ही
+    - जुड़
+    - जुड
+    - साथ
+  - - रहा
+    - తున్నా
+    - ఉన్నాను
+    - उन्नानु
+    - अलग
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: 'Present continuous: -tunnānu, not verb + ''am'''
+  title_en: '‘I am coming’ is one word: వస్తున్నాను'
+  l1_habit_en: Hindi रहा हूँ is two words; Telugu fuses it, or uses -tū unnānu
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - one word
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /12
+  record_sha256: a47e228c6f901cc4f1073df869cce7db9b29bcd5837d526a2abd1825de085fb9
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-013
+    name: 'Present continuous: -tunnānu, not verb + ''am'''
+    category: tense
+    l1_habit: Hindi रहा हूँ is two words; Telugu fuses it, or uses -tū unnānu
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-013-a
+      english: I am eating.
+      hindi: मैं खा रहा हूँ।
+      accepted:
+      - నేను తింటున్నాను
+      - నేను తింటూ ఉన్నాను
+      planted_error: నేను తింటాను ఉన్నాను
+      wrong_regex:
+      - ాను ఉన్నాను$
+      fix_regex:
+      - ^నేను (తింటున్నాను|తింటూ ఉన్నాను)$
+    - item_id: HI-TE-013-b
+      english: I am going.
+      hindi: मैं जा रहा हूँ।
+      accepted:
+      - నేను వెళ్తున్నాను
+      - నేను వెళ్తూ ఉన్నాను
+      planted_error: నేను వెళ్తాను ఉన్నాను
+      wrong_regex:
+      - ాను ఉన్నాను$
+      fix_regex:
+      - ^నేను (వెళ్తున్నాను|వెళ్తూ ఉన్నాను)$
+    title: '‘I am coming’ is one word: వస్తున్నాను'
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/12
+  record_sha256: 9b6b3aa63041e1a33b13a83f6dfb5a3d5bbb090c47d84a263b5acc5b4f58769c
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-013
+    name: 'Present continuous: -tunnānu, not verb + ''am'''
+    category: tense
+    l1_habit: Hindi रहा हूँ is two words; Telugu fuses it, or uses -tū unnānu
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-013-a
+      english: I am eating.
+      hindi: मैं खा रहा हूँ।
+      accepted:
+      - నేను తింటున్నాను
+      - నేను తింటూ ఉన్నాను
+      planted_error: నేను తింటాను ఉన్నాను
+      wrong_regex:
+      - ాను ఉన్నాను$
+      fix_regex:
+      - ^నేను (తింటున్నాను|తింటూ ఉన్నాను)$
+    - item_id: HI-TE-013-b
+      english: I am going.
+      hindi: मैं जा रहा हूँ।
+      accepted:
+      - నేను వెళ్తున్నాను
+      - నేను వెళ్తూ ఉన్నాను
+      planted_error: నేను వెళ్తాను ఉన్నాను
+      wrong_regex:
+      - ాను ఉన్నాను$
+      fix_regex:
+      - ^నేను (వెళ్తున్నాను|వెళ్తూ ఉన్నాను)$
+    title: '‘I am coming’ is one word: వస్తున్నాను'
+    title_hi: '''आ रहा हूँ'' एक शब्द: వస్తున్నాను'
+    explain_hi: '''खा रहा हूँ'' = తింటున్నాను (एक ही शब्द)। తింటాను (खाऊँगा) + ఉన్నాను (हूँ) अलग-अलग नहीं जोड़ते।'
+    key_ideas:
+    - - एक शब्द
+      - एक ही
+      - जुड़
+      - जुड
+      - साथ
+      - one word
+    - - रहा
+      - తున్నా
+      - ఉన్నాను
+      - उन्नानु
+      - अलग
+    status: draft_unverified
+items:
+- item_id: HI-TE-013-a
+  l1_meaning: मैं खा रहा हूँ।
+  correct_form: నేను తింటున్నాను
+  wrong_form: నేను తింటాను ఉన్నాను
+  accepted_variants:
+  - form: నేను తింటూ ఉన్నాను
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /12/items/0/accepted/1
+      record_sha256: 57c8911904d1e3c847e028496556db4c68c38d7ac41180fdb970b61ba810e200
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/12/items/0/accepted/1
+      record_sha256: 57c8911904d1e3c847e028496556db4c68c38d7ac41180fdb970b61ba810e200
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^నేను (తింటున్నాను|తింటూ ఉన్నాను)$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ాను ఉన్నాను$
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I am eating.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /12/items/0
+    record_sha256: b4700031c9276196c65418ea1166476604c8ecba527e1abb7b47b80aa08386ae
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/12/items/0
+    record_sha256: b4700031c9276196c65418ea1166476604c8ecba527e1abb7b47b80aa08386ae
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-013-b
+  l1_meaning: मैं जा रहा हूँ।
+  correct_form: నేను వెళ్తున్నాను
+  wrong_form: నేను వెళ్తాను ఉన్నాను
+  accepted_variants:
+  - form: నేను వెళ్తూ ఉన్నాను
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /12/items/1/accepted/1
+      record_sha256: 98a4212c6cf67b9c56c3fbc17c519976368b551e60f362ccef9ce4ebf5df81a6
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/12/items/1/accepted/1
+      record_sha256: 98a4212c6cf67b9c56c3fbc17c519976368b551e60f362ccef9ce4ebf5df81a6
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^నేను (వెళ్తున్నాను|వెళ్తూ ఉన్నాను)$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ాను ఉన్నాను$
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I am going.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /12/items/1
+    record_sha256: bcacb9e83b78a9e15714818d886baf132c0654aa0bbc6ac868ff2390b43570de
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/12/items/1
+    record_sha256: bcacb9e83b78a9e15714818d886baf132c0654aa0bbc6ac868ff2390b43570de
+    description: sub-record; the raw record is embedded in the parent's provenance

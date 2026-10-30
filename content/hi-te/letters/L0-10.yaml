@@ -1,0 +1,68 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L0-10
+review_status: draft
+imported_to_database: false
+deferred_to: slice 3 (S1 script orientation)
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L0-10.json
+  pointer: ''
+  record_sha256: 6334d6b4c18d6511f50668a728ab02f713c2e69feb4c16c37ad6c75dbddf6a89
+  description: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude
+    (AI), need native review
+  original:
+    unit_id: L0-10
+    level: 0
+    title: ज झ → జ ఝ
+    tip: ''
+    lesson:
+    - hindi: ज
+      telugu: జ
+      note: ''
+      shape: नीचे दो गोल लहरें
+      mnemonic: जल की दो लहरें → జ
+      example: జలం = जल / पानी
+      picture: 💧
+    - hindi: झ
+      telugu: ఝ
+      note: ''
+      shape: चौड़ा, कई लहरें — झरने जैसा
+      mnemonic: झरने का पानी फैला हुआ → ఝ
+      example: ఝరి = झरना
+      picture: 🏞️
+    check:
+      item_id: L0-10-check
+      prompt: ఝ
+      accepted:
+      - झ
+      raju_wrong: ज
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L0-10-a
+      prompt: జ
+      accepted:
+      - ज
+      raju_wrong: झ
+      answer_script: devanagari
+      closed: true
+    - item_id: L0-10-b
+      prompt: ఝ
+      accepted:
+      - झ
+      raju_wrong: ज
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L0-09
+    status: draft_unverified
+    version: 2
+    reviewer: null
+    source: twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI),
+      need native review

@@ -1,0 +1,76 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L1-04
+review_status: draft
+imported_to_database: false
+deferred_to: 'words: lexicon.yaml now; drill items: slice 3 (S3)'
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L1-04.json
+  pointer: ''
+  record_sha256: a9ee8185a7b2cdd6c5930c93f4b5f37c0d1e8d087bc13dfebae702cc733c39f3
+  description: team draft
+  original:
+    unit_id: L1-04
+    level: 1
+    title: 'सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    lesson:
+    - hindi: क्या
+      telugu: ఏమిటి
+      note: ''
+    - hindi: कहाँ
+      telugu: ఎక్కడ
+      note: ''
+    - hindi: कब
+      telugu: ఎప్పుడు
+      note: ''
+    - hindi: कौन
+      telugu: ఎవరు
+      note: ''
+    - hindi: कितना
+      telugu: ఎంత
+      note: दाम पूछने में काम आता है
+    check:
+      item_id: L1-04-check
+      prompt: ఎంత
+      accepted:
+      - कितना
+      - कितने
+      - कितनी
+      raju_wrong: कहाँ
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L1-04-a
+      prompt: ఎక్కడ
+      accepted:
+      - कहाँ
+      - कहां
+      raju_wrong: कब
+      answer_script: devanagari
+      closed: true
+    - item_id: L1-04-b
+      prompt: ఎవరు
+      accepted:
+      - कौन
+      raju_wrong: क्या
+      answer_script: devanagari
+      closed: true
+    - item_id: L1-04-c
+      prompt: ఎప్పుడు
+      accepted:
+      - कब
+      raju_wrong: कहाँ
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L1-03
+    status: draft_unverified
+    version: 1
+    reviewer: null
+    source: team draft

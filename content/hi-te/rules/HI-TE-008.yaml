@@ -1,0 +1,241 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-008
+direction: HI->TE
+contrast_area: agreement
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas:
+  - - వస్తాడు
+    - वस्ताडु
+    - వస్తుంది
+    - वस्तुंदि
+    - डु
+    - ది
+  - - औरत
+    - आदमी
+    - लड़की
+    - लड़का
+    - स्त्री
+    - पुरुष
+    - अंत
+    - आता
+    - आती
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite:
+  title_l1: 'verb का अंत भी ''वह'' के हिसाब से: వస్తాడు / వస్తుంది'
+  explanation_l1: जैसे Hindi में 'आता/आती', वैसे Telugu में आदमी के लिए వస్తాడు और औरत के लिए వస్తుంది।
+dev_notes:
+  name_en: Third-person verb ending follows he / she (positive-transfer control)
+  title_en: Verb endings for ‘he’ and ‘she’
+  l1_habit_en: Hindi verbs also agree in gender, so this is expected to be easy; used as a control
+  transfer: positive_control
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /7
+  record_sha256: cd9da425ed268c045f7cf4afb78b63298b32b65c260d20c2ee3060a50dd0d625
+  description: Claude draft (unreviewed)
+  original:
+    rule_id: HI-TE-008
+    name: Third-person verb ending follows he / she (positive-transfer control)
+    category: agreement
+    l1_habit: Hindi verbs also agree in gender, so this is expected to be easy; used as a control
+    transfer: positive_control
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed)
+    items:
+    - item_id: HI-TE-008-a
+      english: She comes.
+      hindi: वह आती है।
+      accepted:
+      - ఆమె వస్తుంది
+      planted_error: ఆమె వస్తాడు
+      wrong_regex:
+      - ^ఆమె \S*డు$
+      fix_regex:
+      - ^ఆమె వస్తుంది$
+    - item_id: HI-TE-008-b
+      english: He comes.
+      hindi: वह आता है।
+      accepted:
+      - అతను వస్తాడు
+      - వాడు వస్తాడు
+      planted_error: అతను వస్తుంది
+      wrong_regex:
+      - ^(అతను|వాడు) \S*ంది$
+      fix_regex:
+      - ^(అతను|వాడు) వస్తాడు$
+    title: Verb endings for ‘he’ and ‘she’
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/7
+  record_sha256: 1423f2d42bd1605972e4dc1f0679347b114aeb1ade01a3acd41879799318f23f
+  description: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi
+    explanations drafted by Claude (AI), need review
+  original:
+    rule_id: HI-TE-008
+    name: Third-person verb ending follows he / she (positive-transfer control)
+    category: agreement
+    l1_habit: Hindi verbs also agree in gender, so this is expected to be easy; used as a control
+    transfer: positive_control
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed) · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations
+      drafted by Claude (AI), need review
+    items:
+    - item_id: HI-TE-008-a
+      english: She comes.
+      hindi: वह आती है।
+      accepted:
+      - ఆమె వస్తుంది
+      planted_error: ఆమె వస్తాడు
+      wrong_regex:
+      - ^ఆమె \S*డు$
+      fix_regex:
+      - ^ఆమె వస్తుంది$
+    - item_id: HI-TE-008-b
+      english: He comes.
+      hindi: वह आता है।
+      accepted:
+      - అతను వస్తాడు
+      - వాడు వస్తాడు
+      planted_error: అతను వస్తుంది
+      wrong_regex:
+      - ^(అతను|వాడు) \S*ంది$
+      fix_regex:
+      - ^(అతను|వాడు) వస్తాడు$
+    title: Verb endings for ‘he’ and ‘she’
+    title_hi: 'verb का अंत भी ''वह'' के हिसाब से: వస్తాడు / వస్తుంది'
+    explain_hi: जैसे Hindi में 'आता/आती', वैसे Telugu में आदमी के लिए వస్తాడు और औरत के लिए వస్తుంది।
+    key_ideas:
+    - - వస్తాడు
+      - वस्ताडु
+      - వస్తుంది
+      - वस्तुंदि
+      - डु
+      - ది
+    - - औरत
+      - आदमी
+      - लड़की
+      - लड़का
+      - स्त्री
+      - पुरुष
+      - अंत
+      - आता
+      - आती
+    status: draft_unverified
+items:
+- item_id: HI-TE-008-a
+  l1_meaning: वह आती है।
+  correct_form: ఆమె వస్తుంది
+  wrong_form: ఆమె వస్తాడు
+  accepted_variants: []
+  accept_patterns:
+  - ^ఆమె వస్తుంది$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^ఆమె \S*డు$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: She comes.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /7/items/0
+    record_sha256: 1431003ae73a4017a0c1273f9b454dcbed06c3e933cd413289d9fcaf2773dac7
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/7/items/0
+    record_sha256: 1431003ae73a4017a0c1273f9b454dcbed06c3e933cd413289d9fcaf2773dac7
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-008-b
+  l1_meaning: वह आता है।
+  correct_form: అతను వస్తాడు
+  wrong_form: అతను వస్తుంది
+  accepted_variants:
+  - form: వాడు వస్తాడు
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /7/items/1/accepted/1
+      record_sha256: 50044207147e130635ecd5a355663c886d423bf17090f3f02622254263c82c03
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/7/items/1/accepted/1
+      record_sha256: 50044207147e130635ecd5a355663c886d423bf17090f3f02622254263c82c03
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(అతను|వాడు) వస్తాడు$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^(అతను|వాడు) \S*ంది$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He comes.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /7/items/1
+    record_sha256: f0c1060b2ceacd22d05673e95e82fbf3d750b65fa2ff6b2d9a2e3d43bf44f22e
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/7/items/1
+    record_sha256: f0c1060b2ceacd22d05673e95e82fbf3d750b65fa2ff6b2d9a2e3d43bf44f22e
+    description: sub-record; the raw record is embedded in the parent's provenance

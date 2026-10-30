@@ -1,0 +1,275 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: HI-TE-011
+direction: HI->TE
+contrast_area: case
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: '''उसने किताब पढ़ी'' = అతను పుస్తకం చదివాడు। कर्ता (మైం/वह) वैसा ही रहता है: నేను, అతను — నాకు/అతనికి
+  (''मुझको/उसको'') नहीं।'
+concept_key:
+  ideas:
+  - - ने
+  - - नहीं
+    - बिना
+    - నేను
+    - नेनु
+    - అతను
+    - अतनु
+validity: uncertain
+learner_evidence: predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations:
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: వాడు పండ్లు కొన్నాడు
+  note: plain subject in past transitive (no ne-type marker) confirmed
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/6
+    record_sha256: b3451a0b0001ab74902976cbaa6e6ecbbbb91d1081e7345fded5981fd25e346d
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: waaDu paNDlu konnaaDu
+      gloss: He bought fruits.
+      telugu_draft: వాడు పండ్లు కొన్నాడు
+      rules:
+      - HI-TE-011
+      note: plain subject in past transitive (no ne-type marker) confirmed
+- data_source: DS-02
+  reference: Krishnamurti & Gwynn 1985
+  telugu_draft: నేను వచ్చాను
+  note: plain subject
+  provenance:
+    repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/book_examples.jsonl
+    pointer: /line/7
+    record_sha256: 5143ec5e1474b91f4d38eec2128367fd23f0633e7b37aed1f9771b557322c4dd
+    description: Krishnamurti & Gwynn 1985 example recorded by the team; Telugu is a draft
+    original:
+      src: Krishnamurti & Gwynn 1985
+      romanized: neenu waccEEnu
+      gloss: I came.
+      telugu_draft: నేను వచ్చాను
+      rules:
+      - HI-TE-011
+      note: plain subject
+needs_rewrite:
+  title_l1: Telugu में 'ने' नहीं होता
+dev_notes:
+  name_en: 'No ''ne'' marking: subject stays in the plain form in the past'
+  title_en: No ‘ने’ in Telugu
+  l1_habit_en: Hindi ने on past transitive subject; learner marks Telugu subject with a case ending
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms:
+  - ne
+  - 'no'
+  - nahi
+  - nahin
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-hi_l2-te/rules.json
+  pointer: /10
+  record_sha256: ca214bd2cb1689b9e6226ba8f96f58ff6e7c555c694455f3c22b36f984cf5046
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+  original:
+    rule_id: HI-TE-011
+    name: 'No ''ne'' marking: subject stays in the plain form in the past'
+    category: case
+    l1_habit: Hindi ने on past transitive subject; learner marks Telugu subject with a case ending
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    items:
+    - item_id: HI-TE-011-a
+      english: He read the book.
+      hindi: उसने किताब पढ़ी।
+      accepted:
+      - అతను పుస్తకం చదివాడు
+      - వాడు పుస్తకం చదివాడు
+      planted_error: అతనికి పుస్తకం చదివాడు
+      wrong_regex:
+      - '^(అతనికి|వాడికి) '
+      fix_regex:
+      - ^(అతను|వాడు) పుస్తకం చదివాడు$
+    - item_id: HI-TE-011-b
+      english: I ate the rice.
+      hindi: मैंने चावल खाया।
+      accepted:
+      - నేను అన్నం తిన్నాను
+      planted_error: నాకు అన్నం తిన్నాను
+      wrong_regex:
+      - ^నాకు \S+ తిన్నాను$
+      fix_regex:
+      - ^నేను అన్నం తిన్నాను$
+    title: No ‘ने’ in Telugu
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/rules.json
+  pointer: /rules/10
+  record_sha256: e3a75dd50934cfcdf3f1fc35990c88e03fe8684beea84bf6266f2e490fc8ed53
+  description: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)
+    · team rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI),
+    need review
+  original:
+    rule_id: HI-TE-011
+    name: 'No ''ne'' marking: subject stays in the plain form in the past'
+    category: case
+    l1_habit: Hindi ने on past transitive subject; learner marks Telugu subject with a case ending
+    transfer: negative
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl) · team
+      rule bank (FavianaNoronha/LMA---Reverse-learning-Tutor) · Hindi explanations drafted by Claude (AI), need
+      review
+    items:
+    - item_id: HI-TE-011-a
+      english: He read the book.
+      hindi: उसने किताब पढ़ी।
+      accepted:
+      - అతను పుస్తకం చదివాడు
+      - వాడు పుస్తకం చదివాడు
+      planted_error: అతనికి పుస్తకం చదివాడు
+      wrong_regex:
+      - '^(అతనికి|వాడికి) '
+      fix_regex:
+      - ^(అతను|వాడు) పుస్తకం చదివాడు$
+    - item_id: HI-TE-011-b
+      english: I ate the rice.
+      hindi: मैंने चावल खाया।
+      accepted:
+      - నేను అన్నం తిన్నాను
+      planted_error: నాకు అన్నం తిన్నాను
+      wrong_regex:
+      - ^నాకు \S+ తిన్నాను$
+      fix_regex:
+      - ^నేను అన్నం తిన్నాను$
+    title: No ‘ने’ in Telugu
+    title_hi: Telugu में 'ने' नहीं होता
+    explain_hi: '''उसने किताब पढ़ी'' = అతను పుస్తకం చదివాడు। कर्ता (మైం/वह) वैसा ही रहता है: నేను, అతను — నాకు/అతనికి
+      (''मुझको/उसको'') नहीं।'
+    key_ideas:
+    - - ने
+      - ne
+    - - नहीं
+      - बिना
+      - 'no'
+      - నేను
+      - नेनु
+      - అతను
+      - अतनु
+      - nahi
+      - nahin
+    status: draft_unverified
+items:
+- item_id: HI-TE-011-a
+  l1_meaning: उसने किताब पढ़ी।
+  correct_form: అతను పుస్తకం చదివాడు
+  wrong_form: అతనికి పుస్తకం చదివాడు
+  accepted_variants:
+  - form: వాడు పుస్తకం చదివాడు
+    register: written
+    status: proposed
+    provenance:
+    - repo: LMA---Reverse-learning-Tutor
+      remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+      commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+      path: data/l1-hi_l2-te/rules.json
+      pointer: /10/items/0/accepted/1
+      record_sha256: 4c02657d2953ccabc05bca08c27f04f98f715d0438fd94d6d485c88796eef8f5
+      description: sub-record; the raw record is embedded in the parent's provenance
+    - repo: setu-tutor
+      remote: null
+      commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+      path: data/hi-te/rules.json
+      pointer: /rules/10/items/0/accepted/1
+      record_sha256: 4c02657d2953ccabc05bca08c27f04f98f715d0438fd94d6d485c88796eef8f5
+      description: sub-record; the raw record is embedded in the parent's provenance
+  accept_patterns:
+  - ^(అతను|వాడు) పుస్తకం చదివాడు$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: '^(అతనికి|వాడికి) '
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He read the book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /10/items/0
+    record_sha256: 518382c2d588dd66610cab1679d15a755da4ae4cfe1a33cbbe7c2d68e7826df3
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/10/items/0
+    record_sha256: 518382c2d588dd66610cab1679d15a755da4ae4cfe1a33cbbe7c2d68e7826df3
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: HI-TE-011-b
+  l1_meaning: मैंने चावल खाया।
+  correct_form: నేను అన్నం తిన్నాను
+  wrong_form: నాకు అన్నం తిన్నాను
+  accepted_variants: []
+  accept_patterns:
+  - ^నేను అన్నం తిన్నాను$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: ^నాకు \S+ తిన్నాను$
+    kind: wrong
+    reasons:
+    - unbounded_or_large_repeat
+    - wildcard
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I ate the rice.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-hi_l2-te/rules.json
+    pointer: /10/items/1
+    record_sha256: 69d401cb12ad1817ddf6a8533e56df9c7a4686d1c13de6a950beaf3462dcd508
+    description: sub-record; the raw record is embedded in the parent's provenance
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/rules.json
+    pointer: /rules/10/items/1
+    record_sha256: 69d401cb12ad1817ddf6a8533e56df9c7a4686d1c13de6a950beaf3462dcd508
+    description: sub-record; the raw record is embedded in the parent's provenance

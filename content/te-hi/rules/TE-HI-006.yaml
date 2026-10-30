@@ -1,0 +1,134 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+schema: setu.rule/1
+rule_id: TE-HI-006
+direction: TE->HI
+contrast_area: agreement
+band: L4
+band_reason: 'imported default: contrast rules sit at L4 of the learning ladder (learning-ladder.md §1); not yet
+  set by two native speakers or by the leveler'
+title_l1: null
+explanation_l1: null
+concept_key:
+  ideas: []
+validity: uncertain
+learner_evidence: model_predicted
+lifecycle: draft
+licence: team-owned draft content (DS-20); Telugu and Hindi unreviewed
+citations: []
+needs_rewrite: {}
+dev_notes:
+  name_en: With ने, the verb agrees with the object
+  title_en: After ने the verb matches the object (चाय पी)
+  l1_habit_en: In Telugu the verb agrees with the subject (చదివాడు = he read); in Hindi after ने it agrees with
+    the object (किताब पढ़ी)
+  transfer: negative
+  source_status:
+  - draft_unverified
+  source_versions:
+  - 1
+  dropped_latin_concept_terms: []
+  merge_conflicts: {}
+provenance:
+- repo: LMA---Reverse-learning-Tutor
+  remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+  commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+  path: data/l1-te_l2-hi/rules.json
+  pointer: /5
+  record_sha256: 240b1a809559e70ae28aebd6cd894645541c1dd4c61e87c04641823553787ff6
+  description: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti &
+    Gwynn 1985
+  original:
+    rule_id: TE-HI-006
+    name: With ने, the verb agrees with the object
+    category: agreement
+    l1_habit: In Telugu the verb agrees with the subject (చదివాడు = he read); in Hindi after ने it agrees with the
+      object (किताब पढ़ी)
+    transfer: negative
+    status: draft_unverified
+    evidence: model_predicted
+    version: 1
+    reviewer: null
+    reviewed_at: null
+    source: Claude draft (unreviewed); contrast to be checked against NCERT Hindi grammar and Krishnamurti & Gwynn
+      1985
+    items:
+    - item_id: TE-HI-006-a
+      english: I drank tea.
+      telugu: నేను టీ తాగాను
+      accepted:
+      - मैंने चाय पी
+      planted_error: मैंने चाय पिया
+      wrong_regex:
+      - चाय पिया
+      fix_regex:
+      - ^मैंने चाय पी$
+    - item_id: TE-HI-006-b
+      english: He read a book.
+      telugu: అతను ఒక పుస్తకం చదివాడు
+      accepted:
+      - उसने एक किताब पढ़ी
+      planted_error: उसने एक किताब पढ़ा
+      wrong_regex:
+      - किताब पढ़ा$
+      fix_regex:
+      - ^उसने एक किताब पढ़ी$
+    title: After ने the verb matches the object (चाय पी)
+items:
+- item_id: TE-HI-006-a
+  l1_meaning: నేను టీ తాగాను
+  correct_form: मैंने चाय पी
+  wrong_form: मैंने चाय पिया
+  accepted_variants: []
+  accept_patterns:
+  - ^मैंने चाय पी$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: चाय पिया
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: I drank tea.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /5/items/0
+    record_sha256: 98fc3f39c4f8c7e6473abcf7b49e354152d9b62ca8c53022cd33bd61b40d2c62
+    description: sub-record; the raw record is embedded in the parent's provenance
+- item_id: TE-HI-006-b
+  l1_meaning: అతను ఒక పుస్తకం చదివాడు
+  correct_form: उसने एक किताब पढ़ी
+  wrong_form: उसने एक किताब पढ़ा
+  accepted_variants: []
+  accept_patterns:
+  - ^उसने एक किताब पढ़ी$
+  wrong_patterns: []
+  rejected_patterns:
+  - pattern: किताब पढ़ा$
+    kind: wrong
+    reasons:
+    - not_anchored
+  allowed_target_forms: []
+  pool: practice
+  review_status: draft
+  needs_rewrite: {}
+  dev_notes:
+    english_meaning: He read a book.
+    merge_conflicts: {}
+  provenance:
+  - repo: LMA---Reverse-learning-Tutor
+    remote: https://github.com/FavianaNoronha/LMA---Reverse-learning-Tutor.git
+    commit: c11a63a30f7c20311f3fb1e1318427a8cf63b304
+    path: data/l1-te_l2-hi/rules.json
+    pointer: /5/items/1
+    record_sha256: 65030d68fb35c7a5ed95617f239221ff32f8362f91d1474cad480dcb97522caa
+    description: sub-record; the raw record is embedded in the parent's provenance

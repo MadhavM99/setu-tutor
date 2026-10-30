@@ -1,0 +1,663 @@
+[
+ {
+  "rule_id": "HI-TE-001",
+  "name": "Polar question: -aa ending, no kya",
+  "category": "questions",
+  "l1_habit": "Hindi 'क्या' at the start; Telugu marks yes/no questions with -ā on the verb/noun",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-001-a",
+    "english": "Are you coming?",
+    "hindi": "क्या तुम आ रहे हो?",
+    "accepted": [
+     "నువ్వు వస్తావా",
+     "నువ్వు వస్తున్నావా"
+    ],
+    "planted_error": "క్యా నువ్వు వస్తావు",
+    "wrong_regex": [
+     "క్యా"
+    ],
+    "fix_regex": [
+     "^నువ్వు (వస్తావా|వస్తున్నావా)$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-001-b",
+    "english": "Is this a book?",
+    "hindi": "क्या यह किताब है?",
+    "accepted": [
+     "ఇది పుస్తకమా"
+    ],
+    "planted_error": "క్యా ఇది పుస్తకం",
+    "wrong_regex": [
+     "క్యా"
+    ],
+    "fix_regex": [
+     "^ఇది పుస్తకమా$"
+    ]
+   }
+  ],
+  "title": "Questions: add -ā at the end, no ‘क्या’"
+ },
+ {
+  "rule_id": "HI-TE-002",
+  "name": "Zero copula: no 'is' between two nouns",
+  "category": "copula",
+  "l1_habit": "Hindi है is always present; Telugu leaves it out in 'X is Y'",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-002-a",
+    "english": "This is a book.",
+    "hindi": "यह किताब है।",
+    "accepted": [
+     "ఇది పుస్తకం"
+    ],
+    "planted_error": "ఇది పుస్తకం ఉంది",
+    "wrong_regex": [
+     "^(ఇది|అది) \\S+ ఉంది$"
+    ],
+    "fix_regex": [
+     "^ఇది పుస్తకం$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-002-b",
+    "english": "That is a pen.",
+    "hindi": "वह कलम है।",
+    "accepted": [
+     "అది పెన్ను"
+    ],
+    "planted_error": "అది పెన్ను ఉంది",
+    "wrong_regex": [
+     "^(ఇది|అది) \\S+ ఉంది$"
+    ],
+    "fix_regex": [
+     "^అది పెన్ను$"
+    ]
+   }
+  ],
+  "title": "No word for ‘is’ in ‘This is a book’"
+ },
+ {
+  "rule_id": "HI-TE-003",
+  "name": "Possession with dative: 'to me is a book'",
+  "category": "possession",
+  "l1_habit": "Hindi मेरे पास / मुझे; learner uses nominative 'I' + ఉంది",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-003-a",
+    "english": "I have a book.",
+    "hindi": "मेरे पास एक किताब है।",
+    "accepted": [
+     "నాకు ఒక పుస్తకం ఉంది",
+     "నా దగ్గర ఒక పుస్తకం ఉంది"
+    ],
+    "planted_error": "నేను ఒక పుస్తకం ఉంది",
+    "wrong_regex": [
+     "^నేను .* ఉంది$"
+    ],
+    "fix_regex": [
+     "^(నాకు|నా దగ్గర) ఒక పుస్తకం ఉంది$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-003-b",
+    "english": "You have a pen.",
+    "hindi": "तुम्हारे पास एक कलम है।",
+    "accepted": [
+     "నీకు ఒక పెన్ను ఉంది",
+     "నీ దగ్గర ఒక పెన్ను ఉంది"
+    ],
+    "planted_error": "నువ్వు ఒక పెన్ను ఉంది",
+    "wrong_regex": [
+     "^నువ్వు .* ఉంది$"
+    ],
+    "fix_regex": [
+     "^(నీకు|నీ దగ్గర) ఒక పెన్ను ఉంది$"
+    ]
+   }
+  ],
+  "title": "‘I have’ is ‘to me there is’ (నాకు … ఉంది)"
+ },
+ {
+  "rule_id": "HI-TE-004",
+  "name": "Case endings attach to the noun (no separate 'in')",
+  "category": "case",
+  "l1_habit": "Hindi में is a separate word; Telugu -lō is a suffix and the noun changes (ఇల్లు→ఇంట్లో)",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-004-a",
+    "english": "I am in the house.",
+    "hindi": "मैं घर में हूँ।",
+    "accepted": [
+     "నేను ఇంట్లో ఉన్నాను"
+    ],
+    "planted_error": "నేను ఇల్లు లో ఉన్నాను",
+    "wrong_regex": [
+     " లో( |$)"
+    ],
+    "fix_regex": [
+     "^నేను ఇంట్లో ఉన్నాను$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-004-b",
+    "english": "I am in the room.",
+    "hindi": "मैं कमरे में हूँ।",
+    "accepted": [
+     "నేను గదిలో ఉన్నాను"
+    ],
+    "planted_error": "నేను గది లో ఉన్నాను",
+    "wrong_regex": [
+     " లో( |$)"
+    ],
+    "fix_regex": [
+     "^నేను గదిలో ఉన్నాను$"
+    ]
+   }
+  ],
+  "title": "‘in’ sticks to the word (ఇంట్లో = in the house)"
+ },
+ {
+  "rule_id": "HI-TE-005",
+  "name": "Negation: negative verb form, not 'not' after verb",
+  "category": "negation",
+  "l1_habit": "Hindi नहीं before the verb; Telugu uses a negative verb form (రాను) or కాదు only for nouns",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-005-a",
+    "english": "I will not come.",
+    "hindi": "मैं नहीं आऊँगा।",
+    "accepted": [
+     "నేను రాను"
+    ],
+    "planted_error": "నేను వస్తాను కాదు",
+    "wrong_regex": [
+     "కాదు$"
+    ],
+    "fix_regex": [
+     "^నేను రాను$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-005-b",
+    "english": "He will not come.",
+    "hindi": "वह नहीं आएगा।",
+    "accepted": [
+     "అతను రాడు",
+     "వాడు రాడు"
+    ],
+    "planted_error": "అతను వస్తాడు కాదు",
+    "wrong_regex": [
+     "కాదు$"
+    ],
+    "fix_regex": [
+     "^(అతను|వాడు) రాడు$"
+    ]
+   }
+  ],
+  "title": "Saying ‘not’: change the verb (రాను = I won't come)"
+ },
+ {
+  "rule_id": "HI-TE-006",
+  "name": "'We': మేము (without you) vs మనం (with you)",
+  "category": "pronouns",
+  "l1_habit": "Hindi has one हम; Telugu splits inclusive and exclusive",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-006-a",
+    "english": "We (but not you) are going.",
+    "hindi": "हम (तुम्हारे बिना) जा रहे हैं।",
+    "accepted": [
+     "మేము వెళ్తున్నాం",
+     "మేము వెళ్తున్నాము",
+     "మేము వెళ్తాం"
+    ],
+    "planted_error": "మనం వెళ్తున్నాం",
+    "wrong_regex": [
+     "^మనం "
+    ],
+    "fix_regex": [
+     "^మేము (వెళ్తున్నాం|వెళ్తున్నాము|వెళ్తాం)$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-006-b",
+    "english": "We (you and I) are going.",
+    "hindi": "हम (तुम और मैं) जा रहे हैं।",
+    "accepted": [
+     "మనం వెళ్తున్నాం",
+     "మనం వెళ్తాం",
+     "మనం వెళ్దాం"
+    ],
+    "planted_error": "మేము వెళ్తున్నాం",
+    "wrong_regex": [
+     "^మేము "
+    ],
+    "fix_regex": [
+     "^మనం (వెళ్తున్నాం|వెళ్తాం|వెళ్దాం)$"
+    ]
+   }
+  ],
+  "title": "Two words for ‘we’: మేము and మనం"
+ },
+ {
+  "rule_id": "HI-TE-007",
+  "name": "'He' vs 'she' pronouns (Hindi वह is gender-neutral)",
+  "category": "pronouns",
+  "l1_habit": "Hindi वह covers he and she; Telugu uses అతను / ఆమె",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-007-a",
+    "english": "She is a teacher.",
+    "hindi": "वह शिक्षिका है।",
+    "accepted": [
+     "ఆమె టీచరు",
+     "ఆమె టీచర్"
+    ],
+    "planted_error": "అతను టీచరు",
+    "wrong_regex": [
+     "^అతను (టీచరు|టీచర్)$"
+    ],
+    "fix_regex": [
+     "^ఆమె (టీచరు|టీచర్)$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-007-b",
+    "english": "He is a doctor.",
+    "hindi": "वह डॉक्टर है।",
+    "accepted": [
+     "అతను డాక్టరు",
+     "అతను డాక్టర్",
+     "వాడు డాక్టరు",
+     "వాడు డాక్టర్"
+    ],
+    "planted_error": "ఆమె డాక్టరు",
+    "wrong_regex": [
+     "^ఆమె (డాక్టరు|డాక్టర్)$"
+    ],
+    "fix_regex": [
+     "^(అతను|వాడు) (డాక్టరు|డాక్టర్)$"
+    ]
+   }
+  ],
+  "title": "‘He’ and ‘she’ are different words"
+ },
+ {
+  "rule_id": "HI-TE-008",
+  "name": "Third-person verb ending follows he / she (positive-transfer control)",
+  "category": "agreement",
+  "l1_habit": "Hindi verbs also agree in gender, so this is expected to be easy; used as a control",
+  "transfer": "positive_control",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-008-a",
+    "english": "She comes.",
+    "hindi": "वह आती है।",
+    "accepted": [
+     "ఆమె వస్తుంది"
+    ],
+    "planted_error": "ఆమె వస్తాడు",
+    "wrong_regex": [
+     "^ఆమె \\S*డు$"
+    ],
+    "fix_regex": [
+     "^ఆమె వస్తుంది$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-008-b",
+    "english": "He comes.",
+    "hindi": "वह आता है।",
+    "accepted": [
+     "అతను వస్తాడు",
+     "వాడు వస్తాడు"
+    ],
+    "planted_error": "అతను వస్తుంది",
+    "wrong_regex": [
+     "^(అతను|వాడు) \\S*ంది$"
+    ],
+    "fix_regex": [
+     "^(అతను|వాడు) వస్తాడు$"
+    ]
+   }
+  ],
+  "title": "Verb endings for ‘he’ and ‘she’"
+ },
+ {
+  "rule_id": "HI-TE-009",
+  "name": "Respect: మీరు takes the plural -āru ending",
+  "category": "respect",
+  "l1_habit": "Hindi आप takes plural verb; learner keeps singular -āvu/-āvā after మీరు",
+  "transfer": "unclear",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-009-a",
+    "english": "Sir, are you coming?",
+    "hindi": "आप आ रहे हैं?",
+    "accepted": [
+     "మీరు వస్తారా"
+    ],
+    "planted_error": "మీరు వస్తావా",
+    "wrong_regex": [
+     "^మీరు \\S*ావా$"
+    ],
+    "fix_regex": [
+     "^మీరు వస్తారా$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-009-b",
+    "english": "Sir, you eat.",
+    "hindi": "आप खाते हैं।",
+    "accepted": [
+     "మీరు తింటారు"
+    ],
+    "planted_error": "మీరు తింటావు",
+    "wrong_regex": [
+     "^మీరు \\S*ావు$"
+    ],
+    "fix_regex": [
+     "^మీరు తింటారు$"
+    ]
+   }
+  ],
+  "title": "Respect: మీరు takes a plural ending"
+ },
+ {
+  "rule_id": "HI-TE-010",
+  "name": "Relative clause: participle before the noun, no 'jo'",
+  "category": "clauses",
+  "l1_habit": "Hindi जो…वह clause after/before; Telugu uses a -ina participle before the noun",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-010-a",
+    "english": "This is the book that I read.",
+    "hindi": "यह वह किताब है जो मैंने पढ़ी।",
+    "accepted": [
+     "ఇది నేను చదివిన పుస్తకం"
+    ],
+    "planted_error": "ఇది జో పుస్తకం నేను చదివాను",
+    "wrong_regex": [
+     "జో"
+    ],
+    "fix_regex": [
+     "చదివిన పుస్తకం"
+    ]
+   }
+  ],
+  "title": "‘The book I read’: the describing part comes first"
+ },
+ {
+  "rule_id": "HI-TE-011",
+  "name": "No 'ne' marking: subject stays in the plain form in the past",
+  "category": "case",
+  "l1_habit": "Hindi ने on past transitive subject; learner marks Telugu subject with a case ending",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-011-a",
+    "english": "He read the book.",
+    "hindi": "उसने किताब पढ़ी।",
+    "accepted": [
+     "అతను పుస్తకం చదివాడు",
+     "వాడు పుస్తకం చదివాడు"
+    ],
+    "planted_error": "అతనికి పుస్తకం చదివాడు",
+    "wrong_regex": [
+     "^(అతనికి|వాడికి) "
+    ],
+    "fix_regex": [
+     "^(అతను|వాడు) పుస్తకం చదివాడు$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-011-b",
+    "english": "I ate the rice.",
+    "hindi": "मैंने चावल खाया।",
+    "accepted": [
+     "నేను అన్నం తిన్నాను"
+    ],
+    "planted_error": "నాకు అన్నం తిన్నాను",
+    "wrong_regex": [
+     "^నాకు \\S+ తిన్నాను$"
+    ],
+    "fix_regex": [
+     "^నేను అన్నం తిన్నాను$"
+    ]
+   }
+  ],
+  "title": "No ‘ने’ in Telugu"
+ },
+ {
+  "rule_id": "HI-TE-012",
+  "name": "Object with -ను when it is a person",
+  "category": "case",
+  "l1_habit": "Hindi को is optional-ish; learner drops Telugu -ను on animate objects",
+  "transfer": "unclear",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-012-a",
+    "english": "I called mother.",
+    "hindi": "मैंने माँ को बुलाया।",
+    "accepted": [
+     "నేను అమ్మను పిలిచాను"
+    ],
+    "planted_error": "నేను అమ్మ పిలిచాను",
+    "wrong_regex": [
+     "^నేను అమ్మ \\S+$"
+    ],
+    "fix_regex": [
+     "అమ్మను"
+    ]
+   },
+   {
+    "item_id": "HI-TE-012-b",
+    "english": "I saw father.",
+    "hindi": "मैंने पिताजी को देखा।",
+    "accepted": [
+     "నేను నాన్నను చూశాను"
+    ],
+    "planted_error": "నేను నాన్న చూశాను",
+    "wrong_regex": [
+     "^నేను నాన్న \\S+$"
+    ],
+    "fix_regex": [
+     "నాన్నను"
+    ]
+   }
+  ],
+  "title": "Add -ను when the object is a person"
+ },
+ {
+  "rule_id": "HI-TE-013",
+  "name": "Present continuous: -tunnānu, not verb + 'am'",
+  "category": "tense",
+  "l1_habit": "Hindi रहा हूँ is two words; Telugu fuses it, or uses -tū unnānu",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft (unreviewed)",
+  "items": [
+   {
+    "item_id": "HI-TE-013-a",
+    "english": "I am eating.",
+    "hindi": "मैं खा रहा हूँ।",
+    "accepted": [
+     "నేను తింటున్నాను",
+     "నేను తింటూ ఉన్నాను"
+    ],
+    "planted_error": "నేను తింటాను ఉన్నాను",
+    "wrong_regex": [
+     "ాను ఉన్నాను$"
+    ],
+    "fix_regex": [
+     "^నేను (తింటున్నాను|తింటూ ఉన్నాను)$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-013-b",
+    "english": "I am going.",
+    "hindi": "मैं जा रहा हूँ।",
+    "accepted": [
+     "నేను వెళ్తున్నాను",
+     "నేను వెళ్తూ ఉన్నాను"
+    ],
+    "planted_error": "నేను వెళ్తాను ఉన్నాను",
+    "wrong_regex": [
+     "ాను ఉన్నాను$"
+    ],
+    "fix_regex": [
+     "^నేను (వెళ్తున్నాను|వెళ్తూ ఉన్నాను)$"
+    ]
+   }
+  ],
+  "title": "‘I am coming’ is one word: వస్తున్నాను"
+ },
+ {
+  "rule_id": "HI-TE-014",
+  "name": "'For': కోసం comes after the noun",
+  "category": "postposition",
+  "l1_habit": "Hindi के लिए follows the noun, but learner puts కోసం first like an English preposition",
+  "transfer": "unclear",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-014-a",
+    "english": "This is for you.",
+    "hindi": "यह तुम्हारे लिए है।",
+    "accepted": [
+     "ఇది నీ కోసం"
+    ],
+    "planted_error": "ఇది కోసం నీ",
+    "wrong_regex": [
+     "^ఇది కోసం "
+    ],
+    "fix_regex": [
+     "^ఇది నీ కోసం$"
+    ]
+   },
+   {
+    "item_id": "HI-TE-014-b",
+    "english": "This is for me.",
+    "hindi": "यह मेरे लिए है।",
+    "accepted": [
+     "ఇది నా కోసం"
+    ],
+    "planted_error": "ఇది కోసం నా",
+    "wrong_regex": [
+     "^ఇది కోసం "
+    ],
+    "fix_regex": [
+     "^ఇది నా కోసం$"
+    ]
+   }
+  ],
+  "title": "‘For’: కోసం comes after the word"
+ },
+ {
+  "rule_id": "HI-TE-015",
+  "name": "Going to a place: -కి, not -లో",
+  "category": "case",
+  "l1_habit": "Hindi में/को confusion; destination takes -కి",
+  "transfer": "negative",
+  "version": 1,
+  "reviewer": null,
+  "reviewed_at": null,
+  "source": "Claude draft; contrast confirmed in Krishnamurti & Gwynn 1985 examples (see book_examples.jsonl)",
+  "items": [
+   {
+    "item_id": "HI-TE-015-a",
+    "english": "I am going home.",
+    "hindi": "मैं घर जा रहा हूँ।",
+    "accepted": [
+     "నేను ఇంటికి వెళ్తున్నాను"
+    ],
+    "planted_error": "నేను ఇంట్లో వెళ్తున్నాను",
+    "wrong_regex": [
+     "ఇంట్లో వెళ్"
+    ],
+    "fix_regex": [
+     "ఇంటికి"
+    ]
+   },
+   {
+    "item_id": "HI-TE-015-b",
+    "english": "I go to school.",
+    "hindi": "मैं स्कूल जाता हूँ।",
+    "accepted": [
+     "నేను బడికి వెళ్తాను"
+    ],
+    "planted_error": "నేను బడిలో వెళ్తాను",
+    "wrong_regex": [
+     "బడిలో వెళ్"
+    ],
+    "fix_regex": [
+     "బడికి"
+    ]
+   }
+  ],
+  "title": "Going somewhere: use -కి, not -లో"
+ }
+]

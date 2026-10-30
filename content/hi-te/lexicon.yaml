@@ -1,0 +1,703 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+- id: te:ఒకటి
+  telugu: ఒకటి
+  hindi_gloss: एक (1)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-01
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-01.json
+    pointer: /lesson/0
+    record_sha256: 0f97110657cf81e8b7aa84aef2a2f6393f2294d59d6814bceba6dfc26bade363
+    description: 'L1-01 गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు'
+    original:
+      hindi: एक (1)
+      telugu: ఒకటి
+      note: ''
+- id: te:రెండు
+  telugu: రెండు
+  hindi_gloss: दो (2)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-01
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-01.json
+    pointer: /lesson/1
+    record_sha256: 9f17769f60bdf4ddf309ee7c9a1d84a11bdd55d8b018f2a9eecdb672d3c828c6
+    description: 'L1-01 गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు'
+    original:
+      hindi: दो (2)
+      telugu: రెండు
+      note: ''
+- id: te:మూడు
+  telugu: మూడు
+  hindi_gloss: तीन (3)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-01
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-01.json
+    pointer: /lesson/2
+    record_sha256: 22b1f2a5d62c6976174cc19e8288fd2665969aa2b983aba99df6836c64f7e2cc
+    description: 'L1-01 गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు'
+    original:
+      hindi: तीन (3)
+      telugu: మూడు
+      note: ''
+- id: te:నాలుగు
+  telugu: నాలుగు
+  hindi_gloss: चार (4)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-01
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-01.json
+    pointer: /lesson/3
+    record_sha256: bcb47e7a6839fac9ab1e67370dd91fbdf7028a4859766713ba22970a55153ea9
+    description: 'L1-01 गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు'
+    original:
+      hindi: चार (4)
+      telugu: నాలుగు
+      note: ''
+- id: te:ఐదు
+  telugu: ఐదు
+  hindi_gloss: पाँच (5)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-01
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-01.json
+    pointer: /lesson/4
+    record_sha256: e7cf69f2feaeb44c3427e77e7204b334b6e4c28a3ff9eed9502cb3d44489f38f
+    description: 'L1-01 गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు'
+    original:
+      hindi: पाँच (5)
+      telugu: ఐదు
+      note: ''
+- id: te:ఆరు
+  telugu: ఆరు
+  hindi_gloss: छह (6)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-02
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-02.json
+    pointer: /lesson/0
+    record_sha256: 0c58225715dadb6cc274044e73ead50d29c04e3bc97d82da84ee2734cdfbfdcf
+    description: 'L1-02 गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది'
+    original:
+      hindi: छह (6)
+      telugu: ఆరు
+      note: ''
+- id: te:ఏడు
+  telugu: ఏడు
+  hindi_gloss: सात (7)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-02
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-02.json
+    pointer: /lesson/1
+    record_sha256: 46fe6ed055d61f7f04addd6d7f042bb6778e0c5edb5f5b3793ff1d0644d97567
+    description: 'L1-02 गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది'
+    original:
+      hindi: सात (7)
+      telugu: ఏడు
+      note: ''
+- id: te:ఎనిమిది
+  telugu: ఎనిమిది
+  hindi_gloss: आठ (8)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-02
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-02.json
+    pointer: /lesson/2
+    record_sha256: 180e129d96ce654a501c87060307682bce92e767fa85f2541f0c0724bd99d912
+    description: 'L1-02 गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది'
+    original:
+      hindi: आठ (8)
+      telugu: ఎనిమిది
+      note: ''
+- id: te:తొమ్మిది
+  telugu: తొమ్మిది
+  hindi_gloss: नौ (9)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-02
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-02.json
+    pointer: /lesson/3
+    record_sha256: fe78f65864ea86bd62e72d9c5ccf0707501e7e4df6a81e68b6d184a7a99ebc6e
+    description: 'L1-02 गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది'
+    original:
+      hindi: नौ (9)
+      telugu: తొమ్మిది
+      note: ''
+- id: te:పది
+  telugu: పది
+  hindi_gloss: दस (10)
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-02
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-02.json
+    pointer: /lesson/4
+    record_sha256: cea9712701331b0dbe18c860e11ada358c9af0de6a712cfd0af8ee0d27c4791e
+    description: 'L1-02 गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది'
+    original:
+      hindi: दस (10)
+      telugu: పది
+      note: ''
+- id: te:నమస్కారం
+  telugu: నమస్కారం
+  hindi_gloss: नमस्कार / नमस्ते
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: मिलते समय
+    unit: L1-03
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-03.json
+    pointer: /lesson/0
+    record_sha256: 2b509ea480c216804e160f99ea66749cd1d489b4bfdfeedca9cb6074221f557a
+    description: 'L1-03 पहले शब्द: నమస్కారం ధన్యవాదాలు అవును'
+    original:
+      hindi: नमस्कार / नमस्ते
+      telugu: నమస్కారం
+      note: मिलते समय
+- id: te:ధన్యవాదాలు
+  telugu: ధన్యవాదాలు
+  hindi_gloss: धन्यवाद
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: शुक्रिया
+    unit: L1-03
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-03.json
+    pointer: /lesson/1
+    record_sha256: e52218f4184b12f1996952cc2f5bafb45f83578a04a898cb081442afa39ba374
+    description: 'L1-03 पहले शब्द: నమస్కారం ధన్యవాదాలు అవును'
+    original:
+      hindi: धन्यवाद
+      telugu: ధన్యవాదాలు
+      note: शुक्रिया
+- id: te:అవును
+  telugu: అవును
+  hindi_gloss: हाँ
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-03
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-03.json
+    pointer: /lesson/2
+    record_sha256: a3e39efe1efc8436db51575629bc190ee07bac7395809750ebced2bbf6e561f5
+    description: 'L1-03 पहले शब्द: నమస్కారం ధన్యవాదాలు అవును'
+    original:
+      hindi: हाँ
+      telugu: అవును
+      note: ''
+- id: te:ఏమిటి
+  telugu: ఏమిటి
+  hindi_gloss: क्या
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-04
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-04.json
+    pointer: /lesson/0
+    record_sha256: 7dd554fdf937e94d22e357049b2131f554bad5a95a74cd30e3ea114b525861b6
+    description: 'L1-04 सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    original:
+      hindi: क्या
+      telugu: ఏమిటి
+      note: ''
+- id: te:ఎక్కడ
+  telugu: ఎక్కడ
+  hindi_gloss: कहाँ
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-04
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-04.json
+    pointer: /lesson/1
+    record_sha256: de67820ed822542d4c0e026398716b688e567d4a5ab0ff81dd955f5c9809060b
+    description: 'L1-04 सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    original:
+      hindi: कहाँ
+      telugu: ఎక్కడ
+      note: ''
+- id: te:ఎప్పుడు
+  telugu: ఎప్పుడు
+  hindi_gloss: कब
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-04
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-04.json
+    pointer: /lesson/2
+    record_sha256: d12240e4e997684fff423550d94357438d371547510d67f168070dfb499fb367
+    description: 'L1-04 सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    original:
+      hindi: कब
+      telugu: ఎప్పుడు
+      note: ''
+- id: te:ఎవరు
+  telugu: ఎవరు
+  hindi_gloss: कौन
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: null
+    unit: L1-04
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-04.json
+    pointer: /lesson/3
+    record_sha256: 71aa2e2881ea5564628d5a9de6fe42cb431aad1a8d6182da7283c78e53006f46
+    description: 'L1-04 सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    original:
+      hindi: कौन
+      telugu: ఎవరు
+      note: ''
+- id: te:ఎంత
+  telugu: ఎంత
+  hindi_gloss: कितना
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: दाम पूछने में काम आता है
+    unit: L1-04
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-04.json
+    pointer: /lesson/4
+    record_sha256: ec2db44ef9279551dd9f7e55aea5c461b5ad3c0bd3afab3f8aa28a7113b7157d
+    description: 'L1-04 सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత'
+    original:
+      hindi: कितना
+      telugu: ఎంత
+      note: दाम पूछने में काम आता है
+- id: te:పుస్తకం
+  telugu: పుస్తకం
+  hindi_gloss: पुस्तक
+  pos: null
+  freq_rank: null
+  cognate_of: पुस्तक
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: Hindi शब्द + ం (बिंदु)
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/0
+    record_sha256: d466215348349ee75035329b9036549ecde1d8372fb40a04df0364a9ec608eed
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: पुस्तक
+      telugu: పుస్తకం
+      note: Hindi शब्द + ం (बिंदु)
+- id: te:సమయం
+  telugu: సమయం
+  hindi_gloss: समय
+  pos: null
+  freq_rank: null
+  cognate_of: समय
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: वही नियम
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/1
+    record_sha256: c827d2ad1b506c783da041e1f5d8c8de18d1cdbb9fe55b180ba6888da98c0c87
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: समय
+      telugu: సమయం
+      note: वही नियम
+- id: te:దేశం
+  telugu: దేశం
+  hindi_gloss: देश
+  pos: null
+  freq_rank: null
+  cognate_of: देश
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: वही नियम
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/2
+    record_sha256: 657b7943e2c000b4247970a700f67343f04e2aeb43d828b19a44f200cc6841ae
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: देश
+      telugu: దేశం
+      note: वही नियम
+- id: te:పాఠం
+  telugu: పాఠం
+  hindi_gloss: पाठ
+  pos: null
+  freq_rank: null
+  cognate_of: पाठ
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: वही नियम
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/3
+    record_sha256: 23b3be03661dd4c3198d8a8c54435861feb8ff05bf17373c3f7bca1ce80ca056
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: पाठ
+      telugu: పాఠం
+      note: वही नियम
+- id: te:అర్థం
+  telugu: అర్థం
+  hindi_gloss: अर्थ
+  pos: null
+  freq_rank: null
+  cognate_of: अर्थ
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: वही नियम
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/4
+    record_sha256: 81f2d06b3f09b958296d9d3501f26595e50dc3ecdcb2be42d4ba6f4acde041fd
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: अर्थ
+      telugu: అర్థం
+      note: वही नियम
+- id: te:భాగం
+  telugu: భాగం
+  hindi_gloss: भाग
+  pos: null
+  freq_rank: null
+  cognate_of: भाग
+  false_friend: false
+  false_friend_note_hi: null
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: वही नियम
+    unit: L1-05
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-05.json
+    pointer: /lesson/5
+    record_sha256: d29deb05c94e055d18066194e67e0065913d7d7e80f7503a7cbb09e00532ad90
+    description: 'L1-05 Hindi के जुड़वाँ शब्द: Hindi शब्द + ం'
+    original:
+      hindi: भाग
+      telugu: భాగం
+      note: वही नियम
+- id: te:అవసరం
+  telugu: అవసరం
+  hindi_gloss: ज़रूरत
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: true
+  false_friend_note_hi: अवसर नहीं!
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: ⚠ Hindi 'अवसर' = मौका; Telugu అవసరం = ज़रूरत
+    unit: L1-06
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-06.json
+    pointer: /lesson/0
+    record_sha256: e2be7c38b93d6c7e4a5bdfe9197887cc6d642f3a519323c65d648363b27ade47
+    description: 'L1-06 धोखेबाज़ शब्द: दिखते Hindi जैसे, मतलब अलग'
+    original:
+      hindi: ज़रूरत (अवसर नहीं!)
+      telugu: అవసరం
+      note: ⚠ Hindi 'अवसर' = मौका; Telugu అవసరం = ज़रूरत
+- id: te:ఉపన్యాసం
+  telugu: ఉపన్యాసం
+  hindi_gloss: भाषण
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: true
+  false_friend_note_hi: उपन्यास नहीं!
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: ⚠ Hindi 'उपन्यास' = novel; Telugu = भाषण
+    unit: L1-06
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-06.json
+    pointer: /lesson/1
+    record_sha256: 2008461f3d9bdd02c43be6e98d5ce46310b18039f2f8cf988809d957725875f1
+    description: 'L1-06 धोखेबाज़ शब्द: दिखते Hindi जैसे, मतलब अलग'
+    original:
+      hindi: भाषण (उपन्यास नहीं!)
+      telugu: ఉపన్యాసం
+      note: ⚠ Hindi 'उपन्यास' = novel; Telugu = भाषण
+- id: te:చరిత్ర
+  telugu: చరిత్ర
+  hindi_gloss: इतिहास
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: true
+  false_friend_note_hi: चरित्र नहीं!
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: ⚠ Hindi 'चरित्र' = character; Telugu = इतिहास
+    unit: L1-06
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-06.json
+    pointer: /lesson/2
+    record_sha256: 7d501296d416aef3f294de5637365890efa01b62e58ddded4572b0da2d171a4d
+    description: 'L1-06 धोखेबाज़ शब्द: दिखते Hindi जैसे, मतलब अलग'
+    original:
+      hindi: इतिहास (चरित्र नहीं!)
+      telugu: చరిత్ర
+      note: ⚠ Hindi 'चरित्र' = character; Telugu = इतिहास
+- id: te:ఆలస్యం
+  telugu: ఆలస్యం
+  hindi_gloss: देर
+  pos: null
+  freq_rank: null
+  cognate_of: null
+  false_friend: true
+  false_friend_note_hi: आलस्य नहीं!
+  source_id: DS-20
+  review_status: draft
+  dev_notes:
+    lesson_note: ⚠ Hindi 'आलस्य' = सुस्ती; Telugu = देर
+    unit: L1-06
+  provenance:
+  - repo: setu-tutor
+    remote: null
+    commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+    path: data/hi-te/L1-06.json
+    pointer: /lesson/3
+    record_sha256: 49fc9e4f8a3ccbebf99df757bb35285e3e368247fcc71c77c313f7015c3be62a
+    description: 'L1-06 धोखेबाज़ शब्द: दिखते Hindi जैसे, मतलब अलग'
+    original:
+      hindi: देर (आलस्य नहीं!)
+      telugu: ఆలస్యం
+      note: ⚠ Hindi 'आलस्य' = सुस्ती; Telugu = देर

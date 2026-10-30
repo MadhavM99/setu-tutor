@@ -1,0 +1,64 @@
+# Converted by `python -m setu.content convert` from the source snapshots listed under provenance.
+# After this one-time conversion this file is the authored source: edit it to change content, and the
+# importer will add a new version. Review and approval happen only in the teacher console.
+unit_id: L1-03
+review_status: draft
+imported_to_database: false
+deferred_to: 'words: lexicon.yaml now; drill items: slice 3 (S3)'
+note: Kept verbatim (letters, mnemonics, pictures, drill items) for review; nothing here reaches learners. Mnemonics
+  and shape notes become memory-aid drafts only via the grounding validator and teacher review (ADR-0005).
+provenance:
+- repo: setu-tutor
+  remote: null
+  commit: 7b84c7e668230dc6a35b57c4d1ef984c45488c5e
+  path: data/hi-te/L1-03.json
+  pointer: ''
+  record_sha256: fa61c8306ca800bd27bdbe31814955ad842d9b3e4f9fc682a2760894b83a5862
+  description: team draft
+  original:
+    unit_id: L1-03
+    level: 1
+    title: 'पहले शब्द: నమస్కారం ధన్యవాదాలు అవును'
+    lesson:
+    - hindi: नमस्कार / नमस्ते
+      telugu: నమస్కారం
+      note: मिलते समय
+    - hindi: धन्यवाद
+      telugu: ధన్యవాదాలు
+      note: शुक्रिया
+    - hindi: हाँ
+      telugu: అవును
+      note: ''
+    check:
+      item_id: L1-03-check
+      prompt: అవును
+      accepted:
+      - हाँ
+      - हां
+      - हा
+      raju_wrong: नहीं
+      answer_script: devanagari
+      closed: true
+    items:
+    - item_id: L1-03-a
+      prompt: ధన్యవాదాలు
+      accepted:
+      - धन्यवाद
+      - शुक्रिया
+      raju_wrong: नमस्ते
+      answer_script: devanagari
+      closed: true
+    - item_id: L1-03-b
+      prompt: నమస్కారం
+      accepted:
+      - नमस्कार
+      - नमस्ते
+      raju_wrong: धन्यवाद
+      answer_script: devanagari
+      closed: true
+    requires:
+    - L1-02
+    status: draft_unverified
+    version: 1
+    reviewer: null
+    source: team draft

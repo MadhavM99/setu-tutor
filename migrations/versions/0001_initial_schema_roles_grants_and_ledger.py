@@ -751,7 +751,7 @@ def upgrade() -> None:
         op.execute(stmt)
     for stmt in sql.UPGRADE:
         op.execute(stmt)
-    for stmt in grants.grant_statements():
+    for stmt in grants.grant_statements(grants.PLAN_V1, views={}):  # frozen: the plan as of 0001
         op.execute(stmt)
 
 

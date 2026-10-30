@@ -1,0 +1,247 @@
+"""Import the authored content tree into Postgres (slice 1.4).
+
+- Runs in one transaction under the `setu_content` role: all or nothing, never learner data or learning state.
+- Refuses a tree with validation errors (including any claim of review or approval).
+- Idempotent: each record carries the sha256 of its authored form; unchanged records add nothing.
+- Immutable history: a changed rule or item becomes a new version that supersedes the previous one. The importer
+  never supersedes a version that someone has moved past `draft` (under review, verified, active…): those changes
+  go through the teacher console.
+- Never activates anything: rules enter as `uncertain`/`draft`, items and words as `draft`, extra accepted
+  forms as `proposed`. Validation issues are stored with each item version and block its approval.
+"""
+import dataclasses
+import json
+
+from sqlalchemy import text
+from sqlalchemy.engine import Connection, Engine
+
+from . import patterns
+from .schema import normalise_sentence, sha256_of
+from .validate import ContentTree, Result, validate_tree
+
+
+class ImportRefused(Exception):
+    pass
+
+
+@dataclasses.dataclass
+class ImportResult:
+    new_rule_versions: int = 0
+    new_item_versions: int = 0
+    new_variants: int = 0
+    lexemes_written: int = 0
+    scenes_written: int = 0
+    data_sources_written: int = 0
+    unchanged: int = 0
+
+
+def _tx(engine: Engine):
+    return _ContentTx(engine.execution_options(isolation_level="READ COMMITTED"))
+
+
+class _ContentTx:
+    def __init__(self, engine):
+        self._engine = engine
+
+    def __enter__(self) -> Connection:
+        self._ctx = self._engine.begin()
+        c = self._ctx.__enter__()
+        c.execute(text("SET LOCAL ROLE setu_content"))
+        return c
+
+    def __exit__(self, *exc):
+        return self._ctx.__exit__(*exc)
+
+
+def effective_role(engine: Engine) -> str:
+    with _tx(engine) as c:
+        return c.execute(text("SELECT current_user")).scalar_one()
+
+
+def _j(obj) -> str:
+    return json.dumps(obj, ensure_ascii=False, sort_keys=True)
+
+
+def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = None) -> ImportResult:
+    report = report or validate_tree(tree)
+    if report.errors:
+        raise ImportRefused(f"{len(report.errors)} validation errors, e.g. "
+                            + "; ".join(f"{e.code}: {e.detail}" for e in report.errors[:5]))
+    result = ImportResult()
+    with _tx(engine) as c:
+        for ds in tree.data_sources:
+            _data_source(c, ds, result)
+        for rule in tree.rules:
+            _rule(c, rule, report, result)
+        for lex in tree.lexemes:
+            _lexeme(c, lex, result)
+        for scene in tree.scenes:
+            _scene(c, scene, result)
+    return result
+
+
+# ---------------------------------------------------------------- data sources
+
+
+def _data_source(c, ds, result):
+    row = c.execute(text("SELECT name, use, licence, status, notes FROM data_source WHERE id = :i"),
+                    {"i": ds["id"]}).first()
+    values = {k: ds.get(k) for k in ("name", "use", "licence", "status", "notes")}
+    if row is None:
+        c.execute(text("INSERT INTO data_source (id, name, use, licence, status, notes) "
+                       "VALUES (:id, :name, :use, :licence, :status, :notes)"), {"id": ds["id"], **values})
+        result.data_sources_written += 1
+    elif dict(row._mapping) != values:
+        c.execute(text("UPDATE data_source SET name = :name, use = :use, licence = :licence, status = :status, "
+                       "notes = :notes WHERE id = :id"), {"id": ds["id"], **values})
+        result.data_sources_written += 1
+
+
+# ---------------------------------------------------------------- rules and items
+
+
+def _latest(c, table, key_col, key):
+    return c.execute(
+        text(f"SELECT id, version, content_hash, {'lifecycle' if table == 'rule_version' else 'review_status'} "
+             f"AS state FROM {table} WHERE {key_col} = :k ORDER BY version DESC LIMIT 1"), {"k": key}).first()
+
+
+def _last_imported_hash(c, table, key_col, key):
+    return c.execute(text(f"SELECT content_hash FROM {table} WHERE {key_col} = :k AND content_hash IS NOT NULL "
+                          f"ORDER BY version DESC LIMIT 1"), {"k": key}).scalar()
+
+
+def _rule_hash(rule):
+    return sha256_of({k: v for k, v in rule.items() if k != "items"})
+
+
+def _rule(c, rule, report, result):
+    rid = rule["rule_id"]
+    existing = c.execute(text("SELECT direction, contrast_area FROM rule WHERE id = :r"), {"r": rid}).first()
+    if existing is None:
+        c.execute(text("INSERT INTO rule (id, direction, contrast_area) VALUES (:r, :d, :a)"),
+                  {"r": rid, "d": rule["direction"], "a": rule["contrast_area"]})
+    elif existing.direction != rule["direction"]:
+        raise ImportRefused(f"{rid}: direction {rule['direction']} differs from the database ({existing.direction})")
+
+    digest = _rule_hash(rule)
+    latest = _latest(c, "rule_version", "rule_id", rid)
+    if latest is not None and _last_imported_hash(c, "rule_version", "rule_id", rid) == digest:
+        # Unchanged since its last import. If someone has since added a later version (e.g. moved it into review),
+        # new item versions point at that newest version, which is the one reviewers see.
+        rule_version_id = latest.id
+        result.unchanged += 1
+    else:
+        if latest is not None and latest.state != "draft":
+            raise ImportRefused(f"{rid}: version {latest.version} is '{latest.state}'; content changes to reviewed "
+                                "rules go through the teacher console, not the importer")
+        rule_issues = [i.as_dict() for i in report.issues.get(rid, [])]
+        rule_version_id = c.execute(
+            text("INSERT INTO rule_version (rule_id, version, title_hi, l1_explanation_hi, concept_key, band, "
+                 "validity, learner_evidence, lifecycle, teacher_approved, sources, licence, supersedes_version, "
+                 "change_note, provenance, validation_issues, content_hash) VALUES (:r, :v, :t, :e, "
+                 "CAST(:ck AS jsonb), :band, :validity, :evidence, 'draft', false, CAST(:src AS jsonb), :lic, :sup, "
+                 ":note, CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h) RETURNING id"),
+            {"r": rid, "v": (latest.version + 1) if latest else 1, "t": rule.get("title_l1"),
+             "e": rule.get("explanation_l1"), "ck": _j(rule.get("concept_key") or {}), "band": rule["band"],
+             "validity": rule["validity"], "evidence": rule["learner_evidence"],
+             "src": _j(rule.get("citations") or []), "lic": rule.get("licence"),
+             "sup": latest.id if latest else None,
+             "note": "imported from content/" if latest is None
+                     else f"imported from content/ (supersedes v{latest.version})",
+             "prov": _j(rule["provenance"]), "iss": _j(rule_issues), "h": digest}).scalar_one()
+        result.new_rule_versions += 1
+
+    for item in rule["items"]:
+        _item(c, rid, rule_version_id, item, report, result)
+
+
+def _item_hash(item):
+    return sha256_of(item)
+
+
+def _item(c, rid, rule_version_id, item, report, result):
+    iid = item["item_id"]
+    if c.execute(text("SELECT rule_id FROM item WHERE id = :i"), {"i": iid}).scalar() is None:
+        c.execute(text("INSERT INTO item (id, rule_id) VALUES (:i, :r)"), {"i": iid, "r": rid})
+    digest = _item_hash(item)
+    if _last_imported_hash(c, "item_version", "item_id", iid) == digest:
+        result.unchanged += 1
+        return
+    latest = _latest(c, "item_version", "item_id", iid)
+    if latest is not None and latest.state != "draft":
+        raise ImportRefused(f"{iid}: version {latest.version} is '{latest.state}'; content changes to reviewed "
+                            "items go through the teacher console, not the importer")
+    span = None
+    if item.get("wrong_form"):
+        span, _ = patterns.one_error_span(wrong=item["wrong_form"], correct=item["correct_form"])
+    issues = [i.as_dict() for i in report.issues.get(iid, [])]
+    item_version_id = c.execute(
+        text("INSERT INTO item_version (item_id, version, rule_version_id, hindi_meaning, wrong_form, one_error_span, "
+             "correct_form, wrong_patterns, accept_patterns, allowed_target_forms, pool, review_status, provenance, "
+             "validation_issues, content_hash) VALUES (:i, :v, :rv, :m, :w, :span, :c, :wp, :ap, :atf, :pool, "
+             "'draft', CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h) RETURNING id"),
+        {"i": iid, "v": (latest.version + 1) if latest else 1, "rv": rule_version_id, "m": item.get("l1_meaning"),
+         "w": item.get("wrong_form"), "span": span, "c": normalise_sentence(item["correct_form"]),
+         "wp": item.get("wrong_patterns") or [], "ap": item.get("accept_patterns") or [],
+         "atf": item.get("allowed_target_forms") or [], "pool": item["pool"], "prov": _j(item["provenance"]),
+         "iss": _j(issues), "h": digest}).scalar_one()
+    result.new_item_versions += 1
+
+    seen = {normalise_sentence(item["correct_form"])}
+    for v in item.get("accepted_variants") or []:
+        form = normalise_sentence(v["form"])
+        if form in seen:  # duplicate after Unicode/whitespace normalisation: keep one
+            continue
+        seen.add(form)
+        c.execute(text("INSERT INTO accepted_variant (item_version_id, form, register, region, status, approvals, "
+                       "provenance) VALUES (:iv, :f, :reg, :region, 'proposed', '[]'::jsonb, CAST(:p AS jsonb))"),
+                  {"iv": item_version_id, "f": form, "reg": v.get("register", "written"), "region": v.get("region"),
+                   "p": _j(v.get("provenance") or [])})
+        result.new_variants += 1
+
+
+# ---------------------------------------------------------------- words and scenes
+
+
+def _lexeme(c, lex, result):
+    digest = sha256_of(lex)
+    row = c.execute(text("SELECT content_hash, review_status FROM lexeme WHERE id = :i"), {"i": lex["id"]}).first()
+    values = {"id": lex["id"], "telugu": lex["telugu"], "gloss": lex["hindi_gloss"], "pos": lex.get("pos"),
+              "rank": lex.get("freq_rank"), "cog": lex.get("cognate_of"), "ff": bool(lex.get("false_friend")),
+              "note": lex.get("false_friend_note_hi"), "src": lex.get("source_id"),
+              "prov": _j(lex["provenance"]), "h": digest}
+    if row is None:
+        c.execute(text("INSERT INTO lexeme (id, telugu, hindi_gloss, pos, freq_rank, cognate_of, false_friend, "
+                       "false_friend_note_hi, source_id, review_status, provenance, content_hash) VALUES (:id, "
+                       ":telugu, :gloss, :pos, :rank, :cog, :ff, :note, :src, 'draft', CAST(:prov AS jsonb), :h)"),
+                  values)
+        result.lexemes_written += 1
+    elif row.content_hash != digest:
+        if row.review_status != "draft":
+            raise ImportRefused(f"{lex['id']}: word is '{row.review_status}'; edit it in the teacher console")
+        c.execute(text("UPDATE lexeme SET telugu = :telugu, hindi_gloss = :gloss, pos = :pos, freq_rank = :rank, "
+                       "cognate_of = :cog, false_friend = :ff, false_friend_note_hi = :note, source_id = :src, "
+                       "provenance = CAST(:prov AS jsonb), content_hash = :h WHERE id = :id"), values)
+        result.lexemes_written += 1
+    else:
+        result.unchanged += 1
+
+
+def _scene(c, scene, result):
+    digest = sha256_of(scene)
+    row = c.execute(text("SELECT content_hash, review_status FROM scene WHERE id = :i"), {"i": scene["id"]}).first()
+    values = {"id": scene["id"], "t": scene["title_hi"], "s": scene["setup_hi"], "prov": _j(scene["provenance"]),
+              "h": digest}
+    if row is None:
+        c.execute(text("INSERT INTO scene (id, title_hi, setup_hi, review_status, provenance, content_hash) "
+                       "VALUES (:id, :t, :s, 'draft', CAST(:prov AS jsonb), :h)"), values)
+        result.scenes_written += 1
+    elif row.content_hash != digest:
+        if row.review_status != "draft":
+            raise ImportRefused(f"{scene['id']}: scene is '{row.review_status}'; edit it in the teacher console")
+        c.execute(text("UPDATE scene SET title_hi = :t, setup_hi = :s, provenance = CAST(:prov AS jsonb), "
+                       "content_hash = :h WHERE id = :id"), values)
+        result.scenes_written += 1
+    else:
+        result.unchanged += 1
