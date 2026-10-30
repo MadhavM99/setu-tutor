@@ -1,0 +1,105 @@
+{
+ "unit_id": "L0-23",
+ "level": 0,
+ "title": "मात्राएँ: ॆ े ॊ ो → కె కే కొ కో",
+ "tip": "छोटा/लंबा फिर से: लंबे वाले में एक लकीर ज़्यादा",
+ "lesson": [
+  {
+   "hindi": "कॆ",
+   "telugu": "కె",
+   "note": "",
+   "shape": "క + ऊपर एक मुड़ा हुक",
+   "mnemonic": "छोटा ए की मात्रा → కె",
+   "example": "",
+   "picture": ""
+  },
+  {
+   "hindi": "के",
+   "telugu": "కే",
+   "note": "",
+   "shape": "కె + ऊपर एक और सीधी लकीर",
+   "mnemonic": "लंबा ए = एक लकीर ज़्यादा → కే",
+   "example": "",
+   "picture": ""
+  },
+  {
+   "hindi": "कॊ",
+   "telugu": "కొ",
+   "note": "",
+   "shape": "క + दाईं ओर और ऊपर घुमाव",
+   "mnemonic": "छोटा ओ की मात्रा → కొ",
+   "example": "",
+   "picture": ""
+  },
+  {
+   "hindi": "को",
+   "telugu": "కో",
+   "note": "",
+   "shape": "కొ + ऊपर एक और छोटा घुमाव",
+   "mnemonic": "लंबा ओ = एक घुमाव ज़्यादा → కో",
+   "example": "",
+   "picture": ""
+  }
+ ],
+ "check": {
+  "item_id": "L0-23-check",
+  "prompt": "కో",
+  "accepted": [
+   "को"
+  ],
+  "raju_wrong": "कॊ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-23-a",
+   "prompt": "కె",
+   "accepted": [
+    "कॆ",
+    "छोटा के"
+   ],
+   "raju_wrong": "के",
+   "answer_script": "any",
+   "closed": true
+  },
+  {
+   "item_id": "L0-23-b",
+   "prompt": "కే",
+   "accepted": [
+    "के"
+   ],
+   "raju_wrong": "कॆ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-23-c",
+   "prompt": "కొ",
+   "accepted": [
+    "कॊ",
+    "छोटा को"
+   ],
+   "raju_wrong": "को",
+   "answer_script": "any",
+   "closed": true
+  },
+  {
+   "item_id": "L0-23-d",
+   "prompt": "కో",
+   "accepted": [
+    "को"
+   ],
+   "raju_wrong": "कॊ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-22"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

@@ -1,0 +1,86 @@
+{
+ "unit_id": "L1-05",
+ "level": 1,
+ "title": "Hindi के जुड़वाँ शब्द: Hindi शब्द + ం",
+ "lesson": [
+  {
+   "hindi": "पुस्तक",
+   "telugu": "పుస్తకం",
+   "note": "Hindi शब्द + ం (बिंदु)"
+  },
+  {
+   "hindi": "समय",
+   "telugu": "సమయం",
+   "note": "वही नियम"
+  },
+  {
+   "hindi": "देश",
+   "telugu": "దేశం",
+   "note": "वही नियम"
+  },
+  {
+   "hindi": "पाठ",
+   "telugu": "పాఠం",
+   "note": "वही नियम"
+  },
+  {
+   "hindi": "अर्थ",
+   "telugu": "అర్థం",
+   "note": "वही नियम"
+  },
+  {
+   "hindi": "भाग",
+   "telugu": "భాగం",
+   "note": "वही नियम"
+  }
+ ],
+ "check": {
+  "item_id": "L1-05-check",
+  "prompt": "समय",
+  "accepted": [
+   "సమయం"
+  ],
+  "raju_wrong": "సమయ",
+  "answer_script": "telugu",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L1-05-a",
+   "prompt": "पुस्तक",
+   "accepted": [
+    "పుస్తకం"
+   ],
+   "raju_wrong": "పుస్తక",
+   "answer_script": "telugu",
+   "closed": true
+  },
+  {
+   "item_id": "L1-05-b",
+   "prompt": "देश",
+   "accepted": [
+    "దేశం"
+   ],
+   "raju_wrong": "దేశ",
+   "answer_script": "telugu",
+   "closed": true
+  },
+  {
+   "item_id": "L1-05-c",
+   "prompt": "पाठ",
+   "accepted": [
+    "పాఠం"
+   ],
+   "raju_wrong": "పాఠ",
+   "answer_script": "telugu",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L1-04"
+ ],
+ "status": "draft_unverified",
+ "version": 1,
+ "reviewer": null,
+ "source": "shared Sanskrit-origin words (tatsama); team draft"
+}

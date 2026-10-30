@@ -1,0 +1,63 @@
+{
+ "unit_id": "L0-01",
+ "level": 0,
+ "title": "स्वर: अ आ → అ ఆ",
+ "tip": "लंबी आवाज़ = छोटे अक्षर + एक और घुमाव",
+ "lesson": [
+  {
+   "hindi": "अ",
+   "telugu": "అ",
+   "note": "",
+   "shape": "दो गोल पेट, बगल-बगल — जैसे चश्मा 👓",
+   "mnemonic": "'अ'चानक चश्मा पहना → అ",
+   "example": "అమ్మ = अम्मा / माँ",
+   "picture": "👩"
+  },
+  {
+   "hindi": "आ",
+   "telugu": "ఆ",
+   "note": "",
+   "shape": "అ + दाईं ओर एक और घुमाव",
+   "mnemonic": "आवाज़ लंबी, तो अक्षर भी लंबा: అ में एक और घुमाव जुड़ गया → ఆ",
+   "example": "ఆకాశం = आकाश",
+   "picture": "🌌"
+  }
+ ],
+ "check": {
+  "item_id": "L0-01-check",
+  "prompt": "ఆ",
+  "accepted": [
+   "आ"
+  ],
+  "raju_wrong": "अ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-01-a",
+   "prompt": "అ",
+   "accepted": [
+    "अ"
+   ],
+   "raju_wrong": "आ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-01-b",
+   "prompt": "ఆ",
+   "accepted": [
+    "आ"
+   ],
+   "raju_wrong": "अ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

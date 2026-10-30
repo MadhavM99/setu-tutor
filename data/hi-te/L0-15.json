@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-15",
+ "level": 0,
+ "title": "प फ → ప ఫ",
+ "tip": "साँस वाला = साथी + नीचे छोटी लकीर",
+ "lesson": [
+  {
+   "hindi": "प",
+   "telugu": "ప",
+   "note": "",
+   "shape": "बाईं ओर गोल, दाईं ओर ऊपर हुक",
+   "mnemonic": "पेड़ से लटका फल → ప",
+   "example": "పండు = फल",
+   "picture": "🍎"
+  },
+  {
+   "hindi": "फ",
+   "telugu": "ఫ",
+   "note": "",
+   "shape": "ప + नीचे छोटी लकीर (साँस)",
+   "mnemonic": "ప ने साँस ली → ఫ",
+   "example": "ఫలం = फल",
+   "picture": "🍑"
+  }
+ ],
+ "check": {
+  "item_id": "L0-15-check",
+  "prompt": "ఫ",
+  "accepted": [
+   "फ"
+  ],
+  "raju_wrong": "प",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-15-a",
+   "prompt": "ప",
+   "accepted": [
+    "प"
+   ],
+   "raju_wrong": "फ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-15-b",
+   "prompt": "ఫ",
+   "accepted": [
+    "फ"
+   ],
+   "raju_wrong": "प",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-14"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

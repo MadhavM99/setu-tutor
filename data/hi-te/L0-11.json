@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-11",
+ "level": 0,
+ "title": "ट ठ → ట ఠ",
+ "tip": "ఠ = पहिया जिसके बीच में बिंदी ⊙",
+ "lesson": [
+  {
+   "hindi": "ट",
+   "telugu": "ట",
+   "note": "",
+   "shape": "नीचे गोल पेट, ऊपर दाएँ खड़ा हुक",
+   "mnemonic": "टमाटर पर डंडी → ట",
+   "example": "టమాట = टमाटर",
+   "picture": "🍅"
+  },
+  {
+   "hindi": "ठ",
+   "telugu": "ఠ",
+   "note": "",
+   "shape": "गोल पहिया, बीच में बिंदी",
+   "mnemonic": "ठोस गोल पहिया, बीच में धुरी ⊙ → ఠ",
+   "example": "కంఠం = कंठ / गला",
+   "picture": "🗣️"
+  }
+ ],
+ "check": {
+  "item_id": "L0-11-check",
+  "prompt": "ఠ",
+  "accepted": [
+   "ठ"
+  ],
+  "raju_wrong": "ट",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-11-a",
+   "prompt": "ట",
+   "accepted": [
+    "ट"
+   ],
+   "raju_wrong": "ठ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-11-b",
+   "prompt": "ఠ",
+   "accepted": [
+    "ठ"
+   ],
+   "raju_wrong": "ट",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-10"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

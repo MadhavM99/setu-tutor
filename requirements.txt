@@ -1,0 +1,4 @@
+pydantic>=2
+streamlit>=1.40
+certifi
+pytest

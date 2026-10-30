@@ -1,0 +1,84 @@
+{
+ "unit_id": "L1-04",
+ "level": 1,
+ "title": "सवाल के शब्द: ఏమిటి ఎక్కడ ఎప్పుడు ఎవరు ఎంత",
+ "lesson": [
+  {
+   "hindi": "क्या",
+   "telugu": "ఏమిటి",
+   "note": ""
+  },
+  {
+   "hindi": "कहाँ",
+   "telugu": "ఎక్కడ",
+   "note": ""
+  },
+  {
+   "hindi": "कब",
+   "telugu": "ఎప్పుడు",
+   "note": ""
+  },
+  {
+   "hindi": "कौन",
+   "telugu": "ఎవరు",
+   "note": ""
+  },
+  {
+   "hindi": "कितना",
+   "telugu": "ఎంత",
+   "note": "दाम पूछने में काम आता है"
+  }
+ ],
+ "check": {
+  "item_id": "L1-04-check",
+  "prompt": "ఎంత",
+  "accepted": [
+   "कितना",
+   "कितने",
+   "कितनी"
+  ],
+  "raju_wrong": "कहाँ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L1-04-a",
+   "prompt": "ఎక్కడ",
+   "accepted": [
+    "कहाँ",
+    "कहां"
+   ],
+   "raju_wrong": "कब",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-04-b",
+   "prompt": "ఎవరు",
+   "accepted": [
+    "कौन"
+   ],
+   "raju_wrong": "क्या",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-04-c",
+   "prompt": "ఎప్పుడు",
+   "accepted": [
+    "कब"
+   ],
+   "raju_wrong": "कहाँ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L1-03"
+ ],
+ "status": "draft_unverified",
+ "version": 1,
+ "reviewer": null,
+ "source": "team draft"
+}

@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-24",
+ "level": 0,
+ "title": "ं और ् → కం క్త",
+ "tip": "ం = बिंदु (म/न जैसी आवाज़); ్ = अक्षर आधा होकर अगले से जुड़ता है",
+ "lesson": [
+  {
+   "hindi": "कं",
+   "telugu": "కం",
+   "note": "",
+   "shape": "క के दाईं ओर एक छोटा गोला ○",
+   "mnemonic": "शून्य जैसा गोला = Hindi का ं → కం",
+   "example": "కమలం = कमल (आख़िर में ం)",
+   "picture": "🪷"
+  },
+  {
+   "hindi": "क्त",
+   "telugu": "క్త",
+   "note": "",
+   "shape": "క के ऊपर ✓ जैसा निशान, नीचे త का छोटा रूप",
+   "mnemonic": "ऊपर ✓ = आधा क; नीचे छोटा త → క్త",
+   "example": "రక్తం = रक्त / ख़ून",
+   "picture": "🩸"
+  }
+ ],
+ "check": {
+  "item_id": "L0-24-check",
+  "prompt": "క్త",
+  "accepted": [
+   "क्त"
+  ],
+  "raju_wrong": "कत",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-24-a",
+   "prompt": "కం",
+   "accepted": [
+    "कं"
+   ],
+   "raju_wrong": "क",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-24-b",
+   "prompt": "క్త",
+   "accepted": [
+    "क्त"
+   ],
+   "raju_wrong": "कत",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-23"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

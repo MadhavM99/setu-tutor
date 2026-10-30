@@ -1,0 +1,89 @@
+{
+ "unit_id": "L1-02",
+ "level": 1,
+ "title": "गिनती 6–10: ఆరు ఏడు ఎనిమిది తొమ్మిది పది",
+ "lesson": [
+  {
+   "hindi": "छह (6)",
+   "telugu": "ఆరు",
+   "note": ""
+  },
+  {
+   "hindi": "सात (7)",
+   "telugu": "ఏడు",
+   "note": ""
+  },
+  {
+   "hindi": "आठ (8)",
+   "telugu": "ఎనిమిది",
+   "note": ""
+  },
+  {
+   "hindi": "नौ (9)",
+   "telugu": "తొమ్మిది",
+   "note": ""
+  },
+  {
+   "hindi": "दस (10)",
+   "telugu": "పది",
+   "note": ""
+  }
+ ],
+ "check": {
+  "item_id": "L1-02-check",
+  "prompt": "పది",
+  "accepted": [
+   "दस",
+   "10",
+   "१०"
+  ],
+  "raju_wrong": "नौ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L1-02-a",
+   "prompt": "ఏడు",
+   "accepted": [
+    "सात",
+    "7",
+    "७"
+   ],
+   "raju_wrong": "छह",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-02-b",
+   "prompt": "తొమ్మిది",
+   "accepted": [
+    "नौ",
+    "9",
+    "९"
+   ],
+   "raju_wrong": "आठ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-02-c",
+   "prompt": "ఎనిమిది",
+   "accepted": [
+    "आठ",
+    "8",
+    "८"
+   ],
+   "raju_wrong": "नौ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L1-01"
+ ],
+ "status": "draft_unverified",
+ "version": 1,
+ "reviewer": null,
+ "source": "standard Telugu numerals; team draft"
+}

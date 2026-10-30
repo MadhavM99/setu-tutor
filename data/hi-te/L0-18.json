@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-18",
+ "level": 0,
+ "title": "ल ळ → ల ళ",
+ "tip": "ళ नई आवाज़ है — ल नहीं! जीभ ऊपर मोड़कर (मराठी वाला ळ)",
+ "lesson": [
+  {
+   "hindi": "ल",
+   "telugu": "ల",
+   "note": "",
+   "shape": "नीचे गोल, ऊपर दो छोटे सिर",
+   "mnemonic": "लड्डू के ऊपर दो दाने → ల",
+   "example": "లడ్డు = लड्डू",
+   "picture": "🟠"
+  },
+  {
+   "hindi": "ळ",
+   "telugu": "ళ",
+   "note": "",
+   "shape": "ల से अलग: ऊपर लहर, नीचे साँस जैसी लकीर",
+   "mnemonic": "आँखें (కళ్ళు) ≠ ताड़ी (కల్లు)! ళ = जीभ मुड़ी हुई → ళ",
+   "example": "కళ్ళు = आँखें",
+   "picture": "👀"
+  }
+ ],
+ "check": {
+  "item_id": "L0-18-check",
+  "prompt": "ళ",
+  "accepted": [
+   "ळ"
+  ],
+  "raju_wrong": "ल",
+  "answer_script": "any",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-18-a",
+   "prompt": "ల",
+   "accepted": [
+    "ल"
+   ],
+   "raju_wrong": "ळ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-18-b",
+   "prompt": "ళ",
+   "accepted": [
+    "ळ"
+   ],
+   "raju_wrong": "ल",
+   "answer_script": "any",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-17"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

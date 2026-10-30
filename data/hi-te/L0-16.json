@@ -1,0 +1,84 @@
+{
+ "unit_id": "L0-16",
+ "level": 0,
+ "title": "ब भ म → బ భ మ",
+ "tip": "",
+ "lesson": [
+  {
+   "hindi": "ब",
+   "telugu": "బ",
+   "note": "",
+   "shape": "गोल, ऊपर दाएँ छोटा हुक",
+   "mnemonic": "बॉल पर छोटी सी लकीर → బ",
+   "example": "బంతి = गेंद",
+   "picture": "⚽"
+  },
+  {
+   "hindi": "भ",
+   "telugu": "భ",
+   "note": "",
+   "shape": "బ + नीचे छोटी लकीर (साँस)",
+   "mnemonic": "బ ने साँस ली → భ",
+   "example": "భూమి = भूमि / धरती",
+   "picture": "🌍"
+  },
+  {
+   "hindi": "म",
+   "telugu": "మ",
+   "note": "",
+   "shape": "चौड़ा, नीचे दो गोल, बाईं ओर ऊपर हुक",
+   "mnemonic": "मटके पर ढक्कन → మ",
+   "example": "మామిడి = आम",
+   "picture": "🥭"
+  }
+ ],
+ "check": {
+  "item_id": "L0-16-check",
+  "prompt": "మ",
+  "accepted": [
+   "म"
+  ],
+  "raju_wrong": "न",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-16-a",
+   "prompt": "బ",
+   "accepted": [
+    "ब"
+   ],
+   "raju_wrong": "भ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-16-b",
+   "prompt": "భ",
+   "accepted": [
+    "भ"
+   ],
+   "raju_wrong": "ब",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-16-c",
+   "prompt": "మ",
+   "accepted": [
+    "म"
+   ],
+   "raju_wrong": "न",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-15"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-13",
+ "level": 0,
+ "title": "त थ → త థ",
+ "tip": "साँस वाले में नीचे छोटी लकीर",
+ "lesson": [
+  {
+   "hindi": "त",
+   "telugu": "త",
+   "note": "",
+   "shape": "बाईं ओर बड़ा गोल पेट, दाईं ओर छोटा",
+   "mnemonic": "तबले के दो गोल (बड़ा-छोटा) → త",
+   "example": "తల = सिर",
+   "picture": "🙂"
+  },
+  {
+   "hindi": "थ",
+   "telugu": "థ",
+   "note": "",
+   "shape": "गोल, और बीच-नीचे छोटी लकीर (साँस)",
+   "mnemonic": "थकी साँस की लकीर → థ",
+   "example": "రథం = रथ",
+   "picture": "🛞"
+  }
+ ],
+ "check": {
+  "item_id": "L0-13-check",
+  "prompt": "థ",
+  "accepted": [
+   "थ"
+  ],
+  "raju_wrong": "त",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-13-a",
+   "prompt": "త",
+   "accepted": [
+    "त"
+   ],
+   "raju_wrong": "थ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-13-b",
+   "prompt": "థ",
+   "accepted": [
+    "थ"
+   ],
+   "raju_wrong": "त",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-12"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

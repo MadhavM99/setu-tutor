@@ -1,0 +1,46 @@
+{
+ "unit_id": "L0-05",
+ "level": 0,
+ "title": "स्वर: ऐ → ఐ",
+ "tip": "",
+ "lesson": [
+  {
+   "hindi": "ऐ",
+   "telugu": "ఐ",
+   "note": "",
+   "shape": "ఎ जैसा पेट, ऊपर एक और लहर",
+   "mnemonic": "ए के ऊपर एक और ए = ऐ → ఐ",
+   "example": "ఐదు = पाँच",
+   "picture": "✋"
+  }
+ ],
+ "check": {
+  "item_id": "L0-05-check",
+  "prompt": "ఐ",
+  "accepted": [
+   "ऐ"
+  ],
+  "raju_wrong": "ए",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-05-a",
+   "prompt": "ఐ",
+   "accepted": [
+    "ऐ"
+   ],
+   "raju_wrong": "ए",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-04"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

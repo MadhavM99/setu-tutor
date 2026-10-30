@@ -1,0 +1,84 @@
+{
+ "unit_id": "L0-20",
+ "level": 0,
+ "title": "ष स ह → ష స హ",
+ "tip": "",
+ "lesson": [
+  {
+   "hindi": "ष",
+   "telugu": "ష",
+   "note": "",
+   "shape": "ప जैसा, पर नीचे लंबी पूँछ",
+   "mnemonic": "षट्कोण का कोना नीचे खिंचा → ష",
+   "example": "షట్కోణం = षट्कोण",
+   "picture": "⬡"
+  },
+  {
+   "hindi": "स",
+   "telugu": "స",
+   "note": "",
+   "shape": "ऊपर हुक, नीचे खुला गोल",
+   "mnemonic": "सूरज की किरण ऊपर मुड़ी → స",
+   "example": "సూర్యుడు = सूर्य",
+   "picture": "☀️"
+  },
+  {
+   "hindi": "ह",
+   "telugu": "హ",
+   "note": "",
+   "shape": "चौड़ा, दाईं ओर लंबी लकीर",
+   "mnemonic": "हंस की लंबी गर्दन → హ",
+   "example": "హంస = हंस",
+   "picture": "🦢"
+  }
+ ],
+ "check": {
+  "item_id": "L0-20-check",
+  "prompt": "హ",
+  "accepted": [
+   "ह"
+  ],
+  "raju_wrong": "स",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-20-a",
+   "prompt": "ష",
+   "accepted": [
+    "ष"
+   ],
+   "raju_wrong": "श",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-20-b",
+   "prompt": "స",
+   "accepted": [
+    "स"
+   ],
+   "raju_wrong": "श",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-20-c",
+   "prompt": "హ",
+   "accepted": [
+    "ह"
+   ],
+   "raju_wrong": "स",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-19"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-03",
+ "level": 0,
+ "title": "स्वर: उ ऊ → ఉ ఊ",
+ "tip": "लंबी आवाज़ = छोटे अक्षर + एक और घुमाव",
+ "lesson": [
+  {
+   "hindi": "उ",
+   "telugu": "ఉ",
+   "note": "",
+   "shape": "कटोरी जैसा पेट और ऊपर-बाएँ टोपी",
+   "mnemonic": "'उ'ल्टी टोपी वाली कटोरी → ఉ",
+   "example": "ఉప్పు = नमक",
+   "picture": "🧂"
+  },
+  {
+   "hindi": "ऊ",
+   "telugu": "ఊ",
+   "note": "",
+   "shape": "ఉ + दाईं ओर एक और घुमाव",
+   "mnemonic": "ऊ लंबा है: ఉ में एक और घुमाव जुड़ गया → ఊ",
+   "example": "ఊరు = गाँव",
+   "picture": "🏘️"
+  }
+ ],
+ "check": {
+  "item_id": "L0-03-check",
+  "prompt": "ఊ",
+  "accepted": [
+   "ऊ"
+  ],
+  "raju_wrong": "उ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-03-a",
+   "prompt": "ఉ",
+   "accepted": [
+    "उ"
+   ],
+   "raju_wrong": "ऊ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-03-b",
+   "prompt": "ఊ",
+   "accepted": [
+    "ऊ"
+   ],
+   "raju_wrong": "उ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-02"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

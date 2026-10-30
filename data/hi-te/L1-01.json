@@ -1,0 +1,89 @@
+{
+ "unit_id": "L1-01",
+ "level": 1,
+ "title": "गिनती 1–5: ఒకటి రెండు మూడు నాలుగు ఐదు",
+ "lesson": [
+  {
+   "hindi": "एक (1)",
+   "telugu": "ఒకటి",
+   "note": ""
+  },
+  {
+   "hindi": "दो (2)",
+   "telugu": "రెండు",
+   "note": ""
+  },
+  {
+   "hindi": "तीन (3)",
+   "telugu": "మూడు",
+   "note": ""
+  },
+  {
+   "hindi": "चार (4)",
+   "telugu": "నాలుగు",
+   "note": ""
+  },
+  {
+   "hindi": "पाँच (5)",
+   "telugu": "ఐదు",
+   "note": ""
+  }
+ ],
+ "check": {
+  "item_id": "L1-01-check",
+  "prompt": "మూడు",
+  "accepted": [
+   "तीन",
+   "3",
+   "३"
+  ],
+  "raju_wrong": "दो",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L1-01-a",
+   "prompt": "రెండు",
+   "accepted": [
+    "दो",
+    "2",
+    "२"
+   ],
+   "raju_wrong": "तीन",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-01-b",
+   "prompt": "నాలుగు",
+   "accepted": [
+    "चार",
+    "4",
+    "४"
+   ],
+   "raju_wrong": "पाँच",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-01-c",
+   "prompt": "ఒకటి",
+   "accepted": [
+    "एक",
+    "1",
+    "१"
+   ],
+   "raju_wrong": "दो",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-24"
+ ],
+ "status": "draft_unverified",
+ "version": 1,
+ "reviewer": null,
+ "source": "standard Telugu numerals; team draft"
+}

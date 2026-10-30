@@ -1,0 +1,65 @@
+{
+ "unit_id": "L1-03",
+ "level": 1,
+ "title": "पहले शब्द: నమస్కారం ధన్యవాదాలు అవును",
+ "lesson": [
+  {
+   "hindi": "नमस्कार / नमस्ते",
+   "telugu": "నమస్కారం",
+   "note": "मिलते समय"
+  },
+  {
+   "hindi": "धन्यवाद",
+   "telugu": "ధన్యవాదాలు",
+   "note": "शुक्रिया"
+  },
+  {
+   "hindi": "हाँ",
+   "telugu": "అవును",
+   "note": ""
+  }
+ ],
+ "check": {
+  "item_id": "L1-03-check",
+  "prompt": "అవును",
+  "accepted": [
+   "हाँ",
+   "हां",
+   "हा"
+  ],
+  "raju_wrong": "नहीं",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L1-03-a",
+   "prompt": "ధన్యవాదాలు",
+   "accepted": [
+    "धन्यवाद",
+    "शुक्रिया"
+   ],
+   "raju_wrong": "नमस्ते",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L1-03-b",
+   "prompt": "నమస్కారం",
+   "accepted": [
+    "नमस्कार",
+    "नमस्ते"
+   ],
+   "raju_wrong": "धन्यवाद",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L1-02"
+ ],
+ "status": "draft_unverified",
+ "version": 1,
+ "reviewer": null,
+ "source": "team draft"
+}

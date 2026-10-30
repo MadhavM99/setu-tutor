@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-19",
+ "level": 0,
+ "title": "व श → వ శ",
+ "tip": "",
+ "lesson": [
+  {
+   "hindi": "व",
+   "telugu": "వ",
+   "note": "",
+   "shape": "गोल, ऊपर दाएँ छोटा फंदा",
+   "mnemonic": "वन का पेड़ ऊपर से मुड़ा → వ",
+   "example": "వనం = वन / जंगल",
+   "picture": "🌳"
+  },
+  {
+   "hindi": "श",
+   "telugu": "శ",
+   "note": "",
+   "shape": "ऊपर लहर, नीचे गोल पूँछ",
+   "mnemonic": "शंख का घुमाव → శ",
+   "example": "శంఖం = शंख",
+   "picture": "🐚"
+  }
+ ],
+ "check": {
+  "item_id": "L0-19-check",
+  "prompt": "శ",
+  "accepted": [
+   "श"
+  ],
+  "raju_wrong": "ष",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-19-a",
+   "prompt": "వ",
+   "accepted": [
+    "व"
+   ],
+   "raju_wrong": "ब",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-19-b",
+   "prompt": "శ",
+   "accepted": [
+    "श"
+   ],
+   "raju_wrong": "ष",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-18"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

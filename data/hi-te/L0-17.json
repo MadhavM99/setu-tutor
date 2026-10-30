@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-17",
+ "level": 0,
+ "title": "य र → య ర",
+ "tip": "ర = गोल + ऊपर डंडी (सेब 🍎); ఠ = वही गोल + बीच में बिंदी",
+ "lesson": [
+  {
+   "hindi": "य",
+   "telugu": "య",
+   "note": "",
+   "shape": "चौड़ा, तीन गोल लहरें",
+   "mnemonic": "यंत्र के घूमते पहिये → య",
+   "example": "యంత్రం = यंत्र / मशीन",
+   "picture": "⚙️"
+  },
+  {
+   "hindi": "र",
+   "telugu": "ర",
+   "note": "",
+   "shape": "एक गोल, ऊपर छोटी डंडी — सेब जैसा",
+   "mnemonic": "राजा का सेब → ర",
+   "example": "రాజు = राजा (हमारा Raju!)",
+   "picture": "👑"
+  }
+ ],
+ "check": {
+  "item_id": "L0-17-check",
+  "prompt": "ర",
+  "accepted": [
+   "र"
+  ],
+  "raju_wrong": "य",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-17-a",
+   "prompt": "య",
+   "accepted": [
+    "य"
+   ],
+   "raju_wrong": "र",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-17-b",
+   "prompt": "ర",
+   "accepted": [
+    "र"
+   ],
+   "raju_wrong": "य",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-16"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

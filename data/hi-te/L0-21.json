@@ -1,0 +1,84 @@
+{
+ "unit_id": "L0-21",
+ "level": 0,
+ "title": "मात्राएँ: ा ि ी → కా కి కీ",
+ "tip": "मात्राएँ Hindi जैसी ही जगह पर: ा दाएँ, ि ऊपर",
+ "lesson": [
+  {
+   "hindi": "का",
+   "telugu": "కా",
+   "note": "",
+   "shape": "క + ऊपर-दाएँ एक आड़ी लकीर",
+   "mnemonic": "Hindi की ा भी दाईं ओर → కా",
+   "example": "కాకి = कौआ",
+   "picture": "🐦‍⬛"
+  },
+  {
+   "hindi": "कि",
+   "telugu": "కి",
+   "note": "",
+   "shape": "క + ऊपर एक छोटा फंदा",
+   "mnemonic": "ि की तरह ऊपर घुमाव → కి",
+   "example": "",
+   "picture": ""
+  },
+  {
+   "hindi": "की",
+   "telugu": "కీ",
+   "note": "",
+   "shape": "కి + फंदे में एक और घुमाव",
+   "mnemonic": "लंबी ई = ज़्यादा घुमाव → కీ",
+   "example": "",
+   "picture": ""
+  }
+ ],
+ "check": {
+  "item_id": "L0-21-check",
+  "prompt": "కీ",
+  "accepted": [
+   "की"
+  ],
+  "raju_wrong": "कि",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-21-a",
+   "prompt": "కా",
+   "accepted": [
+    "का"
+   ],
+   "raju_wrong": "क",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-21-b",
+   "prompt": "కి",
+   "accepted": [
+    "कि"
+   ],
+   "raju_wrong": "की",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-21-c",
+   "prompt": "కీ",
+   "accepted": [
+    "की"
+   ],
+   "raju_wrong": "कि",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-20"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

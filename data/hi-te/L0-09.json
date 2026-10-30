@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-09",
+ "level": 0,
+ "title": "च छ → చ ఛ",
+ "tip": "साँस वाला = साथी अक्षर + नीचे छोटी लकीर",
+ "lesson": [
+  {
+   "hindi": "च",
+   "telugu": "చ",
+   "note": "",
+   "shape": "बाईं ओर खुला, ऊपर हुक",
+   "mnemonic": "चम्मच की तरह खुला मुँह → చ",
+   "example": "చక్రం = चक्र / पहिया",
+   "picture": "🎡"
+  },
+  {
+   "hindi": "छ",
+   "telugu": "ఛ",
+   "note": "",
+   "shape": "చ + नीचे छोटी लकीर (साँस)",
+   "mnemonic": "చ ने साँस ली (नीचे लकीर) → ఛ",
+   "example": "ఛత్రం = छत्र / छाता",
+   "picture": "☂️"
+  }
+ ],
+ "check": {
+  "item_id": "L0-09-check",
+  "prompt": "ఛ",
+  "accepted": [
+   "छ"
+  ],
+  "raju_wrong": "च",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-09-a",
+   "prompt": "చ",
+   "accepted": [
+    "च"
+   ],
+   "raju_wrong": "छ",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-09-b",
+   "prompt": "ఛ",
+   "accepted": [
+    "छ"
+   ],
+   "raju_wrong": "च",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-08"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

@@ -1,0 +1,65 @@
+{
+ "unit_id": "L0-07",
+ "level": 0,
+ "title": "क ख → క ఖ",
+ "tip": "साँस वाले अक्षर (ख घ छ ...) में अक्सर नीचे एक छोटी खड़ी लकीर = ह की साँस",
+ "lesson": [
+  {
+   "hindi": "क",
+   "telugu": "క",
+   "note": "",
+   "shape": "बीच में एक आड़ी लकीर — जैसे क में भी होती है",
+   "mnemonic": "क की बीच वाली लकीर Telugu में भी → క",
+   "example": "కమలం = कमल",
+   "picture": "🪷"
+  },
+  {
+   "hindi": "ख",
+   "telugu": "ఖ",
+   "note": "",
+   "shape": "गोल पेट और नीचे बीच में छोटी लकीर (साँस)",
+   "mnemonic": "नीचे की लकीर = 'ह' की साँस: क + ह = ख → ఖ",
+   "example": "ఖడ్గం = खड्ग / तलवार",
+   "picture": "🗡️"
+  }
+ ],
+ "check": {
+  "item_id": "L0-07-check",
+  "prompt": "ఖ",
+  "accepted": [
+   "ख"
+  ],
+  "raju_wrong": "क",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-07-a",
+   "prompt": "క",
+   "accepted": [
+    "क"
+   ],
+   "raju_wrong": "ख",
+   "answer_script": "devanagari",
+   "closed": true
+  },
+  {
+   "item_id": "L0-07-b",
+   "prompt": "ఖ",
+   "accepted": [
+    "ख"
+   ],
+   "raju_wrong": "क",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-06"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}

@@ -1,0 +1,66 @@
+{
+ "unit_id": "L0-04",
+ "level": 0,
+ "title": "स्वर: छोटा ए, ए → ఎ ఏ",
+ "tip": "Telugu में ए दो तरह का: छोटा (నయా) और लंबा (Hindi वाला)",
+ "lesson": [
+  {
+   "hindi": "ऎ",
+   "telugu": "ఎ",
+   "note": "",
+   "shape": "एक गोल पेट, ऊपर कुछ नहीं",
+   "mnemonic": "नई आवाज़! 'ए' जल्दी से बोलो, बिना खींचे → ఎ",
+   "example": "ఎలుక = चूहा",
+   "picture": "🐭"
+  },
+  {
+   "hindi": "ए",
+   "telugu": "ఏ",
+   "note": "",
+   "shape": "ఎ + ऊपर-बाएँ एक हुक (टोपी)",
+   "mnemonic": "टोपी पहनी तो आवाज़ लंबी: Hindi वाला ए → ఏ",
+   "example": "ఏనుగు = हाथी",
+   "picture": "🐘"
+  }
+ ],
+ "check": {
+  "item_id": "L0-04-check",
+  "prompt": "ఏ",
+  "accepted": [
+   "ए"
+  ],
+  "raju_wrong": "ऎ",
+  "answer_script": "devanagari",
+  "closed": true
+ },
+ "items": [
+  {
+   "item_id": "L0-04-a",
+   "prompt": "ఎ",
+   "accepted": [
+    "ऎ",
+    "छोटा ए"
+   ],
+   "raju_wrong": "ए",
+   "answer_script": "any",
+   "closed": true
+  },
+  {
+   "item_id": "L0-04-b",
+   "prompt": "ఏ",
+   "accepted": [
+    "ए"
+   ],
+   "raju_wrong": "ऎ",
+   "answer_script": "devanagari",
+   "closed": true
+  }
+ ],
+ "requires": [
+  "L0-03"
+ ],
+ "status": "draft_unverified",
+ "version": 2,
+ "reviewer": null,
+ "source": "twin letters by Unicode offset; shapes checked against Noto Sans Telugu; hooks drafted by Claude (AI), need native review"
+}
