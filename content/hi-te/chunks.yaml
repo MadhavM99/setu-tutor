@@ -1,0 +1,260 @@
+# Routine chunks per scene (L3). Model-drafted, unreviewed: nothing here reaches learners until two native
+# speakers approve each chunk (and its scene). Spoken forms are marked so reviewers can confirm them (P8b-14).
+- id: te-chunk:01-01
+  scene_id: hi-te-scene-01
+  telugu: ఎంత?
+  hindi_meaning: कितना?
+  register: standard
+  order: 1
+  review_status: draft
+  provenance: &id001
+  - source: drafted by a language model (Claude) in slice S4, 31 Oct 2026; unreviewed. Telugu forms, meanings and
+      the spoken/standard label all need two native speakers before use
+- id: te-chunk:01-02
+  scene_id: hi-te-scene-01
+  telugu: చార్మినార్ వెళ్తారా?
+  hindi_meaning: चारमीनार चलेंगे?
+  register: spoken
+  order: 2
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-03
+  scene_id: hi-te-scene-01
+  telugu: మీటర్ వేయండి
+  hindi_meaning: मीटर लगाइए
+  register: standard
+  order: 3
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-04
+  scene_id: hi-te-scene-01
+  telugu: ఇక్కడ ఆపండి
+  hindi_meaning: यहाँ रोकिए
+  register: standard
+  order: 4
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-05
+  scene_id: hi-te-scene-01
+  telugu: చాలా ఎక్కువ
+  hindi_meaning: बहुत ज़्यादा
+  register: standard
+  order: 5
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-06
+  scene_id: hi-te-scene-01
+  telugu: సరే, పదండి
+  hindi_meaning: ठीक है, चलिए
+  register: spoken
+  order: 6
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-07
+  scene_id: hi-te-scene-01
+  telugu: ఎంత దూరం?
+  hindi_meaning: कितनी दूर?
+  register: standard
+  order: 7
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:01-08
+  scene_id: hi-te-scene-01
+  telugu: స్టేషన్ ఎక్కడ?
+  hindi_meaning: स्टेशन कहाँ है?
+  register: standard
+  order: 8
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-01
+  scene_id: hi-te-scene-02
+  telugu: ప్లేట్ ఉందా?
+  hindi_meaning: प्लेट है?
+  register: standard
+  order: 9
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-02
+  scene_id: hi-te-scene-02
+  telugu: అన్నం కావాలి
+  hindi_meaning: चावल चाहिए
+  register: standard
+  order: 10
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-03
+  scene_id: hi-te-scene-02
+  telugu: ఇంకొంచెం ఇవ్వండి
+  hindi_meaning: थोड़ा और दीजिए
+  register: standard
+  order: 11
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-04
+  scene_id: hi-te-scene-02
+  telugu: చాలు
+  hindi_meaning: बस, काफ़ी है
+  register: standard
+  order: 12
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-05
+  scene_id: hi-te-scene-02
+  telugu: నీళ్ళు ఎక్కడ?
+  hindi_meaning: पानी कहाँ है?
+  register: standard
+  order: 13
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-06
+  scene_id: hi-te-scene-02
+  telugu: భోజనం అయిందా?
+  hindi_meaning: खाना हो गया?
+  register: spoken
+  order: 14
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-07
+  scene_id: hi-te-scene-02
+  telugu: చాలా బాగుంది
+  hindi_meaning: बहुत अच्छा है
+  register: standard
+  order: 15
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:02-08
+  scene_id: hi-te-scene-02
+  telugu: కారం ఎక్కువ
+  hindi_meaning: मिर्च ज़्यादा है
+  register: standard
+  order: 16
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-01
+  scene_id: hi-te-scene-03
+  telugu: నమస్కారం అండీ
+  hindi_meaning: नमस्ते जी
+  register: spoken
+  order: 17
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-02
+  scene_id: hi-te-scene-03
+  telugu: గది ఖాళీగా ఉందా?
+  hindi_meaning: कमरा खाली है?
+  register: standard
+  order: 18
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-03
+  scene_id: hi-te-scene-03
+  telugu: అద్దె ఎంత?
+  hindi_meaning: किराया कितना है?
+  register: standard
+  order: 19
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-04
+  scene_id: hi-te-scene-03
+  telugu: నీళ్ళు వస్తాయా?
+  hindi_meaning: पानी आता है?
+  register: standard
+  order: 20
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-05
+  scene_id: hi-te-scene-03
+  telugu: ఒకసారి చూడొచ్చా?
+  hindi_meaning: एक बार देख सकते हैं?
+  register: spoken
+  order: 21
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-06
+  scene_id: hi-te-scene-03
+  telugu: ఎప్పుడు రావచ్చు?
+  hindi_meaning: कब आ सकते हैं?
+  register: standard
+  order: 22
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-07
+  scene_id: hi-te-scene-03
+  telugu: ధన్యవాదాలు అండీ
+  hindi_meaning: धन्यवाद जी
+  register: spoken
+  order: 23
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:03-08
+  scene_id: hi-te-scene-03
+  telugu: మళ్ళీ వస్తాను
+  hindi_meaning: फिर आऊँगा / आऊँगी
+  register: standard
+  order: 24
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-01
+  scene_id: hi-te-scene-04
+  telugu: మీరు ఎలా ఉన్నారు?
+  hindi_meaning: आप कैसे हैं?
+  register: standard
+  order: 25
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-02
+  scene_id: hi-te-scene-04
+  telugu: నేను బాగున్నాను
+  hindi_meaning: मैं ठीक हूँ
+  register: standard
+  order: 26
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-03
+  scene_id: hi-te-scene-04
+  telugu: మీ పేరు ఏమిటి?
+  hindi_meaning: आपका नाम क्या है?
+  register: standard
+  order: 27
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-04
+  scene_id: hi-te-scene-04
+  telugu: మా అమ్మ
+  hindi_meaning: मेरी (हमारी) माँ
+  register: standard
+  order: 28
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-05
+  scene_id: hi-te-scene-04
+  telugu: మా ఇల్లు
+  hindi_meaning: मेरा (हमारा) घर
+  register: standard
+  order: 29
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-06
+  scene_id: hi-te-scene-04
+  telugu: భోజనం చేశారా?
+  hindi_meaning: खाना खा लिया?
+  register: standard
+  order: 30
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-07
+  scene_id: hi-te-scene-04
+  telugu: రండి, కూర్చోండి
+  hindi_meaning: आइए, बैठिए
+  register: standard
+  order: 31
+  review_status: draft
+  provenance: *id001
+- id: te-chunk:04-08
+  scene_id: hi-te-scene-04
+  telugu: వెళ్ళొస్తాను
+  hindi_meaning: चलता / चलती हूँ (फिर आऊँगा)
+  register: spoken
+  order: 32
+  review_status: draft
+  provenance: *id001

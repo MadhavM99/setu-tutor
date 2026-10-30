@@ -38,6 +38,7 @@ class ImportResult:
     data_sources_written: int = 0
     letters_written: int = 0
     aksharas_written: int = 0
+    chunks_written: int = 0
     skills_written: int = 0
     unchanged: int = 0
 
@@ -88,6 +89,7 @@ def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = No
             _lexeme(c, lex, result, order)
         for scene in tree.scenes:
             _scene(c, scene, result)
+        _chunks_and_skills(c, tree.chunks, result)
     return result
 
 
@@ -391,5 +393,44 @@ def _aksharas_and_skills(c, aksharas, letters, result):
                            "unit_order = :ord, note_hi = :note, provenance = CAST(:prov AS jsonb), content_hash = :h "
                            "WHERE id = :id"), values)
             result.aksharas_written += 1
+        else:
+            result.unchanged += 1
+
+
+# ---------------------------------------------------------------- L3 chunks (slice S4)
+
+
+def chunk_skill_id(scene_id: str, modality: str) -> str:
+    return f"L3.chunk.{scene_id}.{modality}"
+
+
+def _chunks_and_skills(c, chunks, result):
+    for scene in dict.fromkeys(ch["scene_id"] for ch in chunks):
+        rec = chunk_skill_id(scene, "REC")
+        requires = [r for r in ("L1.akshara.vowel_signs.RCL",)
+                    if c.execute(text("SELECT 1 FROM skill WHERE id = :s"), {"s": r}).first()]
+        _skill(c, result, rec, band="L3", family="chunk", target=scene, modality="REC", direction="HI->TE",
+               requires=requires)
+        _skill(c, result, chunk_skill_id(scene, "RCL"), band="L3", family="chunk", target=scene, modality="RCL",
+               direction="HI->TE", requires=[rec])
+    for ch in chunks:
+        letters = word_letters(ch["telugu"].replace(" ", "").replace("?", "").replace(",", ""))
+        digest = sha256_of({**ch, "_derived": {"letters": letters}})
+        row = c.execute(text("SELECT content_hash, review_status FROM chunk WHERE id = :i"), {"i": ch["id"]}).first()
+        values = {"id": ch["id"], "scene": ch["scene_id"], "te": ch["telugu"], "hi": ch["hindi_meaning"],
+                  "reg": ch["register"], "letters": _j(letters), "ord": ch["order"], "prov": _j(ch["provenance"]),
+                  "h": digest}
+        if row is None:
+            c.execute(text("INSERT INTO chunk (id, scene_id, telugu, hindi_meaning, register, letters, unit_order, "
+                           "review_status, provenance, content_hash) VALUES (:id, :scene, :te, :hi, :reg, "
+                           "CAST(:letters AS jsonb), :ord, 'draft', CAST(:prov AS jsonb), :h)"), values)
+            result.chunks_written += 1
+        elif row.content_hash != digest:
+            if row.review_status != "draft":
+                raise ImportRefused(f"{ch['id']}: chunk is '{row.review_status}'; edit it in the teacher console")
+            c.execute(text("UPDATE chunk SET scene_id = :scene, telugu = :te, hindi_meaning = :hi, register = :reg, "
+                           "letters = CAST(:letters AS jsonb), unit_order = :ord, provenance = CAST(:prov AS jsonb), "
+                           "content_hash = :h WHERE id = :id"), values)
+            result.chunks_written += 1
         else:
             result.unchanged += 1

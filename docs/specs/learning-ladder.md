@@ -290,3 +290,23 @@ Validation happens in FW-R14. Any CEFR alignment is a separate study.
   - The unlock rule checks letters, not the specific vowel signs a word uses.
   - L2 mastery needs production, so these words cannot reach "mastered" until S4/S5 add production tasks. This is
     by design.
+## L3 as built (slice S4, 31 Oct 2026)
+
+- **Content:** `content/hi-te/chunks.yaml`, 32 chunks, 8 for each of four scenes: auto stand, mess, landlord and
+  family (standing in for the "everyday" scene).
+  - **They were drafted by a language model (Claude) and are unreviewed.** The provenance of every chunk says so.
+  - Spoken forms (వెళ్తారా, చూడొచ్చా, వెళ్ళొస్తాను …) are marked `register: spoken` so reviewers confirm them
+    (P8b-14).
+  - The content plan's ~80 team-written chunks replace or extend these.
+- **Migration 0011:** a `chunk` table.
+  - `learner_chunk` shows a chunk only with two native approvals, an approved scene and approved letters.
+- **Skills:** `L3.chunk.<scene>.REC/RCL`, where REC requires `L1.akshara.vowel_signs.RCL`.
+- **Unlocking:** a chunk unlocks after cue-free recall of its letters.
+- **Practice:** the word chain, with the scene's title and setup on the intro card.
+  - Recall is built on the compose keyboard, which has a space key.
+  - Punctuation and spacing are forgiven by the normaliser.
+  - At most 5 new chunks a day.
+- **Deviations:**
+  - Substitution frames are deferred: combining a frame with fillers produces sentences nobody reviewed (case
+    endings can change). They need approved frame-filler pairs.
+  - The college scene has no chunks yet.

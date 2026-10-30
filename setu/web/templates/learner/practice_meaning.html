@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ t("word.meaning_prompt") }}</h1>
+<h1>{{ t(act.text.meaning_prompt) }}</h1>
 <p class="letter-big">{{ te(unit.telugu) }}</p>
 <form method="post" action="{{ act.path }}/answer" class="stack">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">

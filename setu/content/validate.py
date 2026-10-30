@@ -51,6 +51,7 @@ class ContentTree:
     word_units: list
     letters_l0: list = dataclasses.field(default_factory=list)
     aksharas: list = dataclasses.field(default_factory=list)
+    chunks: list = dataclasses.field(default_factory=list)
     root: Path | None = None
 
 
@@ -90,6 +91,7 @@ def load_tree(root: Path) -> ContentTree:
         else [],
         aksharas=(_yaml(root / "hi-te/script/aksharas.yaml") or []) if (root / "hi-te/script/aksharas.yaml").exists()
         else [],
+        chunks=(_yaml(root / "hi-te/chunks.yaml") or []) if (root / "hi-te/chunks.yaml").exists() else [],
         root=root,
     )
 
@@ -355,6 +357,26 @@ def _validate_akshara(unit, seen, letters) -> Result:
     return res
 
 
+def _validate_chunk(chunk, seen, scene_ids) -> Result:
+    res = Result([], {})
+    cid = chunk.get("id", "?")
+    if cid in seen or not str(cid).startswith("te-chunk:"):
+        res.add(cid, _err("bad_chunk_id"))
+    seen.add(cid)
+    _approval_claims(res, cid, chunk, status_field="review_status", allowed=IMPORTABLE["review_status"])
+    if chunk.get("scene_id") not in scene_ids:
+        res.add(cid, _err("unknown_scene", str(chunk.get("scene_id"))))
+    if chunk.get("register") not in ("standard", "spoken"):
+        res.add(cid, _err("bad_register", str(chunk.get("register"))))
+    _check_target_text(res, cid, "telugu", chunk.get("telugu"), "HI->TE")
+    _check_l1_text(res, cid, "hindi_meaning", chunk.get("hindi_meaning"), "HI->TE")
+    if not chunk.get("hindi_meaning"):
+        res.add(cid, _err("missing_field", "hindi_meaning"))
+    if not chunk.get("provenance"):
+        res.add(cid, _err("missing_provenance"))
+    return res
+
+
 def validate_tree(tree: ContentTree) -> Result:
     res = Result([], {})
     rule_ids, item_owner, sentences = set(), {}, {}
@@ -397,6 +419,9 @@ def validate_tree(tree: ContentTree) -> Result:
     seen_letters = set()
     for letter in tree.letters_l0:
         res.merge(_validate_letter(letter, seen_letters))
+    seen_chunks, scene_ids = set(), {s.get("id") for s in tree.scenes}
+    for chunk in tree.chunks:
+        res.merge(_validate_chunk(chunk, seen_chunks, scene_ids))
     seen_aksharas = set()
     for unit in tree.aksharas:
         res.merge(_validate_akshara(unit, seen_aksharas, seen_letters))

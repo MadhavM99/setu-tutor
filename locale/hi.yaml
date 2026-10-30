@@ -30,6 +30,7 @@ page:
   letters: "तेलुगु अक्षर"
   aksharas: "मात्राएँ और संयुक्त अक्षर"
   words: "तेलुगु शब्द"
+  chunks: "रोज़ के वाक्यांश"
 
 a11y:
   main: "मुख्य हिस्सा"
@@ -101,6 +102,8 @@ learn:
   your_answer: "आपका जवाब:"
   aksharas_link: "मात्राएँ और संयुक्त अक्षर"
   words_link: "पहले शब्द"
+  chunks_link: "रोज़ के वाक्यांश"
+  space: "खाली जगह"
 
 fb:
   correct: "सही!"
@@ -115,3 +118,10 @@ word:
   recall_prompt: "तेलुगु में लिखिए: {twin}"
   cognate: "हिंदी के ‘{hindi}’ जैसा।"
   false_friend: "ध्यान दें: यह हिंदी के ‘{hindi}’ जैसा दिखता है, पर मतलब अलग है।"
+
+chunk:
+  new: "नया वाक्यांश"
+  twin_is: "मतलब: {twin}"
+  choice_prompt: "यह तेलुगु में कैसे कहेंगे: {twin}?"
+  meaning_prompt: "इस वाक्यांश का मतलब क्या है?"
+  recall_prompt: "तेलुगु में लिखिए: {twin}"

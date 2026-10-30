@@ -5,7 +5,7 @@
 <form method="post" action="{{ act.path }}/key" class="keys">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   <input type="hidden" name="buffer" value="{{ buffer }}">
-  {% for k in keys %}<button type="submit" name="key" value="{{ k }}" class="key">{% if telugu %}{{ te(k) }}{% else %}{{ k }}{% endif %}</button>{% endfor %}
+  {% for k in keys %}<button type="submit" name="key" value="{{ k }}" class="key">{% if k == " " %}{{ t("learn.space") }}{% elif telugu %}{{ te(k) }}{% else %}{{ k }}{% endif %}</button>{% endfor %}
   <button type="submit" name="erase" value="1" class="key">{{ t("btn.erase") }}</button>
 </form>
 <form method="post" action="{{ act.path }}/answer">
@@ -23,6 +23,6 @@
 <form method="post" action="{{ act.path }}/answer" class="stack">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   <label for="typed">{{ t("learn.or_type") }}</label>
-  <input id="typed" name="typed" maxlength="12" autocomplete="off">
+  <input id="typed" name="typed" maxlength="{{ act.max_len }}" autocomplete="off">
   <button type="submit">{{ t("btn.check") }}</button>
 </form>

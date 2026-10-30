@@ -350,6 +350,31 @@ class Akshara(Base):
     )
 
 
+class Chunk(Base):
+    """L3 routine chunks per scene (migration 0011). Learners see one only when it has two native approvals, its
+    scene is approved and every letter in it is approved (`learner_chunk`)."""
+
+    __tablename__ = "chunk"
+    id = Column(Text, primary_key=True)
+    scene_id = fk("scene.id")
+    telugu = Column(Text, nullable=False)
+    hindi_meaning = Column(Text, nullable=False)
+    register = Column(Text, nullable=False)
+    letters = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    unit_order = Column(Integer, nullable=False, unique=True)
+    review_status = Column(Text, nullable=False, server_default="draft")
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
+    content_hash = Column(Text)
+    __table_args__ = (
+        one_of("register", "standard", "spoken"),
+        one_of("review_status", *REVIEW),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("telugu", "hindi_meaning"),
+    )
+
+
 class Lexeme(Base):
     __tablename__ = "lexeme"
     id = Column(Text, primary_key=True)

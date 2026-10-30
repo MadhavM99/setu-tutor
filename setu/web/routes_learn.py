@@ -1,9 +1,10 @@
-"""Script and word practice: L0 letters (slice S1), L1 aksharas (slice S2) and L2 words (slice S3). Every answer goes through the checker and the
+"""Script, word and chunk practice: L0 letters (S1), L1 aksharas (S2), L2 words (S3), L3 scene chunks (S4). Every answer goes through the checker and the
 OutcomeWriter; pages show only approved units (`learner_letter`, `learner_akshara`) and keep the pending task on the
 server, so a learner cannot re-roll a task (E-13). Aksharas are offered only once the learner has recalled every
 letter in them without help (X-PERS-04). Akshara answers are built on an on-screen keyboard that works without
 JavaScript: each key is a round trip that only rebuilds the page (R-INPUT, cue-free). Words, like aksharas, are
-offered only once their letters have been recalled; a false friend's meaning step includes its Hindi look-alike."""
+offered only once their letters have been recalled; a false friend's meaning step includes its Hindi look-alike.
+Chunks are introduced inside their scene (title and setup) and built with a space key."""
 import dataclasses
 import datetime as dt
 import json
@@ -23,7 +24,6 @@ from setu.store.outcome_writer import CardTarget, SkillTarget
 from .routes_ui import form_data, optional_user, render
 
 router = APIRouter()
-MAX_BUFFER = 12
 TELUGU_SIGNS = tuple(s for _, s, _, _ in SIGNS) + (VIRAMA,)
 
 
@@ -39,6 +39,8 @@ class Activity:
     chain: tuple = LP.CHAIN
     prompts: str = "learn"  # catalog group for the page prompts
     vowel_keys: bool = False  # words can start with a vowel letter
+    space_key: bool = False  # chunks have more than one word
+    max_len: int = 12
 
     @property
     def path(self) -> str:
@@ -47,7 +49,12 @@ class Activity:
     @property
     def text(self) -> dict:
         """Catalog keys for this activity's prompts (templates may not hold literal text)."""
-        return {k: f"{self.prompts}.{k}" for k in ("new", "twin_is", "choice_prompt", "recall_prompt")}
+        return {k: f"{self.prompts}.{k}" for k in ("new", "twin_is", "choice_prompt", "meaning_prompt", "recall_prompt")}
+
+    @property
+    def view(self) -> str:
+        return {"letters": "learner_letter", "aksharas": "learner_akshara", "words": "learner_lexeme",
+                "chunks": "learner_chunk"}[self.name]
 
 
 # every letter in the unit has had a correct, cue-free recall (X-PERS-04)
@@ -58,21 +65,28 @@ _RECALLED = ("WHERE NOT EXISTS (SELECT 1 FROM learner_letter x JOIN learner_lexe
 LETTERS = Activity(
     "letters", "letter", "SELECT id, telugu, devanagari, twin_label_hi AS label, letter_group AS grp, "
     "varnamala_order AS ord, NULL AS confusable, letter_group AS skill_key, note_hi, group_hi, kind, NULL AS trap, "
-    "NULL AS cognate_of FROM learner_letter ORDER BY varnamala_order", 5, False, False, "L0.script.{}")
+    "NULL AS cognate_of, NULL AS setup_hi FROM learner_letter ORDER BY varnamala_order", 5, False, False, "L0.script.{}")
 AKSHARAS = Activity(
     "aksharas", "akshara", "SELECT a.id, a.telugu, a.devanagari, a.twin_label_hi AS label, a.akshara_group AS grp, "
     "a.unit_order AS ord, a.letters->>0 AS confusable, a.family AS skill_key, a.note_hi, a.group_hi, a.kind, "
-    "NULL AS trap, NULL AS cognate_of FROM learner_akshara a WHERE NOT EXISTS (SELECT 1 FROM "
+    "NULL AS trap, NULL AS cognate_of, NULL AS setup_hi FROM learner_akshara a WHERE NOT EXISTS (SELECT 1 FROM "
     "jsonb_array_elements_text(a.letters) AS l(ch) " + _RECALLED + " ORDER BY a.unit_order", 10, True, True,
     "L1.akshara.{}")
 WORDS = Activity(
     "words", "lexeme", "SELECT w.id, w.telugu, NULL AS devanagari, w.hindi_gloss AS label, w.word_group AS grp, "
     "w.ladder_order AS ord, w.word_group AS confusable, w.word_group AS skill_key, w.false_friend_note_hi AS note_hi, "
-    "NULL AS group_hi, 'word' AS kind, w.looks_like_hi AS trap, w.cognate_of FROM learner_lexeme w "
+    "NULL AS group_hi, 'word' AS kind, w.looks_like_hi AS trap, w.cognate_of, NULL AS setup_hi FROM learner_lexeme w "
     "WHERE w.word_group IS NOT NULL AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements_text(w.letters) AS l(ch) "
     + _RECALLED + " ORDER BY w.ladder_order", 5, False, True, "L2.word.{}", chain=LP.WORD_CHAIN, prompts="word",
     vowel_keys=True)
-ACTIVITIES = {a.name: a for a in (LETTERS, AKSHARAS, WORDS)}
+CHUNKS = Activity(
+    "chunks", "chunk", "SELECT ch.id, ch.telugu, NULL AS devanagari, ch.hindi_meaning AS label, ch.scene_id AS grp, "
+    "ch.unit_order AS ord, ch.scene_id AS confusable, ch.scene_id AS skill_key, NULL AS note_hi, "
+    "s.title_hi AS group_hi, 'chunk' AS kind, NULL AS trap, NULL AS cognate_of, s.setup_hi FROM learner_chunk ch "
+    "JOIN learner_scene s ON s.id = ch.scene_id WHERE NOT EXISTS (SELECT 1 FROM "
+    "jsonb_array_elements_text(ch.letters) AS l(ch) " + _RECALLED + " ORDER BY ch.unit_order", 5, False, True,
+    "L3.chunk.{}", chain=LP.WORD_CHAIN, prompts="chunk", vowel_keys=True, space_key=True, max_len=40)
+ACTIVITIES = {a.name: a for a in (LETTERS, AKSHARAS, WORDS, CHUNKS)}
 
 
 def _units(c, act: Activity, learner_id):
@@ -82,8 +96,7 @@ def _units(c, act: Activity, learner_id):
 
 
 def _any_approved(c, act: Activity) -> bool:
-    table = {"letters": "learner_letter", "aksharas": "learner_akshara", "words": "learner_lexeme"}[act.name]
-    return c.execute(text(f"SELECT EXISTS (SELECT 1 FROM {table})")).scalar_one()
+    return c.execute(text(f"SELECT EXISTS (SELECT 1 FROM {act.view})")).scalar_one()
 
 
 def _session(c, act: Activity, learner_id):
@@ -135,7 +148,7 @@ def _keys(c, act: Activity, views, task: LP.Task):
     keys = list(consonants) + list(TELUGU_SIGNS)
     if task.type == "recognise":
         keys = [TELU_TO_DEVA[k] for k in keys]
-    return keys
+    return keys + [" "] if act.space_key else keys
 
 
 def _page(request, user, act, exchange_id, task, views, meta, keys, buffer=""):
@@ -249,11 +262,11 @@ async def practice_key(request: Request, name: str):
         if task.letter_id not in meta or task.type not in ("recognise", "recall"):  # only typing steps have keys
             return RedirectResponse(act.path, status_code=303)
         keys = _keys(c, act, views, task)
-    buffer = str(data.get("buffer", ""))[:MAX_BUFFER]
+    buffer = str(data.get("buffer", ""))[:act.max_len]
     if data.get("erase"):
         buffer = buffer[:-1]
     elif str(data.get("key", "")) in keys:
-        buffer = (buffer + str(data["key"]))[:MAX_BUFFER]
+        buffer = (buffer + str(data["key"]))[:act.max_len]
     return _page(request, user, act, exchange_id, task, views, meta, keys, buffer=buffer)
 
 
@@ -288,10 +301,10 @@ async def practice_answer(request: Request, name: str):
     else:
         key, typed = str(data.get("key", "")), str(data.get("typed", ""))
         if act.compose:
-            raw, mode = (str(data.get("buffer", ""))[:MAX_BUFFER], "onscreen_keyboard") if data.get("built") \
-                else (typed[:40], "typed")
+            raw, mode = (str(data.get("buffer", ""))[:act.max_len], "onscreen_keyboard") if data.get("built") \
+                else (typed[:act.max_len], "typed")
         else:
-            raw, mode = (key, "onscreen_keyboard") if key else (typed[:40], "typed")
+            raw, mode = (key, "onscreen_keyboard") if key else (typed[:act.max_len], "typed")
         target, accepted = (("devanagari", [unit.devanagari]) if task.type == "recognise"
                             else ("telugu", [unit.telugu]))
         result = checker.check_recall(attempt_id=attempt_id, raw=raw, accepted=accepted, target_script=target,

@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ meta.group_hi if act.intro_per_group else t(act.text.new) }}</h1>
+<h1>{{ meta.group_hi if act.intro_per_group or meta.setup_hi else t(act.text.new) }}</h1>
 <p class="letter-big">{{ te(unit.telugu) }}</p>
 <p>{{ t(act.text.twin_is, twin=unit.label) }}</p>
+{% if meta.setup_hi %}<p>{{ meta.setup_hi }}</p>{% endif %}
 {% if meta.cognate_of %}<p>{{ t("word.cognate", hindi=meta.cognate_of) }}</p>{% endif %}
 {% if meta.trap %}<p><strong>{{ t("word.false_friend", hindi=meta.trap) }}</strong></p>{% endif %}
 {% if meta.note_hi %}<p>{{ meta.note_hi }}</p>{% endif %}
