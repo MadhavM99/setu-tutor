@@ -288,6 +288,9 @@ def _validate_lexeme(lex) -> Result:
         res.add(lid, _err("missing_field", "hindi_gloss"))
     if lex.get("false_friend") and not lex.get("false_friend_note_hi"):
         res.add(lid, _err("false_friend_without_note"))
+    if lex.get("looks_like_hi") and not lex.get("false_friend"):
+        res.add(lid, _err("look_alike_without_false_friend"))
+    _check_l1_text(res, lid, "looks_like_hi", lex.get("looks_like_hi"), "HI->TE")
     _check_provenance(res, lid, lex.get("provenance"))
     return res
 

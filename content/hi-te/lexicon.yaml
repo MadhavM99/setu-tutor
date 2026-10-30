@@ -609,6 +609,7 @@
   cognate_of: null
   false_friend: true
   false_friend_note_hi: अवसर नहीं!
+  looks_like_hi: अवसर
   source_id: DS-20
   review_status: draft
   dev_notes:
@@ -634,6 +635,7 @@
   cognate_of: null
   false_friend: true
   false_friend_note_hi: उपन्यास नहीं!
+  looks_like_hi: उपन्यास
   source_id: DS-20
   review_status: draft
   dev_notes:
@@ -659,6 +661,7 @@
   cognate_of: null
   false_friend: true
   false_friend_note_hi: चरित्र नहीं!
+  looks_like_hi: चरित्र
   source_id: DS-20
   review_status: draft
   dev_notes:
@@ -684,6 +687,7 @@
   cognate_of: null
   false_friend: true
   false_friend_note_hi: आलस्य नहीं!
+  looks_like_hi: आलस्य
   source_id: DS-20
   review_status: draft
   dev_notes:

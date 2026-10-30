@@ -148,11 +148,15 @@ def test_conversion_is_reproducible(tmp_path):
     assert produced == manifest["files"]
 
 
-def test_committed_yaml_still_matches_the_conversion_until_reviewed():
-    # True for this slice: nothing has been edited since conversion. Remove once reviewers start editing.
+def test_committed_yaml_matches_the_conversion_or_a_recorded_edit():
+    # A converted file may change only with an entry in content/EDITS.json giving its new hash and the reason.
     manifest = json.loads((CONTENT / "CONVERSION.json").read_text(encoding="utf-8"))
+    edits = json.loads((CONTENT / "EDITS.json").read_text(encoding="utf-8"))
     for rel, digest in manifest["files"].items():
-        assert hashlib.sha256((CONTENT / rel).read_bytes()).hexdigest() == digest, rel
+        current = hashlib.sha256((CONTENT / rel).read_bytes()).hexdigest()
+        latest = edits[rel][-1] if rel in edits else None
+        assert current == (latest["sha256"] if latest else digest), rel
+        assert latest is None or (latest["change"] and latest["date"]), rel
 
 
 def test_data_source_register_matches_the_docs(tree):

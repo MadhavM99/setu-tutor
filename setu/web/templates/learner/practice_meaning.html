@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("word.meaning_prompt") }}</h1>
+<p class="letter-big">{{ te(unit.telugu) }}</p>
+<form method="post" action="{{ act.path }}/answer" class="stack">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  {% for value, label in labels %}<button type="submit" name="choice" value="{{ value }}">{{ label }}</button>{% endfor %}
+</form>
+{% endblock %}

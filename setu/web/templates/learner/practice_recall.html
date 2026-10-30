@@ -1,5 +1,5 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>{{ t("learn.recall_prompt", twin=unit.label) }}</h1>
+<h1>{{ t(act.text.recall_prompt, twin=unit.label) }}</h1>
 {% set telugu = true %}{% include "learner/_keyboard.html" %}
 {% endblock %}

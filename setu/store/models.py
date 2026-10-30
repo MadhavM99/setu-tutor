@@ -361,6 +361,11 @@ class Lexeme(Base):
     cognate_of = Column(Text)
     false_friend = Column(Boolean, nullable=False, server_default=text("false"))
     false_friend_note_hi = Column(Text)
+    looks_like_hi = Column(Text)  # the Hindi look-alike of a false friend (migration 0010)
+    word_group = Column(Text)
+    ladder_order = Column(Integer)
+    letters = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
     audio_asset_id = fk("audio_asset.id", nullable=True)
     source_id = fk("data_source.id", nullable=True)
     review_status = Column(Text, nullable=False, server_default="draft")
@@ -369,7 +374,9 @@ class Lexeme(Base):
     __table_args__ = (
         one_of("review_status", *REVIEW),
         CheckConstraint("NOT false_friend OR false_friend_note_hi IS NOT NULL", name="false_friend_has_note"),
-        *no_latin("telugu", "hindi_gloss", "false_friend_note_hi", "cognate_of"),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("telugu", "hindi_gloss", "false_friend_note_hi", "cognate_of", "looks_like_hi"),
     )
 
 

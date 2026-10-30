@@ -1,0 +1,6 @@
+{
+ "_note": "Authored edits to converted files. Each entry records the file's current sha256 and why it changed; the conversion manifest (CONVERSION.json) is never rewritten.",
+ "hi-te/lexicon.yaml": [
+  {"date": "2026-10-31", "slice": "S3", "change": "added looks_like_hi (the Hindi look-alike) to the four false friends; drafts", "sha256": "634ec5b4ea85ce809be3740af13b6b7656b1dfc7dcf81c1a2da70fdef8d4bb54"}
+ ]
+}

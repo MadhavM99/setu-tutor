@@ -2,6 +2,7 @@
 {% block content %}
 <h1>{{ t(outcome_key) }}</h1>
 <p class="letter-big">{{ te(unit.telugu) }}</p>
-<p>{{ t("learn.twin_is", twin=unit.label) }}</p>
+<p>{{ t(act.text.twin_is, twin=unit.label) }}</p>
+{% if not correct and unit.trap %}<p>{{ t("word.false_friend", hindi=unit.trap) }}</p>{% endif %}
 <p><a class="button" href="{{ act.path }}">{{ t("btn.next") }}</a></p>
 {% endblock %}

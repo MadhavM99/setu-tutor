@@ -84,8 +84,8 @@ def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = No
             _skill(c, result, rule_skill_id(rule), band=rule["band"], family="rule", target=rule["rule_id"],
                    modality="PR", direction=rule["direction"])
             _rule(c, rule, report, result)
-        for lex in tree.lexemes:
-            _lexeme(c, lex, result)
+        for order, lex in enumerate(tree.lexemes, start=1):
+            _lexeme(c, lex, result, order)
         for scene in tree.scenes:
             _scene(c, scene, result)
     return result
@@ -225,25 +225,50 @@ def _item(c, rid, rule_version_id, item, report, result, rule):
 # ---------------------------------------------------------------- words and scenes
 
 
-def _lexeme(c, lex, result):
-    digest = sha256_of(lex)
+LEXEME_DERIVED = "lexeme-2"  # word group, ladder order and letters (slice S3); part of the word's hash
+
+
+def word_letters(telugu: str) -> list[str]:
+    """The letters a word is written with (signs, virama and ం/ః are not letters)."""
+    from .aksharas import SIGNS, VIRAMA
+
+    marks = {s for _, s, _, _ in SIGNS} | {VIRAMA}
+    return list(dict.fromkeys(ch for ch in telugu if ch not in marks))
+
+
+def word_skill_id(group: str, modality: str) -> str:
+    return f"L2.word.{group}.{modality}"
+
+
+def _lexeme(c, lex, result, order=None):
+    group = (lex.get("dev_notes") or {}).get("unit") or "misc"
+    derived = {"importer": LEXEME_DERIVED, "group": group, "order": order, "letters": word_letters(lex["telugu"])}
+    digest = sha256_of({**lex, "_derived": derived})
     row = c.execute(text("SELECT content_hash, review_status FROM lexeme WHERE id = :i"), {"i": lex["id"]}).first()
     values = {"id": lex["id"], "telugu": lex["telugu"], "gloss": lex["hindi_gloss"], "pos": lex.get("pos"),
               "rank": lex.get("freq_rank"), "cog": lex.get("cognate_of"), "ff": bool(lex.get("false_friend")),
               "note": lex.get("false_friend_note_hi"), "src": lex.get("source_id"),
-              "prov": _j(lex["provenance"]), "h": digest}
+              "prov": _j(lex["provenance"]), "h": digest, "look": lex.get("looks_like_hi"), "grp": group,
+              "ord": order, "letters": _j(derived["letters"])}
+    for modality, requires in (("REC", ["L1.akshara.vowel_signs.REC"]), ("RCL", [word_skill_id(group, "REC")])):
+        _skill(c, result, word_skill_id(group, modality), band="L2", family="word", target=group, modality=modality,
+               direction="HI->TE",
+               requires=[r for r in requires if c.execute(text("SELECT 1 FROM skill WHERE id = :s"), {"s": r}).first()])
     if row is None:
         c.execute(text("INSERT INTO lexeme (id, telugu, hindi_gloss, pos, freq_rank, cognate_of, false_friend, "
-                       "false_friend_note_hi, source_id, review_status, provenance, content_hash) VALUES (:id, "
-                       ":telugu, :gloss, :pos, :rank, :cog, :ff, :note, :src, 'draft', CAST(:prov AS jsonb), :h)"),
-                  values)
+                       "false_friend_note_hi, source_id, review_status, provenance, content_hash, looks_like_hi, "
+                       "word_group, ladder_order, letters) VALUES (:id, :telugu, :gloss, :pos, :rank, :cog, :ff, "
+                       ":note, :src, 'draft', CAST(:prov AS jsonb), :h, :look, :grp, :ord, "
+                       "CAST(:letters AS jsonb))"), values)
         result.lexemes_written += 1
     elif row.content_hash != digest:
         if row.review_status != "draft":
             raise ImportRefused(f"{lex['id']}: word is '{row.review_status}'; edit it in the teacher console")
         c.execute(text("UPDATE lexeme SET telugu = :telugu, hindi_gloss = :gloss, pos = :pos, freq_rank = :rank, "
                        "cognate_of = :cog, false_friend = :ff, false_friend_note_hi = :note, source_id = :src, "
-                       "provenance = CAST(:prov AS jsonb), content_hash = :h WHERE id = :id"), values)
+                       "provenance = CAST(:prov AS jsonb), content_hash = :h, looks_like_hi = :look, "
+                       "word_group = :grp, ladder_order = :ord, letters = CAST(:letters AS jsonb) WHERE id = :id"),
+                  values)
         result.lexemes_written += 1
     else:
         result.unchanged += 1

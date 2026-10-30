@@ -129,3 +129,30 @@ def test_akshara_distractors_are_the_same_consonant_with_other_signs():
                      now=T0, new_today=0, seed=5)
     assert "te-akshara:కి" in t.options and len(t.options) == 4
     assert all(AKSH[o].confusable == "క" for o in t.options)
+
+
+# ---------------------------------------------------------------- L2 words (slice S3)
+
+WORDS = [LP.UnitView("te:అవసరం", "అవసరం", "अवसरं", "ज़रूरत", "L1-06", 1, trap="अवसर"),
+         LP.UnitView("te:చరిత్ర", "చరిత్ర", "चरित्र", "इतिहास", "L1-06", 2, trap="चरित्र"),
+         LP.UnitView("te:ఆలస్యం", "ఆలస్యం", "आलस्यं", "देर", "L1-06", 3, trap="आलस्य"),
+         LP.UnitView("te:పుస్తకం", "పుస్తకం", "पुस्तकं", "पुस्तक", "L1-05", 4),
+         LP.UnitView("te:సమయం", "సమయం", "समयं", "समय", "L1-05", 5)]
+
+
+def test_a_new_word_runs_intro_choice_meaning_recall():
+    t = LP.next_task(letters=WORDS, cards=[], pending=None, now=T0, new_today=0, seed=2, chain=LP.WORD_CHAIN)
+    steps = [t.type]
+    while t.chain:
+        t = LP.next_task(letters=WORDS, cards=[], pending=LP.after_answer(t, "correct"), now=T0, new_today=1, seed=2)
+        steps.append(t.type)
+    assert steps == ["intro", "choice", "meaning", "recall"]
+
+
+def test_a_false_friend_meaning_step_offers_its_look_alike_as_a_trap():
+    t = LP.next_task(letters=WORDS, cards=[], pending=LP.Task("choice", "te:అవసరం", chain=("meaning", "recall")),
+                     now=T0, new_today=0, seed=4)
+    assert t.type == "meaning" and "te:అవసరం" in t.options and "trap:te:అవసరం" in t.options and len(t.options) == 4
+    plain = LP.next_task(letters=WORDS, cards=[], pending=LP.Task("choice", "te:సమయం", chain=("meaning",)),
+                         now=T0, new_today=0, seed=4)
+    assert not any(o.startswith(LP.TRAP) for o in plain.options)

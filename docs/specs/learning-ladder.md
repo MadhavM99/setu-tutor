@@ -265,3 +265,28 @@ Validation happens in FW-R14. Any CEFR alignment is a separate study.
   - the ంం pronunciation difference is a note on the ం intro, not its own exercise;
   - the list of 1 000+ possible conjuncts is reduced to 9 common ones until native reviewers pick more;
   - 489 aksharas each need two approvals; batch approval belongs to the teacher console (Phase 4).
+## L2 as built (slice S3, 31 Oct 2026)
+
+- **Content:** the 28 imported words (`content/hi-te/lexicon.yaml`).
+  - Four false friends gained `looks_like_hi` (अवसर, उपन्यास, चरित्र, आलस्य). This is the first authored edit to a
+    converted file, recorded in `content/EDITS.json`; the conversion guard test now accepts only recorded edits.
+- **Migration 0010:**
+  - A word needs two native approvals, the same as letters and aksharas. Before this, one `approved` status was
+    enough.
+  - `learner_lexeme` now also requires every letter in the word to be approved.
+  - The importer fills each word's group (its source unit), ladder order and letters.
+- **Skills:** `L2.word.<unit>.REC/RCL`, where REC requires `L1.akshara.vowel_signs.REC`.
+- **Unlocking:** a word is offered only after cue-free recall of all its letters.
+- **Chain per new word:**
+  1. intro, with the meaning, a cognate note ("हिंदी के ‘पुस्तक’ जैसा") or a false-friend warning;
+  2. Hindi meaning → pick the Telugu word (recognition);
+  3. Telugu word → pick the meaning (recognition). For a false friend, its Hindi look-alike is one of the options;
+     choosing it is wrong and the warning is shown again;
+  4. build the word on the compose keyboard: letters, vowels and signs (cue-free recall).
+
+  At most 5 new words a day.
+- **Deviations:**
+  - The order follows the source units, not IndicCorp frequency, which isn't available yet.
+  - The unlock rule checks letters, not the specific vowel signs a word uses.
+  - L2 mastery needs production, so these words cannot reach "mastered" until S4/S5 add production tasks. This is
+    by design.

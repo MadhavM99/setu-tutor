@@ -1,8 +1,9 @@
-"""Script practice: L0 letters (slice S1) and L1 aksharas (slice S2). Every answer goes through the checker and the
+"""Script and word practice: L0 letters (slice S1), L1 aksharas (slice S2) and L2 words (slice S3). Every answer goes through the checker and the
 OutcomeWriter; pages show only approved units (`learner_letter`, `learner_akshara`) and keep the pending task on the
 server, so a learner cannot re-roll a task (E-13). Aksharas are offered only once the learner has recalled every
 letter in them without help (X-PERS-04). Akshara answers are built on an on-screen keyboard that works without
-JavaScript: each key is a round trip that only rebuilds the page (R-INPUT, cue-free)."""
+JavaScript: each key is a round trip that only rebuilds the page (R-INPUT, cue-free). Words, like aksharas, are
+offered only once their letters have been recalled; a false friend's meaning step includes its Hindi look-alike."""
 import dataclasses
 import datetime as dt
 import json
@@ -35,35 +36,53 @@ class Activity:
     intro_per_group: bool
     compose: bool
     skill: str  # format string over the unit's skill key
+    chain: tuple = LP.CHAIN
+    prompts: str = "learn"  # catalog group for the page prompts
+    vowel_keys: bool = False  # words can start with a vowel letter
 
     @property
     def path(self) -> str:
         return f"/learn/{self.name}"
 
+    @property
+    def text(self) -> dict:
+        """Catalog keys for this activity's prompts (templates may not hold literal text)."""
+        return {k: f"{self.prompts}.{k}" for k in ("new", "twin_is", "choice_prompt", "recall_prompt")}
+
+
+# every letter in the unit has had a correct, cue-free recall (X-PERS-04)
+_RECALLED = ("WHERE NOT EXISTS (SELECT 1 FROM learner_letter x JOIN learner_lexeme_card c ON c.card_kind = 'letter' "
+             "AND c.card_ref = x.id AND c.modality = 'RCL' AND c.learner_id = :l JOIN fsrs_review_log r ON "
+             "r.card_id = c.id AND r.rating >= 3 AND r.cue_level = 0 WHERE x.telugu = l.ch))")
 
 LETTERS = Activity(
     "letters", "letter", "SELECT id, telugu, devanagari, twin_label_hi AS label, letter_group AS grp, "
-    "varnamala_order AS ord, NULL AS confusable, letter_group AS skill_key, note_hi, group_hi, kind "
-    "FROM learner_letter ORDER BY varnamala_order", 5, False, False, "L0.script.{}")
+    "varnamala_order AS ord, NULL AS confusable, letter_group AS skill_key, note_hi, group_hi, kind, NULL AS trap, "
+    "NULL AS cognate_of FROM learner_letter ORDER BY varnamala_order", 5, False, False, "L0.script.{}")
 AKSHARAS = Activity(
     "aksharas", "akshara", "SELECT a.id, a.telugu, a.devanagari, a.twin_label_hi AS label, a.akshara_group AS grp, "
-    "a.unit_order AS ord, a.letters->>0 AS confusable, a.family AS skill_key, a.note_hi, a.group_hi, a.kind "
-    "FROM learner_akshara a WHERE NOT EXISTS (SELECT 1 FROM jsonb_array_elements_text(a.letters) AS l(ch) "
-    "WHERE NOT EXISTS (SELECT 1 FROM learner_letter x JOIN learner_lexeme_card c ON c.card_kind = 'letter' "
-    "AND c.card_ref = x.id AND c.modality = 'RCL' AND c.learner_id = :l JOIN fsrs_review_log r ON r.card_id = c.id "
-    "AND r.rating >= 3 AND r.cue_level = 0 WHERE x.telugu = l.ch)) ORDER BY a.unit_order", 10, True, True,
+    "a.unit_order AS ord, a.letters->>0 AS confusable, a.family AS skill_key, a.note_hi, a.group_hi, a.kind, "
+    "NULL AS trap, NULL AS cognate_of FROM learner_akshara a WHERE NOT EXISTS (SELECT 1 FROM "
+    "jsonb_array_elements_text(a.letters) AS l(ch) " + _RECALLED + " ORDER BY a.unit_order", 10, True, True,
     "L1.akshara.{}")
-ACTIVITIES = {a.name: a for a in (LETTERS, AKSHARAS)}
+WORDS = Activity(
+    "words", "lexeme", "SELECT w.id, w.telugu, NULL AS devanagari, w.hindi_gloss AS label, w.word_group AS grp, "
+    "w.ladder_order AS ord, w.word_group AS confusable, w.word_group AS skill_key, w.false_friend_note_hi AS note_hi, "
+    "NULL AS group_hi, 'word' AS kind, w.looks_like_hi AS trap, w.cognate_of FROM learner_lexeme w "
+    "WHERE w.word_group IS NOT NULL AND NOT EXISTS (SELECT 1 FROM jsonb_array_elements_text(w.letters) AS l(ch) "
+    + _RECALLED + " ORDER BY w.ladder_order", 5, False, True, "L2.word.{}", chain=LP.WORD_CHAIN, prompts="word",
+    vowel_keys=True)
+ACTIVITIES = {a.name: a for a in (LETTERS, AKSHARAS, WORDS)}
 
 
 def _units(c, act: Activity, learner_id):
     rows = c.execute(text(act.units_sql), {"l": learner_id}).all()
-    views = [LP.UnitView(r.id, r.telugu, r.devanagari, r.label, r.grp, r.ord, r.confusable) for r in rows]
+    views = [LP.UnitView(r.id, r.telugu, r.devanagari, r.label, r.grp, r.ord, r.confusable, r.trap) for r in rows]
     return views, {r.id: r for r in rows}
 
 
 def _any_approved(c, act: Activity) -> bool:
-    table = "learner_letter" if act is LETTERS else "learner_akshara"
+    table = {"letters": "learner_letter", "aksharas": "learner_akshara", "words": "learner_lexeme"}[act.name]
     return c.execute(text(f"SELECT EXISTS (SELECT 1 FROM {table})")).scalar_one()
 
 
@@ -110,8 +129,9 @@ def _keys(c, act: Activity, views, task: LP.Task):
     target script, so the keyboard never narrows the answer down."""
     if not act.compose:
         return [v.devanagari for v in views] if task.type == "recognise" else [v.telugu for v in views]
-    consonants = c.execute(text("SELECT telugu FROM learner_letter WHERE kind = 'consonant' "
-                                "ORDER BY varnamala_order")).scalars().all()
+    kinds = ("vowel", "consonant") if act.vowel_keys else ("consonant",)
+    consonants = c.execute(text("SELECT telugu FROM learner_letter WHERE kind = ANY(:k) ORDER BY varnamala_order"),
+                           {"k": list(kinds)}).scalars().all()
     keys = list(consonants) + list(TELUGU_SIGNS)
     if task.type == "recognise":
         keys = [TELU_TO_DEVA[k] for k in keys]
@@ -120,9 +140,11 @@ def _keys(c, act: Activity, views, task: LP.Task):
 
 def _page(request, user, act, exchange_id, task, views, meta, keys, buffer=""):
     by_id = {x.id: x for x in views}
+    labels = [(o, meta[o[len(LP.TRAP):]].trap if o.startswith(LP.TRAP) else by_id[o].label)
+              for o in task.options if o in by_id or o.startswith(LP.TRAP)]
     return render(request, f"learner/practice_{task.type}.html", title_key=f"page.{act.name}", user=user, act=act,
                   exchange_id=exchange_id, unit=by_id[task.letter_id], meta=meta[task.letter_id],
-                  options=[by_id[o] for o in task.options if o in by_id], keys=keys, buffer=buffer)
+                  options=[by_id[o] for o in task.options if o in by_id], labels=labels, keys=keys, buffer=buffer)
 
 
 def _message(request, user, act, key):
@@ -172,7 +194,7 @@ def practice(request: Request, name: str):
             "AND e.task->>'activity' = :a AND (e.task->>'new')::boolean AND e.created_at::date = :d"), {"l": user.learner_id, "a": act.name, "d": now.date()}).scalar_one()
         session_id, seed = _session(c, act, user.learner_id)
         task = LP.next_task(letters=views, cards=cards, pending=pending, now=now, new_today=new_today, seed=seed,
-                            new_cap=act.new_cap, intro_per_group=act.intro_per_group)
+                            new_cap=act.new_cap, intro_per_group=act.intro_per_group, chain=act.chain)
         if task is None:
             return _message(request, user, act, "learn.done_today")
         exchange_id = _create_exchange(c, act, session_id, task)
@@ -224,7 +246,7 @@ async def practice_key(request: Request, name: str):
             return RedirectResponse(act.path, status_code=303)
         task = _task(row.task)
         views, meta = _units(c, act, user.learner_id)
-        if task.letter_id not in meta or task.type not in ("recognise", "recall"):
+        if task.letter_id not in meta or task.type not in ("recognise", "recall"):  # only typing steps have keys
             return RedirectResponse(act.path, status_code=303)
         keys = _keys(c, act, views, task)
     buffer = str(data.get("buffer", ""))[:MAX_BUFFER]
@@ -259,7 +281,7 @@ async def practice_answer(request: Request, name: str):
         return _feedback(request, user, act, unit, outcome)
 
     attempt_id = uuid.uuid4()
-    if task.type == "choice":
+    if task.type in LP.OPTION_STEPS:
         chosen = str(data.get("choice", ""))
         result = checker.check_choice(attempt_id=attempt_id, chosen=chosen, correct=unit.id)
         raw, mode, cue, aids, normalised = chosen, "multiple_choice", 1, ["choices"], None
