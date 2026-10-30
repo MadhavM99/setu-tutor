@@ -608,5 +608,7 @@ Lifecycle: `built` = code exists; `tested` = acceptance tests pass against real 
 
 | ADR-0007 | P-ETH-04, P8b-12: consent collected in person, recorded automatically at registration; withdrawal recorded by a researcher | built, tested | `tests/db/test_auth_and_consent.py` |
 
-Still open from those rows: P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
+| 2.1 | P-ARCH-05, P-SESS-09 (normalisation part), P8b-06, X-CHK-01, P-DATA-07 (adapter interface only), TS-NORM-01..10 | built, tested | `tests/unit/test_normalise.py` (38 tests) |
+
+Still open from those rows: P-DATA-07 (the IndicXlit model is not wired in; only the adapter interface), P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
 

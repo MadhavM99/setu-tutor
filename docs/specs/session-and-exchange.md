@@ -238,3 +238,29 @@ Tests use held-out items that never appear in practice, including hard items to 
 - Each concept carries a cue level (3 → 0). Scored attempts record `cue_level`. Only `cue_level = 0` attempts count toward mastery and unlock.
 - The new-item cap includes aid time: a new item with an aid counts as one new item.
 - **Study mode:** in reverse-learning A/B/C, the Memory Assistant runs in **fixed mode** (identical aids and exposures across conditions; no exploration). In Study M, the condition determines the aids.
+## 10. Implementation notes: normaliser (slice 2.1, 31 Oct 2026)
+
+`setu/domain/normalise.py` (`normaliser-1`, pure, no I/O):
+
+- **Canonical text:** NFC; zero-width characters, BOM, soft hyphen and word joiner removed; Devanagari and Telugu
+  digits become 0–9; punctuation (including the danda) becomes a space; single spaces. Inputs longer than 300
+  characters are refused (`too_long`).
+- **Conversion table built from character names**, not the raw `0x300` offset: 73 Devanagari↔Telugu pairs. The
+  offset alone would have produced 17 wrong characters (for example ढ़ → Telugu NAKAARA POLLU, U+0904 → a combining
+  anusvara); the legacy bridges in both repos used the raw offset. Devanagari ए/ओ map to Telugu long ఏ/ఓ and the
+  rarely typed ऎ/ऒ to short ఎ/ఒ. Characters without a Telugu twin (ॉ, ॅ, ॐ …) make the input `unconvertible`
+  and are listed, never dropped silently. Nukta is dropped and chandrabindu becomes anusvara, both reported in
+  `notes`.
+- **Forgiveness only for Hindi-keyboard input** (`match_forgiving`): ए/ओ for short ఎ/ఒ (`eo_length`) and a final म
+  for ం (`final_m`, not after a virama). Each use is returned so the feedback can say so. **Change from the legacy
+  app:** it folded e/o length for every answer; now a Telugu-typed ఏ for ఎ is a real spelling difference and is
+  not forgiven. When a mixed Telugu+Devanagari answer is typed, forgiveness applies to the whole answer.
+- **Romanised input:** without a transliterator the status is `needs_transliteration` (the checker will treat it
+  as unsure). With one (the IndicXlit adapter, protocol `Transliterator`), the result is `transliterated` with up to
+  5 validated candidates and the transliterator's version; candidates containing anything but the target script
+  are dropped. The IndicXlit model itself is not wired in yet (no model in this phase); the adapter interface is.
+- **Latin mixed into Indic text** (`పుస్తకo`) is `mixed_script`; letters from other scripts are `foreign_script`.
+- **TE→HI:** a Telugu-typed answer for a Hindi target is converted to Devanagari with the same table.
+- **Explanations** keep their script and punctuation.
+- Every Telugu form in the content (rules, variants, planted errors, words) round-trips Telugu → Devanagari →
+  Telugu without loss, as do 500 seeded random strings.
