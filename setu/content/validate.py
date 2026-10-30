@@ -8,6 +8,8 @@ from pathlib import Path
 
 import yaml
 
+from setu.domain import tokenize
+
 from . import patterns
 from .schema import (
     APPROVAL_KEYS,
@@ -178,6 +180,16 @@ def validate_rule(rule: dict) -> Result:
     for field in (rule.get("needs_rewrite") or {}):
         res.add(rid, Issue("needs_rewrite", field, field))
     _check_provenance(res, rid, rule.get("provenance"))
+
+    # DQ-08: a learner-facing title that contains a corrected word gives the answer away.
+    title = rule.get("title_l1") or ""
+    title_tokens = set(tokenize.tokens(title))
+    for item in rule.get("items") or []:
+        wrong = set(tokenize.tokens(item.get("wrong_form") or ""))
+        reveal = set(tokenize.tokens(item.get("correct_form") or "")) - wrong
+        if title_tokens & reveal:
+            res.add(rid, Issue("title_reveals_answer", f"{item.get('item_id')}: {sorted(title_tokens & reveal)}"))
+            break
 
     seen_items = set()
     for item in rule.get("items") or []:

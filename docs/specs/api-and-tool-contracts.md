@@ -168,3 +168,18 @@ Common rules:
 ### Contract tests
 
 TS-API-*: JSON schema per endpoint, auth matrix, idempotency, the no-leak assertion (TS-API-LEAK), and Hindi-only `message_key` resolution.
+## Part C — Implementation notes (slice 2.4, 31 Oct 2026)
+
+- `setu/domain/leakfilter.py` holds the rules and `setu/agents/tools.py` the envelope. Implemented tools:
+  `check_classmate_sentence`, `check_hint_has_no_answer` and `check_level`, all read-only. The four lookups (A4) and
+  `choose_memory_aid` join with the agents in Phase 4.
+- Every invalid-argument string in A1 is returned verbatim; extra arguments (for example a model setting
+  `no_error`) are refused.
+- **Planted turns accept only the approved planted sentence** (or a full match of an approved wrong pattern). A
+  model paraphrase cannot be verified to contain exactly one error of the planted rule, so it is rejected and the
+  bank sentence is used. This is stricter than "exactly one error" and may raise the bank-fallback rate (M-11).
+- The student-only filter (classmate-output-contract §3) applies the Hindi assistant and teacher word lists only
+  when the target is Telugu, so ordinary Hindi in mirror mode is not flagged.
+- `check_hint_has_no_answer` rejects a hint containing the corrected form, any corrected word in Telugu, or its
+  Devanagari transliteration. The content validator applies the same idea to rule titles: `title_reveals_answer` is
+  now raised on HI-TE-003, 004, 006, 007, 012 and 015 (DQ-08).
