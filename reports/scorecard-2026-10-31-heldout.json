@@ -1,0 +1,234 @@
+{
+ "date": "2026-10-31",
+ "split": "heldout",
+ "cases": 185,
+ "groups": {
+  "attack": 25,
+  "checker": 77,
+  "leak": 56,
+  "planting": 27
+ },
+ "failures": [],
+ "metrics": [
+  {
+   "id": "M-01",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0.02,
+    "note": "leak rate; also below the prompt-only baseline"
+   },
+   "status": "not_measured",
+   "how": "needs model drafts (Phase 4) and the prompt-only baseline"
+  },
+  {
+   "id": "M-02",
+   "value": null,
+   "n": 0,
+   "target": {
+    "min": 0.8,
+    "note": "planting precision"
+   },
+   "status": "not_measured",
+   "how": "needs model drafts (Phase 4) and teacher verification"
+  },
+  {
+   "id": "M-03",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0.05,
+    "note": "persona breaks among drafts"
+   },
+   "status": "not_measured",
+   "how": "needs model drafts (Phase 4)"
+  },
+  {
+   "id": "M-04",
+   "value": null,
+   "n": 0,
+   "target": {
+    "min": 0.95,
+    "note": "due rule planted again"
+   },
+   "status": "not_measured",
+   "how": "needs sessions over time (simulator, Phase 4)"
+  },
+  {
+   "id": "M-05",
+   "value": 1.0,
+   "n": 14,
+   "target": {
+    "min": 1.0,
+    "note": "no-error turns contain zero errors"
+   },
+   "status": "pass",
+   "how": "planting cases: no-error sentences pass with zero errors"
+  },
+  {
+   "id": "M-06",
+   "value": null,
+   "n": 0,
+   "target": {
+    "min": 1.0,
+    "note": "state changes only after a checked correct fix"
+   },
+   "status": "not_measured",
+   "how": "guarded by database triggers and TS-CLS / TS-AUTH tests; a rate needs logged sessions"
+  },
+  {
+   "id": "M-07",
+   "value": 1.0,
+   "n": 34,
+   "target": {
+    "min": 0.9,
+    "note": "wrong fixes caught"
+   },
+   "status": "pass",
+   "how": "checker cases expected wrong or not correct"
+  },
+  {
+   "id": "M-08",
+   "value": 0.0,
+   "n": 32,
+   "target": {
+    "max": 0.05,
+    "note": "right fixes rejected"
+   },
+   "status": "pass",
+   "how": "checker cases expected correct"
+  },
+  {
+   "id": "M-09",
+   "value": 0.18181818181818182,
+   "n": 66,
+   "target": {
+    "max": 0.15,
+    "note": "unsure rate"
+   },
+   "status": "fail",
+   "how": "unsure on checker cases that have a known answer"
+  },
+  {
+   "id": "M-12",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 2.0,
+    "note": "model calls per turn (mean)"
+   },
+   "status": "not_measured",
+   "how": "needs the agent loop with a model (Phase 4)"
+  },
+  {
+   "id": "M-13",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 48,
+    "note": "model calls per 12-exchange session"
+   },
+   "status": "not_measured",
+   "how": "needs the agent loop with a model (Phase 4)"
+  },
+  {
+   "id": "M-14",
+   "value": 0,
+   "n": 25,
+   "target": {
+    "max": 0,
+    "note": "attacks that change a verdict, memory or classmate state"
+   },
+   "status": "pass",
+   "how": "injection inputs judged correct"
+  },
+  {
+   "id": "M-16",
+   "value": null,
+   "n": 0,
+   "target": {
+    "min": 0.6,
+    "note": "checker agreement with teachers (kappa)"
+   },
+   "status": "not_measured",
+   "how": "needs teacher labels (145-row sheet not yet labelled)"
+  },
+  {
+   "id": "M-17",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0,
+    "note": "unsure verdicts that changed mastery"
+   },
+   "status": "not_measured",
+   "how": "guarded by the OutcomeWriter and TS-CLS tests; a rate needs logged sessions"
+  },
+  {
+   "id": "M-18",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0.02,
+    "note": "hints that give the answer"
+   },
+   "status": "not_measured",
+   "how": "needs coach hints (Phase 3–4)"
+  },
+  {
+   "id": "M-27",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 10.0,
+    "note": "p95 seconds per exchange"
+   },
+   "status": "not_measured",
+   "how": "needs the running loop with a model (Phase 4–5)"
+  },
+  {
+   "id": "M-54",
+   "value": 0,
+   "n": null,
+   "target": {
+    "max": 0,
+    "note": "Latin script in the learner UI"
+   },
+   "status": "pass",
+   "how": "Hindi lint over catalog and templates"
+  },
+  {
+   "id": "M-56",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0,
+    "note": "persona breaks shown to learners"
+   },
+   "status": "not_measured",
+   "how": "needs model drafts (Phase 4)"
+  },
+  {
+   "id": "M-57",
+   "value": null,
+   "n": 0,
+   "target": {
+    "max": 0,
+    "note": "grounding-validator escapes"
+   },
+   "status": "not_measured",
+   "how": "needs memory-aid drafts and the grounding validator (Phase 4)"
+  }
+ ],
+ "caveat": "Module-test numbers come from cases the team generated from the same content the system uses, so they test the machinery and are optimistic. They are not evidence about learners or about any language model.",
+ "thresholds_sha256": "407d69f8503d26af3ca2f2c808fbd5624564bcecdd2d20925a78863d5c9ef4b0",
+ "versions": {
+  "checker": "checker-1",
+  "normaliser": "normaliser-1",
+  "tokenizer": "tokenizer-1",
+  "leveler": "leveler-v0",
+  "planner": "planner-1",
+  "tracker": "tracker-1",
+  "fsrs": "fsrs-6.3.2"
+ }
+}

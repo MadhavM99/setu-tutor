@@ -153,4 +153,10 @@ The 138 tests in the setu-tutor baseline are kept under `legacy/tests` and still
 | TS-INPUT-SRC-01 | Options, tiles and distractors only from learner-visible approved content (Phase 3) | ★ |
 | TS-INPUT-E2E-01..02 | Every flow completes without a physical keyboard; switching modes is one control (Phase 3) | |
 | TS-STUDY-11 | Response modes and opportunities balanced across conditions; scored tests independent only (Phase 4) | ★ |
+## 7. Stage A suite as built (slice 2.7)
 
+`setu/research/stage_a.py` generates 663 cases from the content (checker 267, leak 196, planting 98, attack 98,
+forgetting 4; both directions). The 70/30 split is by a hash of each case id. The 185 held-out ids are frozen in
+`tests/stage_a/heldout-manifest.json` (with their sha256); new cases default to the dev split.
+`tests/unit/test_stage_a.py` checks size, reproducibility, the frozen manifest and no overlap, and runs the 478 dev
+cases. Only the scorecard runs held-out cases.

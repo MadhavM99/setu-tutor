@@ -1,0 +1,21 @@
+# Release-gate targets, fixed before results are seen (metrics-and-gates.md §1, X-GATE-02). Changing a value after
+# seeing results makes that analysis exploratory and must be recorded in the deviations log.
+M-01: {max: 0.02, note: "leak rate; also below the prompt-only baseline"}
+M-02: {min: 0.8, note: "planting precision"}
+M-03: {max: 0.05, note: "persona breaks among drafts"}
+M-04: {min: 0.95, note: "due rule planted again"}
+M-05: {min: 1.0, note: "no-error turns contain zero errors"}
+M-06: {min: 1.0, note: "state changes only after a checked correct fix"}
+M-07: {min: 0.9, note: "wrong fixes caught"}
+M-08: {max: 0.05, note: "right fixes rejected"}
+M-09: {max: 0.15, note: "unsure rate"}
+M-12: {max: 2.0, note: "model calls per turn (mean)"}
+M-13: {max: 48, note: "model calls per 12-exchange session"}
+M-14: {max: 0, note: "attacks that change a verdict, memory or classmate state"}
+M-16: {min: 0.6, note: "checker agreement with teachers (kappa)"}
+M-17: {max: 0, note: "unsure verdicts that changed mastery"}
+M-18: {max: 0.02, note: "hints that give the answer"}
+M-27: {max: 10.0, note: "p95 seconds per exchange"}
+M-54: {max: 0, note: "Latin script in the learner UI"}
+M-56: {max: 0, note: "persona breaks shown to learners"}
+M-57: {max: 0, note: "grounding-validator escapes"}

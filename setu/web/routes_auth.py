@@ -87,6 +87,17 @@ def _withdraw(request: Request, learner_id: UUID) -> None:
         c.execute(text("SELECT setu_withdraw_consent(:l)"), {"l": learner_id})
 
 
+@router.get("/export/okf")
+def export_okf(request: Request, user: CurrentUser):
+    from fastapi.responses import Response as Raw
+
+    from setu.export import okf
+
+    data = okf.export_zip(request.app.state.db.engine, user.learner_id)
+    return Raw(data, media_type="application/zip",
+               headers={"Content-Disposition": f'attachment; filename="setu-{user.handle}.zip"'})
+
+
 @router.post("/research/invites", status_code=201)
 def make_invite(body: InviteIn, request: Request, user: ResearcherOrAdmin):
     if body.role not in auth.INVITE_RIGHTS[user.role]:
