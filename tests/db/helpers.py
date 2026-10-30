@@ -41,14 +41,19 @@ def ok(conn, sql, params=None):
 # ---------- fixture rows (inserted as the owner, inside the test transaction) ----------
 
 
-def make_learner(conn, handle=None, role="learner"):
-    return conn.execute(
+def make_learner(conn, handle=None, role="learner", consent=True):
+    """A learner row; with `consent`, also an active pilot consent so sessions may start (migration 0004)."""
+    learner_id = conn.execute(
         text(
             "INSERT INTO learner (handle, passphrase_hash, l1, l2, direction, role) "
             "VALUES (:h, 'argon2-placeholder', 'hi', 'te', 'HI->TE', :r) RETURNING id"
         ),
         {"h": handle or f"h-{uuid.uuid4().hex[:8]}", "r": role},
     ).scalar_one()
+    if consent:
+        conn.execute(text("INSERT INTO consent (learner_id, form_version, scope) VALUES (:l, 'pilot-v1', "
+                          "ARRAY['pilot'])"), {"l": learner_id})
+    return learner_id
 
 
 def make_rule(conn, rule_id="HI-TE-001", direction="HI->TE"):

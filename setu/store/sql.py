@@ -326,3 +326,54 @@ LEARNER_VIEWS_DOWN = [
 ]
 CONTENT_FUNCTIONS_DOWN = ["DROP FUNCTION IF EXISTS setu_patterns_anchored(text[])",
                           "DROP FUNCTION IF EXISTS setu_no_latin(text)"]
+
+# ---------------------------------------------------------------- migration 0004 (slice 1.5)
+
+CONSENT_GUARDS = [
+    """
+CREATE FUNCTION setu_session_requires_consent() RETURNS trigger LANGUAGE plpgsql AS $$
+-- No practice session without active consent (P-ETH-04, TS-PRIV-01); study and test sessions need the pilot scope.
+DECLARE
+  scopes text[];
+BEGIN
+  SELECT scope INTO scopes FROM consent
+   WHERE learner_id = NEW.learner_id AND withdrawn_at IS NULL ORDER BY signed_at DESC LIMIT 1;
+  IF scopes IS NULL THEN
+    RAISE EXCEPTION 'session refused: learner % has no active consent', NEW.learner_id;
+  END IF;
+  IF (NEW.mode LIKE 'study_%' OR NEW.mode LIKE 'test_%') AND NOT ('pilot' = ANY (scopes)) THEN
+    RAISE EXCEPTION 'session refused: % sessions need consent with the pilot scope', NEW.mode;
+  END IF;
+  RETURN NEW;
+END $$""",
+    (
+        "CREATE TRIGGER session_requires_consent BEFORE INSERT ON session "
+        "FOR EACH ROW EXECUTE FUNCTION setu_session_requires_consent()"
+    ),
+    """
+CREATE FUNCTION setu_withdraw_consent(p_learner uuid) RETURNS integer
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp AS $$
+-- Withdrawal (data-model.md §5): consent ends, the learner's raw text is removed from attempts, background answers
+-- are deleted and sign-in sessions are revoked. Learning state and the append-only ledger stay; the ledger holds
+-- pseudonymous ids and outcomes only, never the learner's words. Returns the number of attempts redacted.
+DECLARE
+  redacted integer;
+BEGIN
+  UPDATE consent SET withdrawn_at = now() WHERE learner_id = p_learner AND withdrawn_at IS NULL;
+  UPDATE attempt a SET raw_text = '', normalised_text = NULL, redacted_at = now()
+    FROM exchange e JOIN session s ON s.id = e.session_id
+   WHERE a.exchange_id = e.id AND s.learner_id = p_learner AND a.redacted_at IS NULL;
+  GET DIAGNOSTICS redacted = ROW_COUNT;
+  DELETE FROM background WHERE learner_id = p_learner;
+  UPDATE auth_session SET revoked_at = now() WHERE learner_id = p_learner AND revoked_at IS NULL;
+  RETURN redacted;
+END $$""",
+    "REVOKE ALL ON FUNCTION setu_withdraw_consent(uuid) FROM PUBLIC",
+    "GRANT EXECUTE ON FUNCTION setu_withdraw_consent(uuid) TO setu_app",
+]
+
+CONSENT_GUARDS_DOWN = [
+    "DROP FUNCTION IF EXISTS setu_withdraw_consent(uuid)",
+    "DROP TRIGGER IF EXISTS session_requires_consent ON session",
+    "DROP FUNCTION IF EXISTS setu_session_requires_consent()",
+]

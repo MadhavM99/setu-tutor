@@ -117,8 +117,13 @@ Common rules:
 
 | Method | Path | Request | Response | Notes |
 |---|---|---|---|---|
-| POST | `/auth/login` | handle, passphrase | cookie | Rate-limited |
-| POST | `/consent` | form_version, scopes | 204 | Required before study sessions |
+| POST | `/auth/register` | invite_code, passphrase | 201 `{learner_id, handle}` + cookie | Single-use invite; handle is random digits (built in slice 1.5) |
+| POST | `/auth/login` | handle, passphrase | 204 + cookie | Lockout after 5 failures in 15 min per handle (429 `err.locked`); same 401 `err.auth_failed` for unknown handles and wrong passphrases |
+| POST | `/auth/logout` | — | 204 | Revokes the session |
+| GET | `/me` | — | `{learner_id, handle, role, consent}` | |
+| GET | `/consent` | — | `{form_version, scopes, text_key}` | Current form (text in the Hindi catalog, ethics-approved before use) |
+| POST | `/consent` | form_version, scopes | 204 | Any active consent is required for practice sessions; the pilot scope for study and test sessions (enforced by the database) |
+| POST | `/consent/withdraw` | — | 204 | Runs `setu_withdraw_consent()` |
 | POST | `/session/start` | — | session_id, first task fragment | Server builds the plan (seeded) |
 | GET | `/task/current` | — | task fragment (Hindi) | The server owns the pending task; no re-roll [fixes LMA defect 4] |
 | POST | `/task/answer` | `{task_id, text?, says_correct?: bool, input_script}` + Idempotency-Key | feedback fragment `{outcome_key, hint_hi?, reveal?, correction_shown?}` | `outcome_key` ∈ fb.correct / fb.partial / fb.wrong / fb.unsure / fb.false_alarm |
@@ -150,6 +155,8 @@ Common rules:
 
 | Method | Path | Purpose |
 |---|---|---|
+| POST | `/research/invites` | `{role, cohort}` → single-use code. Researchers invite learners and teachers; only admins invite researchers and admins (built in slice 1.5) |
+| POST | `/research/participants/{id}/withdraw` | Withdraw a participant (built in slice 1.5) |
 | POST | `/research/study` | Create a study with a threshold-file hash and prereg ref |
 | POST | `/research/participants` | Create a participant, consent and background; Latin-square assignment |
 | POST | `/research/tests/{phase}/open` | Schedule pre, post, delayed or transfer tests |

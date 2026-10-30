@@ -34,9 +34,9 @@ def _rule(c, direction="HI->TE"):
 
 
 def _person(c, role="learner"):
-    return c.execute(text("INSERT INTO learner (handle, passphrase_hash, l1, l2, direction, role) VALUES "
-                          "(:h, 'x', 'hi', 'te', 'HI->TE', :r) RETURNING id"),
-                     {"h": f"h-{uuid.uuid4().hex[:10]}", "r": role}).scalar_one()
+    from .helpers import make_learner
+
+    return make_learner(c, handle=f"h-{uuid.uuid4().hex[:10]}", role=role)
 
 
 def _attempt(c, learner, rv, kind="correction", planted=True):

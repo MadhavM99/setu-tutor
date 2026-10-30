@@ -76,7 +76,18 @@ PLAN_V2 = {role: list(specs) for role, specs in PLAN_V1.items()}
 PLAN_V2["setu_read"] = [s for s in PLAN_V1["setu_read"] if s[0] not in DRAFT_BEARING]
 VIEW_GRANTS = {view: ("setu_read", "setu_app", "setu_writer", "setu_content") for view in LEARNER_VIEWS}
 
-GRANT_PLAN = PLAN_V2  # the current plan
+# Plan V3 (migration 0004, slice 1.5): accounts. Only the web layer touches invites, sessions and login attempts;
+# no other role can read them. Consent withdrawal runs through `setu_withdraw_consent()` (EXECUTE: setu_app).
+PLAN_V3 = {role: list(specs) for role, specs in PLAN_V2.items()}
+PLAN_V3["setu_app"] += [
+    ("invite", "SELECT, INSERT", None),
+    ("invite", "UPDATE", ("used_at", "used_by")),
+    ("auth_session", "SELECT, INSERT", None),
+    ("auth_session", "UPDATE", ("revoked_at",)),
+    ("login_attempt", "SELECT, INSERT", None),
+]
+
+GRANT_PLAN = PLAN_V3  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}

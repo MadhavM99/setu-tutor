@@ -107,7 +107,50 @@ class Consent(Base):
     __table_args__ = (
         CheckConstraint("scope <@ ARRAY['pilot','audio','writing_upload','data_sharing']::text[]",
                         name="scope_values"),
+        CheckConstraint("cardinality(scope) >= 1", name="scope_not_empty"),
     )
+
+
+class Invite(Base):
+    """Single-use invite codes (E-08). Only the code's sha256 is stored."""
+
+    __tablename__ = "invite"
+    id = uuid_pk()
+    code_hash = Column(Text, nullable=False, unique=True)
+    role = Column(Text, nullable=False)
+    cohort = Column(Text)
+    created_by = fk("learner.id", nullable=True)
+    created_at = now()
+    expires_at = Column(TIMESTAMP(timezone=True), nullable=False)
+    used_at = Column(TIMESTAMP(timezone=True))
+    used_by = fk("learner.id", nullable=True)
+    __table_args__ = (
+        one_of("role", "learner", "teacher", "researcher", "admin"),
+        CheckConstraint("(used_at IS NULL) = (used_by IS NULL)", name="used_together"),
+    )
+
+
+class AuthSession(Base):
+    """Signed-in sessions. Only the token's sha256 is stored."""
+
+    __tablename__ = "auth_session"
+    id = uuid_pk()
+    token_hash = Column(Text, nullable=False, unique=True)
+    learner_id = fk("learner.id")
+    created_at = now()
+    expires_at = Column(TIMESTAMP(timezone=True), nullable=False)
+    revoked_at = Column(TIMESTAMP(timezone=True))
+    __table_args__ = (CheckConstraint("expires_at > created_at", name="expires_after_created"),)
+
+
+class LoginAttempt(Base):
+    """Login attempts per handle, for the lockout. No IP address or user agent is stored."""
+
+    __tablename__ = "login_attempt"
+    id = uuid_pk()
+    handle = Column(Text, nullable=False)
+    ok = Column(Boolean, nullable=False)
+    ts = now()
 
 
 class Background(Base):
@@ -714,6 +757,7 @@ class Attempt(Base):
     confidence = Column(Integer)
     latency_ms = Column(Integer)
     idempotency_key = Column(Text, nullable=False, unique=True)
+    redacted_at = Column(TIMESTAMP(timezone=True))  # set when consent is withdrawn (raw text removed)
     created_at = now()
     __table_args__ = (
         UniqueConstraint("exchange_id", "n", name="uq_attempt_exchange_id_n"),
@@ -724,6 +768,7 @@ class Attempt(Base):
         CheckConstraint("hint_type IS NULL OR hint_type IN ('recast','l1_rule','contrast','generic')",
                         name="hint_type_values"),
         CheckConstraint("confidence IS NULL OR confidence BETWEEN 1 AND 5", name="confidence_range"),
+        CheckConstraint("redacted_at IS NULL OR (raw_text = '' AND normalised_text IS NULL)", name="redacted_is_empty"),
     )
 
 
