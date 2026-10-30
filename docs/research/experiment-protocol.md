@@ -91,6 +91,13 @@ Tags: [P] paper · [P8b] newer paper copy · [X] prompt extension · [E] enginee
 | Exploratory | Mirror, forgetting vs remembering, predict-then-check, hint type, only if recruitment allows; reported separately |
 | Larger study | Sample size from a power analysis using Stage A and pilot variance; mixed-effects model with learners and rules as random effects; outcomes and analysis preregistered (FW-R01) |
 
+## 4b. Memory support in the reverse-learning study (amendment A1)
+
+- Conditions A, B and C receive **identical memory support**: the same approved aids, the same cue ladder and fade schedule, and the same number of aid presentations per rule. The Memory Assistant runs in fixed mode (no exploration, no adaptivity).
+- Balance is checked from `aid_event` (M-67, TS-STUDY-10).
+- The effect of memory aids is studied separately in **Study M** ([memory-experiment-protocol.md](memory-experiment-protocol.md)).
+- A participant may take part in both studies only if the concept sets don't overlap. Study order is recorded.
+
 ## 5. Contrast validity and learner writing [P-EVAL-09/10]
 
 - **Before looking at data:** fix which error types the table predicts to be more frequent for Dravidian-L1 learners of Hindi.

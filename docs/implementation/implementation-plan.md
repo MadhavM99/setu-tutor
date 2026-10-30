@@ -73,6 +73,17 @@ Tests: TS-L0..L5, TS-SESS-*, TS-EXCH-*, TS-OWN-*, TS-UI-*, TS-E2E-*, TS-A11Y-*.
   - simulator v1 with 60 baseline runs and ablations;
   - TE→HI end to end, with mirror mode behind a flag.
 
+### Amendment A1 work (adds ~3–4 weeks in total)
+
+| Where | Slice | Spec IDs |
+|---|---|---|
+| Phase 1 | Memory tables in the schema; `cue_level` on attempts; catalog `raju.*` templates; Raju turn-type enum | X-MEM-AID-06/12, X-RAJU-01/02 |
+| Phase 2 | Student-only filter and new tool reasons; grounding validator; fact-sheet builder; FSRS cue cap; cue-ladder service | X-RAJU-03, X-MEM-AID-04/11/13 |
+| Phase 3 | S1–S3 use **non-generative fallback aids** (twin view, decomposition, cognate link, reconstruction) plus native audio where available; aid events and fading end to end | X-MEM-AID-02/07/09/11/12 |
+| Phase 4 | Offline aid pipeline (separate environment, budget, OCR, image generation, review queue F9); policy ranking and per-aid measurement; teacher-model recommendation behind a flag; Study M machinery; simulator aid parameters | X-MEM-AID-03/05/08/10, X-MEM-EXP-* |
+| Phase 5 | G-MEM-ASSET / G-MEM-GROUND runs; Raju persona red team (M-56) | Gates |
+| Phase 6 | Study M (separate recruitment, 30-day follow-up) after G-MEM-EXP | X-MEM-EXP-01..03 |
+
 ### Phase 5: Speech and gates (~2 weeks)
 
 - ASR/TTS adapters behind flags, with WER vs Whisper.
@@ -104,9 +115,10 @@ As in [metrics-and-gates.md](../research/metrics-and-gates.md) §2. If a safety-
 | Letter units L0-01..24, words L1-01..06 | Migrate as draft content | Valuable; unreviewed | Importer → YAML |
 | Rule bank (15 / 29) | Merge with the LMA bank | Duplicate copies with different fields | Importer; DQ register |
 | Didi Q&A to the model | **Remove** | Sends learner text to a commercial API; not answer-safe | Approved hints; "सवाल पूछें" → teacher queue later |
-| AI tricks and pictures (`aids.py`, Nano Banana, SVG) | **Remove from runtime** | Unreviewed; slow; gimmicky | Optional offline drafting with teacher approval (archived) |
+| AI tricks and pictures (`aids.py`, Nano Banana, SVG) | **Refactor into the offline aid pipeline** (amendment A1, ADR-0005) | The runtime versions were unreviewed, slow and gimmicky; the ideas (font overlay, SVG sanitiser, text check) are useful | Offline generation → validators → teacher review → library; no runtime generation |
 | Ravi scene lines | Replace | Unreviewable model text | Approved scene scripts; LLM friend behind a gate |
 | Balloons, emoji, celebrating persona | **Remove** | X-CALM | — |
+| Model-written Raju lines and reactions (`writer.py`) | **Replace** | Assistant drift; ADR-0006 | Fixed `raju.*` catalog templates; the model fills only the sentence slot |
 | Settings dev controls (time travel, reset, jump) | Move | No auth; unsafe for learners | Researcher console, audited |
 | Gemini / Google AI Studio clients (`llm.py`) | **Remove** | D3 privacy | OpenAI-compatible client only |
 | Offline hook drafting (`scripts/draft_hooks.py`) | Keep as an offline tool | Drafts go to review only | Point it at the self-hosted model |

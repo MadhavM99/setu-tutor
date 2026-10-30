@@ -98,6 +98,25 @@ erDiagram
 | `test_administration` | `learner_id`, `phase`, `item_version_ref`, `scheduled_for` |
 | `blind_mark` | `export_id`, `rater_id`, `response_id` (random), `score`, `rubric_version` |
 
+### Memory Assistant (amendment A1)
+
+| Table | Columns |
+|---|---|
+| `concept` | `id`, `kind` (letter\|sound\|akshara\|lexeme\|false_friend\|rule\|chunk\|scene), `content_ref`, `fact_sheet` json (verified fact ids only) |
+| `technique_policy` | `version`, `unit_kind`, `technique`, `default_rank`, `active` |
+| `memory_aid` (immutable versions) | `id`, `concept_id`, `technique`, `version`, `text_hi`, `telugu_spans`, `uses_facts[]`, `lures[]` (declared misassociation forms), `visual_asset_id`, `audio_asset_id`, `audio_alt_hi_id`, `alt_text_hi`, `generation` json (tool, model, prompt, seed or `manual`), `validator_results` json, `review_status` (draft\|in_review\|approved\|rejected\|retired), `reviewers` json, `licence`, `provenance`, `retired_reason`, `supersedes` |
+| `visual_asset` | `id`, `uri`, `sha256`, `phash`, `prompt`, `negative_prompt`, `model`, `provider` (self_hosted\|external_offline), `seed`, `ocr_result`, `safety_result`, `contrast_ok`, `review_status`, `licence`, `alt_text_hi` |
+| `audio_asset` | `id`, `uri`, `kind` (native_recording\|tts_reviewed), `speaker_consent_id`, `rights`, `review_status` |
+| `aid_event` | `id`, `learner_id`, `concept_id`, `memory_aid_id` (or `fallback:<kind>`), `event` (presented\|selected\|used\|dismissed), `recommended_by` (policy\|teacher_model\|study_fixed), `rank`, `exploration bool`, `dwell_ms`, `session_id`, `ts` |
+| `concept_cue_state` | `learner_id`, `concept_id`, `cue_level` 0–3, `updated_by_event` (written by OutcomeWriter) |
+| `technique_effect` | `scope` (learner\|population), `learner_id` (nullable), `technique`, `alpha`, `beta`, `n`, `updated_at` |
+| `aid_misassociation` | `attempt_id`, `memory_aid_id`, `lure` |
+| `generation_cost` | `id`, `batch_id`, `provider`, `model`, `units` (GPU-s or images), `cost`, `ts` |
+
+`attempt` gains `cue_level` (0–3) and `aid_visible_before_answer bool`. The FSRS review log gains `cue_level`.
+
+Mastery rule: OutcomeWriter ignores `aid_event` for mastery. Attempts with `cue_level > 0` cap the FSRS rating at Hard and never count toward unlock.
+
 ### Audit
 
 | Table | Columns |
@@ -159,7 +178,7 @@ locked → available → learning → mastered ⇄ due → relearning → master
 | LMA `data/l1-te_l2-hi/rules.json` | `content/te-hi/rules` | Same as above, `direction = TE->HI` |
 | LMA `tests_v0.jsonl`, `teacher_labels_v0.csv` | `tests/stage_a/dev` and a labelling batch | The held-out manifest is regenerated once and then frozen |
 | setu `runs/*.json` (dev learner) | Not migrated | Developer test data only |
-| setu `runs/ai/aids.json`, images | Not migrated | Unreviewed AI content; archived in `legacy/` |
+| setu `runs/ai/aids.json`, images | Not migrated as approved content | Unreviewed. Tricks may be re-imported as `memory_aid` **drafts** through the grounding validator and teacher review (ADR-0005); the SVG pictures are discarded |
 
 ## 7. Indexes and integrity
 

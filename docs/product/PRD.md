@@ -44,6 +44,8 @@ Status: draft for approval (Phase 0). Each statement is tagged **[P]** paper, **
 7. **Every planted error ends shown corrected.** [R-13]
 8. **Honesty in research.** Thresholds are fixed in advance. Failures and null results are reported. Simulation is never presented as human evidence. [X-RULES-05, X-GATE-02]
 9. **Privacy by default.** Pseudonymous IDs, our own server, no commercial model API at runtime, adults only. [P-ETH-05, D3]
+10. **Memory aids support encoding; they never count as learning.** Aids are approved, grounded, text-free (images), faded, and measured by delayed cue-free recall. [X-MEM-AID]
+11. **राजू is only a weaker student.** He never acts as an assistant or teacher. [X-RAJU]
 
 ## 5. Scope (first release, Phases 1–5)
 
@@ -64,6 +66,16 @@ Status: draft for approval (Phase 0). Each statement is tagged **[P]** paper, **
   - a tool loop;
   - forgetting tied to the learner's tracker.
 - **Coach:** fixed teacher-approved hints first; LLM drafting behind a flag.
+- **Memory Assistant (स्मृति सहायक)** [X-MEM-AID, amendment A1]:
+  - technique policy by unit type;
+  - grounded Hindi mnemonics;
+  - text-free illustrations from an approved library, with app-rendered glyphs;
+  - native audio and sound associations;
+  - chunking and decomposition;
+  - cue fading;
+  - FSRS integration;
+  - per-aid effect measurement;
+  - non-generative fallbacks.
 - **Native friend (रवि):** bank-only first; LLM behind a gate.
 - **Deterministic core:** normaliser, checker (4 verdicts), planner, scheduler, OutcomeWriter, ledger, OKF export.
 - **Teacher console (Hindi):**
@@ -86,7 +98,9 @@ Status: draft for approval (Phase 0). Each statement is tagged **[P]** paper, **
 
 ## 6. Non-goals (first release)
 
-- Gamification of any kind; AI-generated pictures or mnemonics at runtime. [X-CALM]
+- Gamification of any kind. [X-CALM]
+- Per-learner or runtime image generation; unreviewed aids shown to learners. Runtime verbal mnemonics stay off until G-MEM-RT. [ADR-0005]
+- Free conversation with राजू. [ADR-0006]
 - Any commercial model API at runtime. [D3]
 - Fine-tuning, LoRA, DPO or activation steering. [P-MODEL-03, FW-P21/22]
 - Per-sound pronunciation scoring. [X-SPEECH-04, FW-P20]
@@ -119,6 +133,8 @@ Status: draft for approval (Phase 0). Each statement is tagged **[P]** paper, **
 - copy rate < 5% per rule;
 - false alarms.
 
+**Memory Assistant:** M-56..M-63 and M-68; Study M outcomes M-64..M-66 (memory-experiment-protocol.md).
+
 **Product signals:**
 - returning for a second session;
 - SUS;
@@ -145,3 +161,5 @@ Each feature has a full template spec in the file named.
 | F-RES Research console and study mode | experiment-protocol.md |
 | F-OKF Record export | data-model.md §8 |
 | F-SPEECH Speech adapters | architecture.md §7 |
+| F-MEM Memory Assistant (F-MEM-1..8) | memory-assistant.md |
+| F-RAJU Classmate output contract | classmate-output-contract.md |

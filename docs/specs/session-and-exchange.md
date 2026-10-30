@@ -76,7 +76,7 @@ Every feature below follows the mandatory template: Purpose · Learner outcome �
    - after 3 failures → the bank sentence;
    - an invalid draft is never shown. [P-ARCH-03, X-EXCH-01]
 
-   Then the Hindi question ("मैंने ये लिखा — सही है?") comes from fixed templates.
+   Then the Hindi question ("मैंने ये लिखा — सही है?") comes from fixed templates. Raju's whole output channel is defined by the closed turn types and the student-only filter in [classmate-output-contract.md](classmate-output-contract.md) (amendment A1): the model fills only the sentence slot.
 3. **Fix:**
    - the learner either chooses "ये वाक्य सही है" or types a correction; the box starts **empty** (never pre-filled);
    - an optional confidence slider appears only under the research flag. [X-EXCH-03]
@@ -231,3 +231,10 @@ TS-EXCH-01..12, TS-CHK-*, TS-LEAK-*, TS-COACH-*, TS-RED-*.
 | **C** normal tutor | Write their own sentence for the item's Hindi meaning; the AI corrects the learner's own errors with the same checker and hints | as A |
 
 Tests use held-out items that never appear in practice, including hard items to avoid ceiling effects. [P-EVAL-17, P8b-11]
+
+## 9. Memory aids in sessions (amendment A1)
+
+- Aids are offered at **encoding** (new items) and **relearning** (after a lapse), never before answering a due review or a test. [memory-assistant.md F-MEM-8]
+- Each concept carries a cue level (3 → 0). Scored attempts record `cue_level`. Only `cue_level = 0` attempts count toward mastery and unlock.
+- The new-item cap includes aid time: a new item with an aid counts as one new item.
+- **Study mode:** in reverse-learning A/B/C, the Memory Assistant runs in **fixed mode** (identical aids and exposures across conditions; no exploration). In Study M, the condition determines the aids.

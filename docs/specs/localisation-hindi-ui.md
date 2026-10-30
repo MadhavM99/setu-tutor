@@ -68,3 +68,9 @@ Requirement [X-NOENG]: the learner-visible product is entirely in natural, simpl
 - "(2/2 key ideas)".
 - The Telugu-script wrong-script message.
 - From the LMA hosted app: all English UI.
+
+## 6. Memory aids and Raju lines (amendment A1)
+
+- **Aid text** (stories, captions, articulation notes, alt text, audio descriptions) is Hindi in Devanagari, plus Telugu only in Telugu script. The grounding validator rejects Latin.
+- **Images contain no text at all.** Any glyph or caption is rendered by the app as DOM/SVG text from fonts and the catalog (`lang` attributes set). OCR rejects images with text in any script.
+- **Raju's Hindi lines** are catalog entries under `raju.*` only (classmate-output-contract.md §1). The lint also checks that templates rendering Raju's turns take no free-text variables except the validated Telugu sentence slot.

@@ -230,3 +230,33 @@ All items are tagged **[P]**. FW-P23 is pulled into the first release as **[X-BE
 - **Risks:** assuming transfer.
 - **Gate:** the pair's own content gate.
 - **Eval:** per-pair Stage A.
+
+## Amendment A1 additions
+
+### FW-R18 Long-term mnemonic retention
+- **Spec:** 90-day follow-up; approved-library aids vs runtime-generated grounded aids.
+- **Deps:** Study M; G-MEM-RT.
+- **Risks:** attrition.
+- **Gate:** Study M complete.
+- **Eval:** 90-day cue-free production; misassociations.
+
+### FW-R19 Technique × unit × learner policy learning
+- **Spec:** learn which technique helps which unit type and learner profile (contextual bandit over the policy table, with safety constraints).
+- **Deps:** M-61 data.
+- **Risks:** confounding.
+- **Gate:** n ≥ 30 exposures per aid.
+- **Eval:** delayed recall vs the fixed policy.
+
+### FW-P30 Learner-authored mnemonics
+- **Spec:** the learner writes their own story or keyword; it passes the grounding validator and stays private.
+- **Deps:** G-MEM-GROUND.
+- **Risks:** wrong facts in learner text.
+- **Gate:** privacy review.
+- **Eval:** delayed recall vs approved aids.
+
+### FW-P31 Memory-palace scenes for phrase sets
+- **Spec:** full loci scenes for L3/L5.
+- **Deps:** Study M imagery result.
+- **Risks:** time cost.
+- **Gate:** Study M shows a benefit.
+- **Eval:** phrase recall at 7 and 30 days.

@@ -293,6 +293,19 @@ The target is fixed before any data is seen. System metrics are computed on the 
 | M-53 | X | Ladder | Time to mastery per skill; prerequisite revisit rate | Reported | M | M | 3 |
 | M-54 | X | UI | Learner-visible Latin-script strings | 0 (lint) | B | B | 1 |
 | M-55 | X | Checker | Accuracy on IndicGEC robustness set (false accept / false reject) | Reported | M | M | 4 |
+| M-56 | X-A1 | Classmate | Persona breaks **shown** to learners (assistant or teacher register, formatting, gloss) | 0 | B | P | 2/4 |
+| M-57 | X-A1 | Memory | Ungrounded facts passing `check_mnemonic_grounding` on a held-out adversarial set (≥ 60 drafts) | 0 | B | M | 2 |
+| M-58 | X-A1 | Memory | Shown images in which OCR or a reviewer finds embedded text | 0 | B | M | 4 |
+| M-59 | X-A1 | Memory | Shown aids with Hindi alt text and an audio alternative | 100% | M | M | 4 |
+| M-60 | X-A1 | Memory | Active concepts with a non-generative fallback aid | 100% | M | M | 3 |
+| M-61 | X-A1 | Memory | Per-aid and per-technique effect on cue-free recall at ≥ 1 and ≥ 7 days (micro-randomised) | Reported with CI; flag harm | M | M | 4 |
+| M-62 | X-A1 | Memory | Generation cost per approved asset; spend vs budget | ≤ budget; reported | M | M | 4 |
+| M-63 | X-A1 | Memory | Incorrect associations (responses equal to an aid's declared lure) per aid and technique | Reported; in Study M ≤ M-A + 5 pp | M | M | 4/6 |
+| M-64 | X-A1 | Study M | 7-day cue-free production, M-B, M-C, M-D vs M-A | Hedges' g + 95% CI | NA | NA | 6 |
+| M-65 | X-A1 | Study M | Immediate, 1-, 7- and 30-day retention; transfer; unaided production by condition | Reported | NA | NA | 6 |
+| M-66 | X-A1 | Study M | Time to mastery by condition | Reported | NA | NA | 6 |
+| M-67 | X-A1 | Reverse study | Aid exposures per rule balanced across A, B and C | Equal (max difference 0) | NA | NA | 4 |
+| M-68 | X-A1 | Memory | Cue-free recall after fading to level 0 (per concept type) | Reported | M | M | 3 |
 
 ## 16. Risks — R (Table 10, p.15, plus prompt §13)
 
@@ -318,6 +331,12 @@ The target is fixed before any data is seen. System metrics are computed on the 
 | R-18 | E | All content is unreviewed drafts, which blocks the gate | Native review is the critical path in the implementation plan; dev mode is flagged and never shown to pilot learners | 1/6 | G3 |
 | R-19 | E | Solo capacity vs scope | Sequenced slices; roadmap items gated; scope cuts recorded, not hidden | all | Milestone reports |
 | R-20 | E | Self-hosted models need a GPU | Mock-first development; Ollama 4B for dev; 12B on a rented or institute GPU for evaluation | 4 | P-MODEL-01 |
+| R-22 | X-A1 | Mnemonics create incorrect associations (keyword or false-friend lures) | Declared lures per aid; misassociation logging; harm flag and retirement; false-friend aids must show the contrast | 3/4 | M-63 |
+| R-23 | X-A1 | Learner data leaks to an external image service | Offline concept-level generation only; allow-listed request schema; no runtime client (ADR-0005) | 1/4 | TS-IMG-03, TS-PRIV-07 |
+| R-24 | X-A1 | Teacher review load and generation cost overrun | Concept prioritisation; budget file and cost ledger; fallback-first | 4 | M-62 |
+| R-25 | X-A1 | Memory aids confound the reverse-learning comparison | Fixed, identical memory support across A/B/C; balance check | 4 | M-67, TS-STUDY-10 |
+| R-26 | X-A1 | Mnemonic benefits fade at long delays or help recognition more than production | 7- and 30-day production outcomes; claims only from delayed results | 6 | M-64, M-65 |
+| R-27 | X-A1 | Raju drifts into general-assistant behaviour | Closed turn types; model fills only the sentence slot; student-only filter; fixed Hindi lines | 2/4 | M-56, TS-RAJU-* |
 | R-21 | E | Reusing team code from the LMA repo | Credit, licence check, and team consent recorded in ADR-0001 | 1 | — |
 
 ## 17. Ethics and limitations — P-ETH (§9, p.15)
@@ -403,6 +422,10 @@ Every row has its own entry in [`../research/roadmap-future-work.md`](../researc
 | FW-P27 | Hyderabadi Telugu and Dakhini Hindi varieties, code-mixing | Local speakers' variant lists |
 | FW-P28 | Low-cost deployment (Gemma 3 4B, on-device) | M-01/M-02 at 4B |
 | FW-P29 | More pairs (Hindi↔Tamil, Hindi↔Kannada) | Pipeline stable for one pair |
+| FW-R18 | (A1) Long-term mnemonic retention (90 days); approved-library aids vs runtime-generated grounded aids | Study M complete; G-MEM-RT |
+| FW-R19 | (A1) Which technique works for which unit type and learner profile (adaptive-policy learning) | n ≥ 30 exposures per aid |
+| FW-P30 | (A1) Learner-authored mnemonics (the learner writes their own story or keyword; it passes the grounding validator; private) | G-MEM-GROUND; privacy review |
+| FW-P31 | (A1) Full memory-palace scenes for L3/L5 phrase sets | Study M shows a benefit for imagery |
 
 ## 21. Prompt extensions — X (master prompt)
 
@@ -521,4 +544,48 @@ Every row has its own entry in [`../research/roadmap-future-work.md`](../researc
 | E-14 | No turn type or answer in any learner-facing API response before the learner answers | Fixes the `turn_type` leak | 2 | TS-API-LEAK |
 | E-15 | Accessibility: WCAG 2.2 AA, self-hosted Noto Sans Telugu and Devanagari, ≥ 18 px base, keyboard-only flow, on-screen Telugu keyboard and Devanagari typing | Learners mostly can't type Telugu | 3 | TS-A11Y-* |
 | E-16 | Versioned tokenizer for TMR (NFC, punctuation split, clitic policy) | Comparable TMR over time | 2 | TS-TMR-* |
+| E-18 | (A1) A separate offline content-pipeline environment with its own egress allow-list; the runtime app has no generation clients | Isolates external image services from learner data | 1 | TS-PRIV-07 |
+| E-19 | (A1) Budget file plus a generation cost ledger; the CLI refuses past the ceiling | Cost control | 4 | TS-MEM-COST-01..03 |
+| E-20 | (A1) Local multi-script OCR (Devanagari, Telugu, Latin) as an image pre-check | "No embedded text" becomes testable | 4 | TS-IMG-01 |
 | E-17 | Held-out manifest frozen once (hash list committed); CI fails if dev code reads held-out labels | Fixes LMA split rewrite | 2 | TS-SUITE-SPLIT |
+
+## 23. Amendment A1 — Memory Assistant (user request, 30 Oct 2026)
+
+Spec: [`memory-assistant.md`](memory-assistant.md). Study: [`../research/memory-experiment-protocol.md`](../research/memory-experiment-protocol.md). ADR-0005.
+
+| ID | Source | Requirement | setu | LMA | Ph | Acceptance (short G/W/T) | Tests |
+|---|---|---|---|---|---|---|---|
+| X-MEM-AID-01 | A1 R1 | Visual mnemonics, Hindi stories, sound associations, chunking, memory palace, other evidence-informed techniques | P(tricks, unreviewed) | M | 3/4 | Technique catalog in the policy table | TS-MEM-SEL-01 |
+| X-MEM-AID-02 | A1 R2 | Technique chosen by unit type (letters, sounds, akshara, vocabulary, false friends, grammar, phrases) | M | M | 3 | Each unit type → eligible techniques | TS-MEM-SEL-02..04 |
+| X-MEM-AID-03 | A1 R3 | AI teacher recommends a technique from skill history and difficulty (chooses only among deterministic candidates) | M | M | 4 | Invalid choice → top candidate | TS-MEM-SEL-05..08 |
+| X-MEM-AID-04 | A1 R4 | Mnemonics grounded in verified content; no invented Telugu facts | B | M | 2/4 | Grounding validator + teacher review; M-57 = 0 | TS-MEM-GRD-* |
+| X-MEM-AID-05 | A1 R5 | Educational images without embedded text; glyphs and Hindi rendered separately by the app | B(SVG, unverified) | M | 4 | OCR check; overlay as DOM text; M-58 = 0 | TS-IMG-* |
+| X-MEM-AID-06 | A1 R6 | Approved visual asset library (concept id, version, prompt, review status, licence, alt text, usage history) | P(aids.json) | M | 1/4 | Schema; immutable versions | TS-MEM-LIB-* |
+| X-MEM-AID-07 | A1 R7 | Cache and reuse; non-generative fallback | P | M | 3 | M-60 = 100%; no runtime generation calls | TS-MEM-LIB-01..03 |
+| X-MEM-AID-08 | A1 R8 | No identifiable learner info to external image services | B | NA | 1 | Allow-listed concept-only payload; offline only | TS-IMG-03, TS-PRIV-07 |
+| X-MEM-AID-09 | A1 R9 | Hindi descriptions, audio alternatives, readable contrast, no colour-only meaning | M | M | 3/4 | M-59 = 100%; axe checks | TS-MEM-A11Y-* |
+| X-MEM-AID-10 | A1 R10 | Measure whether each aid improves independent delayed recall; viewing is not evidence | M | M | 4 | Micro-randomised effect estimates (M-61) | TS-MEM-MEAS-* |
+| X-MEM-AID-11 | A1 R11 | Gradually fade visual, audio and text cues; measure recall at cue level 0 | P(reading aid only) | P | 3 | Cue ladder 3→0; tests at 0 (M-68) | TS-MEM-FADE-* |
+| X-MEM-AID-12 | A1 R12 | Store presented, selected, used and later recalled; never award mastery for viewing | M | M | 2/3 | `aid_event`; mastery only from cue-free attempts | TS-MEM-MEAS-01..03 |
+| X-MEM-AID-13 | A1 R13 | FSRS for discrete items; aid scheduling integrated with learner state | P | P | 2 | Aid-visible attempts capped at Hard and excluded from mastery | TS-SCHED-MEM-* |
+| X-MEM-AID-14 | A1 R14 | No English in generated or static learner-facing assets | B | B | 1/4 | Catalog lint + OCR on images + validator `LATIN` | TS-L10N-*, TS-IMG-01 |
+| X-MEM-AID-15 | A1 R15 | Subsystem added to architecture, PRD, journeys, data model, API, content pipeline, matrix, implementation plan, test plan, research protocol, roadmap | — | — | 0 | This amendment | Coverage check |
+| X-MEM-EXP-01 | A1 EXP | Separate human experiment M-A (normal + retrieval) / M-B (verbal) / M-C (visual + native audio) / M-D (adaptive) | NA | NA | 6 | Williams 4×4 design; preregistered | TS-MSTUDY-01 |
+| X-MEM-EXP-02 | A1 EXP | Comparable concepts, time and practice opportunities | NA | NA | 4 | Balanced sets; equal opportunities and time box | TS-MSTUDY-02..03 |
+| X-MEM-EXP-03 | A1 EXP | Immediate, 1-, 7-, 30-day retention; unaided production; transfer; time to mastery; incorrect associations | NA | NA | 6 | M-64..M-66, M-63 | TS-MSTUDY-04..08 |
+| X-MEM-EXP-04 | A1 EXP | Memory support identical across the reverse-learning A/B/C conditions | NA | B | 4 | Fixed-mode policy; M-67 balanced | TS-STUDY-10 |
+| X-MEM-EXP-05 | A1 EXP | Simulated learners test logic, scheduling and reproducibility only; never reported as human evidence | NA | P | 4 | Report language check | TS-SIM-MEM-01..03 |
+| X-MEM-EXP-06 | A1 EXP | Acceptance tests, gates, teacher-review requirements, cost controls and failure behaviour defined before implementation | — | — | 0 | memory-assistant.md §2, §4–6 | Doc |
+
+## 24. Amendment A1 — Raju is a weaker student only (user request, 30 Oct 2026)
+
+Spec: [`classmate-output-contract.md`](classmate-output-contract.md). ADR-0006.
+
+| ID | Requirement | setu | LMA | Ph | Acceptance | Tests |
+|---|---|---|---|---|---|---|
+| X-RAJU-01 | Closed set of turn types (attempt, retry_attempt, thanks_learned, still_confused, ask_why, confirm_correct); no free chat | B(model-written chatter) | P | 2/3 | No other turn type can be emitted | TS-RAJU-01..03 |
+| X-RAJU-02 | The model fills only the L2 sentence slot; all Hindi lines come from fixed catalog templates | B | P | 2/4 | Rendered Hindi equals a catalog entry exactly | TS-RAJU-04..05 |
+| X-RAJU-03 | Student-only filter: assistant register, teacher register, formatting, gloss, answer leak, competence ceiling, instruction echo | P | P | 2 | Each reason code tested; M-56 = 0 | TS-RAJU-06..15 |
+| X-RAJU-04 | Prompt frames a constrained form-fill, not an assistant; no learner text; decoding limits | B | P | 4 | Prompt-content tests | TS-RAJU-16..17 |
+| X-RAJU-05 | Raju never knows more than the learner (state-limited competence) | P | V | 2 | P-CLS-05/10 | TS-CLS-* |
+| X-RAJU-06 | Calm adult-classmate persona; the legacy child persona and celebrations retired | B | P | 1 | Catalog review | TS-UI-CALM |

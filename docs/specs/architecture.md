@@ -51,6 +51,9 @@ flowchart LR
 | Exporter | OKF Markdown + YAML from ReadRepo | No | Files only | X-MEM-03 |
 | Speech | HTTP adapters to ASR/TTS, behind flags | ASR/TTS models | Audio assets (approved) | P-ARCH-13 |
 | Contrast pipeline | Offline scripts → `content_proposal` (draft) | Optional | Proposals only | P-ARCH-15 |
+| **Memory Assistant** (runtime) | Deterministic technique policy, cue-ladder service, aid renderer (image + font glyph + catalog text), `aid_event` logging, per-aid effect estimator; optional teacher-model choice among candidates | Optional (choose and phrase only) | `aid_event`, `concept_cue_state` (via OutcomeWriter for cue state) | X-MEM-AID, ADR-0005 |
+| **Aid pipeline** (offline) | Fact-sheet builder, mnemonic drafter, `check_mnemonic_grounding`, image generator (self-hosted preferred; external allowed only here), OCR / safety / contrast checks, budget and cost ledger, review queue | Yes (drafting, images) | `memory_aid`, `visual_asset` drafts only | X-MEM-AID, E-18..E-20 |
+| **Classmate output contract** | Closed turn types; model fills only the sentence slot; fixed Hindi templates; student-only filter | Yes (slot only) | Nothing | X-RAJU, ADR-0006 |
 
 ## 2. Trust boundaries [P §9, X §6.3]
 
@@ -62,6 +65,9 @@ flowchart LR
 | Model → state | No path. Agents get only ReadRepo and read-only tools. OutcomeWriter accepts only a `Verdict` produced by the checker (an internal type with a constructor private to the checker module) or a `TeacherResolution` signed by a teacher session | Code: types and import rules; DB: grants (E-01); test: TS-AUTH-01..05 |
 | Uploaded learner writing | Produces `content_proposal` rows only; teacher approval is required to change the bank | TS-TCH-UP |
 | Network egress | The runtime config allows only the configured self-hosted model URL and speech URLs; there is no commercial API client in the codebase | TS-PRIV-03 (egress allow-list test) |
+| Aid pipeline → external image service | Runs only in the separate offline pipeline environment. Requests are built from a concept-only allow-listed schema (no learner id, text or cohort). Outputs are untrusted until OCR, safety and teacher review | TS-IMG-03, TS-PRIV-07 |
+| Memory aids → mastery | Aid events never reach mastery; only cue-free checker verdicts do | TS-MEM-MEAS-01..03 |
+| Raju output | Only the sentence slot comes from the model; Hindi lines come from the catalog; the student-only filter applies | TS-RAJU-* |
 | Roles | learner, teacher, researcher, admin. Dev controls (time travel, reset) are researcher-only and audited | TS-AUTHN-* |
 
 ## 3. Sequence: one correction exchange
@@ -170,3 +176,39 @@ tests/           unit/ contract/ adversarial/ stage_a/{dev,heldout-manifest} e2e
 docs/            this package
 legacy/          the Streamlit app, kept read-only until its features are migrated (see implementation plan §4)
 ```
+
+## 10. Memory Assistant flows (amendment A1)
+
+```mermaid
+sequenceDiagram
+  participant CLI as Aid pipeline (offline env)
+  participant F as Fact sheet (verified only)
+  participant G as Drafter / image model
+  participant V as Validators (grounding, OCR, safety)
+  participant T as Teacher review
+  participant L as Asset library
+  CLI->>F: build(concept_id)
+  CLI->>G: concept-only prompt (budget-checked)
+  G-->>V: drafts / ≤3 images
+  V-->>CLI: pass / reasons
+  CLI->>T: passing drafts → review queue
+  T->>L: approve → versioned asset (alt text, licence, audio alt)
+```
+
+```mermaid
+sequenceDiagram
+  participant P as Planner
+  participant MA as Memory Assistant policy
+  participant L as Asset library
+  participant U as Learner
+  participant C as Checker
+  participant O as OutcomeWriter
+  P->>MA: concept, learner, phase (encode | relearn | review | test)
+  MA->>L: approved aids for concept (else fallback)
+  MA-->>U: aid at cue level (none for review/test before answer)
+  U->>C: cue-free answer
+  C-->>O: Verdict (+cue_level)
+  O->>O: FSRS (Hard cap if cue>0), mastery only if cue=0, cue ladder step
+```
+
+Directory additions: `setu/memory/` (policy, cue ladder, renderer, estimator) and `pipeline/aids/` (offline CLI, validators, budget). The pipeline is deployed separately from the app.

@@ -93,3 +93,18 @@ The columns are in data-model.md. Value sets:
 | DQ-14 | Teacher label sheet: 145 synthetic rows, 0 labels, not blind | Re-export shuffled with random ids; label with a teacher | 4/6 |
 | DQ-15 | TH-CLU-01 band 3 while the paper's bands are L0–L2 | Item band vs ladder band separated (learning-ladder.md) | 0 |
 | DQ-16 | Spoken vs textbook forms (వస్తున్నా / వస్తున్నాను) | Variants with `register = spoken` after approval | 6 |
+
+## 7. Memory-aid content pipeline (amendment A1)
+
+1. **Concepts** are derived from active content (letters, sounds, akshara, lexemes, false friends, rules, chunks, scenes). Each has a fact sheet built **only** from verified fields.
+2. **Non-generative fallback** is created automatically for every concept: twin view, glyph decomposition, cognate link, approved example, reconstruction ladder.
+3. **Drafts:** hand-written by teachers or the team, or model-drafted offline. Drafts must pass `check_mnemonic_grounding`, and each declares its lures.
+4. **Images:** concept-only prompts → ≤ 3 candidates → OCR, safety and contrast checks → teacher review. Glyphs and captions are overlaid by the app.
+5. **Audio:** native recordings with consent and rights; reviewed TTS for Hindi audio descriptions.
+6. **Review:** see the reviewer table in memory-assistant.md F-MEM-6. Linguistic aids need 2 native speakers.
+7. **Budget:** `content/aid_budget.yaml`; cost ledger; priority L0 → top-300 lexemes → false friends → scenes.
+8. **Versioning:** approved aids are immutable; corrections create versions; retirements keep their history.
+
+New DQ entries:
+- **DQ-17:** the legacy tricks in `runs/ai/aids.json` must not be imported as approved; they enter only as drafts.
+- **DQ-18:** shape descriptions in the setu L0 cards were "checked against Noto Sans Telugu" by an AI. They need native and teacher review before they can serve as facts.

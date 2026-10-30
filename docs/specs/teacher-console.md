@@ -146,3 +146,27 @@ Every feature follows the template: Purpose · Learner outcome · User flow · D
 
   Everything else is excluded, with a count of excluded rows.
 - **Tests:** TS-TCH-EXP.
+
+## F9. Memory-aid review and effects (amendment A1) [X-MEM-AID-04..06, X-MEM-AID-10]
+
+- **Purpose:** only correct, text-free, accessible aids reach learners, and aids that don't help are retired.
+- **Learner outcome:** better delayed recall without false associations (a hypothesis, measured).
+- **User flow:** "स्मृति सहायक जाँच" queue.
+  - Each draft shows the concept, its fact sheet, validator results, the image with the app overlay, the alt text, the audio, and the declared lures.
+  - The review form answers follow memory-assistant.md F-MEM-6.
+  - Actions: approve, reject, retire, or edit the alt text.
+  - An effects tab shows per-aid and per-technique estimates (अनुमान, n, CI) and misassociation counts.
+- **Data inputs:** `memory_aid`, `visual_asset`, `aid_event`, `technique_effect`, `aid_misassociation`.
+- **Data writes:** review status and reviewer records (new versions).
+- **Model involvement:** none.
+- **Failure behaviour:** approval is blocked if the linguistic-reviewer count is short or the alt text is missing.
+- **Accessibility/localisation:** Hindi; image zoom; audio playable.
+- **Acceptance criteria:**
+
+  | Given | When | Then |
+  |---|---|---|
+  | An image with an OCR hit | — | it cannot be approved |
+  | A letter-sound aid with 1 speaker approval | — | it stays `in_review` |
+  | An aid flagged for harm | retired | the policy stops selecting it from the next request |
+
+- **Tests:** TS-MEM-REV-01..05.

@@ -97,3 +97,23 @@ All learner-visible text is Hindi (Devanagari). Telugu appears only in Telugu sc
 ## J-10 Mirror (exploratory, flag off) [P-SESS-03]
 
 The learner corrects a **Hindi** sentence carrying a TE→HI error (e.g. मेरा किताब) and explains it in Hindi. It is tagged `mode=mirror` and reported separately.
+
+## J-11 Memory aid and fading (amendment A1) [X-MEM-AID]
+
+1. **New letter ళ (first encounter).** दीदी: "इसे याद रखने का एक तरीका:".
+   - The approved aid appears: a text-free illustration with the app-rendered ళ, the Hindi caption from the catalog, and a native recording, plus a minimal pair కళ్ళు / కల్లు.
+   - "दूसरा तरीका" shows the next eligible aid.
+   - Logged: `presented`, `selected`, `used`.
+2. **Recall.** The aid is hidden. The learner hears or sees the Hindi prompt and types the Telugu (cue level 0). Only this attempt can count toward mastery.
+3. **Later encounters.** The cue ladder steps down: full aid → image only → no cue. A lapse at level 0 brings back a partial cue once.
+4. **Due reviews** never show the aid before the answer. After a lapse, the aid is offered *after* the answer as relearning.
+5. **False friend अवसर / అవసరం.** A two-panel contrast story ("यह नहीं — यह"). The lure, the Hindi meaning "मौका", is declared, and answering it is logged as a misassociation.
+6. **Teacher.** Reviews drafts in "स्मृति सहायक जाँच" and sees per-aid effect estimates labelled अनुमान, with n.
+
+## Note on J-5 (राजू) — amendment A1 [X-RAJU]
+
+राजू only ever:
+- shows one Telugu sentence (model-written within the contract, or from the bank);
+- says a fixed Hindi student line.
+
+There is no chat box to राजू. Anything the learner types goes to the checker only.

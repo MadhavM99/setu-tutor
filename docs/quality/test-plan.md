@@ -120,3 +120,23 @@ The split is 30% held out by a SHA-256 hash of `case_id`, frozen once. Both dire
 ## 4. Regression references from the legacy app
 
 The 138 tests in the setu-tutor baseline are kept under `legacy/tests` and still run until each legacy feature is migrated or deliberately retired (implementation-plan.md §4). Tests that assert the defects are rewritten to assert the fix. For example, `test_raju.py:49` accepted "सही जवाब" in a hint.
+
+## 5. Amendment A1 suites
+
+| Suite | What it proves | ★ |
+|---|---|---|
+| TS-RAJU-01..20 | Closed turn types; Hindi lines equal catalog entries; reason codes `PERSONA_ASSISTANT`, `PERSONA_TEACHER`, `FORMAT`, `GLOSS`, `UNSAFE`, plus existing leak reasons; decoding-limit fallback; prompt has no assistant framing and no learner text; 200-draft mock sweep with injected assistant outputs → 0 shown | ★ |
+| TS-MEM-SEL-01..08 | Policy table per unit type; ranking by posterior; exploration logged; teacher-model choice limited to candidates; harmful aids excluded | |
+| TS-MEM-GRD-01..15 | Grounding validator: wrong pairs, ungrounded Telugu, Latin, grammar claims, missing contrast, answer reveal; held-out adversarial set (M-57 = 0) | ★ |
+| TS-IMG-01..12 | OCR rejects text in any script; overlay rendered as DOM/SVG text; provider payload allow-list (concept-only); ≤ 3 candidates per concept; safety and contrast checks; no image client in the runtime app | ★ (01, 03) |
+| TS-MEM-LIB-01..06 | Fallback for every active concept; cache hits serve the same approved asset; no runtime generation calls; immutable versions; retirement | ★ (01) |
+| TS-MEM-A11Y-01..05 | Alt text and audio alternative present; contrast; no colour-only meaning; keyboard; captions | |
+| TS-MEM-MEAS-01..08 | Viewing never changes mastery; cue-level logging; micro-randomisation is seeded and balanced; lure matching logs misassociations; effect estimator against a known fixture | ★ (01–03) |
+| TS-MEM-FADE-01..08 | Cue ladder steps; lapse restores level 2 once; tests at level 0; no aid before due-review answers | ★ |
+| TS-SCHED-MEM-01..04 | FSRS rating capped at Hard when cue > 0; such attempts are excluded from unlock | ★ |
+| TS-MEM-REV-01..05 | Review-count rules per aid kind; approval blocked without alt text or with an OCR hit | |
+| TS-MEM-COST-01..03 | Budget ceiling enforced; cost ledger rows; batch hard stop | |
+| TS-PRIV-07 | Runtime egress allow-list contains no image or text generation provider; pipeline payloads contain no learner fields | ★ |
+| TS-STUDY-10 | Aid exposures identical across reverse-learning A/B/C (M-67) | ★ |
+| TS-MSTUDY-01..08 | Study M machinery (memory-experiment-protocol.md §9) | |
+| TS-SIM-MEM-01..03 | Simulator aid parameters drive scheduling, fading and logging reproducibly; no mastery from viewing in simulation; reports labelled as machinery tests | |

@@ -91,6 +91,20 @@ A test verifies that no lookup returns the planned item's correct form to the cl
 
 ---
 
+### A5. Memory Assistant tools (amendment A1)
+
+| Tool | Used by | Args | Returns / errors |
+|---|---|---|---|
+| `lookup_verified_facts` | Offline drafter; teacher model | `concept_id` | Fact sheet (verified fact ids, glyph, twin, sound, gloss, approved example) · `ERROR invalid_argument concept_id: "<v>" is not an active concept.` |
+| `check_mnemonic_grounding` | Drafter (revise loop), pipeline, runtime flag | `concept_id`, `draft` json (`story_hi` ≤ 160 chars, `uses_facts[]`, `telugu_spans[]`) | `{ok, reasons}` with reasons `UNGROUNDED_TELUGU`, `WRONG_PAIR`, `LATIN`, `TOO_LONG`, `GRAMMAR_CLAIM`, `MISSING_CONTRAST`, `MISSING_TARGET`, `AID_REVEALS_ANSWER`, `UNSAFE` |
+| `choose_memory_aid` | Teacher model (flag) | `candidate_ids[]` (≤ 2, from the policy), `reason_template_id` | Validated choice; anything else → top candidate |
+
+Image-provider requests (offline pipeline only) use the schema `{concept_id, object_hi, style_guide_version, negative: fixed}`. Any additional field is rejected by the client (TS-IMG-03).
+
+### A6. Classmate output contract (amendment A1)
+
+`check_classmate_sentence` gains the reasons `PERSONA_ASSISTANT`, `PERSONA_TEACHER`, `FORMAT` and `UNSAFE` (see classmate-output-contract.md §3). Raju has no other tool and no free-text output channel.
+
 ## Part B — HTTP API (server-rendered HTMX endpoints plus JSON for research)
 
 Common rules:
@@ -112,6 +126,9 @@ Common rules:
 | POST | `/diagnostic/start`, `/diagnostic/answer` | as above | — | Placement |
 | GET | `/ladder` | — | page | Ladder view |
 | GET | `/export/okf` | — | zip | The learner's own record |
+| GET | `/aid/{concept_id}` | `?phase=encode\|relearn` | Aid fragment at the learner's cue level, or the fallback | Never returns an aid for `review` / `test` before the answer |
+| POST | `/aid/event` | `{concept_id, aid_id, event, dwell_ms}` + Idempotency-Key | 204 | Logged; never touches mastery |
+| POST | `/aid/next` | `{concept_id}` | The next eligible aid ("दूसरा तरीका") | `selected` logged |
 
 ### Teacher (role = teacher)
 
@@ -125,6 +142,9 @@ Common rules:
 | GET | `/teacher/analytics` | Per-rule errors per opportunity, false alarms, copy rate; observed vs estimated |
 | POST | `/teacher/override/{attempt_id}` | Audited override |
 | POST | `/teacher/uploads` | Anonymised writing → proposals (flag) |
+| GET | `/teacher/aids` | Aid review queue (drafts passing validators) |
+| POST | `/teacher/aids/{id}/review` | Approve, reject or retire with form answers; alt-text edit |
+| GET | `/teacher/aids/effects` | Per-aid and per-technique effect estimates (अनुमान, with n), misassociations |
 
 ### Research (role = researcher)
 

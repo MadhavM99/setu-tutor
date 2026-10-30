@@ -20,6 +20,10 @@ Tags: [P] paper · [P8b] newer paper copy · [X] prompt extension · [E] enginee
 | 12 | **Error exposure safety** | Every planted error ends shown corrected next to the error; copy rate measured per rule | M-37 | R-13 |
 | 13 | **No "always an error" cue** | About 20% no-error turns, but only when a plantable rule exists (otherwise a production task); false alarms measured | M-36 | P-SESS-07, R-14, R-17 |
 
+| 14 | **Encoding aids (mnemonics, dual coding)** [X-A1] | Technique by unit type; grounded, approved aids; images text-free with app-rendered glyphs. Evidence: keyword method (Atkinson & Raugh 1975) for immediate vocabulary recall, with reported weakening at long delays and for production; dual coding (Paivio). Treated as hypotheses | Per-aid effect on delayed cue-free recall (M-61); Study M | memory-assistant.md |
+| 15 | **Cue fading** [X-A1] | Cue ladder 3 → 0; mastery only at level 0 | M-68 | memory-assistant.md F-MEM-8 |
+| 16 | **Avoid misleading associations** [X-A1] | Declared lures; false-friend contrast always shown; harmful aids retired | M-63 | memory-assistant.md F-MEM-7 |
+
 ## Known risk the methodology must report: teaching may reduce production (R-17)
 
 The newer paper copy's v0 simulation found condition A (teach Raju) < C (normal tutor) on delayed production under every assumption set. Once a rule is taught, Raju stops making the error until he forgets, so 83% of A turns became no-error, recognition-only turns. That result follows from the simulator's assumptions, not from people. The design responds without hiding it:

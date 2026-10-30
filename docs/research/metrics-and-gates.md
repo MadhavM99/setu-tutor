@@ -64,6 +64,19 @@ IDs match the traceability matrix (§15).
 | M-53 | Time to mastery; prerequisite revisit rate [X] | — | Reported | — |
 | M-54 | Latin script in the learner UI [X] | Visible Latin characters in E2E crawls | 0 | G1 |
 | M-55 | IndicGEC robustness [P-DATA-04] | False accept / false reject on native pairs | Reported | — |
+| M-56 | Persona breaks shown [A1] | Shown Raju turns with assistant or teacher register, formatting or gloss (automated re-check + teacher audit of ≥ 200 turns) | 0 | G2 (safety) |
+| M-57 | Grounding validator escapes [A1] | Adversarial ungrounded drafts that pass / held-out set (≥ 60) | 0 | G-MEM-GROUND |
+| M-58 | Text in shown images [A1] | Shown images with OCR or reviewer-detected text | 0 | G-MEM-ASSET |
+| M-59 | Aid accessibility [A1] | Shown aids with Hindi alt text and an audio alternative / shown aids | 100% | G-MEM-ASSET |
+| M-60 | Fallback coverage [A1] | Active concepts with a non-generative aid / active concepts | 100% | G-MEM-ASSET |
+| M-61 | Per-aid effect [A1] | Difference in cue-free recall at ≥ 1 and ≥ 7 days, aid vs micro-randomised fallback; Beta posterior | Reported with CI | — |
+| M-62 | Generation cost [A1] | Cost per approved asset; spend vs budget | ≤ budget | Pipeline hard stop |
+| M-63 | Incorrect associations [A1] | Responses equal to declared lures / opportunities, per aid and technique | Reported; Study M safety ≤ M-A + 5 pp | Study M |
+| M-64 | Study M primary [A1] | 7-day cue-free production per condition vs M-A | Hedges' g + 95% CI | Study M |
+| M-65 | Study M retention and transfer [A1] | Immediate, 1-, 7-, 30-day; transfer; unaided production | Reported | Study M |
+| M-66 | Study M time to mastery [A1] | Exposures and minutes to unlock | Reported | Study M |
+| M-67 | Aid balance in the reverse study [A1] | Max difference in aid presentations per rule across A/B/C | 0 | G4 |
+| M-68 | Recall after fading [A1] | Cue-free recall at cue level 0 per concept type | Reported | — |
 
 **Labelling note.** On held-out cases, "leak" and "planting" are judged by a deterministic oracle plus a teacher-labelled sample. An LLM is never used to grade.
 
@@ -79,6 +92,13 @@ IDs match the traceability matrix (§15).
 | **G4** | The pilot | Ethics approval, consent forms, facilitator script, preregistration, data-protection plan |
 | **G-speech** | Speech features | M-25; speaker review of the voices |
 | **G-friend** | LLM native friend | M-21, M-45 |
+
+| **G-MEM-ASSET** | Any memory aid shown to pilot learners | All shown aids approved; M-58 = 0; M-59 = 100%; M-60 = 100%; licences recorded; linguistic aids approved by 2 speakers |
+| **G-MEM-GROUND** | Model-drafted mnemonics entering review | M-57 = 0; teacher audit of 50 approved aids finds 0 factual errors |
+| **G-MEM-RT** | Runtime verbal mnemonic generation | G-MEM-GROUND; ≤ 2% of sampled runtime drafts rejected by teachers; cost ceiling set |
+| **G-MEM-EXP** | Study M | Ethics incl. the 30-day follow-up; preregistration; balanced concept sets; TS-MSTUDY-* pass |
+
+G2 also requires M-56 = 0 (amendment A1).
 
 A module that misses its gate is labelled **built, not evaluated** and its feature flag is off for learners. [P-PLAN-03]
 

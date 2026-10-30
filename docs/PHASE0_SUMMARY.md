@@ -72,3 +72,18 @@ Each has a conservative default; see the plan:
 - Only `docs/` changed since the baseline.
 
 **Next step:** user approval (gate G0). Implementation starts with Phase 1, slice 1.1, after approval.
+
+## Amendment A1 (30 Oct 2026): Memory Assistant and student-only Raju
+
+The package was approved with this amendment. It is still docs only.
+
+| Change | Where |
+|---|---|
+| **Memory Assistant** (स्मृति सहायक), a first-class subsystem. It covers:<br>• a technique policy by unit type (letters, sounds, akshara, vocabulary, false friends, grammar, phrases);<br>• an AI-teacher recommendation limited to deterministic candidates;<br>• mnemonics grounded in verified facts only;<br>• text-free illustrations with app-rendered glyphs;<br>• an approved, versioned asset library with a non-generative fallback;<br>• accessibility;<br>• per-aid delayed-recall measurement;<br>• cue fading (3 → 0);<br>• FSRS integration, where aid-visible attempts are capped at Hard and never count toward mastery;<br>• cost controls, failure behaviour and gates. | [specs/memory-assistant.md](specs/memory-assistant.md), ADR-0005 |
+| **Image and mnemonic generation is offline only.** Prompts are concept-level, checked by OCR and the grounding validator, then reviewed by a teacher. External image services are allowed only in the offline pipeline environment; the runtime app has none. | ADR-0005 (scopes ADR-0003) |
+| **Study M**, separate from the reverse-learning study: M-A normal + retrieval, M-B verbal mnemonics, M-C visual + native audio, M-D adaptive. Williams 4×4 design; outcomes at 1, 7 and 30 days, production, transfer, time to mastery and incorrect associations. | [research/memory-experiment-protocol.md](research/memory-experiment-protocol.md) |
+| **Reverse-learning A/B/C get identical memory support** (fixed mode, with a balance check, M-67). | research/experiment-protocol.md §4b |
+| **Raju is a weaker student only.** Closed turn types; the model fills only the Telugu sentence slot; every Hindi line comes from fixed catalog templates; there is no free chat; a student-only filter rejects assistant, teacher, formatting, gloss, answer-leak and competence violations. Persona breaks shown to learners must be 0 (M-56, a G2 safety gate). | [specs/classmate-output-contract.md](specs/classmate-output-contract.md), ADR-0006 |
+| **Integrated into:** PRD, journeys (J-11), architecture §10, data model, API (A5/A6, `/aid/*`, teacher `/aids`), content pipeline §7, teacher console F9, localisation §6, session §9, methodology rows 14–16, metrics M-56..M-68, gates G-MEM-*, matrix §23–24 plus new R/FW/E rows, test plan §5, implementation plan, data-source register, roadmap. | — |
+
+**Open decision (default chosen).** The amendment bundles native audio into M-C. To keep pronunciation exposure from being confounded with the mnemonic, all four conditions hear the same native pronunciation once per item; M-C adds *association* audio. Say if you want audio exclusive to M-C. The analysis would then treat visual + audio as one package.
