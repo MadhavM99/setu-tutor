@@ -616,6 +616,8 @@ Lifecycle: `built` = code exists; `tested` = acceptance tests pass against real 
 
 | 2.4 | P-ARCH-04, P-CLS-03..08, P-TOOL-01/03/06/07/08 (check_level, hint check, envelope, exact errors), X-RAJU-03, DQ-08 (titles flagged), TS-LEAK-*, TS-TOOL-*, TS-RAJU-06..15 | built, tested | `tests/unit/test_leakfilter_and_tools.py` (34) |
 
+| 2.5 | P-ARCH-02, P-SESS-05, P-SESS-07, P-LSP-04/05, P8b-03, P-BANK-05 (only plantable content), X-CLS-START, R-17 mitigation, E-12, P-CLS-01 (VL view), TS-PLAN-01..08 | built, tested | `tests/unit/test_planner.py` (11), `tests/db/test_classmate_vl.py` |
+
 Still open from those rows: P-TOOL-04/05 lookups and the agent loop (Phase 4), leveler vocabulary and word-form dimensions (need IndicCorp ranks and the analyser), M-51 leveler validation, concept keys without relation phrases (every explanation is unsure until teachers add them), checker agreement with teachers M-16 (needs labels), X-INPUT-01/03/04/05/06/14 (Phase 3–4 interfaces and study balance), P-DATA-07 (the IndicXlit model is not wired in; only the adapter interface), P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
 
 ## 26. Requirement R-INPUT: multiple input methods and keyboard independence (user requirement, 31 Oct 2026)

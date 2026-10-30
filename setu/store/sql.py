@@ -435,3 +435,25 @@ INPUT_DOWN = [
 ]
 INPUT_FUNCTIONS_DOWN = ["DROP FUNCTION IF EXISTS setu_recall_cues(jsonb)",
                         "DROP FUNCTION IF EXISTS setu_assistance_valid(jsonb)"]
+
+# ---------------------------------------------------------------- migration 0006 (slice 2.5)
+
+# VL (paper §5): the words a learner has met, which bound every classmate sentence (TMR = 0). Built from the
+# learner's word cards and the words of every item sentence shown to them; the planted rule's allowed target forms
+# are added per turn by the leak filter, not stored here.
+CLASSMATE_VL = [
+    """
+CREATE VIEW classmate_vl AS
+SELECT c.learner_id, l.telugu AS form, 'word_card' AS source
+  FROM learner_lexeme_card c JOIN lexeme l ON l.id = c.card_ref
+ WHERE c.card_kind = 'lexeme'
+UNION
+SELECT s.learner_id, t.form, 'item_shown' AS source
+  FROM exchange e
+  JOIN session s ON s.id = e.session_id
+  JOIN item_version iv ON iv.id = e.item_version_id
+  CROSS JOIN LATERAL regexp_split_to_table(iv.correct_form, '\\s+') AS t(form)
+ WHERE t.form <> ''""",
+    "GRANT SELECT ON classmate_vl TO setu_read, setu_app, setu_writer",
+]
+CLASSMATE_VL_DOWN = ["DROP VIEW IF EXISTS classmate_vl"]

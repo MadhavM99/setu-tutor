@@ -343,3 +343,19 @@ private (`_issue_verdict`) and the import-boundary test keeps it inside the chec
   this as `concept_key_without_relations` on the 15 HI→TE rules.
 - **Not yet:** own-sentence frames (slice 3, S5), the morphological analyser (Phase 4), checker agreement with
   teachers (needs teacher labels).
+## 13. Implementation notes: planner and seen words (slice 2.5, 31 Oct 2026)
+
+- `setu/domain/planner.py` (`planner-1`): pure and seeded; the plan returns its seed and config for the session
+  record. It plans the correction block and the own-sentence block; reviews and new items join with the scheduler
+  (slice 2.6).
+- **Classmate start:** active only when the learner is ready on at least `classmate_start_min_rules` rules (default
+  3), counting only rules with plantable content; otherwise the correction block becomes own-sentence turns.
+- **Planted turns:** rules the learner is ready on, with plantable content, that the classmate does not know
+  (unknown or forgotten), at band b or b+1. Forgotten rules come first; otherwise the weight is
+  (errors + 1) / (opportunities + 2).
+- **No-error turns:** about 20%, on rules the classmate knows, only while something can be planted. With nothing to
+  plant, there is at most one no-error check and the rest become production (R-17).
+- **Interleaving:** at most two consecutive turns on one rule.
+- `classmate_vl` (migration 0006): a learner's seen words are their word cards plus the words of every item
+  sentence shown to them (surface tokens). The planted rule's target forms are added per turn by the leak filter.
+  Readable by `setu_read`.
