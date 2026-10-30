@@ -163,3 +163,107 @@ DOWNGRADE_FUNCTIONS = [
     "DROP FUNCTION IF EXISTS setu_ledger_before_insert() CASCADE",
     "DROP FUNCTION IF EXISTS setu_ledger_hash(text, bigint, timestamptz, text, text, jsonb) CASCADE",
 ]
+
+# ---------------------------------------------------------------- migration 0002 (slice 1.3)
+
+CLASSMATE_GUARD = [
+    r"""
+CREATE FUNCTION setu_classmate_guard() RETURNS trigger LANGUAGE plpgsql AS $$
+-- Every change to what the classmate knows must be backed, in the database, by the evidence the paper allows
+-- (P8b-01): unknown -> taught only after a checked correct fix of a planted error of that rule by that learner
+-- (or a teacher resolution settling such a fix as correct); taught -> forgotten only by the scheduler when
+-- predicted recall < 0.5. Versions move by exactly one, and old evidence cannot be replayed.
+DECLARE
+  ev event_ledger%ROWTYPE;
+  evidence_at timestamptz;
+  previous_change_at timestamptz;
+BEGIN
+  IF TG_OP = 'UPDATE' THEN
+    IF NEW.learner_id <> OLD.learner_id OR NEW.rule_id <> OLD.rule_id THEN
+      RAISE EXCEPTION 'classmate state: learner and rule cannot change';
+    END IF;
+    IF NEW.state = OLD.state THEN
+      RAISE EXCEPTION 'classmate state: % -> % is not a transition', OLD.state, NEW.state;
+    END IF;
+    IF NEW.state_version <> OLD.state_version + 1 THEN
+      RAISE EXCEPTION 'classmate state: version must move from % to %', OLD.state_version, OLD.state_version + 1;
+    END IF;
+  ELSIF NEW.state_version <> 1 THEN
+    RAISE EXCEPTION 'classmate state: a new row starts at version 1';
+  END IF;
+
+  SELECT * INTO ev FROM event_ledger WHERE id = NEW.last_event_id;
+  IF NOT FOUND OR ev.payload->>'learner_id' IS DISTINCT FROM NEW.learner_id::text
+     OR ev.payload->>'rule_id' IS DISTINCT FROM NEW.rule_id THEN
+    RAISE EXCEPTION 'classmate state: event % does not describe this learner and rule', NEW.last_event_id;
+  END IF;
+
+  IF NEW.state = 'taught' THEN
+    IF ev.event_type <> 'classmate_taught' THEN
+      RAISE EXCEPTION 'classmate state: teaching needs a classmate_taught event, got %', ev.event_type;
+    END IF;
+    IF ev.payload ? 'verdict_id' AND ev.actor = 'checker' THEN
+      SELECT v.created_at INTO evidence_at
+        FROM verdict v
+        JOIN attempt a ON a.id = v.attempt_id
+        JOIN exchange e ON e.id = a.exchange_id
+        JOIN session s ON s.id = e.session_id
+        JOIN rule_version rv ON rv.id = e.rule_version_id
+       WHERE v.id = (ev.payload->>'verdict_id')::uuid
+         AND v.outcome = 'correct' AND v.kind = 'fix'
+         AND e.kind = 'correction' AND e.planted
+         AND s.learner_id = NEW.learner_id AND rv.rule_id = NEW.rule_id;
+    ELSIF ev.payload ? 'resolution_id' AND ev.actor LIKE 'teacher:%' THEN
+      SELECT tr.resolved_at INTO evidence_at
+        FROM teacher_resolution tr
+        JOIN teacher_queue_item q ON q.id = tr.queue_item_id
+        JOIN verdict v ON v.id = q.verdict_id
+        JOIN attempt a ON a.id = v.attempt_id
+        JOIN exchange e ON e.id = a.exchange_id
+        JOIN session s ON s.id = e.session_id
+        JOIN rule_version rv ON rv.id = e.rule_version_id
+       WHERE tr.id = (ev.payload->>'resolution_id')::uuid
+         AND tr.outcome = 'correct' AND ev.actor = 'teacher:' || tr.teacher_id::text
+         AND v.kind = 'fix' AND e.kind = 'correction' AND e.planted
+         AND s.learner_id = NEW.learner_id AND rv.rule_id = NEW.rule_id;
+    END IF;
+    IF evidence_at IS NULL THEN
+      RAISE EXCEPTION 'classmate state: no checked correct fix of rule % by this learner backs event %',
+        NEW.rule_id, NEW.last_event_id;
+    END IF;
+    IF TG_OP = 'UPDATE' THEN
+      SELECT ts INTO previous_change_at FROM event_ledger WHERE id = OLD.last_event_id;
+      IF evidence_at <= previous_change_at THEN
+        RAISE EXCEPTION 'classmate state: stale evidence (older than the last change to this rule)';
+      END IF;
+    END IF;
+  ELSIF NEW.state = 'forgotten' THEN
+    IF TG_OP <> 'UPDATE' OR OLD.state <> 'taught' THEN
+      RAISE EXCEPTION 'classmate state: only a taught rule can be forgotten';
+    END IF;
+    IF ev.event_type <> 'classmate_forgot' OR ev.actor <> 'scheduler'
+       OR coalesce((ev.payload->>'predicted_recall')::float8, 1) >= 0.5 THEN
+      RAISE EXCEPTION 'classmate state: forgetting needs a scheduler event with predicted recall below 0.5';
+    END IF;
+  ELSE
+    IF TG_OP <> 'INSERT' OR ev.event_type <> 'classmate_initialised' THEN
+      RAISE EXCEPTION 'classmate state: unknown is only an initial state';
+    END IF;
+  END IF;
+  RETURN NEW;
+END $$""",
+    (
+        "CREATE TRIGGER classmate_rule_state_guard BEFORE INSERT OR UPDATE ON classmate_rule_state "
+        "FOR EACH ROW EXECUTE FUNCTION setu_classmate_guard()"
+    ),
+    (
+        "CREATE TRIGGER classmate_rule_state_no_delete BEFORE DELETE ON classmate_rule_state "
+        "FOR EACH ROW EXECUTE FUNCTION setu_forbid_mutation()"
+    ),
+]
+
+CLASSMATE_GUARD_DOWN = [
+    "DROP TRIGGER IF EXISTS classmate_rule_state_no_delete ON classmate_rule_state",
+    "DROP TRIGGER IF EXISTS classmate_rule_state_guard ON classmate_rule_state",
+    "DROP FUNCTION IF EXISTS setu_classmate_guard()",
+]

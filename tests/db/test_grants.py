@@ -17,8 +17,9 @@ def world(conn):
     learner = make_learner(conn)
     make_rule(conn)
     rv = make_rule_version(conn)
-    ev = conn.execute(text("INSERT INTO event_ledger (actor, event_type, payload) VALUES ('checker', 't', '{}') "
-                           "RETURNING id")).scalar_one()
+    ev = conn.execute(text("INSERT INTO event_ledger (actor, event_type, payload) VALUES ('checker', "
+                           "'classmate_initialised', jsonb_build_object('learner_id', CAST(:l AS text), "
+                           "'rule_id', 'HI-TE-001')) RETURNING id"), {"l": learner}).scalar_one()
     conn.execute(text("INSERT INTO classmate_rule_state (learner_id, rule_id, state, state_version, last_event_id) "
                       "VALUES (:l, 'HI-TE-001', 'unknown', 1, :e)"), {"l": learner, "e": ev})
     return {"learner": learner, "rv": rv, "ev": ev}
@@ -89,8 +90,10 @@ def test_writer_appends_to_ledger_and_updates_state_but_cannot_edit_content(conn
     with as_role(conn, "setu_writer"):
         ev = ok(conn, "INSERT INTO event_ledger (actor, event_type, payload) VALUES ('checker', 'teach', '{}') "
                 "RETURNING id").scalar_one()
-        ok(conn, "UPDATE classmate_rule_state SET state = 'taught', state_version = 2, last_event_id = :e",
-           {"e": ev})
+        # The writer has the UPDATE privilege, but the guard trigger (slice 1.3) still refuses a "taught"
+        # change that no checked correct fix backs.
+        fails(conn, "UPDATE classmate_rule_state SET state = 'taught', state_version = 2, last_event_id = :e",
+              {"e": ev}, match="classmate state")
         fails(conn, "UPDATE event_ledger SET payload = '{}'", match="permission denied")
         fails(conn, "INSERT INTO rule (id, direction, contrast_area) VALUES ('HI-TE-003', 'HI->TE', 'x')",
               match="permission denied")

@@ -807,6 +807,7 @@ class ClassmateRuleState(Base):
     last_event_id = fk("event_ledger.id")
     __table_args__ = (
         PrimaryKeyConstraint("learner_id", "rule_id"),  # data-model.md §7: unique (learner_id, rule_id)
+        UniqueConstraint("last_event_id", name="uq_classmate_rule_state_last_event_id"),  # one event, one change
         one_of("state", "unknown", "taught", "forgotten"),
         CheckConstraint("state_version >= 1", name="version_positive"),
     )

@@ -115,10 +115,11 @@ def test_fsrs_rating_capped_at_hard_when_a_cue_was_visible(conn):
 def test_classmate_state_unique_per_learner_and_rule(conn):
     learner = make_learner(conn)
     make_rule(conn)
-    ev = conn.execute(text("INSERT INTO event_ledger (actor, event_type, payload) VALUES "
-                           "('checker', 'teach', '{}') RETURNING id")).scalar_one()
+    ev = conn.execute(text("INSERT INTO event_ledger (actor, event_type, payload) VALUES ('checker', "
+                           "'classmate_initialised', jsonb_build_object('learner_id', CAST(:l AS text), "
+                           "'rule_id', 'HI-TE-001')) RETURNING id"), {"l": learner}).scalar_one()
     q = ("INSERT INTO classmate_rule_state (learner_id, rule_id, state, state_version, last_event_id) "
-         "VALUES (:l, 'HI-TE-001', 'taught', 1, :e)")
+         "VALUES (:l, 'HI-TE-001', 'unknown', 1, :e)")
     ok(conn, q, {"l": learner, "e": ev})
     fails(conn, q, {"l": learner, "e": ev})
     fails(conn, "UPDATE classmate_rule_state SET state = 'mastered' WHERE learner_id = :l", {"l": learner})
