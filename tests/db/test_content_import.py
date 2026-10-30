@@ -27,13 +27,17 @@ def fresh(db_url):
     with admin.connect() as c:
         c.execute(text(f'CREATE DATABASE "{name}"'))
     url = ADMIN_URL.rsplit("/", 1)[0] + f"/{name}"
-    upgrade(url)
-    eng = create_engine(url)
-    yield eng
-    eng.dispose()
-    with admin.connect() as c:
-        c.execute(text(f'DROP DATABASE "{name}" WITH (FORCE)'))
-    admin.dispose()
+    eng = None
+    try:  # drop the database even if migrating it fails
+        upgrade(url)
+        eng = create_engine(url)
+        yield eng
+    finally:
+        if eng is not None:
+            eng.dispose()
+        with admin.connect() as c:
+            c.execute(text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
+        admin.dispose()
 
 
 @pytest.fixture(scope="module")
