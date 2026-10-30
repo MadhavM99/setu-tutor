@@ -6,5 +6,5 @@ vendored so `python -m setu.content convert` is reproducible without that checko
 sha256 of each file; a test checks it. Do not edit these files: change the converted YAML under `content/hi-te`
 and `content/te-hi` instead, which creates new versions on import.
 
-All rules and items here are Claude-drafted and unreviewed (`draft_unverified`). Reuse of the team's work is
-recorded in `docs/adr/0001-rebuild-in-setu-tutor-reuse-lma.md`; team consent is still to be confirmed.
+All rules and items here are Claude-drafted and unreviewed (`draft_unverified`). Reuse of the team's work, and the
+team's consent to it (confirmed 31 Oct 2026), are recorded in `docs/adr/0001-rebuild-in-setu-tutor-reuse-lma.md`.

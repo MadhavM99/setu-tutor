@@ -25,3 +25,10 @@ The LMA repo is shared with the team, so team consent to reuse its code is recor
 - There is one engine.
 - The LMA validity defects are fixed during the port (audit §6).
 - The hosted JS app is retired.
+
+## Team consent
+
+Recorded 31 Oct 2026: the user confirmed that the LMA team agrees to its work being reused in setu-tutor (code ports
+and the vendored data snapshot under `content/sources/lma-c11a63a/`). Reused material keeps provenance pointing to
+the team repository and commit.
+
