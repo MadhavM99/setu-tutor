@@ -1,6 +1,8 @@
-runs/
-.venv/
 .git/
-__pycache__/
+.venv/
+legacy/
+runs/
+docs/
+tests/
+**/__pycache__/
 *.pyc
-.pytest_cache/

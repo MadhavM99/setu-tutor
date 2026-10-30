@@ -1,0 +1,29 @@
+# Local stack: app + Postgres 16. Ollama joins in Phase 4 (profile "llm").
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: setu
+      POSTGRES_USER: setu_migrate
+      POSTGRES_PASSWORD: ${SETU_DB_PASSWORD:-setu-dev-only}
+    ports:
+      - "5432:5432"
+    volumes:
+      - setu-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U setu_migrate -d setu"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    environment:
+      SETU_DATABASE_URL: postgresql+psycopg://setu_migrate:${SETU_DB_PASSWORD:-setu-dev-only}@db:5432/setu
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  setu-db:

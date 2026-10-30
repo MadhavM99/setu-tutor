@@ -164,3 +164,9 @@ R-17, R-18, R-19, R-20 and R-21 are tracked in the matrix §16. The highest-leve
 9. telemetry exists for its metric;
 10. docs are updated;
 11. its gate is passed, or it is flagged `built_not_evaluated`.
+
+## 7. Progress log
+
+| Slice | Status | Evidence |
+|---|---|---|
+| 1.1 Scaffold, legacy move, Compose, CI | **Built and tested** (31 Oct 2026) | New suite: 4 passed (package imports, domain has no I/O imports, `/healthz`, no commercial model client). Legacy suite from `legacy/`: 138 passed on Python 3.11. `ruff check .` clean. `docker compose config` valid. **Not verified:** the Compose stack was not started (Docker daemon not running) and CI has not run (no remote configured). Known warning: Starlette deprecates its httpx-based TestClient (third-party; left as is) |

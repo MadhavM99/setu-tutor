@@ -1,0 +1,42 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check .
+      - name: Tests (no model keys, no network models)
+        env:
+          GEMINI_API_KEY: ""
+          SETU_GEMINI_API_KEY: ""
+          SETU_LLM_URL: ""
+        run: pytest -q
+
+  legacy:
+    # The pre-redesign app stays runnable until each feature is migrated (implementation plan §4).
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: legacy
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - name: Legacy tests (model keys unset)
+        env:
+          GEMINI_API_KEY: ""
+          SETU_GEMINI_API_KEY: ""
+          SETU_LLM_URL: ""
+        run: python -m pytest -q -p no:cacheprovider
