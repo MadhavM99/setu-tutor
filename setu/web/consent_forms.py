@@ -1,21 +1,15 @@
-"""Consent forms the app can record. The Hindi text lives in the catalog under `text_key` (slice 1.6) and must be
-the version approved by the institute's ethics process before any pilot learner signs it (gate G4)."""
+"""Consent is collected in person by the facilitator before an invite is handed out (decision D5, 31 Oct 2026).
+
+The app does not ask learners for consent and shows no consent screens. When an invite is redeemed it records the
+in-person consent (all scopes) so the database can keep enforcing "no session without consent" and the record
+shows how consent was obtained. Withdrawal also happens in person; a researcher records it through
+`POST /api/research/participants/{id}/withdraw`.
+"""
 
 FORMS = {
-    "pilot-v1": {
+    "in-person-v1": {
         "scopes": ("pilot", "audio", "writing_upload", "data_sharing"),
-        "text_key": "consent.pilot_v1",
-        "status": "draft: awaiting ethics approval",
+        "how": "signed on paper with the facilitator at enrolment",
     },
 }
-CURRENT = "pilot-v1"
-
-
-def signable(app_state, version: str) -> bool:
-    """A form can be signed only when its approved text is in the catalog (or in development/test builds)."""
-    form = FORMS.get(version)
-    if form is None:
-        return False
-    catalog = app_state.catalog
-    approved = catalog.has(form["text_key"]) and not catalog.is_pending(form["text_key"])
-    return approved or app_state.allow_unapproved_consent
+CURRENT = "in-person-v1"

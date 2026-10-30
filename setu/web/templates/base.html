@@ -13,7 +13,6 @@
     {% if user %}
     <nav aria-label="{{ t('a11y.site_nav') }}">
       <a href="/">{{ t("nav.home") }}</a>
-      <a href="/consent">{{ t("nav.consent") }}</a>
       {% if user.role in ("teacher", "admin") %}<a href="/teacher">{{ t("nav.teacher") }}</a>{% endif %}
       <form method="post" action="/logout" class="inline">
         <button type="submit">{{ t("btn.signout") }}</button>

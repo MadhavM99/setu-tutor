@@ -119,12 +119,10 @@ def test_registering_through_the_form_shows_the_handle_once(app, engine):
     assert any("आमंत्रण" in t for t in assert_hindi_page(bad, status=400).text)
 
 
-def test_consent_page_fails_closed_until_the_approved_text_exists(app, engine):
+def test_there_is_no_consent_page_and_no_consent_link(app, engine):
     c, _ = signed_in(app, engine)
-    v = assert_hindi_page(c.get("/consent"))
-    assert any("तैयार नहीं" in t for t in v.text)
-    assert 'action="/consent"' not in c.get("/consent").text  # nobody can sign an unapproved form
-
+    assert c.get("/consent", headers={"accept": "text/html"}).status_code == 404
+    assert 'href="/consent"' not in c.get("/").text
 
 def test_teacher_page_is_hindi_and_needs_a_teacher(app, engine):
     learner, _ = signed_in(app, engine)
@@ -147,16 +145,3 @@ def test_unknown_page_is_a_hindi_404(app):
     assert r.status_code == 404
     v = crawl(r)
     assert v.html_lang == "hi" and not re.search(r"[A-Za-z]", " ".join(v.text))
-
-
-def test_posting_consent_directly_is_refused_while_the_form_is_unapproved(app, engine):
-    c, _ = signed_in(app, engine)
-    r = c.post("/consent", data={"scopes": "pilot"})
-    assert r.status_code == 409
-    assert c.get("/api/me").json()["consent"] is None
-
-
-def test_api_also_refuses_consent_while_the_form_is_unapproved(app, engine):
-    c, _ = signed_in(app, engine)
-    r = c.post("/api/consent", json={"form_version": "pilot-v1", "scopes": ["pilot"]})
-    assert r.status_code == 409 and r.json()["message_key"] == "err.consent_text_pending"

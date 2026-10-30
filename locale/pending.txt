@@ -1,3 +1,2 @@
 # Keys whose wording must come from an approved source before it may be shown. Rendering a pending key fails.
 # key<TAB>what is needed
-consent.pilot_v1	the consent form text approved by the institute's ethics process (gate G4)

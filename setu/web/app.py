@@ -34,14 +34,10 @@ def _templates(catalog: Catalog) -> Environment:
     return env
 
 
-def create_app(*, engine: Engine | None = None, cookie_secure: bool = True,
-               allow_unapproved_consent: bool = False) -> FastAPI:
-    """`allow_unapproved_consent` is for development and tests only: by default nobody can sign a consent form
-    whose ethics-approved text is not in the catalog (gate G4)."""
+def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> FastAPI:
     app = FastAPI(title="setu", version=__version__, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.db = AppDatabase(engine)
     app.state.cookie_secure = cookie_secure
-    app.state.allow_unapproved_consent = allow_unapproved_consent
     app.state.catalog = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")
     app.state.templates = _templates(app.state.catalog)
     app.add_exception_handler(ApiError, api_error_handler)

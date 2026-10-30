@@ -116,16 +116,9 @@ def test_every_template_key_exists(catalog):
 
 def test_every_api_error_has_a_hindi_message(catalog):
     codes = _api_error_codes()
-    assert {"auth_failed", "locked", "invite_invalid", "not_signed_in", "forbidden", "validation"} <= codes
-    assert [c for c in codes if not catalog.has(f"err.{c}")] == []
-
-
-def test_every_consent_scope_has_a_label(catalog):
-    from setu.web import consent_forms
-
-    for form in consent_forms.FORMS.values():
-        for scope in form["scopes"]:
-            assert catalog.has(f"consent.scope.{scope}")
+    assert {"auth_failed", "locked", "invite_invalid", "not_signed_in", "forbidden"} <= codes
+    # validation and not_found/generic come from the request-validation and HTTP error handlers (errors.py, app.py)
+    assert [c for c in codes | {"validation", "not_found", "generic"} if not catalog.has(f"err.{c}")] == []
 
 
 # ---------------------------------------------------------------- TS-L10N-05: fail closed at runtime
@@ -136,11 +129,16 @@ def test_missing_key_fails_loudly(catalog):
         catalog.get("nav.does_not_exist")
 
 
-def test_pending_text_is_never_rendered(catalog):
-    # The consent form text must be the ethics-approved version; until it is in the catalog it cannot be shown.
-    assert catalog.is_pending("consent.pilot_v1")
+def test_pending_text_is_never_rendered(tmp_path):
+    # Wording that must come from an approved source is listed in pending.txt and cannot be rendered until it exists.
+    cat = tmp_path / "hi.yaml"
+    cat.write_text('nav:\n  home: "मुख्य पृष्ठ"\n', encoding="utf-8")
+    pending = tmp_path / "pending.txt"
+    pending.write_text("tch.notice\tapproved wording needed\n", encoding="utf-8")
+    c = i18n.Catalog.load(cat, pending_file=pending)
+    assert c.is_pending("tch.notice")
     with pytest.raises(i18n.PendingText):
-        catalog.get("consent.pilot_v1")
+        c.get("tch.notice")
 
 
 def test_parameters_are_filled_and_must_not_inject_latin(catalog):

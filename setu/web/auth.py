@@ -16,6 +16,7 @@ from argon2.exceptions import InvalidHashError, VerificationError, VerifyMismatc
 from sqlalchemy import text
 from sqlalchemy.engine import Connection, Engine
 
+from . import consent_forms
 from .db import AppDatabase
 
 _hasher = PasswordHasher()  # argon2id with the library's current recommended parameters
@@ -113,6 +114,10 @@ def redeem_invite(c: Connection, code: str, passphrase: str) -> tuple[uuid.UUID,
              "VALUES (:h, :p, 'hi', 'te', 'HI->TE', :r, :co) RETURNING id"),
         {"h": handle, "p": hash_passphrase(passphrase), "r": invite.role, "co": invite.cohort}).scalar_one()
     c.execute(text("UPDATE invite SET used_at = now(), used_by = :l WHERE id = :i"), {"l": learner_id, "i": invite.id})
+    # Consent was given in person before the invite was handed out (decision D5); record it so sessions may start.
+    form = consent_forms.FORMS[consent_forms.CURRENT]
+    c.execute(text("INSERT INTO consent (learner_id, form_version, scope) VALUES (:l, :f, :s)"),
+              {"l": learner_id, "f": consent_forms.CURRENT, "s": list(form["scopes"])})
     return learner_id, handle
 
 

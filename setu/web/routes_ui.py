@@ -1,4 +1,4 @@
-"""Server-rendered Hindi pages (sign-in, registration, home, consent, teacher room).
+"""Server-rendered Hindi pages (sign-in, registration, home, teacher room). Consent is collected in person (D5).
 
 They call the same account functions as the JSON API. Every word comes from the catalog; a missing or pending key
 raises, so a page never falls back to other text (localisation-hindi-ui.md §1).
@@ -7,9 +7,8 @@ from urllib.parse import parse_qs
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
-from sqlalchemy import text
 
-from . import auth, consent_forms
+from . import auth
 from .deps import COOKIE, User
 from .routes_auth import _set_cookie
 
@@ -35,19 +34,12 @@ async def form_data(request: Request) -> dict:
     return {k: v if len(v) > 1 else v[0] for k, v in parse_qs(body, keep_blank_values=True).items()}
 
 
-def _active_consent(request: Request, user: User):
-    with request.app.state.db.tx() as c:
-        return c.execute(text("SELECT form_version, scope FROM consent WHERE learner_id = :l AND withdrawn_at IS NULL "
-                              "ORDER BY signed_at DESC LIMIT 1"), {"l": user.learner_id}).first()
-
-
 @router.get("/", response_class=HTMLResponse)
 def home(request: Request):
     user = optional_user(request)
     if user is None:
         return RedirectResponse("/login", status_code=303)
-    return render(request, "learner/home.html", title_key="page.home", user=user,
-                  consent=_active_consent(request, user))
+    return render(request, "learner/home.html", title_key="page.home", user=user)
 
 
 @router.get("/login", response_class=HTMLResponse)
@@ -107,18 +99,6 @@ def logout_form(request: Request):
     return response
 
 
-@router.get("/consent", response_class=HTMLResponse)
-def consent_page(request: Request):
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
-    form = consent_forms.FORMS[consent_forms.CURRENT]
-    catalog = request.app.state.catalog
-    return render(request, "learner/consent.html", title_key="page.consent", user=user,
-                  consent=_active_consent(request, user), scopes=form["scopes"], form_text_key=form["text_key"],
-                  form_text_pending=catalog.is_pending(form["text_key"]) or not catalog.has(form["text_key"]))
-
-
 @router.get("/teacher", response_class=HTMLResponse)
 def teacher_home(request: Request):
     user = optional_user(request)
@@ -128,37 +108,3 @@ def teacher_home(request: Request):
         return render(request, "learner/message.html", title_key="page.forbidden", user=user,
                       message_key="err.forbidden", status=403)
     return render(request, "teacher/home.html", title_key="page.teacher", user=user)
-
-
-@router.post("/consent", response_class=HTMLResponse)
-async def consent_form_submit(request: Request):
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
-    form = consent_forms.FORMS[consent_forms.CURRENT]
-    if not consent_forms.signable(request.app.state, consent_forms.CURRENT):
-        # Fail closed: an unapproved form cannot be signed even by posting directly (gate G4).
-        return render(request, "learner/message.html", title_key="page.consent", user=user,
-                      message_key="consent.pending", status=409)
-    data = await form_data(request)
-    scopes = data.get("scopes", [])
-    scopes = [scopes] if isinstance(scopes, str) else list(scopes)
-    if not scopes or not set(scopes) <= set(form["scopes"]):
-        return render(request, "learner/message.html", title_key="page.consent", user=user,
-                      message_key="err.validation", status=400)
-    with request.app.state.db.tx() as c:
-        c.execute(text("INSERT INTO consent (learner_id, form_version, scope) VALUES (:l, :f, :s)"),
-                  {"l": user.learner_id, "f": consent_forms.CURRENT, "s": sorted(set(scopes))})
-    return RedirectResponse("/consent", status_code=303)
-
-
-@router.post("/consent/withdraw")
-def consent_withdraw_submit(request: Request):
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
-    with request.app.state.db.tx() as c:
-        c.execute(text("SELECT setu_withdraw_consent(:l)"), {"l": user.learner_id})
-    response = RedirectResponse("/login", status_code=303)
-    response.delete_cookie(COOKIE, path="/")
-    return response

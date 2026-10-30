@@ -8,7 +8,7 @@ All learner-visible text is Hindi (Devanagari). Telugu appears only in Telugu sc
 
 1. **Invite link** → "सेतु में आपका स्वागत है".
 2. Choose a passphrase. No email or real name is required. [E-08]
-3. **Consent** (pilot only), in plain Hindi. Recorded with its version. [P-ETH-04]
+3. **Consent** is given in person to the facilitator before the invite is handed out; the app records it automatically and shows no consent screen (ADR-0007). [P-ETH-04]
 4. **"क्या आप तेलुगु पढ़ सकते हैं?"**:
    - "बिल्कुल नहीं" starts at L0. The placement diagnostic is skipped and shown later as an option.
    - "थोड़ा-बहुत" goes to J-3.

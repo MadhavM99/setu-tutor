@@ -604,7 +604,9 @@ Lifecycle: `built` = code exists; `tested` = acceptance tests pass against real 
 
 | 1.5 | E-08, P-ETH-04, P-ETH-05 (pseudonymous ids; no runtime model client yet to configure), X-PRIV-01, TS-AUTHN-*, TS-PRIV-01, TS-PRIV-06 (logs and login records hold no names or IPs), data-model §5 withdrawal | built, tested | `tests/unit/test_credentials.py`, `tests/db/test_auth_and_consent.py`; dev database upgraded to 0004 |
 
-| 1.6 | X-NOENG, E-03, M-54 (0 Latin in visible text: lint + rendered crawl), TS-L10N-01..05, TS-UI-CALM (no emoji), E-15 (self-hosted fonts, `lang`, 18px base, focus styles), P-ETH-04 (consent cannot be signed before approved text) | built, tested | `tests/unit/test_l10n.py`, `tests/db/test_ui_pages.py`; `python -m scripts.lint_hindi` in CI; real server smoke test |
+| 1.6 | X-NOENG, E-03, M-54 (0 Latin in visible text: lint + rendered crawl), TS-L10N-01..05, TS-UI-CALM (no emoji), E-15 (self-hosted fonts, `lang`, 18px base, focus styles) | built, tested | `tests/unit/test_l10n.py`, `tests/db/test_ui_pages.py`; `python -m scripts.lint_hindi` in CI; real server smoke test |
 
-Still open from those rows: P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), the ethics-approved Hindi consent text (gate G4), and the researcher console's other controls (time travel and study setup, phase 4).
+| ADR-0007 | P-ETH-04, P8b-12: consent collected in person, recorded automatically at registration; withdrawal recorded by a researcher | built, tested | `tests/db/test_auth_and_consent.py` |
+
+Still open from those rows: P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
 

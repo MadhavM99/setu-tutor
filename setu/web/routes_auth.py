@@ -1,11 +1,11 @@
-"""Accounts, consent and withdrawal (E-08, P-ETH-04/05, data-model.md §5)."""
+"""Accounts and withdrawal (E-08, P-ETH-05, data-model.md §5). Consent is collected in person (decision D5)."""
 from uuid import UUID
 
 from fastapi import APIRouter, Request, Response
 from pydantic import BaseModel, Field
 from sqlalchemy import text
 
-from . import auth, consent_forms
+from . import auth
 from .deps import COOKIE, CurrentUser, ResearcherOrAdmin
 from .errors import ApiError
 
@@ -20,11 +20,6 @@ class Register(BaseModel):
 class Login(BaseModel):
     handle: str = Field(min_length=1, max_length=16)
     passphrase: str = Field(min_length=1, max_length=auth.MAX_PASSPHRASE)
-
-
-class ConsentIn(BaseModel):
-    form_version: str = Field(max_length=32)
-    scopes: list[str] = Field(min_length=1, max_length=8)
 
 
 class InviteIn(BaseModel):
@@ -87,37 +82,9 @@ def me(request: Request, user: CurrentUser):
     return {"learner_id": str(user.learner_id), "handle": user.handle, "role": user.role, "consent": consent}
 
 
-@router.get("/consent")
-def consent_form(_user: CurrentUser):
-    form = consent_forms.FORMS[consent_forms.CURRENT]
-    return {"form_version": consent_forms.CURRENT, "scopes": list(form["scopes"]), "text_key": form["text_key"]}
-
-
-@router.post("/consent", status_code=204)
-def give_consent(body: ConsentIn, request: Request, response: Response, user: CurrentUser):
-    form = consent_forms.FORMS.get(body.form_version)
-    if form is None or not set(body.scopes) <= set(form["scopes"]) or len(set(body.scopes)) != len(body.scopes):
-        raise ApiError("validation")
-    if not consent_forms.signable(request.app.state, body.form_version):
-        raise ApiError("consent_text_pending", 409)
-    with request.app.state.db.tx() as c:
-        c.execute(text("INSERT INTO consent (learner_id, form_version, scope) VALUES (:l, :f, :s)"),
-                  {"l": user.learner_id, "f": body.form_version, "s": body.scopes})
-    response.status_code = 204
-    return response
-
-
 def _withdraw(request: Request, learner_id: UUID) -> None:
     with request.app.state.db.tx() as c:
         c.execute(text("SELECT setu_withdraw_consent(:l)"), {"l": learner_id})
-
-
-@router.post("/consent/withdraw", status_code=204)
-def withdraw_own(request: Request, response: Response, user: CurrentUser):
-    _withdraw(request, user.learner_id)
-    response.delete_cookie(COOKIE, path="/")
-    response.status_code = 204
-    return response
 
 
 @router.post("/research/invites", status_code=201)

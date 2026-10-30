@@ -15,7 +15,7 @@ PASS = "मेरा लंबा पासवर्ड"
 def app(engine):
     from setu.web.app import create_app
 
-    return create_app(engine=engine, cookie_secure=True, allow_unapproved_consent=True)  # dev/test opt-in
+    return create_app(engine=engine, cookie_secure=True)
 
 
 def client(app):
@@ -35,10 +35,6 @@ def register(app, engine, role="learner"):
     return c, r.json()["handle"], uuid.UUID(r.json()["learner_id"])
 
 
-def consent(c, scopes=("pilot",)):
-    return c.post("/api/consent", json={"form_version": "pilot-v1", "scopes": list(scopes)})
-
-
 def q(engine, sql, **p):
     with engine.connect() as c:
         return c.execute(text(sql), p).all()
@@ -51,7 +47,9 @@ def test_register_with_an_invite_gives_a_numeric_handle_and_a_session(app, engin
     c, handle, lid = register(app, engine)
     assert handle.replace("-", "").isdigit()
     me = c.get("/api/me").json()
-    assert me == {"learner_id": str(lid), "handle": handle, "role": "learner", "consent": None}
+    assert me == {"learner_id": str(lid), "handle": handle, "role": "learner",
+                  "consent": {"form_version": "in-person-v1",
+                              "scopes": ["pilot", "audio", "writing_upload", "data_sharing"]}}
     row = q(engine, "SELECT passphrase_hash FROM learner WHERE id = :i", i=lid)[0]
     assert row.passphrase_hash.startswith("$argon2id$")
 
@@ -142,17 +140,15 @@ def test_teachers_cannot_use_research_endpoints(app, engine):
 # ---------------------------------------------------------------- consent
 
 
-def test_consent_is_recorded_with_its_form_version_and_scopes(app, engine):
-    c, _, _ = register(app, engine)
-    assert c.get("/api/consent").json()["form_version"] == "pilot-v1"
-    assert consent(c, ("pilot", "audio")).status_code == 204
-    me = c.get("/api/me").json()
-    assert me["consent"] == {"form_version": "pilot-v1", "scopes": ["pilot", "audio"]}
-    bad = c.post("/api/consent", json={"form_version": "pilot-v1", "scopes": ["marketing"]})
-    assert bad.status_code == 400 and bad.json()["message_key"] == "err.validation"
-    unknown_form = c.post("/api/consent", json={"form_version": "pilot-v0", "scopes": ["pilot"]})
-    assert unknown_form.json()["message_key"] == "err.validation"
-
+def test_consent_is_taken_in_person_so_the_app_has_no_consent_endpoints(app, engine):
+    # Decision D5: the facilitator collects consent in person before handing out the invite; registering records it.
+    c, _, lid = register(app, engine)
+    assert c.post("/api/consent", json={"form_version": "x", "scopes": ["pilot"]}).status_code == 404
+    assert c.get("/api/consent").status_code == 404
+    assert c.post("/api/consent/withdraw").status_code == 404  # withdrawal is recorded by a researcher
+    rows = q(engine, "SELECT form_version, scope FROM consent WHERE learner_id = :l", l=lid)
+    assert [(r.form_version, list(r.scope)) for r in rows] == [
+        ("in-person-v1", ["pilot", "audio", "writing_upload", "data_sharing"])]
 
 def _start_session(engine, lid, mode="learn"):
     with engine.begin() as c:
@@ -161,19 +157,17 @@ def _start_session(engine, lid, mode="learn"):
                               "(:l, :m, '{}', 1) RETURNING id"), {"l": lid, "m": mode}).scalar_one()
 
 
-def test_no_practice_session_without_active_consent(app, engine):
-    c, _, lid = register(app, engine)
+def test_no_practice_session_without_a_consent_record(app, engine):
+    from .helpers import make_learner
+
+    with engine.begin() as c:  # a learner row created outside registration has no consent record
+        lid = make_learner(c, handle=f"h-{uuid.uuid4().hex[:10]}", consent=False)
     with pytest.raises(DBAPIError) as e:
         _start_session(engine, lid)
     assert "consent" in str(e.value.orig)
-    consent(c, ("audio",))
-    _start_session(engine, lid)  # any active consent allows ordinary practice
-    with pytest.raises(DBAPIError) as e:
-        _start_session(engine, lid, mode="study_A")  # study sessions need the pilot scope
-    assert "pilot" in str(e.value.orig)
-    consent(c, ("pilot",))
-    _start_session(engine, lid, mode="study_A")
-
+    _, _, registered = register(app, engine)
+    _start_session(engine, registered)
+    _start_session(engine, registered, mode="study_A")  # in-person consent covers the pilot scope
 
 # ---------------------------------------------------------------- withdrawal
 
@@ -193,7 +187,6 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
     from setu.store.outcome_writer import OutcomeWriter
 
     c, _, lid = register(app, engine)
-    consent(c, ("pilot",))
     with engine.begin() as conn:
         conn.execute(text("SET LOCAL ROLE setu_app"))
         conn.execute(text("INSERT INTO background (learner_id, answers) VALUES (:l, '{\"region\": \"हैदराबाद\"}')"),
@@ -203,8 +196,8 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
     OutcomeWriter(engine, resolution_key=b"k" * 32).record_verdict(
         issue_verdict(attempt_id=a, outcome="unsure", kind="own", reason_code="unseen", checker_version="t"))
 
-    r = c.post("/api/consent/withdraw")
-    assert r.status_code == 204
+    researcher, _, _ = register(app, engine, role="researcher")
+    assert researcher.post(f"/api/research/participants/{lid}/withdraw").status_code == 204
 
     attempt = q(engine, "SELECT raw_text, normalised_text, redacted_at FROM attempt WHERE id = :a", a=a)[0]
     assert attempt.raw_text == "" and attempt.normalised_text is None and attempt.redacted_at is not None
@@ -223,8 +216,7 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
 
 
 def test_researcher_can_withdraw_a_participant_and_learners_cannot_withdraw_others(app, engine):
-    learner_c, _, lid = register(app, engine)
-    consent(learner_c)
+    _, _, lid = register(app, engine)
     other, _, _ = register(app, engine)
     assert other.post(f"/api/research/participants/{lid}/withdraw").status_code == 403
     researcher, _, _ = register(app, engine, role="researcher")
