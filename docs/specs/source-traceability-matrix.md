@@ -497,6 +497,7 @@ Every row has its own entry in [`../research/roadmap-future-work.md`](../researc
 | X-GATE-01 | §12 | Metrics in an automated dashboard plus a reproducible report; thresholds fixed in advance | NA | P | 4 | Scorecard command | TS-SCORE-01 |
 | X-GATE-02 | §12 | Never relax targets quietly; a failed gate is reported; revised thresholds are preregistered for later; post-hoc changes marked exploratory | — | — | all | Threshold file is versioned and frozen | Doc |
 | X-PRIV-01 | §9 | Pseudonymous ids; minimal personal data; no identifiable learner writing to any commercial API | B | P | 1 | P-ETH-05 | TS-PRIV-* |
+| X-DELIV | §16 | Delivery approach: the paper's four-week plan is a reference only; parallelise only behind shared schemas and mocks; check capacity instead of assuming 10 h/day; no participant uses an unvalidated module; a part that misses its gate is "built, not evaluated" | — | — | 0+ | implementation-plan.md §1–2 (solo capacity, decision D4) | Doc |
 | X-DOD | §17 | Definition-of-done checklist applied to every feature | — | — | all | PR template | Doc |
 | X-AFTER | §18 | Slice protocol (spec IDs, files, dependencies, risks, tests before each slice) and milestone report format | — | — | 1+ | implementation-plan.md §6 | Doc |
 

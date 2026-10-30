@@ -54,15 +54,21 @@ Each has a conservative default; see the plan:
 
 ## Package status
 
-**Done:**
-- the audit
-- the PRD and learner journeys
-- the traceability matrix
-- the ladder, methodology, session, architecture, data-model, API/tool, content-bank, teacher-console and localisation specs
-- the experiment protocol, metrics and gates, roadmap and data-source register
+**Complete.** Phase 0 also includes:
+- [quality/test-plan.md](quality/test-plan.md)
+- [implementation/implementation-plan.md](implementation/implementation-plan.md), with slices, dependency graph and a legacy-migration table
+- ADRs 0001–0004 in [adr/](adr/)
 
-**Not yet written:**
-- `docs/quality/test-plan.md` (the TS-* suite IDs used in the matrix still need their definitions)
-- `docs/implementation/implementation-plan.md` (the phase table is in the approved plan; the slice detail, dependency graph and legacy-migration table still need writing)
-- `docs/adr/0001–0004`
-- the coverage and template verification checks
+**Verification run (30 Oct 2026):**
+- The matrix has 380 unique IDs with no duplicates. Every per-family minimum is met:
+  - all 45 Table 9 metric items, plus the newer copy's metrics and the ladder metrics;
+  - all 16 Table 10 risks, plus R-17 to R-21;
+  - all 29 future-work items;
+  - all 13 contrast families;
+  - all 11 Table 7 sources;
+  - prompt §0–§18.
+- Every cited test-suite ID is defined in the test plan.
+- Every feature spec has all mandatory template fields.
+- Only `docs/` changed since the baseline.
+
+**Next step:** user approval (gate G0). Implementation starts with Phase 1, slice 1.1, after approval.
