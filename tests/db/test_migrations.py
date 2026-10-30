@@ -13,18 +13,34 @@ def test_models_match_migrated_schema(engine):
     assert diff == []
 
 
-def test_downgrade_and_upgrade_round_trip(db_url, engine):
+def test_downgrade_and_upgrade_round_trip():
+    """On a fresh database: downgrades are only expected to work when no rows use newer values (verdicts and rule
+    versions are immutable, so a downgrade cannot rewrite them)."""
+    import uuid
+
     from setu.store.migrate import downgrade, upgrade
 
-    engine.dispose()
-    downgrade(db_url, "base")
-    eng = create_engine(db_url)
-    with eng.connect() as c:
-        left = c.execute(text("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public' "
-                              "AND table_name <> 'alembic_version'")).scalar_one()
-    eng.dispose()
-    assert left == 0
-    upgrade(db_url)
+    from .conftest import ADMIN_URL
+
+    name = f"setu_test_rt_{uuid.uuid4().hex[:8]}"
+    admin = create_engine(ADMIN_URL, isolation_level="AUTOCOMMIT")
+    with admin.connect() as c:
+        c.execute(text(f'CREATE DATABASE "{name}"'))
+    url = ADMIN_URL.rsplit("/", 1)[0] + f"/{name}"
+    try:
+        upgrade(url)
+        downgrade(url, "base")
+        eng = create_engine(url)
+        with eng.connect() as c:
+            left = c.execute(text("SELECT count(*) FROM information_schema.tables WHERE table_schema = 'public' "
+                                  "AND table_name <> 'alembic_version'")).scalar_one()
+        eng.dispose()
+        assert left == 0
+        upgrade(url)
+    finally:
+        with admin.connect() as c:
+            c.execute(text(f'DROP DATABASE IF EXISTS "{name}" WITH (FORCE)'))
+        admin.dispose()
 
 
 def test_roles_exist_and_cannot_log_in(engine):

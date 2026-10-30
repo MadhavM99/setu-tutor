@@ -127,3 +127,9 @@ Any change after data is seen is marked **exploratory**. [X-GATE-02]
 - 5–8 short interviews with adult learners and Hindi/Telugu teachers **before** showing the prototype, using the LMA `docs/interview_guide.md`.
 - Topics: recurring errors, current tools, who would choose and pay.
 - Concrete commitments are recorded (second session, sharing permitted examples, a pilot, willingness to pay), not compliments.
+## 9. Input-method balance (R-INPUT)
+
+Response modes are a potential confound. In every condition of the reverse-learning study and of Study M:
+- the allowed response modes and the number of practice opportunities per mode are fixed per block and identical across conditions;
+- scored tests (pre-, post-, delayed, transfer) accept independent modes only (typed, on-screen keyboard; spoken only once the speech gate passes);
+- the analysis reports response-mode counts per learner and condition (TS-STUDY-11).

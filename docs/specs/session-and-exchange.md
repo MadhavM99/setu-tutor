@@ -264,3 +264,82 @@ Tests use held-out items that never appear in practice, including hard items to 
 - **Explanations** keep their script and punctuation.
 - Every Telugu form in the content (rules, variants, planted errors, words) round-trips Telugu → Devanagari →
   Telugu without loss, as do 500 seeded random strings.
+## 11. Input methods and keyboard independence (requirement R-INPUT, 31 Oct 2026)
+
+Tags: [X-INPUT] user requirement; [E] engineering choice. Interaction components are built in Phase 3; the
+contracts and data model below are in force from slice 2.2.
+
+**No physical Hindi or Telugu keyboard is ever required, and nothing depends on the operating system having one.**
+
+| `response_mode` | What the learner does | Evidence it gives | Counts as recall? | May teach राजू? |
+|---|---|---|---|---|
+| `multiple_choice` | Picks one of a few approved options | Recognition (`verdict.kind = recognition`, modality REC) | No | No |
+| `tiles` | Builds the answer from offered akshara, letter or word tiles | Assisted production (`assistance` lists `tiles`) | No (cue level ≥ 1) | No |
+| `onscreen_keyboard` | Composes freely on the full on-screen Telugu or Devanagari keyboard (letters, vowel signs, gunintalu, virama) | Independent production | Yes, if no recall cue was shown | Yes |
+| `typed` | Types on a physical keyboard (Telugu, or Devanagari with the bridge) | Independent production | Yes, if no recall cue was shown | Yes |
+| `spoken` | Speaks the answer (Phase 5, behind the speech gate); the transcript goes through the normaliser and checker like typed text | Independent production | Yes, if no recall cue was shown | Yes |
+
+**The on-screen keyboard is not a cue:** it always offers the whole alphabet, never a subset that hints at the answer.
+Tiles offer a subset, so they are a cue.
+
+**Aids recorded on every attempt** (`attempt.assistance`):
+
+| Kind | Aids | Effect |
+|---|---|---|
+| **Recall cues** | `choices`, `tiles`, `hint`, `illustration`, `answer_audio`, `memory_aid`, `revealed_answer` | Any recall cue makes `cue_level ≥ 1` |
+| **Presentation aids** | `reading_aid` (the Devanagari reading of a Telugu prompt), `prompt_audio` | Recorded but not cues: they render the prompt, not the answer, and the paper keeps them equal across conditions (P8b-07) |
+
+**Rules (enforced in the database from migration 0005):**
+- `response_mode` and `cue_level` are recorded for every attempt.
+- `cue_level = 0` if and only if no recall cue is present.
+- `multiple_choice` must list `choices` and `tiles` must list `tiles`, so both always have `cue_level ≥ 1`.
+- The classmate learns only from a `fix` verdict on an attempt with an independent `response_mode`, `cue_level = 0` and no revealed answer (in the classmate-state trigger as well as in the OutcomeWriter).
+- The FSRS cue restriction applies to every assisted answer: a review log entry carries its attempt's cue level, and with a cue the rating is capped at Hard.
+
+**Content in selectable controls:**
+- Keyboards use the verified Unicode tables of the normaliser (`DEVA_TO_TELU`, `TELU_TO_DEVA`).
+- Options and tiles come only from approved content (the `learner_*` views), so no incorrect or unapproved Telugu form is ever offered as a selectable answer.
+- Distractors in multiple choice are approved forms or approved planted errors only.
+- All controls and instructions are in Hindi; Telugu appears only as content.
+- Switching input method is one tap and is remembered per learner (Phase 3).
+
+**Experiments:**
+- In the reverse-learning study (A/B/C) and Study M, the allowed response modes and the number of practice opportunities per mode are fixed per block and identical across conditions.
+- Scored tests use independent modes only.
+- The balance is checked from `attempt.response_mode` (TS-STUDY-11).
+
+**Acceptance criteria:**
+
+| Given | When | Then |
+|---|---|---|
+| A correct multiple-choice answer | checked | `kind = recognition`; the classmate is unchanged; it adds REC evidence only |
+| A correct fix built from tiles | recorded | `cue_level ≥ 1`, `assistance` contains `tiles`; the classmate is unchanged |
+| A correct typed fix with no recall cue | recorded | the classmate learns the rule |
+| An attempt that claims `multiple_choice` without `choices`, or `cue_level = 0` with a hint | written | refused by the database |
+| An assisted review | logged | the FSRS rating is capped at Hard |
+| A study block | configured | identical response modes and opportunities across conditions |
+## 12. Implementation notes: checker (slice 2.2, 31 Oct 2026)
+
+`setu/domain/checker.py` (`checker-1`) is now the only producer of verdicts: `check_fix`, `check_recall`,
+`check_choice` and `check_explanation`. The temporary public `issue_verdict` of slice 1.3 is gone; minting is
+private (`_issue_verdict`) and the import-boundary test keeps it inside the checker module.
+
+- **Fix order** as in §3.1. "Planted error still present" covers three cases: the planted sentence itself
+  (including its Hindi-keyboard form), a wrong pattern (full match), and any word that appears in the planted
+  sentence but in none of the accepted forms. The last case is what catches HI-TE-010-a's planted జో now that the
+  unanchored legacy pattern was rejected.
+- **Near miss:** one character away from an accepted form **and** more than one away from the planted sentence;
+  otherwise `unsure` (for example అమ్మన is one edit from both అమ్మను and అమ్మ).
+- **Extra or missing word:** the fixed words are all present and exactly one other word is added or missing.
+- **Abstentions:** unreadable input (`input_*` reasons) and unknown forms are `unsure`. An empty answer is `wrong`
+  (`empty`), so "I don't know" does not flood the teacher queue (an LMA defect). A transliterated (romanised)
+  answer is always `unsure` (`romanised_*`), never automatically correct.
+- **No-error turns:** "this is right" → correct (`confirmed_correct`); retyping the sentence unchanged → correct;
+  any change → wrong with `false_alarm`. "No mistake" on a planted sentence → wrong (`missed_error`).
+- **Multiple choice** → `kind = recognition` only. `check_fix` and `check_recall` refuse multiple-choice input.
+- **Explanations:** whole-word or phrase matches only (so आ does not match inside आसमान). `correct` needs every key
+  idea **and** every relation phrase. With no `relations` in the concept key, even an explanation with all ideas is
+  `unsure`. No current rule has relations, so for now every "why?" answer goes to a teacher; the validator flags
+  this as `concept_key_without_relations` on the 15 HI→TE rules.
+- **Not yet:** own-sentence frames (slice 3, S5), the morphological analyser (Phase 4), checker agreement with
+  teachers (needs teacher labels).

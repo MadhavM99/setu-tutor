@@ -21,6 +21,7 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Connection, Engine
 
 from setu.domain import scheduler
+from setu.domain.checker import INDEPENDENT_MODES
 from setu.domain.verdict import is_minted
 
 from .resolution import TeacherResolution
@@ -125,7 +126,8 @@ class OutcomeWriter:
     @staticmethod
     def _attempt_context(c: Connection, attempt_id) -> dict:
         row = c.execute(
-            text("SELECT s.learner_id, e.kind, e.planted, rv.rule_id FROM attempt a "
+            text("SELECT s.learner_id, e.kind, e.planted, rv.rule_id, a.response_mode, a.cue_level, a.after_reveal "
+                 "FROM attempt a "
                  "JOIN exchange e ON e.id = a.exchange_id JOIN session s ON s.id = e.session_id "
                  "LEFT JOIN rule_version rv ON rv.id = e.rule_version_id WHERE a.id = :a"),
             {"a": attempt_id}).first()
@@ -134,8 +136,13 @@ class OutcomeWriter:
         return row._asdict()
 
     def _maybe_teach(self, c: Connection, context: dict, actor: str, evidence: dict):
-        """k = 1: one checked correct fix of a planted error teaches the classmate that rule."""
+        """k = 1: one checked correct fix of a planted error teaches the classmate that rule.
+
+        The fix must be independent production (typed, on-screen keyboard or spoken), given with no recall cue and
+        not after the answer was revealed (R-INPUT; also enforced by the classmate-state trigger)."""
         if not (context["kind"] == "correction" and context["planted"] and context["rule_id"]):
+            return None, None
+        if context["response_mode"] not in INDEPENDENT_MODES or context["cue_level"] != 0 or context["after_reveal"]:
             return None, None
         learner_id, rule_id = context["learner_id"], context["rule_id"]
         current = c.execute(

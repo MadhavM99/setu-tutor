@@ -197,6 +197,13 @@ def normalise_explanation(raw: str) -> Normalised:
     return Normalised(text, "any", input_script, "ok" if text else "empty")
 
 
+def forgiving_fold(n: Normalised, text: str) -> str:
+    """`text` as compared under Hindi-keyboard forgiveness; unchanged unless `n` was Devanagari-typed Telugu."""
+    if n.typed_devanagari and n.target_script == "telugu":
+        return _FINAL_M.sub("ం", text).translate(_FOLD_EO)
+    return text
+
+
 def match_forgiving(n: Normalised, candidates: Iterable[str]) -> Match | None:
     """Match against accepted forms, forgiving Hindi-keyboard habits only for Devanagari-typed Telugu answers."""
     if n.status not in ("ok", "transliterated") or not n.text:

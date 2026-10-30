@@ -163,3 +163,11 @@ Each feature has a full template spec in the file named.
 | F-SPEECH Speech adapters | architecture.md §7 |
 | F-MEM Memory Assistant (F-MEM-1..8) | memory-assistant.md |
 | F-RAJU Classmate output contract | classmate-output-contract.md |
+## 9. Keyboard independence (R-INPUT, 31 Oct 2026)
+
+No learner needs a physical Hindi or Telugu keyboard. Three ways to answer:
+1. multiple choice for beginner recognition and guided practice;
+2. an on-screen Telugu keyboard, akshara/letter tiles and word building;
+3. independent typed or spoken answers for production and cue-free recall.
+
+Switching is easy, controls are in Hindi, and every answer records how it was given and what help was on screen. Details: session-and-exchange.md §11.

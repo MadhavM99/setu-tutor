@@ -77,10 +77,9 @@ def test_writer_credentials_are_read_only_by_the_writer():
 
 
 def _a_real_verdict(outcome="correct", kind="fix"):
-    from setu.domain.checker import issue_verdict
+    from setu.domain.checker import _issue_verdict as issue_verdict  # tests mint arbitrary verdicts
 
-    return issue_verdict(attempt_id=uuid.uuid4(), outcome=outcome, kind=kind, reason_code="accepted_form",
-                         checker_version="test")
+    return issue_verdict(attempt_id=uuid.uuid4(), outcome=outcome, kind=kind, reason_code="accepted_form")
 
 
 def test_verdict_cannot_be_constructed_directly():
@@ -99,10 +98,10 @@ def test_verdict_cannot_be_copied_into_a_different_outcome():
 
 
 def test_verdict_rejects_values_outside_the_four_outcomes():
-    from setu.domain.checker import issue_verdict
+    from setu.domain.checker import _issue_verdict as issue_verdict  # tests mint arbitrary verdicts
 
     with pytest.raises(ValueError):
-        issue_verdict(attempt_id=uuid.uuid4(), outcome="approved", kind="fix", reason_code="x", checker_version="v")
+        issue_verdict(attempt_id=uuid.uuid4(), outcome="approved", kind="fix", reason_code="x")
 
 
 def test_writer_rejects_anything_that_is_not_a_minted_verdict():

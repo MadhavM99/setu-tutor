@@ -140,3 +140,17 @@ The 138 tests in the setu-tutor baseline are kept under `legacy/tests` and still
 | TS-STUDY-10 | Aid exposures identical across reverse-learning A/B/C (M-67) | ★ |
 | TS-MSTUDY-01..08 | Study M machinery (memory-experiment-protocol.md §9) | |
 | TS-SIM-MEM-01..03 | Simulator aid parameters drive scheduling, fading and logging reproducibly; no mastery from viewing in simulation; reports labelled as machinery tests | |
+
+## 6. R-INPUT suites (input methods)
+
+| Suite | What it proves | ★ |
+|---|---|---|
+| TS-DB-INPUT-01..03 | `response_mode` values; `cue_level = 0` iff no recall cue; multiple choice needs `choices`, tiles need `tiles`; presentation aids alone keep `cue_level = 0` | ★ |
+| TS-CHK-MC-01..02 | Multiple-choice answers are `recognition`; the fix checker refuses multiple-choice input; recognition and production stay separate | ★ |
+| TS-CLS-INPUT-01..04 | A correct multiple-choice, tile, cued or after-reveal answer never teaches the classmate (writer and trigger); an independent cue-free fix does | ★ |
+| TS-SCHED-MEM-05 | `fsrs_review_log.cue_level` must equal the attempt's cue level | ★ |
+| TS-INPUT-KB-01..04 | On-screen keyboard layouts come from the verified tables; vowel signs, virama and gunintalu compose to valid NFC text (Phase 3) | |
+| TS-INPUT-SRC-01 | Options, tiles and distractors only from learner-visible approved content (Phase 3) | ★ |
+| TS-INPUT-E2E-01..02 | Every flow completes without a physical keyboard; switching modes is one control (Phase 3) | |
+| TS-STUDY-11 | Response modes and opportunities balanced across conditions; scored tests independent only (Phase 4) | ★ |
+

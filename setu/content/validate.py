@@ -166,10 +166,15 @@ def validate_rule(rule: dict) -> Result:
         _check_l1_text(res, rid, field, rule.get(field), direction)
         if rule.get(field) is None:
             res.add(rid, Issue("missing_l1_text", field, field))
-    for idea in (rule.get("concept_key") or {}).get("ideas", []):
-        for term in idea:
-            if LATIN.search(term):
-                res.add(rid, _err("latin_in_learner_text", f"concept_key term {term!r}"))
+    concept = rule.get("concept_key") or {}
+    for part in ("ideas", "relations"):
+        for group in concept.get(part, []):
+            for term in group:
+                if LATIN.search(term):
+                    res.add(rid, _err("latin_in_learner_text", f"concept_key {part} term {term!r}"))
+    if concept.get("ideas") and not concept.get("relations"):
+        # Without relation phrases the checker cannot tell an explanation from a keyword list (checker-1).
+        res.add(rid, Issue("concept_key_without_relations"))
     for field in (rule.get("needs_rewrite") or {}):
         res.add(rid, Issue("needs_rewrite", field, field))
     _check_provenance(res, rid, rule.get("provenance"))

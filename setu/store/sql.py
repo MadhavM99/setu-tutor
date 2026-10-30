@@ -377,3 +377,61 @@ CONSENT_GUARDS_DOWN = [
     "DROP TRIGGER IF EXISTS session_requires_consent ON session",
     "DROP FUNCTION IF EXISTS setu_session_requires_consent()",
 ]
+
+
+# ---------------------------------------------------------------- migration 0005 (slice 2.2, R-INPUT)
+
+RECALL_CUES = ("choices", "tiles", "hint", "illustration", "answer_audio", "memory_aid", "revealed_answer")
+PRESENTATION_AIDS = ("reading_aid", "prompt_audio")
+INDEPENDENT_MODES = ("onscreen_keyboard", "typed", "spoken")
+
+INPUT_FUNCTIONS = [
+    f"""
+CREATE FUNCTION setu_assistance_valid(a jsonb) RETURNS boolean LANGUAGE sql IMMUTABLE AS $fn$
+  SELECT jsonb_typeof(a) = 'array' AND NOT EXISTS (
+    SELECT 1 FROM jsonb_array_elements(a) x
+     WHERE jsonb_typeof(x) <> 'string'
+        OR x #>> '{{}}' NOT IN ({", ".join(repr(k) for k in RECALL_CUES + PRESENTATION_AIDS)}))
+$fn$""",
+    f"""
+CREATE FUNCTION setu_recall_cues(a jsonb) RETURNS integer LANGUAGE sql IMMUTABLE AS $fn$
+  SELECT count(*)::int FROM jsonb_array_elements_text(a) x WHERE x IN ({", ".join(repr(k) for k in RECALL_CUES)})
+$fn$""",
+]
+
+_V1_GUARD = CLASSMATE_GUARD[0]
+CLASSMATE_GUARD_V1_REPLACE = _V1_GUARD.replace("CREATE FUNCTION", "CREATE OR REPLACE FUNCTION", 1)
+CLASSMATE_GUARD_V2 = CLASSMATE_GUARD_V1_REPLACE.replace(
+    "AND e.kind = 'correction' AND e.planted",
+    "AND e.kind = 'correction' AND e.planted\n         AND a.response_mode IN ('onscreen_keyboard', 'typed', 'spoken')"
+    " AND a.cue_level = 0 AND NOT a.after_reveal",
+)
+
+FSRS_CUE_GUARD = [
+    """
+CREATE FUNCTION setu_fsrs_cue_from_attempt() RETURNS trigger LANGUAGE plpgsql AS $$
+-- A review that points to a verdict carries the cue level of the attempt behind it (R-INPUT, F-MEM-8), so an
+-- assisted answer cannot be logged as a cue-free review and escape the Hard cap.
+DECLARE
+  attempt_cue integer;
+BEGIN
+  IF NEW.verdict_id IS NOT NULL THEN
+    SELECT a.cue_level INTO attempt_cue FROM verdict v JOIN attempt a ON a.id = v.attempt_id WHERE v.id = NEW.verdict_id;
+    IF attempt_cue IS DISTINCT FROM NEW.cue_level THEN
+      RAISE EXCEPTION 'fsrs review: cue_level % must equal the attempt''s cue_level %', NEW.cue_level, attempt_cue;
+    END IF;
+  END IF;
+  RETURN NEW;
+END $$""",
+    (
+        "CREATE TRIGGER fsrs_review_cue_from_attempt BEFORE INSERT ON fsrs_review_log "
+        "FOR EACH ROW EXECUTE FUNCTION setu_fsrs_cue_from_attempt()"
+    ),
+]
+
+INPUT_DOWN = [
+    "DROP TRIGGER IF EXISTS fsrs_review_cue_from_attempt ON fsrs_review_log",
+    "DROP FUNCTION IF EXISTS setu_fsrs_cue_from_attempt()",
+]
+INPUT_FUNCTIONS_DOWN = ["DROP FUNCTION IF EXISTS setu_recall_cues(jsonb)",
+                        "DROP FUNCTION IF EXISTS setu_assistance_valid(jsonb)"]

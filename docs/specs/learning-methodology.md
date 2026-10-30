@@ -38,3 +38,6 @@ The newer paper copy's v0 simulation found condition A (teach Raju) < C (normal 
 - That simulated learners behave like people. [X-SIM-05]
 - That contrast predictions match real learner errors (no rule is observed yet). [P-ETH-10]
 - That teaching the classmate beats matched examples or a normal tutor. This is the open research question.
+## Input methods and evidence (R-INPUT)
+
+Multiple choice and tiles make the product usable without a Hindi or Telugu keyboard. They are recognition and guided practice, not cue-free recall: their answers are stored as recognition or assisted evidence, never count toward cue-free recall or production unlocks, and never teach राजू. Independent production (typed, on-screen keyboard, spoken) is evaluated separately. See session-and-exchange.md §11.

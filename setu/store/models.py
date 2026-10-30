@@ -754,6 +754,9 @@ class Attempt(Base):
     hint_type = Column(Text)
     hint_id = fk("hint.id", nullable=True)
     after_reveal = Column(Boolean, nullable=False, server_default=text("false"))
+    # R-INPUT (migration 0005): how the answer was given and every aid that was on screen.
+    response_mode = Column(Text, nullable=False, server_default="typed")
+    assistance = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
     confidence = Column(Integer)
     latency_ms = Column(Integer)
     idempotency_key = Column(Text, nullable=False, unique=True)
@@ -769,6 +772,11 @@ class Attempt(Base):
                         name="hint_type_values"),
         CheckConstraint("confidence IS NULL OR confidence BETWEEN 1 AND 5", name="confidence_range"),
         CheckConstraint("redacted_at IS NULL OR (raw_text = '' AND normalised_text IS NULL)", name="redacted_is_empty"),
+        one_of("response_mode", "multiple_choice", "tiles", "onscreen_keyboard", "typed", "spoken"),
+        CheckConstraint("setu_assistance_valid(assistance)", name="assistance_values"),
+        CheckConstraint("(cue_level = 0) = (setu_recall_cues(assistance) = 0)", name="cue_level_matches_aids"),
+        CheckConstraint("response_mode <> 'multiple_choice' OR assistance ? 'choices'", name="choices_recorded"),
+        CheckConstraint("response_mode <> 'tiles' OR assistance ? 'tiles'", name="tiles_recorded"),
     )
 
 
@@ -784,7 +792,7 @@ class Verdict(Base):
     created_at = now()
     __table_args__ = (
         one_of("outcome", "correct", "partial", "wrong", "unsure"),
-        one_of("kind", "fix", "no_error", "explanation", "own", "recall"),
+        one_of("kind", "fix", "no_error", "explanation", "own", "recall", "recognition"),
     )
 
 

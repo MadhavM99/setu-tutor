@@ -64,10 +64,9 @@ def new_attempt(engine, world, **kw):
 
 
 def verdict(attempt_id, outcome="correct", kind="fix"):
-    from setu.domain.checker import issue_verdict
+    from setu.domain.checker import _issue_verdict as issue_verdict  # tests mint arbitrary verdicts
 
-    return issue_verdict(attempt_id=attempt_id, outcome=outcome, kind=kind, reason_code="test",
-                         checker_version="test")
+    return issue_verdict(attempt_id=attempt_id, outcome=outcome, kind=kind, reason_code="test")
 
 
 def classmate(engine, world):

@@ -11,7 +11,7 @@ import uuid
 import weakref
 
 OUTCOMES = ("correct", "partial", "wrong", "unsure")
-KINDS = ("fix", "no_error", "explanation", "own", "recall")
+KINDS = ("fix", "no_error", "explanation", "own", "recall", "recognition")
 
 _CHECKER_CAPABILITY = object()
 _MINTED: "weakref.WeakSet[Verdict]" = weakref.WeakSet()

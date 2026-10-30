@@ -610,5 +610,28 @@ Lifecycle: `built` = code exists; `tested` = acceptance tests pass against real 
 
 | 2.1 | P-ARCH-05, P-SESS-09 (normalisation part), P8b-06, X-CHK-01, P-DATA-07 (adapter interface only), TS-NORM-01..10 | built, tested | `tests/unit/test_normalise.py` (38 tests) |
 
-Still open from those rows: P-DATA-07 (the IndicXlit model is not wired in; only the adapter interface), P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
+| 2.2 | P-ARCH-06, P-SESS-09/10 (verdicts; hints come later), P-LSP-02 (concept-key scoring), X-CHK-01/02 (variants, romanised never correct), M-17 (unsure never changes state, with 1.3), X-INPUT-02/07/08/09/10/11/12/13 (contracts and database), TS-CHK-*, TS-WHY-*, TS-CHK-MC-*, TS-DB-INPUT-*, TS-CLS-INPUT-*, TS-SCHED-MEM-05 | built, tested | `tests/unit/test_checker.py` (41), `tests/db/test_input_modes.py` (16) |
+
+Still open from those rows: concept keys without relation phrases (every explanation is unsure until teachers add them), checker agreement with teachers M-16 (needs labels), X-INPUT-01/03/04/05/06/14 (Phase 3–4 interfaces and study balance), P-DATA-07 (the IndicXlit model is not wired in; only the adapter interface), P-BANK-08 (rates per opportunity, teacher analytics), X-BANK-05 (opportunity counts are stored, no analytics yet), DQ-08 (rule titles that reveal answers are imported as drafts and not yet detected automatically), DQ-01 (only 25 rules / 49 items exist vs 250 planned), M-54 for pages not built yet (each new page joins the crawl), E-15 full WCAG audit (axe checks arrive with the learner slices), and the researcher console's other controls (time travel and study setup, phase 4).
+
+## 26. Requirement R-INPUT: multiple input methods and keyboard independence (user requirement, 31 Oct 2026)
+
+Spec: session-and-exchange.md §11. Contracts and data model in slice 2.2; interaction components in Phase 3.
+
+| ID | Requirement | Ph | Acceptance (short G/W/T) | Tests |
+|---|---|---|---|---|
+| X-INPUT-01 | Never require a physical Hindi or Telugu keyboard; never depend on OS keyboards | 3 | Every answer type has an on-screen path; E2E flow runs with keyboard input disabled | TS-INPUT-E2E-01 |
+| X-INPUT-02 | Three response modes: multiple choice, on-screen keyboard/tiles/word building, independent typed or spoken | 2/3 | `response_mode` enum in the schema and checker contracts | TS-INPUT-01, TS-DB-INPUT-01 |
+| X-INPUT-03 | Switching input methods is easy | 3 | One control, remembered per learner | TS-INPUT-E2E-02 |
+| X-INPUT-04 | On-screen keyboards use verified Devanagari/Telugu Unicode; letter composition, vowel signs, gunintalu | 3 | Keyboard layout generated from `DEVA_TO_TELU` / `TELU_TO_DEVA`; composition tests | TS-INPUT-KB-01..04 |
+| X-INPUT-05 | No incorrect or unapproved Telugu as selectable content | 3 | Options, tiles and distractors come only from `learner_*` views | TS-INPUT-SRC-01 |
+| X-INPUT-06 | Controls and instructions in Hindi, Telugu only as content | 3 | Hindi lint and page crawl | TS-L10N-* |
+| X-INPUT-07 | Record `response_mode` and `cue_level` for every attempt | 2 | NOT NULL columns; CHECK `cue_level = 0` iff no recall cue | TS-DB-INPUT-01..03 |
+| X-INPUT-08 | Record whether choices, tiles, hints, illustrations, audio or other aids supported the answer | 2 | `attempt.assistance`; multiple choice must list `choices`, tiles `tiles` | TS-DB-INPUT-02 |
+| X-INPUT-09 | Multiple-choice correctness is recognition, not recall | 2 | `check_choice` gives `kind = recognition` | TS-CHK-MC-01 |
+| X-INPUT-10 | Tile answers keep their assistance metadata | 2 | `tiles` ⇒ `cue_level ≥ 1` and `tiles` listed | TS-DB-INPUT-02 |
+| X-INPUT-11 | Independent production evaluated separately | 2/3 | Verdict kinds and response modes stored separately; analytics split by mode | TS-CHK-MC-02 |
+| X-INPUT-12 | Multiple choice alone never teaches राजू (implemented more strictly: only independent, cue-free fixes teach) | 2 | Writer and classmate trigger refuse assisted evidence | TS-CLS-INPUT-01..04 |
+| X-INPUT-13 | FSRS cue restriction for assisted answers | 2 | Review log cue level equals the attempt's; capped at Hard | TS-SCHED-MEM-05 |
+| X-INPUT-14 | Experimental balance of response modes and opportunities | 4 | Study configs fix modes per block identically across conditions; scored tests independent only | TS-STUDY-11 |
 

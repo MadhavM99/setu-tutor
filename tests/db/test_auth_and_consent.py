@@ -183,7 +183,7 @@ def _attempt(engine, session_id, raw):
 
 
 def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine):
-    from setu.domain.checker import issue_verdict
+    from setu.domain.checker import _issue_verdict as issue_verdict  # tests mint arbitrary verdicts
     from setu.store.outcome_writer import OutcomeWriter
 
     c, _, lid = register(app, engine)
@@ -194,7 +194,7 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
     s = _start_session(engine, lid)
     a = _attempt(engine, s, "నేను హైదరాబాద్‌లో ఉంటాను — मेरा नाम रमेश है")
     OutcomeWriter(engine, resolution_key=b"k" * 32).record_verdict(
-        issue_verdict(attempt_id=a, outcome="unsure", kind="own", reason_code="unseen", checker_version="t"))
+        issue_verdict(attempt_id=a, outcome="unsure", kind="own", reason_code="unseen"))
 
     researcher, _, _ = register(app, engine, role="researcher")
     assert researcher.post(f"/api/research/participants/{lid}/withdraw").status_code == 204
