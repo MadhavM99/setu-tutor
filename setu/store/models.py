@@ -10,6 +10,7 @@ from sqlalchemy import (
     Boolean,
     CheckConstraint,
     Column,
+    Date,
     Float,
     ForeignKey,
     Integer,
@@ -234,6 +235,10 @@ class LearnerSkillState(Base):
     status = Column(Text, nullable=False, server_default="locked")
     source = Column(Text, nullable=False, server_default="observed")
     updated_by_event = fk("event_ledger.id", nullable=True)
+    tracker_alpha = Column(Float, nullable=False, server_default=text("1"))  # migration 0007 (tracker-1)
+    tracker_beta = Column(Float, nullable=False, server_default=text("1"))
+    half_life_days = Column(Float, nullable=False, server_default=text("1"))
+    tracker_version = Column(Text)
     __table_args__ = (
         PrimaryKeyConstraint("learner_id", "skill_id"),
         CheckConstraint("0 <= mastery_lo AND mastery_lo <= mastery_mean AND mastery_mean <= mastery_hi "
@@ -243,6 +248,30 @@ class LearnerSkillState(Base):
                         name="counts_non_negative"),
         one_of("status", "locked", "available", "learning", "mastered", "due", "relearning", "placed"),
         one_of("source", "observed", "placed"),
+    )
+
+
+class SkillEvidence(Base):
+    """One checked answer counted towards a skill (migration 0007). Immutable; written by the OutcomeWriter only.
+    The unlock rule (learning-ladder.md §3) is computed from these rows, so every mastery decision is auditable."""
+
+    __tablename__ = "skill_evidence"
+    id = uuid_pk()
+    learner_id = fk("learner.id")
+    skill_id = fk("skill.id")
+    verdict_id = fk("verdict.id")
+    item_ref = Column(Text, nullable=False)
+    task_type = Column(Text, nullable=False)
+    day = Column(Date, nullable=False)
+    outcome = Column(Text, nullable=False)
+    cue_level = Column(Integer, nullable=False)
+    after_reveal = Column(Boolean, nullable=False)
+    production = Column(Boolean, nullable=False)
+    created_at = now()
+    __table_args__ = (
+        UniqueConstraint("verdict_id", "skill_id", name="uq_skill_evidence_verdict_skill"),
+        one_of("outcome", "correct", "partial", "wrong"),
+        CheckConstraint(CUE_LEVEL, name="cue_level"),
     )
 
 
@@ -302,6 +331,8 @@ class LearnerLexemeCard(Base):
     reps = Column(Integer, nullable=False, server_default=text("0"))
     lapses = Column(Integer, nullable=False, server_default=text("0"))
     fsrs_version = Column(Text)
+    fsrs_state = Column(Integer)  # py-fsrs State (1 learning, 2 review, 3 relearning); migration 0007
+    fsrs_step = Column(Integer)
     __table_args__ = (
         UniqueConstraint("learner_id", "card_kind", "card_ref", "modality", name="uq_learner_lexeme_card_key"),
         one_of("card_kind", "letter", "akshara", "lexeme", "chunk"),

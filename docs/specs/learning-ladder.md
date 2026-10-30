@@ -202,3 +202,26 @@ Validation happens in FW-R14. Any CEFR alignment is a separate study.
   database is rebuilt.
 - **Validation status:** thresholds and family bands are drafts. Nothing is "validated" until κ ≥ 0.6 against
   independent teacher bands (M-51).
+## 10. Implementation notes: scheduler and mastery (slice 2.6, 31 Oct 2026)
+
+- **FSRS** (`fsrs==6.3.2`, fuzzing off for reproducible intervals) for letters, akshara, words and chunks.
+  Rating from the verdict: correct → Good, partial → Hard, wrong → Again, unsure → no review; any recall cue or a
+  multiple-choice answer caps it at Hard. Easy is never inferred. Cards store py-fsrs state and step
+  (migration 0007); every review is logged with the attempt's cue level.
+- **Mastery tracker `tracker-1`**: a Beta(α, β) belief with a 90% interval (`mastery_lo`, `mastery_hi`) and a memory
+  half-life.
+  - A cue-free correct answer adds 1 to α and multiplies the half-life by 1.2 + 3(1 − p).
+  - A partial answer adds 0.5 to each of α and β.
+  - A wrong answer adds 1 to β and halves the half-life (floor 0.5 days).
+  - Evidence fades towards Beta(1, 1) with a 60-day half-life.
+  - Answers with a recall cue or after a reveal are not evidence.
+  - Predicted recall is 2^(−days / half-life); `due_at` is when it reaches 0.5.
+  - All parameters are drafts to calibrate on pilot data.
+- **Unlock rule** (§3) computed from the immutable `skill_evidence` rows: at least 3 cue-free correct answers on 2+
+  items, 2+ task types and 2+ days, at least one production for L2 and above, and `mastery_lo` ≥ 0.6 (in practice
+  about five consecutive cue-free successes). A mastered skill whose predicted recall falls below 0.5 is `due`.
+- **Forgetting:** `setu/store/scheduling.forget_due` reads (as `setu_read`) the rules the classmate knows and the
+  learner's tracker for each rule's `target_skill_id`. The scheduler issues a `ForgetDecision` when predicted recall
+  is below 0.5, and the OutcomeWriter applies it. Rules without a `target_skill_id` cannot be forgotten yet.
+- **Baselines:** BKT (four-parameter, standard equations) and SM-2, plus log-loss and AUC, ready for M-23/M-24 once
+  there is response data.

@@ -9,10 +9,12 @@ Every call runs in one transaction under the `setu_writer` role (`SET LOCAL ROLE
 writer privileges even if it connects as the owner. Every change is appended to the event ledger, and the
 `classmate_rule_state` trigger re-checks in the database that each change is backed by that evidence.
 
-Mastery and FSRS updates join here in slice 2.6; until then the writer records verdicts, the teacher queue,
-the classmate's knowledge and the ledger.
+From slice 2.6 a verdict may also name the FSRS card (`CardTarget`) and the skill (`SkillTarget`) it is evidence
+for; the writer then updates the card and its review log (the rating comes from the verdict and the attempt's cue
+level) and the mastery tracker, skill evidence and status, all in the same transaction. Unsure changes nothing.
 """
 import dataclasses
+import datetime as dt
 import json
 import os
 import uuid
@@ -37,6 +39,24 @@ class ConflictingVerdict(Exception):
 
 class ResolutionRefused(Exception):
     """The resolution is well signed but cannot be applied (not a teacher, item missing or already settled)."""
+
+
+@dataclasses.dataclass(frozen=True)
+class CardTarget:
+    """The FSRS card a recall or recognition answer is about (letter, akshara, lexeme or chunk, per modality)."""
+    card_kind: str
+    card_ref: str
+    modality: str
+
+
+@dataclasses.dataclass(frozen=True)
+class SkillTarget:
+    """The skill an answer is evidence for, and what kind of evidence it is (learning-ladder.md §3)."""
+    skill_id: str
+    band: str
+    item_ref: str
+    task_type: str
+    production: bool = False
 
 
 @dataclasses.dataclass(frozen=True)
@@ -86,8 +106,10 @@ class OutcomeWriter:
 
     # ------------------------------------------------------------------ verdicts
 
-    def record_verdict(self, v) -> VerdictRecord:
+    def record_verdict(self, v, *, card: CardTarget | None = None, skill: SkillTarget | None = None,
+                       at: dt.datetime | None = None) -> VerdictRecord:
         self.validate_verdict(v)
+        at = at or dt.datetime.now(dt.UTC)
         with self._tx() as c:
             existing = c.execute(
                 text("SELECT v.id, v.outcome, v.kind, v.reason_code, v.checker_version, q.id AS queue_id "
@@ -118,10 +140,84 @@ class OutcomeWriter:
                                      {"v": verdict_id}).scalar_one()
                 return VerdictRecord(verdict_id, queue_id, None, None)
 
+            if card is not None:
+                self._review_card(c, context, card, v, verdict_id, at)
+            if skill is not None:
+                self._update_skill(c, context, skill, v, verdict_id, at)
             change = event_id = None
             if v.outcome == "correct" and v.kind == "fix":
                 change, event_id = self._maybe_teach(c, context, "checker", {"verdict_id": str(verdict_id)})
             return VerdictRecord(verdict_id, queue_id, change, event_id)
+
+    # ------------------------------------------------------------------ scheduling (slice 2.6)
+
+    def _review_card(self, c, context, card: CardTarget, v, verdict_id, at):
+        rating = scheduler.fsrs_rating(outcome=v.outcome, cue_level=context["cue_level"], kind=v.kind)
+        if rating is None:
+            return
+        row = c.execute(text("SELECT * FROM learner_lexeme_card WHERE learner_id = :l AND card_kind = :k "
+                             "AND card_ref = :r AND modality = :m FOR UPDATE"),
+                        {"l": context["learner_id"], "k": card.card_kind, "r": card.card_ref,
+                         "m": card.modality}).first()
+        state = scheduler.new_card() if row is None or row.fsrs_state is None else scheduler.CardState(
+            row.stability, row.difficulty, row.due, row.last_review, row.reps, row.lapses, row.fsrs_state,
+            row.fsrs_step)
+        new = scheduler.fsrs_review(state, rating=rating, at=at)
+        values = {"l": context["learner_id"], "k": card.card_kind, "r": card.card_ref, "m": card.modality,
+                  "st": new.stability, "d": new.difficulty, "due": new.due, "lr": new.last_review, "reps": new.reps,
+                  "lapses": new.lapses, "fs": new.state, "step": new.step, "ver": new.version}
+        card_id = c.execute(
+            text("INSERT INTO learner_lexeme_card (learner_id, card_kind, card_ref, modality, stability, difficulty, "
+                 "due, last_review, reps, lapses, fsrs_state, fsrs_step, fsrs_version) VALUES (:l, :k, :r, :m, :st, "
+                 ":d, :due, :lr, :reps, :lapses, :fs, :step, :ver) ON CONFLICT (learner_id, card_kind, card_ref, "
+                 "modality) DO UPDATE SET stability = :st, difficulty = :d, due = :due, last_review = :lr, "
+                 "reps = :reps, lapses = :lapses, fsrs_state = :fs, fsrs_step = :step, fsrs_version = :ver "
+                 "RETURNING id"), values).scalar_one()
+        c.execute(text("INSERT INTO fsrs_review_log (card_id, verdict_id, rating, cue_level, reviewed_at) "
+                       "VALUES (:c, :v, :r, :cue, :at)"),
+                  {"c": card_id, "v": verdict_id, "r": rating, "cue": context["cue_level"], "at": at})
+
+    def _update_skill(self, c, context, skill: SkillTarget, v, verdict_id, at):
+        if v.outcome == "unsure":
+            return
+        learner_id = context["learner_id"]
+        c.execute(text("INSERT INTO skill_evidence (learner_id, skill_id, verdict_id, item_ref, task_type, day, outcome, "
+                       "cue_level, after_reveal, production) VALUES (:l, :s, :v, :i, :t, :d, :o, :cue, :ar, :p)"),
+                  {"l": learner_id, "s": skill.skill_id, "v": verdict_id, "i": skill.item_ref, "t": skill.task_type,
+                   "d": at.date(), "o": v.outcome, "cue": context["cue_level"], "ar": context["after_reveal"],
+                   "p": skill.production})
+        row = c.execute(text("SELECT tracker_alpha, tracker_beta, half_life_days, last_practised FROM "
+                             "learner_skill_state WHERE learner_id = :l AND skill_id = :s FOR UPDATE"),
+                        {"l": learner_id, "s": skill.skill_id}).first()
+        tracker = (scheduler.TrackerState.new(at=at) if row is None or row.last_practised is None else
+                   scheduler.TrackerState(row.tracker_alpha, row.tracker_beta, row.half_life_days, row.last_practised))
+        tracker = scheduler.track(tracker, outcome=v.outcome, cue_level=context["cue_level"],
+                                  after_reveal=context["after_reveal"], at=at)
+        evidence = [scheduler.Evidence(r.item_ref, r.task_type, r.day, r.outcome, r.cue_level, r.after_reveal,
+                                       r.production)
+                    for r in c.execute(text("SELECT * FROM skill_evidence WHERE learner_id = :l AND skill_id = :s"),
+                                       {"l": learner_id, "s": skill.skill_id})]
+        m = scheduler.mastery_status(evidence, tracker, band=skill.band, at=at)
+        event_id = self._event(c, "checker", "skill_updated", {
+            "learner_id": str(learner_id), "skill_id": skill.skill_id, "verdict_id": str(verdict_id),
+            "status": m.status, "tracker_version": tracker.version})
+        due = tracker.last_practised + dt.timedelta(days=tracker.half_life_days)
+        c.execute(
+            text("INSERT INTO learner_skill_state (learner_id, skill_id, mastery_mean, mastery_lo, mastery_hi, "
+                 "evidence_n, distinct_items, distinct_task_types, distinct_days, cuefree_successes, "
+                 "production_successes, last_practised, due_at, status, source, updated_by_event, tracker_alpha, "
+                 "tracker_beta, half_life_days, tracker_version) VALUES (:l, :s, :mean, :lo, :hi, :n, :items, "
+                 ":types, :days, :cf, :prod, :last, :due, :status, 'observed', :ev, :a, :b, :h, :tv) "
+                 "ON CONFLICT (learner_id, skill_id) DO UPDATE SET mastery_mean = :mean, mastery_lo = :lo, "
+                 "mastery_hi = :hi, evidence_n = :n, distinct_items = :items, distinct_task_types = :types, "
+                 "distinct_days = :days, cuefree_successes = :cf, production_successes = :prod, "
+                 "last_practised = :last, due_at = :due, status = :status, updated_by_event = :ev, "
+                 "tracker_alpha = :a, tracker_beta = :b, half_life_days = :h, tracker_version = :tv"),
+            {"l": learner_id, "s": skill.skill_id, "mean": tracker.mean, "lo": tracker.lo, "hi": tracker.hi,
+             "n": m.evidence_n, "items": m.distinct_items, "types": m.distinct_task_types, "days": m.distinct_days,
+             "cf": m.cuefree_successes, "prod": m.production_successes, "last": tracker.last_practised, "due": due,
+             "status": m.status, "ev": event_id, "a": tracker.alpha, "b": tracker.beta, "h": tracker.half_life_days,
+             "tv": tracker.version})
 
     @staticmethod
     def _attempt_context(c: Connection, attempt_id) -> dict:

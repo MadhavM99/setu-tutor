@@ -87,7 +87,14 @@ PLAN_V3["setu_app"] += [
     ("login_attempt", "SELECT, INSERT", None),
 ]
 
-GRANT_PLAN = PLAN_V3  # the current plan
+# Plan V4 (migration 0007, slice 2.6): skill evidence. Written only by the OutcomeWriter (insert; immutable),
+# readable by the read and web roles.
+PLAN_V4 = {role: list(specs) for role, specs in PLAN_V3.items()}
+PLAN_V4["setu_read"] += [("skill_evidence", "SELECT", None)]
+PLAN_V4["setu_app"] += [("skill_evidence", "SELECT", None)]
+PLAN_V4["setu_writer"] += [("skill_evidence", "SELECT, INSERT", None)]
+
+GRANT_PLAN = PLAN_V4  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}
