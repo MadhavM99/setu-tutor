@@ -178,3 +178,27 @@ Validation happens in FW-R14. Any CEFR alignment is a separate study.
   | A placed-but-unconfirmed skill | the page renders | shown under "अभी सीख रहे हैं" with the note "पक्का करना बाकी" |
 
 - **Tests:** TS-UI-LAD, TS-L10N-01.
+## 9. Implementation notes: tokenizer, TMR and leveler v0 (slice 2.3, 31 Oct 2026)
+
+- `setu/domain/tokenize.py` (`tokenizer-1`): canonical surface forms split on whitespace; clitics and suffixes are
+  not split (ఇంట్లో is one token) until an analyser replaces it under a new version.
+- **TMR** counts token occurrences not in the known set. It excludes the planted rule's allowed target forms
+  (`exempt`) and pure numbers, records the tokenizer version, and refuses an empty sentence.
+- `setu/domain/leveler.py` (`leveler-v0`, registered in `LEVELERS` as the comparison baseline): band = the hardest
+  **assessed** dimension; the result names the deciding dimension and gives its reason.
+
+  | Dimension | Rule | Status |
+  |---|---|---|
+  | script | Only independent letters → L0; any vowel sign, virama, anusvara or visarga → L1 | Computed |
+  | structure | One word → L2; 2–3 words → L3; 4+ words → L4; at least the contrast family's band (sentence-level contrasts L4, clause contrasts L5, `spelling` L2) | Computed |
+  | vocabulary | Frequency rank thresholds 300 / 1,000 / 2,000 → L2 / L3 / L4, beyond → L5 | **Unassessed** until IndicCorp frequency ranks are imported |
+  | word forms | — | **Unassessed** until the morphological analyser (Phase 4); a home-made suffix list would misfire (నేను ends in ను) and would be unreviewed Telugu analysis |
+
+  The leveler reports unassessed dimensions and sets `complete = false`, never guessing.
+- **Learner-relative extras:** letters the learner has not met (`unknown_letters`) and the TMR against the learner's
+  known words.
+- **Import:** new item versions store `band`, `band_reason` and `leveler_version`. Items imported before slice 2.3
+  (the 49 in the dev database) keep an empty band until they next change (item versions are immutable) or the
+  database is rebuilt.
+- **Validation status:** thresholds and family bands are drafts. Nothing is "validated" until κ ≥ 0.6 against
+  independent teacher bands (M-51).

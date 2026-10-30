@@ -15,8 +15,10 @@ import json
 from sqlalchemy import text
 from sqlalchemy.engine import Connection, Engine
 
+from setu.domain import leveler
+
 from . import patterns
-from .schema import normalise_sentence, sha256_of
+from .schema import TARGET_SCRIPT, normalise_sentence, sha256_of
 from .validate import ContentTree, Result, validate_tree
 
 
@@ -153,14 +155,14 @@ def _rule(c, rule, report, result):
         result.new_rule_versions += 1
 
     for item in rule["items"]:
-        _item(c, rid, rule_version_id, item, report, result)
+        _item(c, rid, rule_version_id, item, report, result, rule)
 
 
 def _item_hash(item):
     return sha256_of(item)
 
 
-def _item(c, rid, rule_version_id, item, report, result):
+def _item(c, rid, rule_version_id, item, report, result, rule):
     iid = item["item_id"]
     if c.execute(text("SELECT rule_id FROM item WHERE id = :i"), {"i": iid}).scalar() is None:
         c.execute(text("INSERT INTO item (id, rule_id) VALUES (:i, :r)"), {"i": iid, "r": rid})
@@ -176,16 +178,20 @@ def _item(c, rid, rule_version_id, item, report, result):
     if item.get("wrong_form"):
         span, _ = patterns.one_error_span(wrong=item["wrong_form"], correct=item["correct_form"])
     issues = [i.as_dict() for i in report.issues.get(iid, [])]
+    lv = leveler.level(item["correct_form"], contrast_area=rule.get("contrast_area"),
+                       script=TARGET_SCRIPT[rule["direction"]])
     item_version_id = c.execute(
         text("INSERT INTO item_version (item_id, version, rule_version_id, hindi_meaning, wrong_form, one_error_span, "
              "correct_form, wrong_patterns, accept_patterns, allowed_target_forms, pool, review_status, provenance, "
-             "validation_issues, content_hash) VALUES (:i, :v, :rv, :m, :w, :span, :c, :wp, :ap, :atf, :pool, "
-             "'draft', CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h) RETURNING id"),
+             "validation_issues, content_hash, band, band_reason, leveler_version) VALUES (:i, :v, :rv, :m, :w, :span, "
+             ":c, :wp, :ap, :atf, :pool, 'draft', CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h, :band, :breason, "
+             ":lver) RETURNING id"),
         {"i": iid, "v": (latest.version + 1) if latest else 1, "rv": rule_version_id, "m": item.get("l1_meaning"),
          "w": item.get("wrong_form"), "span": span, "c": normalise_sentence(item["correct_form"]),
          "wp": item.get("wrong_patterns") or [], "ap": item.get("accept_patterns") or [],
          "atf": item.get("allowed_target_forms") or [], "pool": item["pool"], "prov": _j(item["provenance"]),
-         "iss": _j(issues), "h": digest}).scalar_one()
+         "iss": _j(issues), "h": digest, "band": lv.band, "breason": lv.reason,
+         "lver": lv.leveler_version}).scalar_one()
     result.new_item_versions += 1
 
     seen = {normalise_sentence(item["correct_form"])}

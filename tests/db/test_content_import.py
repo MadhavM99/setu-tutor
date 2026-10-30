@@ -233,3 +233,14 @@ def test_an_approved_variant_of_a_draft_item_stays_hidden(fresh, tree):
                        "WHERE id = (SELECT id FROM accepted_variant LIMIT 1)"), {"a": approvals("t1", "t2")})
     assert count(fresh, "SELECT count(*) FROM accepted_variant WHERE status = 'approved'") == 1
     assert count(fresh, "SELECT count(*) FROM learner_accepted_variant") == 0
+
+
+def test_imported_items_carry_a_leveler_v0_band_and_its_reason(fresh, tree):
+    importer.import_tree(fresh, tree)
+    with fresh.connect() as c:
+        rows = c.execute(text("SELECT item_id, band, band_reason, leveler_version FROM item_version")).all()
+    assert rows and all(r.leveler_version == "leveler-v0" and r.band and r.band_reason for r in rows)
+    by_id = {r.item_id: r for r in rows}
+    assert by_id["HI-TE-010-a"].band == "L5"          # a clause contrast
+    assert by_id["HI-TE-001-a"].band == "L4"
+    assert "unassessed" in by_id["HI-TE-001-a"].band_reason  # vocabulary and word forms are not measured yet
