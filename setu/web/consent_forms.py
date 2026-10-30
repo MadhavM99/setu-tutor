@@ -9,3 +9,13 @@ FORMS = {
     },
 }
 CURRENT = "pilot-v1"
+
+
+def signable(app_state, version: str) -> bool:
+    """A form can be signed only when its approved text is in the catalog (or in development/test builds)."""
+    form = FORMS.get(version)
+    if form is None:
+        return False
+    catalog = app_state.catalog
+    approved = catalog.has(form["text_key"]) and not catalog.is_pending(form["text_key"])
+    return approved or app_state.allow_unapproved_consent

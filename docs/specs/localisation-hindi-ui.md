@@ -74,3 +74,27 @@ Requirement [X-NOENG]: the learner-visible product is entirely in natural, simpl
 - **Aid text** (stories, captions, articulation notes, alt text, audio descriptions) is Hindi in Devanagari, plus Telugu only in Telugu script. The grounding validator rejects Latin.
 - **Images contain no text at all.** Any glyph or caption is rendered by the app as DOM/SVG text from fonts and the catalog (`lang` attributes set). OCR rejects images with text in any script.
 - **Raju's Hindi lines** are catalog entries under `raju.*` only (classmate-output-contract.md §1). The lint also checks that templates rendering Raju's turns take no free-text variables except the validated Telugu sentence slot.
+## 7. Implementation notes (slice 1.6, 31 Oct 2026)
+
+- `locale/hi.yaml` holds every learner and teacher string. Groups: app, nav, page, a11y, onb, form, btn, home,
+  consent, tch, err (plus fb, hint, ladder, res, raju, lang reserved). `_meta.digits: devanagari`: counts render
+  with Devanagari digits; handles and invite codes keep 0–9 because people type them.
+- `setu/web/i18n.py`: a missing key raises `MissingText`; a key listed in `locale/pending.txt` raises `PendingText`;
+  a parameter value with Latin script raises `LatinInText`. Templates use `StrictUndefined`.
+- `scripts/lint_hindi.py` (run in CI) checks catalog values (no Latin outside `{param}` placeholders, no emoji,
+  known groups, nothing empty) and the **visible** content of `templates/*.html`, `templates/learner/**`,
+  `templates/teacher/**`: text nodes and visible attributes (`alt`, `title`, `placeholder`, `aria-label`,
+  `aria-description`, submit/button values), Latin string literals printed from expressions, and resources from
+  other hosts. Tag and attribute names are markup and are not checked. **Interpretation of §1:** the spec said
+  "any template matches [A-Za-z]"; taken literally that rejects every HTML tag, so the lint checks what a person sees,
+  and the rendered-page crawl (`tests/db/test_ui_pages.py`) checks the actual output too.
+- `locale/allow-latin.txt` is empty.
+- **Consent fails closed:** `consent.pilot_v1` is pending, so the consent page shows no form, and both the page
+  and `POST /api/consent` refuse (409) until the ethics-approved Hindi text is in the catalog. Development and tests
+  opt in with `create_app(allow_unapproved_consent=True)`; it is off by default.
+- Fonts: Noto Sans Devanagari and Noto Sans Telugu (400/700, script subsets, OFL 1.1) are self-hosted under
+  `setu/web/static/fonts` with pinned checksums; no Latin subset is shipped. Pages load nothing from other hosts.
+- Pages so far: sign-in, registration (shows the new handle once), home, consent, teacher room (teachers and
+  admins), Hindi 404. No Telugu text appears yet, because no Telugu content is reviewed (`te()` wraps Telugu in
+  `lang="te"` when it does).
+- The catalog wording is a developer draft; a teacher reviews it before any pilot.

@@ -15,7 +15,7 @@ PASS = "मेरा लंबा पासवर्ड"
 def app(engine):
     from setu.web.app import create_app
 
-    return create_app(engine=engine, cookie_secure=True)
+    return create_app(engine=engine, cookie_secure=True, allow_unapproved_consent=True)  # dev/test opt-in
 
 
 def client(app):
@@ -30,13 +30,13 @@ def invite(engine, role="learner", **kw):
 
 def register(app, engine, role="learner"):
     c = client(app)
-    r = c.post("/auth/register", json={"invite_code": invite(engine, role=role), "passphrase": PASS})
+    r = c.post("/api/auth/register", json={"invite_code": invite(engine, role=role), "passphrase": PASS})
     assert r.status_code == 201, r.text
     return c, r.json()["handle"], uuid.UUID(r.json()["learner_id"])
 
 
 def consent(c, scopes=("pilot",)):
-    return c.post("/consent", json={"form_version": "pilot-v1", "scopes": list(scopes)})
+    return c.post("/api/consent", json={"form_version": "pilot-v1", "scopes": list(scopes)})
 
 
 def q(engine, sql, **p):
@@ -50,7 +50,7 @@ def q(engine, sql, **p):
 def test_register_with_an_invite_gives_a_numeric_handle_and_a_session(app, engine):
     c, handle, lid = register(app, engine)
     assert handle.replace("-", "").isdigit()
-    me = c.get("/me").json()
+    me = c.get("/api/me").json()
     assert me == {"learner_id": str(lid), "handle": handle, "role": "learner", "consent": None}
     row = q(engine, "SELECT passphrase_hash FROM learner WHERE id = :i", i=lid)[0]
     assert row.passphrase_hash.startswith("$argon2id$")
@@ -64,24 +64,24 @@ def test_learner_table_holds_no_names_emails_or_phones(engine):
 
 def test_invites_are_single_use_and_unknown_or_expired_invites_fail(app, engine):
     code = invite(engine)
-    assert client(app).post("/auth/register", json={"invite_code": code, "passphrase": PASS}).status_code == 201
-    again = client(app).post("/auth/register", json={"invite_code": code, "passphrase": PASS})
+    assert client(app).post("/api/auth/register", json={"invite_code": code, "passphrase": PASS}).status_code == 201
+    again = client(app).post("/api/auth/register", json={"invite_code": code, "passphrase": PASS})
     assert again.status_code == 400 and again.json()["message_key"] == "err.invite_invalid"
-    unknown = client(app).post("/auth/register", json={"invite_code": "0000-0000-0000", "passphrase": PASS})
+    unknown = client(app).post("/api/auth/register", json={"invite_code": "0000-0000-0000", "passphrase": PASS})
     assert unknown.json()["message_key"] == "err.invite_invalid"
     expired = invite(engine, valid_hours=-1)
-    r = client(app).post("/auth/register", json={"invite_code": expired, "passphrase": PASS})
+    r = client(app).post("/api/auth/register", json={"invite_code": expired, "passphrase": PASS})
     assert r.json()["message_key"] == "err.invite_invalid"
 
 
 def test_weak_passphrase_is_refused(app, engine):
-    r = client(app).post("/auth/register", json={"invite_code": invite(engine), "passphrase": "short"})
+    r = client(app).post("/api/auth/register", json={"invite_code": invite(engine), "passphrase": "short"})
     assert r.status_code == 400 and r.json()["message_key"] == "err.weak_passphrase"
 
 
 def test_session_cookie_is_httponly_secure_samesite_and_only_its_hash_is_stored(app, engine):
     c, handle, lid = register(app, engine)
-    r = c.post("/auth/login", json={"handle": handle, "passphrase": PASS})
+    r = c.post("/api/auth/login", json={"handle": handle, "passphrase": PASS})
     assert r.status_code == 204
     cookie = r.headers["set-cookie"]
     assert "HttpOnly" in cookie and "Secure" in cookie and "SameSite=lax" in cookie.replace("Lax", "lax")
@@ -92,8 +92,8 @@ def test_session_cookie_is_httponly_secure_samesite_and_only_its_hash_is_stored(
 
 def test_failed_login_does_not_reveal_whether_a_handle_exists(app, engine):
     _, handle, _ = register(app, engine)
-    wrong = client(app).post("/auth/login", json={"handle": handle, "passphrase": "गलत पासवर्ड है यह"})
-    nobody = client(app).post("/auth/login", json={"handle": "9999-0000", "passphrase": "गलत पासवर्ड है यह"})
+    wrong = client(app).post("/api/auth/login", json={"handle": handle, "passphrase": "गलत पासवर्ड है यह"})
+    nobody = client(app).post("/api/auth/login", json={"handle": "9999-0000", "passphrase": "गलत पासवर्ड है यह"})
     assert wrong.status_code == nobody.status_code == 401
     assert wrong.json() == nobody.json() == {"error": "auth_failed", "message_key": "err.auth_failed"}
 
@@ -101,22 +101,22 @@ def test_failed_login_does_not_reveal_whether_a_handle_exists(app, engine):
 def test_five_failures_lock_the_handle_even_for_the_right_passphrase(app, engine):
     _, handle, _ = register(app, engine)
     for _ in range(5):
-        client(app).post("/auth/login", json={"handle": handle, "passphrase": "गलत पासवर्ड है यह"})
-    r = client(app).post("/auth/login", json={"handle": handle, "passphrase": PASS})
+        client(app).post("/api/auth/login", json={"handle": handle, "passphrase": "गलत पासवर्ड है यह"})
+    r = client(app).post("/api/auth/login", json={"handle": handle, "passphrase": PASS})
     assert r.status_code == 429 and r.json()["message_key"] == "err.locked"
 
 
 def test_logout_revokes_the_session(app, engine):
     c, _, _ = register(app, engine)
     cookie = c.cookies.get("setu_session")
-    assert c.post("/auth/logout").status_code == 204
+    assert c.post("/api/auth/logout").status_code == 204
     replay = client(app)
     replay.cookies.set("setu_session", cookie)
-    assert replay.get("/me").status_code == 401
+    assert replay.get("/api/me").status_code == 401
 
 
 def test_requests_without_a_session_are_refused(app):
-    r = client(app).get("/me")
+    r = client(app).get("/api/me")
     assert r.status_code == 401 and r.json()["message_key"] == "err.not_signed_in"
 
 
@@ -125,18 +125,18 @@ def test_requests_without_a_session_are_refused(app):
 
 def test_only_researchers_and_admins_create_invites(app, engine):
     learner, _, _ = register(app, engine)
-    r = learner.post("/research/invites", json={"role": "learner"})
+    r = learner.post("/api/research/invites", json={"role": "learner"})
     assert r.status_code == 403 and r.json()["message_key"] == "err.forbidden"
     researcher, _, _ = register(app, engine, role="researcher")
-    r = researcher.post("/research/invites", json={"role": "learner", "cohort": "pilot-1"})
+    r = researcher.post("/api/research/invites", json={"role": "learner", "cohort": "pilot-1"})
     assert r.status_code == 201 and r.json()["invite_code"]
     # a researcher cannot mint admins; only an admin can create privileged invites
-    assert researcher.post("/research/invites", json={"role": "admin"}).status_code == 403
+    assert researcher.post("/api/research/invites", json={"role": "admin"}).status_code == 403
 
 
 def test_teachers_cannot_use_research_endpoints(app, engine):
     teacher, _, _ = register(app, engine, role="teacher")
-    assert teacher.post("/research/invites", json={"role": "learner"}).status_code == 403
+    assert teacher.post("/api/research/invites", json={"role": "learner"}).status_code == 403
 
 
 # ---------------------------------------------------------------- consent
@@ -144,13 +144,13 @@ def test_teachers_cannot_use_research_endpoints(app, engine):
 
 def test_consent_is_recorded_with_its_form_version_and_scopes(app, engine):
     c, _, _ = register(app, engine)
-    assert c.get("/consent").json()["form_version"] == "pilot-v1"
+    assert c.get("/api/consent").json()["form_version"] == "pilot-v1"
     assert consent(c, ("pilot", "audio")).status_code == 204
-    me = c.get("/me").json()
+    me = c.get("/api/me").json()
     assert me["consent"] == {"form_version": "pilot-v1", "scopes": ["pilot", "audio"]}
-    bad = c.post("/consent", json={"form_version": "pilot-v1", "scopes": ["marketing"]})
+    bad = c.post("/api/consent", json={"form_version": "pilot-v1", "scopes": ["marketing"]})
     assert bad.status_code == 400 and bad.json()["message_key"] == "err.validation"
-    unknown_form = c.post("/consent", json={"form_version": "pilot-v0", "scopes": ["pilot"]})
+    unknown_form = c.post("/api/consent", json={"form_version": "pilot-v0", "scopes": ["pilot"]})
     assert unknown_form.json()["message_key"] == "err.validation"
 
 
@@ -203,7 +203,7 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
     OutcomeWriter(engine, resolution_key=b"k" * 32).record_verdict(
         issue_verdict(attempt_id=a, outcome="unsure", kind="own", reason_code="unseen", checker_version="t"))
 
-    r = c.post("/consent/withdraw")
+    r = c.post("/api/consent/withdraw")
     assert r.status_code == 204
 
     attempt = q(engine, "SELECT raw_text, normalised_text, redacted_at FROM attempt WHERE id = :a", a=a)[0]
@@ -211,7 +211,7 @@ def test_withdrawal_redacts_learner_text_and_stops_further_sessions(app, engine)
     assert q(engine, "SELECT count(*) AS n FROM background WHERE learner_id = :l", l=lid)[0].n == 0
     assert q(engine, "SELECT count(*) AS n FROM consent WHERE learner_id = :l AND withdrawn_at IS NULL",
              l=lid)[0].n == 0
-    assert c.get("/me").status_code == 401  # sessions revoked
+    assert c.get("/api/me").status_code == 401  # sessions revoked
     with pytest.raises(DBAPIError):
         _start_session(engine, lid)
     # The append-only ledger is untouched and never held the learner's words in the first place.
@@ -226,9 +226,9 @@ def test_researcher_can_withdraw_a_participant_and_learners_cannot_withdraw_othe
     learner_c, _, lid = register(app, engine)
     consent(learner_c)
     other, _, _ = register(app, engine)
-    assert other.post(f"/research/participants/{lid}/withdraw").status_code == 403
+    assert other.post(f"/api/research/participants/{lid}/withdraw").status_code == 403
     researcher, _, _ = register(app, engine, role="researcher")
-    assert researcher.post(f"/research/participants/{lid}/withdraw").status_code == 204
+    assert researcher.post(f"/api/research/participants/{lid}/withdraw").status_code == 204
     assert q(engine, "SELECT count(*) AS n FROM consent WHERE learner_id = :l AND withdrawn_at IS NULL",
              l=lid)[0].n == 0
 

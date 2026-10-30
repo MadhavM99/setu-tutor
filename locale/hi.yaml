@@ -1,0 +1,91 @@
+# Hindi string catalog: every word a learner or teacher sees comes from here (localisation-hindi-ui.md).
+# Values: Devanagari (and Telugu, inside lang="te" markup) only. No Latin script, no emoji.
+# `scripts/lint_hindi.py` checks this file in CI; keys used by templates and API errors must exist.
+# Draft wording, written by the development team: a teacher reviews the catalog before any pilot.
+_meta:
+  digits: devanagari          # counts are shown with Devanagari digits; codes and handles keep 0-9 for typing
+
+app:
+  name: "सेतु"
+  tagline: "हिंदी से तेलुगु"
+
+nav:
+  skip: "मुख्य हिस्से पर जाएँ"
+  home: "मुख्य पृष्ठ"
+  practice: "आज का अभ्यास"
+  ladder: "मेरी सीढ़ी"
+  consent: "सहमति"
+  signin: "अंदर आएँ"
+  register: "नया खाता"
+  signout: "बाहर निकलें"
+  teacher: "शिक्षक कक्ष"
+
+page:
+  login: "अंदर आएँ"
+  register: "नया खाता"
+  home: "मुख्य पृष्ठ"
+  consent: "सहमति"
+  teacher: "शिक्षक कक्ष"
+  not_found: "पृष्ठ नहीं मिला"
+  forbidden: "अनुमति नहीं"
+
+a11y:
+  main: "मुख्य हिस्सा"
+  site_nav: "मुख्य रास्ते"
+
+onb:
+  welcome: "सेतु में आपका स्वागत है"
+  register_intro: "शोधकर्ता से मिला आमंत्रण कोड डालिए और अपना पासवर्ड चुनिए। आपका नाम, ईमेल या फ़ोन नंबर नहीं माँगा जाएगा।"
+  handle_shown: "आपकी पहचान-संख्या है: {handle}"
+  handle_keep: "इसे लिख लीजिए। अगली बार अंदर आने के लिए यही संख्या और आपका पासवर्ड चाहिए।"
+  login_intro: "अपनी पहचान-संख्या और पासवर्ड डालिए।"
+  have_account: "पहले से खाता है?"
+  need_account: "आमंत्रण कोड मिला है?"
+
+form:
+  invite_code: "आमंत्रण कोड"
+  handle: "पहचान-संख्या"
+  passphrase: "पासवर्ड"
+  passphrase_help: "कम से कम दस अक्षर। हिंदी में भी लिख सकते हैं।"
+
+btn:
+  signin: "अंदर आएँ"
+  register: "खाता बनाएँ"
+  continue: "आगे बढ़ें"
+  signout: "बाहर निकलें"
+  consent: "मैं सहमत हूँ"
+  withdraw: "सहमति वापस लें"
+
+home:
+  greeting: "नमस्ते!"
+  signed_in_as: "आप पहचान-संख्या {handle} से अंदर हैं।"
+  coming_soon: "अभ्यास का हिस्सा अभी तैयार किया जा रहा है।"
+  consent_missing: "अभ्यास शुरू करने से पहले सहमति ज़रूरी है।"
+  consent_given: "आपकी सहमति दर्ज है।"
+
+consent:
+  title: "सहमति"
+  pending: "सहमति-पत्र अभी तैयार नहीं है। कृपया शोधकर्ता से संपर्क करें।"
+  given: "आपकी सहमति दर्ज हो गई है।"
+  withdraw_help: "आप कभी भी सहमति वापस ले सकते हैं। तब आपके लिखे हुए वाक्य हटा दिए जाएँगे।"
+  scope:
+    pilot: "अध्ययन में भाग लेना"
+    audio: "मेरी आवाज़ की रिकॉर्डिंग रखना"
+    writing_upload: "मेरे लिखे हुए वाक्य शिक्षकों को दिखाना"
+    data_sharing: "बिना पहचान वाला डेटा शोध के लिए साझा करना"
+
+tch:
+  title: "शिक्षक कक्ष"
+  coming_soon: "शिक्षक कक्ष के काम अगले चरण में जुड़ेंगे।"
+
+err:
+  auth_failed: "पहचान-संख्या या पासवर्ड सही नहीं है।"
+  locked: "बहुत बार गलत पासवर्ड डाला गया। पंद्रह मिनट बाद फिर कोशिश करें।"
+  invite_invalid: "यह आमंत्रण कोड मान्य नहीं है या पहले इस्तेमाल हो चुका है।"
+  weak_passphrase: "पासवर्ड कम से कम दस अक्षर का होना चाहिए।"
+  not_signed_in: "कृपया पहले अंदर आएँ।"
+  forbidden: "आपको यह पृष्ठ देखने की अनुमति नहीं है।"
+  validation: "कुछ जानकारी सही नहीं भरी गई। कृपया दोबारा देखें।"
+  not_found: "यह पृष्ठ नहीं मिला।"
+  generic: "कुछ गड़बड़ हुई। कृपया दोबारा कोशिश करें।"
+  consent_text_pending: "सहमति-पत्र अभी तैयार नहीं है, इसलिए अभी सहमति दर्ज नहीं की जा सकती।"

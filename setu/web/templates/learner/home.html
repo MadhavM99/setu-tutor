@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("home.greeting") }}</h1>
+<p>{{ t("home.signed_in_as", handle=user.handle) }}</p>
+{% if consent %}
+<p>{{ t("home.consent_given") }}</p>
+{% else %}
+<p>{{ t("home.consent_missing") }} <a href="/consent">{{ t("nav.consent") }}</a></p>
+{% endif %}
+<p>{{ t("home.coming_soon") }}</p>
+{% endblock %}

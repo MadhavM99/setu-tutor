@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ t(title_key) }} · {{ t("app.name") }}</title>
+  <link rel="stylesheet" href="/static/css/setu.css">
+</head>
+<body>
+  <a class="skip" href="#main">{{ t("nav.skip") }}</a>
+  <header class="top">
+    <span class="brand">{{ t("app.name") }} <span class="tagline">{{ t("app.tagline") }}</span></span>
+    {% if user %}
+    <nav aria-label="{{ t('a11y.site_nav') }}">
+      <a href="/">{{ t("nav.home") }}</a>
+      <a href="/consent">{{ t("nav.consent") }}</a>
+      {% if user.role in ("teacher", "admin") %}<a href="/teacher">{{ t("nav.teacher") }}</a>{% endif %}
+      <form method="post" action="/logout" class="inline">
+        <button type="submit">{{ t("btn.signout") }}</button>
+      </form>
+    </nav>
+    {% endif %}
+  </header>
+  <main id="main" aria-label="{{ t('a11y.main') }}">
+    {% if error_key is defined and error_key %}<p class="error" role="alert">{{ t(error_key) }}</p>{% endif %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

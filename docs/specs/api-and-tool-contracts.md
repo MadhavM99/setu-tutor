@@ -107,6 +107,9 @@ Image-provider requests (offline pipeline only) use the schema `{concept_id, obj
 
 ## Part B — HTTP API (server-rendered HTMX endpoints plus JSON for research)
 
+**Path prefix (slice 1.6):** the JSON endpoints below are served under `/api` (for example `/api/auth/login`,
+`/api/consent`), because the Hindi pages use the plain paths (`/login`, `/register`, `/consent`, `/teacher`).
+
 Common rules:
 - **Auth:** session cookie (argon2 passphrase login); role checks on every route. [E-08]
 - **Idempotency:** every POST that submits an answer carries `Idempotency-Key`. A repeat returns the original result. [E-13]

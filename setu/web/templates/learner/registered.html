@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("onb.welcome") }}</h1>
+<p class="handle">{{ t("onb.handle_shown", handle=handle) }}</p>
+<p>{{ t("onb.handle_keep") }}</p>
+<p><a class="button" href="/">{{ t("btn.continue") }}</a></p>
+{% endblock %}

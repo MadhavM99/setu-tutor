@@ -98,6 +98,8 @@ def give_consent(body: ConsentIn, request: Request, response: Response, user: Cu
     form = consent_forms.FORMS.get(body.form_version)
     if form is None or not set(body.scopes) <= set(form["scopes"]) or len(set(body.scopes)) != len(body.scopes):
         raise ApiError("validation")
+    if not consent_forms.signable(request.app.state, body.form_version):
+        raise ApiError("consent_text_pending", 409)
     with request.app.state.db.tx() as c:
         c.execute(text("INSERT INTO consent (learner_id, form_version, scope) VALUES (:l, :f, :s)"),
                   {"l": user.learner_id, "f": body.form_version, "s": body.scopes})

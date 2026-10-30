@@ -82,7 +82,7 @@ def _now() -> datetime:
 # ---------------------------------------------------------------- invites
 
 
-def create_invite(engine_or_db, *, role: str, cohort: str | None = None, valid_hours: float = 72,
+def create_invite(engine_or_db, *, role: str = "learner", cohort: str | None = None, valid_hours: float = 72,
                   created_by: uuid.UUID | None = None) -> str:
     """Create a single-use invite and return its code (shown once; only its hash is stored)."""
     if role not in ROLES:

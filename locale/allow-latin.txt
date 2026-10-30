@@ -1,0 +1,1 @@
+# Catalog keys allowed to contain Latin script. Starts empty; adding a key needs an ADR (localisation-hindi-ui.md §1).

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("onb.welcome") }}</h1>
+<p>{{ t("onb.login_intro") }}</p>
+<form method="post" action="/login" class="stack">
+  <label for="handle">{{ t("form.handle") }}</label>
+  <input id="handle" name="handle" inputmode="numeric" autocomplete="username" required maxlength="16">
+  <label for="passphrase">{{ t("form.passphrase") }}</label>
+  <input id="passphrase" name="passphrase" type="password" autocomplete="current-password" required>
+  <button type="submit">{{ t("btn.signin") }}</button>
+</form>
+<p>{{ t("onb.need_account") }} <a href="/register">{{ t("nav.register") }}</a></p>
+{% endblock %}

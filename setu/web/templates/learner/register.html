@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("page.register") }}</h1>
+<p>{{ t("onb.register_intro") }}</p>
+<form method="post" action="/register" class="stack">
+  <label for="invite_code">{{ t("form.invite_code") }}</label>
+  <input id="invite_code" name="invite_code" inputmode="numeric" required maxlength="32">
+  <label for="passphrase">{{ t("form.passphrase") }}</label>
+  <input id="passphrase" name="passphrase" type="password" autocomplete="new-password" required
+         aria-describedby="passphrase-help">
+  <p id="passphrase-help" class="help">{{ t("form.passphrase_help") }}</p>
+  <button type="submit">{{ t("btn.register") }}</button>
+</form>
+<p>{{ t("onb.have_account") }} <a href="/login">{{ t("nav.signin") }}</a></p>
+{% endblock %}
