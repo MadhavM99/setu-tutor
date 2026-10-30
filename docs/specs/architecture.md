@@ -160,7 +160,8 @@ sequenceDiagram
 
 ## 8. Deployment [E-09]
 
-- Docker Compose with these services: `app` (Python ≥ 3.11, uvicorn), `db` (Postgres 16, with the roles `setu_read`, `setu_writer` and `setu_migrate`), and optionally `ollama` for development.
+- Docker Compose with these services: `app` (Python ≥ 3.11, uvicorn), `db` (Postgres 16; host port `${SETU_DB_PORT:-5433}`), and optionally `ollama` for development.
+- Database roles (implemented in slice 1.2, `setu/store/grants.py`): `setu_read` (agents' tools; no writes, no secrets, no raw learner text), `setu_app` (web layer; operational records only), `setu_writer` (OutcomeWriter only; learning state, verdicts, ledger appends), `setu_content` (importer and teacher review; content only), `setu_migrate` (owner). All are NOLOGIN group roles. Nobody has DELETE or TRUNCATE.
 - Gemma 3 12B on a GPU host through vLLM for evaluations.
 - Fonts are self-hosted (Noto Sans Telugu and Noto Sans Devanagari); there is no Google Fonts call.
 - The CI runs ruff, pytest (unit, contract, adversarial, Stage-A dev split), the Hindi lint, and Playwright E2E against the mock model.

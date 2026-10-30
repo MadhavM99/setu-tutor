@@ -6,6 +6,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: setu
+          POSTGRES_USER: setu_migrate
+          POSTGRES_PASSWORD: setu-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U setu_migrate -d setu"
+          --health-interval 5s --health-retries 10
+    env:
+      SETU_TEST_ADMIN_URL: postgresql+psycopg://setu_migrate:setu-ci-only@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

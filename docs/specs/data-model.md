@@ -193,3 +193,21 @@ locked → available → learning → mastered ⇄ due → relearning → master
 - Each file is Markdown with a YAML header carrying `okf_version`, `source: postgres`, `generated_at` and `ledger_head_hash`.
 - The export is read-only, regenerated on demand, and never imported back.
 - Acceptance: for any learner, the export is regenerated after an event, and the YAML values equal the database values. TS-OKF-01..03.
+
+## 9. Implementation notes (slice 1.2, 31 Oct 2026)
+
+These refine the tables above to match the code in `setu/store/` and migration `0001`.
+
+| Topic | As built | Why |
+|---|---|---|
+| Roles | Five roles instead of the three named in architecture §8: `setu_app` and `setu_content` were added | The spec gave the web layer only `setu_read`, but the web layer must record sessions and attempts. Content import and review also had no role. Both new roles are narrower than giving `setu_writer` those jobs. `setu_writer` stays the only role that can write learning state |
+| `setu_read` scope | Content and learning-state tables, plus learner columns without `passphrase_hash`. No attempts, consent, background, model calls, ledger or teacher notes | Least privilege for agent tools (prompt-injection blast radius) |
+| `learner_lexeme_card` | Generalised to `card_kind` (letter, akshara, lexeme, chunk) + `card_ref` | Amendment A1 makes letters and akshara FSRS cards too |
+| `fsrs_review_log` | New table; `CHECK (cue_level = 0 OR rating <= 2)` | Enforces the A1 rule that a visible cue caps the rating at Hard |
+| `event_ledger` | `id`, `ts`, `prev_hash` and `hash` are set by a trigger (client values ignored); appends are serialised with an advisory lock and must run at READ COMMITTED; `setu_verify_ledger()` returns the first broken id. UPDATE, DELETE and TRUNCATE raise | E-02 |
+| Verified rules | Besides the §7 CHECK (≥ 2 approvals), a trigger requires **two distinct reviewers of the rule's target language** (Telugu for HI→TE, Hindi for TE→HI) | Paper: two native speakers per language; a count alone accepts the same reviewer twice |
+| Immutability | `rule_version`, `item_version`, `hint`, `verdict` reject UPDATE, DELETE and TRUNCATE. `memory_aid` content columns are immutable, its status follows draft → in_review → approved → retired (or rejected), and retirement needs a reason | data-model §4, A1 |
+| `study_assignment`, `session.mode`, `test_administration.phase` | Also accept Study M conditions (M-A..M-D, day1/day7/day30) | Amendment A1 |
+| `model_call.agent` | Includes `teacher` | A1: the AI teacher may choose among aid candidates |
+| `visual_asset.ocr_text_found` | New boolean next to `ocr_result`; approval requires `false`, contrast ok, alt text and licence | Makes "no embedded text" enforceable in the database |
+| **Deferred** | `classmate_vl` view → slice 2.5 (it depends on the seen-forms rules); anchored-pattern validation for `item_version` patterns → content validator, slice 1.4; consent-withdrawal deletion procedure → slice 1.5 | Not schema-only concerns |

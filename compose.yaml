@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: setu_migrate
       POSTGRES_PASSWORD: ${SETU_DB_PASSWORD:-setu-dev-only}
     ports:
-      - "5432:5432"
+      - "${SETU_DB_PORT:-5433}:5432"   # 5432 is often taken by a local Postgres
     volumes:
       - setu-db:/var/lib/postgresql/data
     healthcheck:
