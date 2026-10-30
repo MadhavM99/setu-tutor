@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("learn.new_letter") }}</h1>
+<p class="letter-big">{{ te(letter.telugu) }}</p>
+<p>{{ t("learn.twin_is", twin=letter.label) }}</p>
+<form method="post" action="/learn/letters/continue">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <button type="submit">{{ t("btn.next") }}</button>
+</form>
+{% endblock %}

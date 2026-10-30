@@ -76,6 +76,11 @@ class ResolutionRecord:
 
 
 class OutcomeWriter:
+    @classmethod
+    def from_environment(cls, *, fallback: Engine) -> "OutcomeWriter":
+        url = os.environ.get("SETU_WRITER_DATABASE_URL")
+        return cls(create_engine(url) if url else fallback)
+
     def __init__(self, engine: Engine | None = None, *, resolution_key: bytes | None = None):
         self._engine = engine or create_engine(os.environ["SETU_WRITER_DATABASE_URL"])
         key = resolution_key if resolution_key is not None else os.environ.get("SETU_RESOLUTION_KEY", "").encode()

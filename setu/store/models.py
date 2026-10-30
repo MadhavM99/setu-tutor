@@ -292,6 +292,34 @@ class AudioAsset(Base):
     )
 
 
+class Letter(Base):
+    """L0 script letters (migration 0008). Learners see only approved letters (`learner_letter`); approval needs two
+    native-speaker approvals, like any letter-sound claim (memory-assistant.md F-MEM-6)."""
+
+    __tablename__ = "letter"
+    id = Column(Text, primary_key=True)
+    telugu = Column(Text, nullable=False, unique=True)
+    devanagari = Column(Text, nullable=False)
+    twin_label_hi = Column(Text, nullable=False)
+    kind = Column(Text, nullable=False)
+    letter_group = Column(Text, nullable=False)
+    group_hi = Column(Text, nullable=False)
+    varnamala_order = Column(Integer, nullable=False, unique=True)
+    new_for_hindi = Column(Boolean, nullable=False, server_default=text("false"))
+    note_hi = Column(Text)
+    review_status = Column(Text, nullable=False, server_default="draft")
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
+    content_hash = Column(Text)
+    __table_args__ = (
+        one_of("kind", "vowel", "consonant"),
+        one_of("review_status", *REVIEW),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("telugu", "devanagari", "twin_label_hi", "group_hi", "note_hi"),
+    )
+
+
 class Lexeme(Base):
     __tablename__ = "lexeme"
     id = Column(Text, primary_key=True)
@@ -762,6 +790,7 @@ class Exchange(Base):
     leveler_version = Column(Text)
     tokenizer_version = Column(Text)
     tmr = Column(Float)
+    task = Column(JSONB)  # the planned task (migration 0008): type, target, options, chain; held by the server
     created_at = now()
     __table_args__ = (
         one_of("kind", "correction", "no_error", "own", "review", "learn", "scene", "mirror"),

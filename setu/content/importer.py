@@ -21,6 +21,8 @@ from . import patterns
 from .schema import TARGET_SCRIPT, normalise_sentence, sha256_of
 from .validate import ContentTree, Result, validate_tree
 
+IMPORTER_VERSION = "importer-2"  # adds rule target skills and leveler labels (slice S1); part of every content hash
+
 
 class ImportRefused(Exception):
     pass
@@ -34,6 +36,8 @@ class ImportResult:
     lexemes_written: int = 0
     scenes_written: int = 0
     data_sources_written: int = 0
+    letters_written: int = 0
+    skills_written: int = 0
     unchanged: int = 0
 
 
@@ -73,7 +77,10 @@ def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = No
     with _tx(engine) as c:
         for ds in tree.data_sources:
             _data_source(c, ds, result)
+        _letters_and_script_skills(c, tree.letters_l0, result)
         for rule in tree.rules:
+            _skill(c, result, rule_skill_id(rule), band=rule["band"], family="rule", target=rule["rule_id"],
+                   modality="PR", direction=rule["direction"])
             _rule(c, rule, report, result)
         for lex in tree.lexemes:
             _lexeme(c, lex, result)
@@ -113,8 +120,13 @@ def _last_imported_hash(c, table, key_col, key):
                           f"ORDER BY version DESC LIMIT 1"), {"k": key}).scalar()
 
 
+def rule_skill_id(rule) -> str:
+    return f"{rule['band']}.rule.{rule['rule_id']}.PR"
+
+
 def _rule_hash(rule):
-    return sha256_of({k: v for k, v in rule.items() if k != "items"})
+    derived = {"importer": IMPORTER_VERSION, "target_skill_id": rule_skill_id(rule)}
+    return sha256_of({**{k: v for k, v in rule.items() if k != "items"}, "_derived": derived})
 
 
 def _rule(c, rule, report, result):
@@ -141,9 +153,9 @@ def _rule(c, rule, report, result):
         rule_version_id = c.execute(
             text("INSERT INTO rule_version (rule_id, version, title_hi, l1_explanation_hi, concept_key, band, "
                  "validity, learner_evidence, lifecycle, teacher_approved, sources, licence, supersedes_version, "
-                 "change_note, provenance, validation_issues, content_hash) VALUES (:r, :v, :t, :e, "
+                 "change_note, provenance, validation_issues, content_hash, target_skill_id) VALUES (:r, :v, :t, :e, "
                  "CAST(:ck AS jsonb), :band, :validity, :evidence, 'draft', false, CAST(:src AS jsonb), :lic, :sup, "
-                 ":note, CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h) RETURNING id"),
+                 ":note, CAST(:prov AS jsonb), CAST(:iss AS jsonb), :h, :skill) RETURNING id"),
             {"r": rid, "v": (latest.version + 1) if latest else 1, "t": rule.get("title_l1"),
              "e": rule.get("explanation_l1"), "ck": _j(rule.get("concept_key") or {}), "band": rule["band"],
              "validity": rule["validity"], "evidence": rule["learner_evidence"],
@@ -151,7 +163,8 @@ def _rule(c, rule, report, result):
              "sup": latest.id if latest else None,
              "note": "imported from content/" if latest is None
                      else f"imported from content/ (supersedes v{latest.version})",
-             "prov": _j(rule["provenance"]), "iss": _j(rule_issues), "h": digest}).scalar_one()
+             "prov": _j(rule["provenance"]), "iss": _j(rule_issues), "h": digest,
+             "skill": rule_skill_id(rule)}).scalar_one()
         result.new_rule_versions += 1
 
     for item in rule["items"]:
@@ -159,7 +172,7 @@ def _rule(c, rule, report, result):
 
 
 def _item_hash(item):
-    return sha256_of(item)
+    return sha256_of({**item, "_derived": {"importer": IMPORTER_VERSION, "leveler": leveler.VERSION}})
 
 
 def _item(c, rid, rule_version_id, item, report, result, rule):
@@ -251,3 +264,58 @@ def _scene(c, scene, result):
         result.scenes_written += 1
     else:
         result.unchanged += 1
+
+
+# ---------------------------------------------------------------- L0 letters and the skill graph (slice S1)
+
+L0_MODALITIES = ("REC", "RCL")
+
+
+def script_skill_id(group: str, modality: str) -> str:
+    return f"L0.script.{group}.{modality}"
+
+
+def _skill(c, result, skill_id, *, band, family, target, modality, direction, requires=()):
+    if c.execute(text("SELECT 1 FROM skill WHERE id = :s"), {"s": skill_id}).first() is None:
+        c.execute(text("INSERT INTO skill (id, band, family, target, modality, direction) VALUES "
+                       "(:s, :b, :f, :t, :m, :d)"),
+                  {"s": skill_id, "b": band, "f": family, "t": target, "m": modality, "d": direction})
+        result.skills_written += 1
+    for req in requires:
+        c.execute(text("INSERT INTO skill_prereq (skill_id, requires_id) VALUES (:s, :r) ON CONFLICT DO NOTHING"),
+                  {"s": skill_id, "r": req})
+
+
+def _letters_and_script_skills(c, letters, result):
+    groups = list(dict.fromkeys(letter["group"] for letter in sorted(letters, key=lambda x: x["varnamala_order"])))
+    for i, group in enumerate(groups):
+        rec, rcl = script_skill_id(group, "REC"), script_skill_id(group, "RCL")
+        previous = [script_skill_id(groups[i - 1], "REC")] if i else []
+        _skill(c, result, rec, band="L0", family="script", target=group, modality="REC", direction="HI->TE",
+               requires=previous)
+        _skill(c, result, rcl, band="L0", family="script", target=group, modality="RCL", direction="HI->TE",
+               requires=[rec])
+    for letter in letters:
+        digest = sha256_of(letter)
+        row = c.execute(text("SELECT content_hash, review_status FROM letter WHERE id = :i"),
+                        {"i": letter["id"]}).first()
+        values = {"id": letter["id"], "te": letter["telugu"], "dv": letter["devanagari"],
+                  "label": letter["twin_label_hi"], "kind": letter["kind"], "grp": letter["group"],
+                  "grp_hi": letter["group_hi"], "ord": letter["varnamala_order"], "new": letter["new_for_hindi"],
+                  "note": letter.get("note_hi"), "prov": _j(letter["provenance"]), "h": digest}
+        if row is None:
+            c.execute(text("INSERT INTO letter (id, telugu, devanagari, twin_label_hi, kind, letter_group, group_hi, "
+                           "varnamala_order, new_for_hindi, note_hi, review_status, provenance, content_hash) VALUES "
+                           "(:id, :te, :dv, :label, :kind, :grp, :grp_hi, :ord, :new, :note, 'draft', "
+                           "CAST(:prov AS jsonb), :h)"), values)
+            result.letters_written += 1
+        elif row.content_hash != digest:
+            if row.review_status != "draft":
+                raise ImportRefused(f"{letter['id']}: letter is '{row.review_status}'; edit it in the teacher console")
+            c.execute(text("UPDATE letter SET telugu = :te, devanagari = :dv, twin_label_hi = :label, kind = :kind, "
+                           "letter_group = :grp, group_hi = :grp_hi, varnamala_order = :ord, new_for_hindi = :new, "
+                           "note_hi = :note, provenance = CAST(:prov AS jsonb), content_hash = :h WHERE id = :id"),
+                      values)
+            result.letters_written += 1
+        else:
+            result.unchanged += 1

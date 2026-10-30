@@ -49,6 +49,7 @@ class ContentTree:
     data_sources: list
     letters: list
     word_units: list
+    letters_l0: list = dataclasses.field(default_factory=list)
     root: Path | None = None
 
 
@@ -84,6 +85,8 @@ def load_tree(root: Path) -> ContentTree:
         data_sources=_yaml(root / "data_sources.yaml") or [],
         letters=[_yaml(p) for p in sorted((root / "hi-te/letters").glob("*.yaml"))],
         word_units=[_yaml(p) for p in sorted((root / "hi-te/word_units").glob("*.yaml"))],
+        letters_l0=(_yaml(root / "hi-te/script/letters.yaml") or []) if (root / "hi-te/script/letters.yaml").exists()
+        else [],
         root=root,
     )
 
@@ -298,6 +301,27 @@ def _validate_scene(scene) -> Result:
     return res
 
 
+def _validate_letter(letter, seen) -> Result:
+    from setu.domain.normalise import TELU_TO_DEVA
+
+    res = Result([], {})
+    lid = letter.get("id", "?")
+    if lid in seen:
+        res.add(lid, _err("duplicate_letter"))
+    seen.add(lid)
+    _approval_claims(res, lid, letter, status_field="review_status", allowed=IMPORTABLE["review_status"])
+    ch = letter.get("telugu", "")
+    if len(ch) != 1 or ch not in TELU_TO_DEVA:
+        res.add(lid, _err("bad_letter", repr(ch)))
+    elif letter.get("devanagari") != TELU_TO_DEVA[ch]:
+        res.add(lid, _err("twin_mismatch", f"{ch} -> {letter.get('devanagari')}"))
+    for field in ("twin_label_hi", "note_hi", "group_hi"):
+        _check_l1_text(res, lid, field, letter.get(field), "HI->TE")
+    if not letter.get("provenance"):
+        res.add(lid, _err("missing_provenance"))
+    return res
+
+
 def validate_tree(tree: ContentTree) -> Result:
     res = Result([], {})
     rule_ids, item_owner, sentences = set(), {}, {}
@@ -337,6 +361,9 @@ def validate_tree(tree: ContentTree) -> Result:
         ds_ids.add(ds.get("id"))
         if ds.get("status") not in DATA_SOURCE_STATUS:
             res.add(ds.get("id"), _err("bad_status", str(ds.get("status"))))
+    seen_letters = set()
+    for letter in tree.letters_l0:
+        res.merge(_validate_letter(letter, seen_letters))
     for unit in tree.letters + tree.word_units:
         uid = unit.get("unit_id", "?")
         _approval_claims(res, uid, unit, status_field="review_status", allowed=IMPORTABLE["review_status"])

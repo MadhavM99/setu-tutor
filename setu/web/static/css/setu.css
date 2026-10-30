@@ -31,3 +31,6 @@ form.inline { display: inline; } form.inline button { background: transparent; c
 .error { color: var(--alert); border-inline-start: 4px solid var(--alert); padding-inline-start: .75rem; }
 .notice { border-inline-start: 4px solid var(--muted); padding-inline-start: .75rem; }
 .handle { font-size: 1.4rem; font-weight: 700; }
+.letter-big { font-size: 3.5rem; margin: .5rem 0; }
+.keys { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0; }
+.key { min-width: 3rem; min-height: 3rem; font-size: 1.4rem; background: #fff; color: var(--ink); border-color: var(--muted); }

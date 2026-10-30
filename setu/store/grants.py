@@ -94,7 +94,16 @@ PLAN_V4["setu_read"] += [("skill_evidence", "SELECT", None)]
 PLAN_V4["setu_app"] += [("skill_evidence", "SELECT", None)]
 PLAN_V4["setu_writer"] += [("skill_evidence", "SELECT, INSERT", None)]
 
-GRANT_PLAN = PLAN_V4  # the current plan
+# Plan V5 (migration 0008, slice S1): letters. Content writes them; the web layer and the writer read them; the
+# read role sees approved letters only through `learner_letter`.
+PLAN_V5 = {role: list(specs) for role, specs in PLAN_V4.items()}
+PLAN_V5["setu_content"] += [("letter", "SELECT, INSERT, UPDATE", None)]
+PLAN_V5["setu_app"] += [("letter", "SELECT", None)]
+PLAN_V5["setu_writer"] += [("letter", "SELECT", None)]
+VIEW_GRANTS_V2 = {**VIEW_GRANTS, "learner_letter": VIEW_GRANTS["learner_rule_version"],
+                  "classmate_vl": ("setu_read", "setu_app", "setu_writer")}
+
+GRANT_PLAN = PLAN_V5  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}

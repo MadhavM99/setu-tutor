@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("learn.intro_title") }}</h1>
+<p>{{ t("learn.intro_order") }}</p>
+<p>{{ t("learn.intro_new") }}</p>
+<ul>
+  <li>{{ te("ఎ") }} {{ te("ఒ") }} {{ t("learn.diff_short_eo") }}</li>
+  <li>{{ te("ళ") }} {{ t("learn.diff_lla") }}</li>
+  <li>{{ te("ఱ") }} {{ t("learn.diff_rra") }}</li>
+  <li>{{ t("learn.diff_final_vowel") }}</li>
+</ul>
+<p><a class="button" href="/learn/letters">{{ t("btn.start") }}</a></p>
+{% endblock %}

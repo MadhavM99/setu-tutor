@@ -16,6 +16,7 @@ from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
 from .i18n import Catalog
 from .routes_auth import router as auth_router
+from .routes_learn import router as learn_router
 from .routes_ui import router as ui_router
 
 HERE = Path(__file__).resolve().parent
@@ -34,9 +35,25 @@ def _templates(catalog: Catalog) -> Environment:
     return env
 
 
+class _LazyWriter:
+    """The OutcomeWriter, built on first use. It reads its own credentials; with none set (development and tests)
+    it uses the app's engine and switches to setu_writer per transaction."""
+
+    def __init__(self, db):
+        self._db, self._writer = db, None
+
+    def __getattr__(self, name):
+        if self._writer is None:
+            from setu.store.outcome_writer import OutcomeWriter
+
+            self._writer = OutcomeWriter.from_environment(fallback=self._db.engine)
+        return getattr(self._writer, name)
+
+
 def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> FastAPI:
     app = FastAPI(title="setu", version=__version__, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.db = AppDatabase(engine)
+    app.state.writer = _LazyWriter(app.state.db)
     app.state.cookie_secure = cookie_secure
     app.state.catalog = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")
     app.state.templates = _templates(app.state.catalog)
@@ -59,6 +76,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     app.include_router(auth_router, prefix="/api")  # JSON API; the Hindi pages live at the root
     app.include_router(ui_router)
+    app.include_router(learn_router)
     return app
 
 
