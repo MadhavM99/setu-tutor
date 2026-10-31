@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("tch.kind." ~ kind) }}</h1>
+{% if message_key %}<p role="status">{{ t(message_key) }}</p>{% endif %}
+{% if rows %}
+<form method="post" action="/teacher/review/{{ kind }}/batch" class="stack">
+<table>
+  <thead><tr><th>{{ t("tch.pick") }}</th>{% for col, label, telugu in k.fields %}<th>{{ t(label) }}</th>{% endfor %}<th>{{ t("tch.approvals") }}</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+  <tr>
+    <td>{% if not r.mine %}<input type="checkbox" name="pick" value="{{ r.id }}|{{ r.content_hash }}" aria-label="{{ t('tch.pick') }}">{% endif %}</td>
+    {% for col, label, telugu in k.fields %}<td>{% set value = r[col] %}{% include "teacher/_field.html" %}</td>{% endfor %}
+    <td>{{ t("tch.approvals_n", n=r.approvals|length) }}{% if r.drafted %} · {{ t("tch.model_drafted") }}{% endif %} · <a href="/teacher/review/{{ kind }}/item?id={{ r.id|urlencode }}">{{ t("tch.open") }}</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% if k.native_required %}<label><input type="checkbox" name="native" value="1"> {{ t("tch.native_declare") }}</label>{% endif %}
+<button type="submit">{{ t("tch.approve_selected") }}</button>
+</form>
+{% else %}<p>{{ t("tch.nothing_pending") }}</p>{% endif %}
+<p><a href="/teacher/review">{{ t("tch.back") }}</a></p>
+{% endblock %}

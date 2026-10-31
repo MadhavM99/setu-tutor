@@ -21,6 +21,7 @@ from .routes_ladder import router as ladder_router
 from .routes_learn import router as learn_router
 from .routes_rules import router as rules_router
 from .routes_scenes import router as scenes_router
+from .routes_teacher import router as teacher_router
 from .routes_ui import router as ui_router
 
 HERE = Path(__file__).resolve().parent
@@ -82,6 +83,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.mount("/static", StaticFiles(directory=HERE / "static"), name="static")
     app.include_router(auth_router, prefix="/api")  # JSON API; the Hindi pages live at the root
     app.include_router(ui_router)
+    app.include_router(teacher_router)
     app.include_router(rules_router)  # before /learn/{name}
     app.include_router(ladder_router)
     app.include_router(scenes_router)  # before /learn/{name}

@@ -97,14 +97,3 @@ def logout_form(request: Request):
     response = RedirectResponse("/login", status_code=303)
     response.delete_cookie(COOKIE, path="/")
     return response
-
-
-@router.get("/teacher", response_class=HTMLResponse)
-def teacher_home(request: Request):
-    user = optional_user(request)
-    if user is None:
-        return RedirectResponse("/login", status_code=303)
-    if user.role not in ("teacher", "admin"):
-        return render(request, "learner/message.html", title_key="page.forbidden", user=user,
-                      message_key="err.forbidden", status=403)
-    return render(request, "teacher/home.html", title_key="page.teacher", user=user)

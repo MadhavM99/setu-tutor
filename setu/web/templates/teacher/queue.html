@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("tch.queue_title") }}</h1>
+{% if message_key %}<p role="status">{{ t(message_key) }}</p>{% endif %}
+{% for it in items %}
+<section class="stack">
+  {% if it.shown %}<p>{{ t("tch.q_shown") }} {{ te(it.shown) }}</p>{% endif %}
+  {% if it.goal %}<p>{{ t("tch.q_goal") }} {{ it.goal }}</p>{% endif %}
+  <p>{{ t("tch.q_answer") }} {% if it.explanation %}{{ it.answer }}{% else %}{{ te(it.answer) }}{% endif %}</p>
+  {% if it.accepted %}<p>{{ t("tch.q_accepted") }} {% for f in it.accepted %}{{ te(f) }}{% if not loop.last %} · {% endif %}{% endfor %}</p>{% endif %}
+  <p>{{ t(it.reason_key) }}</p>
+  <form method="post" action="/teacher/queue/settle">
+    <input type="hidden" name="queue_item_id" value="{{ it.id }}">
+    <label for="note-{{ it.id }}">{{ t("tch.comment") }}</label>
+    <input id="note-{{ it.id }}" name="note_hi" maxlength="500">
+    <button type="submit" name="outcome" value="correct">{{ t("tch.o_correct") }}</button>
+    <button type="submit" name="outcome" value="partial">{{ t("tch.o_partial") }}</button>
+    <button type="submit" name="outcome" value="wrong">{{ t("tch.o_wrong") }}</button>
+  </form>
+</section>
+{% else %}<p>{{ t("tch.queue_empty") }}</p>{% endfor %}
+{% endblock %}

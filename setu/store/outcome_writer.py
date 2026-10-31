@@ -154,7 +154,7 @@ class OutcomeWriter:
             if card is not None:
                 self._review_card(c, context, card, v, verdict_id, at)
             if skill is not None:
-                self._update_skill(c, context, skill, v, verdict_id, at)
+                self._update_skill(c, context, skill, v.outcome, verdict_id, at)
             if v.kind == "own" and exchange.is_copy(v.reason_code):
                 self._maybe_copy(c, context, v.attempt_id, verdict_id)
             change = event_id = None
@@ -190,21 +190,21 @@ class OutcomeWriter:
                        "VALUES (:c, :v, :r, :cue, :at)"),
                   {"c": card_id, "v": verdict_id, "r": rating, "cue": context["cue_level"], "at": at})
 
-    def _update_skill(self, c, context, skill: SkillTarget, v, verdict_id, at):
-        if v.outcome == "unsure":
+    def _update_skill(self, c, context, skill: SkillTarget, outcome: str, verdict_id, at):
+        if outcome == "unsure":
             return
         learner_id = context["learner_id"]
         c.execute(text("INSERT INTO skill_evidence (learner_id, skill_id, verdict_id, item_ref, task_type, day, outcome, "
                        "cue_level, after_reveal, production) VALUES (:l, :s, :v, :i, :t, :d, :o, :cue, :ar, :p)"),
                   {"l": learner_id, "s": skill.skill_id, "v": verdict_id, "i": skill.item_ref, "t": skill.task_type,
-                   "d": at.date(), "o": v.outcome, "cue": context["cue_level"], "ar": context["after_reveal"],
+                   "d": at.date(), "o": outcome, "cue": context["cue_level"], "ar": context["after_reveal"],
                    "p": skill.production})
         row = c.execute(text("SELECT tracker_alpha, tracker_beta, half_life_days, last_practised, status FROM "
                              "learner_skill_state WHERE learner_id = :l AND skill_id = :s FOR UPDATE"),
                         {"l": learner_id, "s": skill.skill_id}).first()
         tracker = (scheduler.TrackerState.new(at=at) if row is None or row.last_practised is None else
                    scheduler.TrackerState(row.tracker_alpha, row.tracker_beta, row.half_life_days, row.last_practised))
-        tracker = scheduler.track(tracker, outcome=v.outcome, cue_level=context["cue_level"],
+        tracker = scheduler.track(tracker, outcome=outcome, cue_level=context["cue_level"],
                                   after_reveal=context["after_reveal"], at=at)
         evidence = [scheduler.Evidence(r.item_ref, r.task_type, r.day, r.outcome, r.cue_level, r.after_reveal,
                                        r.production)
@@ -214,7 +214,7 @@ class OutcomeWriter:
         status = m.status
         if row is not None and row.status == "placed" and status != "mastered":
             # F-PLACE: a placed skill stays placed while its confirmation answers are right; a miss sends it back
-            ok = v.outcome == "correct" and context["cue_level"] == 0 and not context["after_reveal"]
+            ok = outcome == "correct" and context["cue_level"] == 0 and not context["after_reveal"]
             status = "placed" if ok else "learning"
         event_id = self._event(c, "checker", "skill_updated", {
             "learner_id": str(learner_id), "skill_id": skill.skill_id, "verdict_id": str(verdict_id),
@@ -338,6 +338,30 @@ class OutcomeWriter:
 
     # ------------------------------------------------------------------ teacher resolutions
 
+    @staticmethod
+    def _resolution_skill(c: Connection, attempt_id) -> SkillTarget | None:
+        """The skill a settled answer is evidence for: the rule's skill for correction, no-error and own-sentence
+        turns, the scene's production skill for a scene reply. Other answers (recall cards, explanations,
+        placement probes, copies after a reveal) settle the verdict only."""
+        row = c.execute(text(
+            "SELECT e.kind, e.task, rv.target_skill_id, rv.band, i.item_id, v.kind AS vkind, a.after_reveal "
+            "FROM attempt a "
+            "JOIN exchange e ON e.id = a.exchange_id JOIN verdict v ON v.attempt_id = a.id "
+            "LEFT JOIN rule_version rv ON rv.id = e.rule_version_id LEFT JOIN item_version i ON i.id = e.item_version_id "
+            "WHERE a.id = :a"), {"a": attempt_id}).first()
+        if row is None or row.vkind == "explanation" or row.after_reveal:  # a copied answer is never evidence
+            return None
+        if row.target_skill_id and row.kind in ("correction", "no_error", "own"):
+            task = {"correction": "fix"}.get(row.kind, row.kind)
+            return SkillTarget(row.target_skill_id, row.band, item_ref=row.item_id or row.target_skill_id,
+                               task_type=task, production=row.kind != "no_error")
+        task = row.task or {}
+        if row.kind == "scene" and task.get("step") == "reply":
+            line = f"{task['scene_id']}#{task['line']}"
+            return SkillTarget(f"L5.scene.{task['scene_id']}.PR", "L5", item_ref=line, task_type="scene_reply",
+                               production=True)
+        return None
+
     def apply_resolution(self, r: TeacherResolution) -> ResolutionRecord:
         if not isinstance(r, TeacherResolution):
             raise TypeError("expected a TeacherResolution")
@@ -365,6 +389,9 @@ class OutcomeWriter:
                 "resolution_id": str(resolution_id), "queue_item_id": str(r.queue_item_id),
                 "verdict_id": str(item.verdict_id), "learner_id": str(context["learner_id"]),
                 "outcome": r.outcome})
+            skill = self._resolution_skill(c, item.attempt_id)
+            if skill is not None:  # the learner gets the credit (or the error) the checker could not give
+                self._update_skill(c, context, skill, r.outcome, item.verdict_id, dt.datetime.now(dt.UTC))
             change = classmate_event = None
             if r.outcome == "correct" and item.kind == "fix":
                 change, classmate_event = self._maybe_teach(c, context, actor,

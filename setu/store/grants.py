@@ -128,16 +128,25 @@ PLAN_V8["setu_writer"] += [("scene_script", "SELECT", None), ("scene_reply_varia
 VIEW_GRANTS_V5 = {**VIEW_GRANTS_V4, "learner_scene_script": VIEW_GRANTS["learner_rule_version"],
                   "learner_scene_reply_variant": VIEW_GRANTS["learner_rule_version"]}
 
-GRANT_PLAN = PLAN_V8  # the current plan
+# Plan V9 (migration 0013, slice 4.1): the teacher console reviews content as `setu_content`. Every decision is kept
+# in `content_review` (immutable) and appended to the ledger, so the content role may append ledger events too.
+PLAN_V9 = {role: list(specs) for role, specs in PLAN_V8.items()}
+PLAN_V9["setu_content"] += [("content_review", "SELECT, INSERT", None), ("event_ledger", "SELECT, INSERT", None)]
+PLAN_V9["setu_app"] += [("content_review", "SELECT", None)]
+PLAN_V9["setu_writer"] += [("content_review", "SELECT", None)]
+SEQUENCE_GRANTS_V2 = {"event_ledger_id_seq": ("setu_writer", "setu_content")}
+
+GRANT_PLAN = PLAN_V9  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}
 
 
-def grant_statements(plan=None, views=None):
+def grant_statements(plan=None, views=None, sequences=None):
     """Statements that set privileges to `plan` (default: the current plan) from a clean slate."""
     plan = GRANT_PLAN if plan is None else plan
     views = VIEW_GRANTS if views is None else views
+    sequences = SEQUENCE_GRANTS if sequences is None else sequences
     stmts = [
         "REVOKE ALL ON ALL TABLES IN SCHEMA public FROM PUBLIC",
         "REVOKE CREATE ON SCHEMA public FROM PUBLIC",
@@ -156,7 +165,7 @@ def grant_statements(plan=None, views=None):
     for view, roles in views.items():
         for role in roles:
             stmts.append(f"GRANT SELECT ON public.{view} TO {role}")
-    for seq, roles in SEQUENCE_GRANTS.items():
+    for seq, roles in sequences.items():
         for role in roles:
             stmts.append(f"GRANT USAGE ON SEQUENCE public.{seq} TO {role}")
     return stmts

@@ -73,6 +73,13 @@ Tests: TS-L0..L5, TS-SESS-*, TS-EXCH-*, TS-OWN-*, TS-UI-*, TS-E2E-*, TS-A11Y-*.
   - simulator v1 with 60 baseline runs and ablations;
   - TE→HI end to end, with mirror mode behind a flag.
 
+**Phase 4 slices (set 31 Oct 2026):** 4.1 teacher console I (native review of script, word, chunk and scene content;
+unsure queue F3) · 4.2 rule review and promotion (F1), variant review (F4), two-rater κ (F2) · 4.3 analytics,
+override, exports (F6–F8) · 4.4 self-hosted model client and the classmate tool loop with prompt-only and resampling
+baselines · 4.5 coach and friend models behind flags, red team on live output · 4.6 research console (study A/B/C,
+Latin square, test pools, blinded export) · 4.7 simulator v1 · 4.8 TE→HI end to end, mirror mode behind a flag ·
+4.9 memory-aid pipeline (A1). The teacher console comes first because approvals unblock everything learner-facing.
+
 ### Amendment A1 work (adds ~3–4 weeks in total)
 
 | Where | Slice | Spec IDs |
@@ -230,4 +237,8 @@ R-17, R-18, R-19, R-20 and R-21 are tracked in the matrix §16. The highest-leve
 | **Failed** | M-09 unsure rate 0.182 > 0.15 (unchanged, waiting for teacher labels) |
 | **Deviations** | See each slice's implementation notes; the main ones: hinted fixes never teach the classmate; own sentences use rule items, not `own_task` frames; placement covers L0–L3; scene out-of-band words are measured against the scene vocabulary, not the learner's own seen words |
 | **Next decisions** | (1) Who reviews the drafted chunks, rules and scene lines, and when; (2) start Phase 4 with the teacher console (approvals unblock everything learner-facing) or the model client; (3) push S1–S8 so CI runs |
+
+| Slice | Status | Evidence |
+|---|---|---|
+| 4.1 Teacher console I: native content review and the unsure queue | **Built and tested** (31 Oct 2026) | New suite 1052 passed. `ContentReviewer` (content role) is the only approval path for letters, aksharas, words, chunks, scenes, scene scripts, lines and reply variants: teacher role re-checked in the database, the exact version shown (content hash), a native-speaker declaration for Telugu, one approval per reviewer, visible at the second approval, rejection withdraws at once; single and batch review. Migration 0013: `setu_distinct_reviewers` checks on every approvals column (rules and accepted variants too), immutable `content_review` history, grant plan V9; the content role may append to the ledger only `content_reviewed` events by a teacher (trigger), every other ledger write stays writer-only (test updated to say so). Unsure queue (F3): answer, shown sentence or task, accepted forms, Hindi reason; settlement signed and applied by the OutcomeWriter, first one wins; a settled answer now also counts as skill evidence (rule and scene-reply skills). Model-drafted content is flagged to reviewers. Dev DB at 0013. Legacy 138 passed; lints clean. Not built: proposing a variant from a settlement (4.2 with F4), rule review (4.2) |
 

@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>{{ t("tch.title") }}</h1>
-<p>{{ t("tch.coming_soon") }}</p>
+<ul>
+  <li><a href="/teacher/review">{{ t("tch.review_link") }}</a></li>
+  <li><a href="/teacher/queue">{{ t("tch.queue_link") }}</a></li>
+</ul>
 {% endblock %}

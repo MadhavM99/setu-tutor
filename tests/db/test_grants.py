@@ -34,7 +34,20 @@ def _privilege(conn, role, table, priv):
 @pytest.mark.parametrize("table", LEARNING_STATE)
 def test_only_writer_can_write_learning_state(conn, role, table):
     for priv in ("INSERT", "UPDATE", "DELETE", "TRUNCATE"):
+        if (role, table, priv) == ("setu_content", "event_ledger", "INSERT"):
+            continue  # slice 4.1: teacher review events only, enforced by a trigger (next test)
         assert not _privilege(conn, role, table, priv), (role, table, priv)
+
+
+def test_the_content_role_appends_only_teacher_review_events(conn):
+    with as_role(conn, "setu_content"):
+        for actor, kind in (("checker", "verdict_recorded"), ("teacher:x", "classmate_taught"),
+                            ("teacher:x", "teacher_resolution"), ("scheduler", "content_reviewed")):
+            fails(conn, "INSERT INTO event_ledger (actor, event_type, payload) VALUES (:a, :k, '{}')",
+                  {"a": actor, "k": kind}, match="setu_content may append only")
+        ok(conn, "INSERT INTO event_ledger (actor, event_type, payload) VALUES ('teacher:x', 'content_reviewed', "
+                 "'{}')")
+        fails(conn, "UPDATE event_ledger SET payload = '{}'", match="permission denied")
 
 
 @pytest.mark.parametrize("table", ["learner_skill_state", "learner_lexeme_card", "classmate_rule_state",

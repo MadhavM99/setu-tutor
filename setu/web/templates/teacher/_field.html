@@ -1,0 +1,2 @@
+{# One field value: Telugu in Telugu script, lists joined. #}
+{% if value is none %}—{% elif value is string %}{% if telugu %}{{ te(value) }}{% else %}{{ value }}{% endif %}{% else %}{% for v in value %}{% if telugu %}{{ te(v) }}{% else %}{{ v }}{% endif %}{% if not loop.last %} · {% endif %}{% endfor %}{% endif %}

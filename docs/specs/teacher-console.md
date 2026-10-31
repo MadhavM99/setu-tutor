@@ -170,3 +170,21 @@ Every feature follows the template: Purpose · Learner outcome · User flow · D
   | An aid flagged for harm | retired | the policy stops selecting it from the next request |
 
 - **Tests:** TS-MEM-REV-01..05.
+
+## Implementation notes: slice 4.1 (31 Oct 2026)
+
+- **F0 (new, needed by the Phase 3 gates): native review of non-rule content.** `/teacher/review` lists pending
+  letters, aksharas, words, chunks, scenes, scene scripts, scene lines and reply variants. A teacher approves or
+  rejects one record (with a Hindi comment) or approves a batch. Rules: teacher role (checked in the database); the
+  decision applies to the content hash shown, else "बदल गई है"; Telugu approvals need the native-speaker declaration;
+  one approval per reviewer (also `setu_distinct_reviewers` in the database); `approved` at two approvals (a scene's
+  Hindi title and set-up need one teacher); rejection withdraws the record from learners and keeps its approvals and
+  history. Each decision is a row in the immutable `content_review` and one `content_reviewed` ledger event.
+- **F3 as built:** `/teacher/queue` shows the 50 newest open items with the answer, the shown sentence or the task,
+  the accepted forms and the reason in Hindi (no raw codes, no learner identity). Settling signs a
+  `TeacherResolution` with `SETU_RESOLUTION_KEY` (refused in Hindi without one); the OutcomeWriter applies it once
+  and records skill evidence for rule and scene-reply answers; a correct fix still teaches the classmate only if
+  the answer was cue-free. The "propose as a variant" option is deferred to slice 4.2 with F4.
+- **Deviation:** the content role may append ledger events, but a trigger limits it to `content_reviewed` events
+  with a teacher actor.
+

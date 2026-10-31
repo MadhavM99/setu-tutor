@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("tch.kind." ~ kind) }}</h1>
+{% if message_key %}<p role="status">{{ t(message_key) }}</p>{% endif %}
+{% if drafted %}<p><strong>{{ t("tch.model_drafted") }}</strong> {{ t("tch.model_drafted_help") }}</p>{% endif %}
+<dl>
+{% for col, label, telugu in k.fields %}<dt>{{ t(label) }}</dt><dd>{% set value = rec[col] %}{% include "teacher/_field.html" %}</dd>{% endfor %}
+<dt>{{ t("tch.status") }}</dt><dd>{{ t("tch.state." ~ rec.status) }}</dd>
+<dt>{{ t("tch.approvals") }}</dt><dd>{{ t("tch.approvals_n", n=rec.approvals|length) }}</dd>
+</dl>
+{% if rec.status not in ("approved", "rejected") or not mine %}
+<form method="post" action="/teacher/review/{{ kind }}/item" class="stack">
+  <input type="hidden" name="id" value="{{ rec.id }}">
+  <input type="hidden" name="content_hash" value="{{ rec.content_hash }}">
+  {% if k.native_required %}<label><input type="checkbox" name="native" value="1"> {{ t("tch.native_declare") }}</label>{% endif %}
+  <label for="comment_hi">{{ t("tch.comment") }}</label>
+  <textarea id="comment_hi" name="comment_hi" maxlength="500"></textarea>
+  <button type="submit" name="decision" value="approve">{{ t("tch.approve") }}</button>
+  <button type="submit" name="decision" value="reject">{{ t("tch.reject") }}</button>
+</form>
+{% endif %}
+<p><a href="/teacher/review/{{ kind }}">{{ t("tch.back") }}</a></p>
+{% endblock %}

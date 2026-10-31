@@ -992,6 +992,29 @@ class FsrsReviewLog(Base):
     )
 
 
+class ContentReview(Base):
+    """One teacher's decision on one version of a content record (migration 0013, slice 4.1). Immutable: the full
+    history of approvals and rejections is kept; the record's own `approvals` hold the current approvals."""
+
+    __tablename__ = "content_review"
+    id = uuid_pk()
+    target_kind = Column(Text, nullable=False)
+    target_id = Column(Text, nullable=False)
+    content_hash = Column(Text, nullable=False)
+    reviewer_id = fk("learner.id")
+    decision = Column(Text, nullable=False)
+    native_speaker = Column(Boolean, nullable=False)
+    comment_hi = Column(Text)
+    status_after = Column(Text, nullable=False)
+    created_at = now()
+    __table_args__ = (
+        one_of("target_kind", "letter", "akshara", "lexeme", "chunk", "scene", "scene_script", "scene_line",
+               "scene_reply_variant"),
+        one_of("decision", "approve", "reject"),
+        *no_latin("comment_hi"),
+    )
+
+
 class SceneEvent(Base):
     """Scene telemetry (migration 0012): start, each friend line shown (with out-of-band words and Hindi share), hints,
     fallbacks and completion with its measures. Operational, written by the web layer; never learning state."""
