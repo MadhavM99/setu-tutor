@@ -310,3 +310,26 @@ Validation happens in FW-R14. Any CEFR alignment is a separate study.
   - Substitution frames are deferred: combining a frame with fillers produces sentences nobody reviewed (case
     endings can change). They need approved frame-filler pairs.
   - The college scene has no chunks yet.
+
+## 13. Implementation notes: placement and ladder view (slice S7, 31 Oct 2026)
+
+- `setu/domain/placement.py` (`placement-1`): the walk starts at L2 (or the nearest band with approved units). A band
+  passes on correct, cue-free answers to two different units covering `recall` (Hindi prompt → Telugu, production)
+  and `read` (Telugu → Devanagari reading); it fails on two misses or after six probes. Unsure counts for neither.
+  Pass → up, fail → down; the walk ends when the next band is already decided. Passing a band places it and every
+  band below it.
+- Probes use approved units without the letter gates and give no feedback. Answers are card reviews only (no skill
+  evidence); the placement decision is applied by `OutcomeWriter.apply_placement`, which refuses it unless at least
+  two of its verdicts are the learner's correct, cue-free diagnostic answers. Skills that already have observed
+  state are left alone.
+- Placed skills: `status = placed`, `source = placed`, confirmation due in two days. In practice their units come up
+  as reviews (not intros) and placed letters count as recalled for the akshara, word and chunk gates. A correct
+  cue-free confirmation keeps `placed`; a miss sets `learning`; mastery still needs the full unlock rule.
+- `/ladder`: skills grouped by target with Hindi names from approved content; "अब आप ये कर सकते हैं" (mastered),
+  "अभी सीख रहे हैं" (learning, due, relearning, placed with "पक्का करना बाकी"), "आगे" (with the first unmet
+  prerequisite). One recommendation with its reason. No numbers or percentages.
+- **Deviations:** L4 rules are not probed (rules become ready through own sentences in S5), so a learner who already
+  knows a rule cannot yet skip straight to teaching it; the diagnostic accepts typed input only (Hindi or Telugu
+  keyboard), no on-screen keyboard; the 15-minute stop is the learner's "बस, यहीं से शुरू करें" button; the L0 reading
+  game (P8b-04) is not built.
+

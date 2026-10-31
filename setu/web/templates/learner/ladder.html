@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{# The ladder view: what the learner can do, what is in progress, what comes later. No scores. #}
+{% macro name(x) %}{% if x.get("name_key") %}{{ t(x.name_key) }}{% else %}{{ x.name }}{% endif %}{% endmacro %}
+{% block content %}
+<h1>{{ t("ladder.title") }}</h1>
+{% if nxt %}
+<p><strong>{{ t("ladder.next", name=name(nxt)) }}</strong>
+{% if nxt.after %}{{ t("ladder.because_after", name=name(nxt.after)) }}{% elif nxt.learning %}{{ t("ladder.because_learning") }}{% else %}{{ t("ladder.because_start") }}{% endif %}</p>
+{% endif %}
+<h2>{{ t("ladder.can") }}</h2>
+{% if can %}<ul>{% for x in can %}<li>{{ name(x) }}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
+<h2>{{ t("ladder.now") }}</h2>
+{% if now %}<ul>{% for x in now %}<li>{{ name(x) }}{% if x.placed %} — {{ t("ladder.to_confirm") }}{% endif %}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
+<h2>{{ t("ladder.later") }}</h2>
+<ul>{% for x in later %}<li>{{ name(x) }}{% if x.needs %} — {{ t("ladder.needs", name=name(x.needs)) }}{% endif %}</li>{% endfor %}</ul>
+{% endblock %}

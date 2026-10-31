@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("place.title") }}</h1>
+<p>{{ t("place.explain") }}</p>
+<p>{{ t("place.no_feedback") }}</p>
+<form method="post" action="/learn/placement/start">
+  <button type="submit">{{ t("btn.start") }}</button>
+</form>
+<p><a href="/learn/letters">{{ t("place.skip") }}</a></p>
+{% endblock %}

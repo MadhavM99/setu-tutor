@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("place.done") }}</h1>
+{% if bands %}
+<h2>{{ t("place.can") }}</h2>
+<ul>{% for b in bands %}<li>{{ t("ladder.cando." ~ b) }}</li>{% endfor %}</ul>
+<p>{{ t("place.confirm") }}</p>
+{% endif %}
+<h2>{{ t("place.start_here") }}</h2>
+<p><a class="button" href="/learn/{{ start }}">{{ t("page." ~ start) }}</a></p>
+<p>{{ t("place.why_placed") if bands else t("place.why_beginner") }}</p>
+{% endblock %}

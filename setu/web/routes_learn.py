@@ -57,10 +57,12 @@ class Activity:
                 "chunks": "learner_chunk"}[self.name]
 
 
-# every letter in the unit has had a correct, cue-free recall (X-PERS-04)
-_RECALLED = ("WHERE NOT EXISTS (SELECT 1 FROM learner_letter x JOIN learner_lexeme_card c ON c.card_kind = 'letter' "
-             "AND c.card_ref = x.id AND c.modality = 'RCL' AND c.learner_id = :l JOIN fsrs_review_log r ON "
-             "r.card_id = c.id AND r.rating >= 3 AND r.cue_level = 0 WHERE x.telugu = l.ch))")
+# every letter in the unit has had a correct, cue-free recall (X-PERS-04), or its L0 skill was placed (F-PLACE)
+_RECALLED = ("WHERE NOT EXISTS (SELECT 1 FROM learner_letter x WHERE x.telugu = l.ch AND (EXISTS (SELECT 1 FROM "
+             "learner_lexeme_card c JOIN fsrs_review_log r ON r.card_id = c.id AND r.rating >= 3 AND r.cue_level = 0 "
+             "WHERE c.card_kind = 'letter' AND c.card_ref = x.id AND c.modality = 'RCL' AND c.learner_id = :l) OR "
+             "EXISTS (SELECT 1 FROM learner_skill_state ss WHERE ss.learner_id = :l AND ss.status = 'placed' AND "
+             "ss.skill_id = 'L0.script.' || x.letter_group || '.RCL'))))")
 
 LETTERS = Activity(
     "letters", "letter", "SELECT id, telugu, devanagari, twin_label_hi AS label, letter_group AS grp, "
@@ -93,6 +95,16 @@ def _units(c, act: Activity, learner_id):
     rows = c.execute(text(act.units_sql), {"l": learner_id}).all()
     views = [LP.UnitView(r.id, r.telugu, r.devanagari, r.label, r.grp, r.ord, r.confusable, r.trap) for r in rows]
     return views, {r.id: r for r in rows}
+
+
+def _placed_cards(c, act: Activity, learner_id, views, meta, cards):
+    """Units of a placed skill are not new: each counts as a recall card due at the skill's confirmation date, so the
+    learner gets a confirmation review instead of the intro chain (F-PLACE)."""
+    due = dict(c.execute(text("SELECT skill_id, due_at FROM learner_skill_state WHERE learner_id = :l AND "
+                              "status = 'placed'"), {"l": learner_id}).all())
+    have = {x.letter_id for x in cards}
+    return [LP.CardView(v.id, "RCL", due[sid]) for v in views if v.id not in have
+            and (sid := f"{act.skill.format(meta[v.id].skill_key)}.RCL") in due]
 
 
 def _any_approved(c, act: Activity) -> bool:
@@ -202,6 +214,7 @@ def practice(request: Request, name: str):
         cards = [LP.CardView(r.card_ref, r.modality, r.due) for r in c.execute(text(
             "SELECT card_ref, modality, due FROM learner_lexeme_card WHERE learner_id = :l AND card_kind = :k"),
             {"l": user.learner_id, "k": act.card_kind})]
+        cards += _placed_cards(c, act, user.learner_id, views, meta, cards)
         new_today = c.execute(text(
             "SELECT count(*) FROM exchange e JOIN session s ON s.id = e.session_id WHERE s.learner_id = :l "
             "AND e.task->>'activity' = :a AND (e.task->>'new')::boolean AND e.created_at::date = :d"), {"l": user.learner_id, "a": act.name, "d": now.date()}).scalar_one()

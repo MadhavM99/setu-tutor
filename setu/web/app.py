@@ -17,6 +17,7 @@ from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
 from .i18n import Catalog
 from .routes_auth import router as auth_router
+from .routes_ladder import router as ladder_router
 from .routes_learn import router as learn_router
 from .routes_rules import router as rules_router
 from .routes_ui import router as ui_router
@@ -80,6 +81,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.include_router(auth_router, prefix="/api")  # JSON API; the Hindi pages live at the root
     app.include_router(ui_router)
     app.include_router(rules_router)  # before /learn/{name}
+    app.include_router(ladder_router)
     app.include_router(learn_router)
     return app
 

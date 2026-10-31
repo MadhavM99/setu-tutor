@@ -24,7 +24,7 @@ import uuid
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Connection, Engine
 
-from setu.domain import exchange, scheduler
+from setu.domain import exchange, placement, scheduler
 from setu.domain.checker import INDEPENDENT_MODES
 from setu.domain.verdict import is_minted
 
@@ -37,6 +37,10 @@ class NotAVerdict(TypeError):
 
 class ConflictingVerdict(Exception):
     """The attempt already has a different verdict; verdicts are immutable."""
+
+
+class PlacementRefused(Exception):
+    """The placement decision does not rest on enough correct, cue-free diagnostic answers of this learner."""
 
 
 class ResolutionRefused(Exception):
@@ -195,7 +199,7 @@ class OutcomeWriter:
                   {"l": learner_id, "s": skill.skill_id, "v": verdict_id, "i": skill.item_ref, "t": skill.task_type,
                    "d": at.date(), "o": v.outcome, "cue": context["cue_level"], "ar": context["after_reveal"],
                    "p": skill.production})
-        row = c.execute(text("SELECT tracker_alpha, tracker_beta, half_life_days, last_practised FROM "
+        row = c.execute(text("SELECT tracker_alpha, tracker_beta, half_life_days, last_practised, status FROM "
                              "learner_skill_state WHERE learner_id = :l AND skill_id = :s FOR UPDATE"),
                         {"l": learner_id, "s": skill.skill_id}).first()
         tracker = (scheduler.TrackerState.new(at=at) if row is None or row.last_practised is None else
@@ -207,9 +211,14 @@ class OutcomeWriter:
                     for r in c.execute(text("SELECT * FROM skill_evidence WHERE learner_id = :l AND skill_id = :s"),
                                        {"l": learner_id, "s": skill.skill_id})]
         m = scheduler.mastery_status(evidence, tracker, band=skill.band, at=at)
+        status = m.status
+        if row is not None and row.status == "placed" and status != "mastered":
+            # F-PLACE: a placed skill stays placed while its confirmation answers are right; a miss sends it back
+            ok = v.outcome == "correct" and context["cue_level"] == 0 and not context["after_reveal"]
+            status = "placed" if ok else "learning"
         event_id = self._event(c, "checker", "skill_updated", {
             "learner_id": str(learner_id), "skill_id": skill.skill_id, "verdict_id": str(verdict_id),
-            "status": m.status, "tracker_version": tracker.version})
+            "status": status, "tracker_version": tracker.version})
         due = tracker.last_practised + dt.timedelta(days=tracker.half_life_days)
         c.execute(
             text("INSERT INTO learner_skill_state (learner_id, skill_id, mastery_mean, mastery_lo, mastery_hi, "
@@ -225,7 +234,7 @@ class OutcomeWriter:
             {"l": learner_id, "s": skill.skill_id, "mean": tracker.mean, "lo": tracker.lo, "hi": tracker.hi,
              "n": m.evidence_n, "items": m.distinct_items, "types": m.distinct_task_types, "days": m.distinct_days,
              "cf": m.cuefree_successes, "prod": m.production_successes, "last": tracker.last_practised, "due": due,
-             "status": m.status, "ev": event_id, "a": tracker.alpha, "b": tracker.beta, "h": tracker.half_life_days,
+             "status": status, "ev": event_id, "a": tracker.alpha, "b": tracker.beta, "h": tracker.half_life_days,
              "tv": tracker.version})
 
     def _maybe_copy(self, c: Connection, context: dict, attempt_id, verdict_id):
@@ -277,6 +286,35 @@ class OutcomeWriter:
                            "WHERE learner_id = :l AND rule_id = :r"),
                       {"v": current.state_version + 1, "e": event_id, "l": learner_id, "r": rule_id})
         return "taught", event_id
+
+    # ------------------------------------------------------------------ placement (slice S7)
+
+    def apply_placement(self, decision, *, at: dt.datetime | None = None) -> list[str]:
+        """Mark the decision's skills `placed` (source placed, confirmation due within CONFIRM_DAYS). Skills that
+        already have observed state are left alone. Refused unless at least two of the verdicts it rests on are this
+        learner's correct, cue-free diagnostic answers."""
+        if not placement.is_minted(decision):
+            raise TypeError("the OutcomeWriter accepts only placement decisions issued by the diagnostic")
+        at = at or dt.datetime.now(dt.UTC)
+        with self._tx() as c:
+            backed = c.execute(text(
+                "SELECT count(*) FROM verdict v JOIN attempt a ON a.id = v.attempt_id JOIN exchange e "
+                "ON e.id = a.exchange_id JOIN session s ON s.id = e.session_id WHERE v.id = ANY(:v) "
+                "AND s.learner_id = :l AND s.mode = 'diagnostic' AND v.outcome = 'correct' AND a.cue_level = 0 "
+                "AND NOT a.after_reveal"), {"v": list(decision.verdict_ids), "l": decision.learner_id}).scalar_one()
+            if backed < 2:
+                raise PlacementRefused("a placement needs at least two correct, cue-free diagnostic answers")
+            event_id = self._event(c, "checker", "skill_placed", {
+                "learner_id": str(decision.learner_id), "bands": list(decision.bands),
+                "skills": list(decision.skill_ids), "verdict_ids": [str(v) for v in decision.verdict_ids],
+                "version": decision.version})
+            due = at + dt.timedelta(days=placement.CONFIRM_DAYS)
+            return list(c.execute(text(
+                "INSERT INTO learner_skill_state (learner_id, skill_id, status, source, due_at, updated_by_event) "
+                "SELECT :l, s, 'placed', 'placed', :due, :ev FROM unnest(CAST(:skills AS text[])) AS s "
+                "ON CONFLICT (learner_id, skill_id) DO NOTHING RETURNING skill_id"),
+                {"l": decision.learner_id, "due": due, "ev": event_id,
+                 "skills": list(decision.skill_ids)}).scalars())
 
     # ------------------------------------------------------------------ forgetting
 

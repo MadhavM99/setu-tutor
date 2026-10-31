@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{# One diagnostic probe. No hint, no options, no feedback: the answer is checked and the walk moves on. #}
+{% block content %}
+{% if task.task_type == "recall" %}
+<h1>{{ t("place.recall", prompt=unit.prompt) }}</h1>
+{% else %}
+<p class="letter-big">{{ te(unit.telugu) }}</p>
+<h1>{{ t("place.read") }}</h1>
+{% endif %}
+<form method="post" action="/learn/placement/answer" class="stack">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <label for="typed">{{ t("place.type_here") }}</label>
+  <input id="typed" name="typed" maxlength="{{ max_len }}" autocomplete="off">
+  <button type="submit">{{ t("btn.next") }}</button>
+</form>
+<form method="post" action="/learn/placement/stop">
+  <button type="submit">{{ t("place.stop") }}</button>
+</form>
+{% endblock %}

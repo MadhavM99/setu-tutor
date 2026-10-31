@@ -64,6 +64,15 @@ def test_only_the_scheduler_mints_forget_decisions():
     assert users <= allowed
 
 
+def test_only_the_diagnostic_mints_placement_decisions():
+    users = {
+        p.relative_to(ROOT).as_posix()
+        for p in _python_files("setu", "pipeline")
+        if "object.__new__(PlacementDecision)" in p.read_text(encoding="utf-8")
+    }
+    assert users == {"setu/domain/placement.py"}
+
+
 def test_writer_credentials_are_read_only_by_the_writer():
     users = {
         p.relative_to(ROOT).as_posix()
