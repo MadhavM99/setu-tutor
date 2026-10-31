@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
 {# One diagnostic probe. No hint, no options, no feedback: the answer is checked and the walk moves on. #}
 {% block content %}
 {% if task.task_type == "recall" %}
@@ -14,6 +14,6 @@
   <button type="submit">{{ t("btn.next") }}</button>
 </form>
 <form method="post" action="/learn/placement/stop">
-  <button type="submit">{{ t("place.stop") }}</button>
+  <button type="submit" class="secondary">{{ t("place.stop") }}</button>
 </form>
 {% endblock %}

@@ -154,9 +154,11 @@ def log_call(c, exchange_id, agent: str, completion, *, rejected=()):
         return
     err = completion.error or (("rejected: " + ", ".join(rejected)) if rejected else None)
     c.execute(text("INSERT INTO model_call (exchange_id, agent, model, prompt_version, request_hash, response_text, "
-                   "latency_ms, error) VALUES (:e, :a, :m, :pv, :h, :t, :ms, :err)"),
+                   "latency_ms, error, prompt_tokens, completion_tokens) VALUES (:e, :a, :m, :pv, :h, :t, :ms, :err, "
+                   ":pt, :ct)"),
               {"e": exchange_id, "a": agent, "m": completion.model, "pv": classmate.VERSION,
-               "h": completion.request_hash or "-", "t": completion.text, "ms": completion.latency_ms, "err": err})
+               "h": completion.request_hash or "-", "t": completion.text, "ms": completion.latency_ms, "err": err,
+               "pt": completion.prompt_tokens, "ct": completion.completion_tokens})
 
 
 def _raju(c, provider, learner_id, turn_kind, rule, item, rules, items):
@@ -265,11 +267,8 @@ def _hint(c, row, rules, items, provider=None):
     h = coach.hint(provider, _key(items[row.item_version_id], items), rule_title=rules[row.rule_id].title_hi or "",
                    approved=approved, wrong_sentence=row.shown_text or "")
     if h.completion is not None:
-        c.execute(text("INSERT INTO model_call (exchange_id, agent, model, prompt_version, request_hash, response_text, "
-                       "latency_ms, error) VALUES (:e, 'coach', :m, :pv, :h, :t, :ms, :err)"),
-                  {"e": row.id, "m": h.completion.model, "pv": classmate.VERSION, "h": h.completion.request_hash or "-",
-                   "t": h.text if h.source == "model" else h.completion.text, "ms": h.completion.latency_ms,
-                   "err": h.completion.error or (("rejected: " + ", ".join(h.rejected)) if h.rejected else None)})
+        shown = h.completion if h.source != "model" else dataclasses.replace(h.completion, text=h.text)
+        log_call(c, row.id, "coach", shown, rejected=h.rejected)
     return h.hint_type, h.text
 
 
@@ -282,6 +281,7 @@ def _render(request, user, c, row, step, rules, items, buffer=""):
     rule = rules[row.rule_id]
     n, total = _position(c, row)
     ctx = {"exchange_id": row.id, "rule": rule, "step": step, "turn_kind": _turn_kind(row), "n": n, "total": total,
+           "step_n": n, "step_total": total,
            "act": BOARD, "buffer": buffer}
     if step.name == "intro":
         return render(request, "learner/rule_intro.html", title_key="page.rules", user=user, **ctx)

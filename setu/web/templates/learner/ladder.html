@@ -8,9 +8,9 @@
 {% if nxt.after %}{{ t("ladder.because_after", name=name(nxt.after)) }}{% elif nxt.learning %}{{ t("ladder.because_learning") }}{% else %}{{ t("ladder.because_start") }}{% endif %}</p>
 {% endif %}
 <h2>{{ t("ladder.can") }}</h2>
-{% if can %}<ul>{% for x in can %}<li>{{ name(x) }}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
+{% if can %}<ul class="plain">{% for x in can %}<li>{{ name(x) }}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
 <h2>{{ t("ladder.now") }}</h2>
-{% if now %}<ul>{% for x in now %}<li>{{ name(x) }}{% if x.placed %} — {{ t("ladder.to_confirm") }}{% endif %}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
+{% if now %}<ul class="plain">{% for x in now %}<li>{{ name(x) }}{% if x.placed %} — {{ t("ladder.to_confirm") }}{% endif %}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
 <h2>{{ t("ladder.later") }}</h2>
-<ul>{% for x in later %}<li>{{ name(x) }}{% if x.needs %} — {{ t("ladder.needs", name=name(x.needs)) }}{% endif %}</li>{% endfor %}</ul>
+<ul class="plain">{% for x in later %}<li>{{ name(x) }}{% if x.needs %} — {{ t("ladder.needs", name=name(x.needs)) }}{% endif %}</li>{% endfor %}</ul>
 {% endblock %}

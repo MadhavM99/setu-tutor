@@ -3,13 +3,19 @@
 Speaks the OpenAI-compatible chat-completions protocol, so it works with LM Studio, Ollama, vLLM or llama.cpp
 servers. Configuration comes only from the environment (no secrets in source):
 
-    SETU_LLM_URL      e.g. http://localhost:1234/v1   (unset: no model; every agent uses its approved fallback)
-    SETU_LLM_MODEL    e.g. qwen/qwen3.5-9b
-    SETU_LLM_TIMEOUT  seconds, default 20
-    SETU_LLM_RETRIES  default 1
+    SETU_LLM_URL          e.g. http://localhost:1234/v1 or https://api.groq.com/openai/v1  (unset: no model)
+    SETU_LLM_MODEL        e.g. qwen/qwen3.5-9b, llama-3.3-70b-versatile
+    SETU_LLM_API_KEY      bearer key for a hosted provider (never logged, never stored)
+    SETU_LLM_ALLOW_HOSTED 1 to allow a non-local endpoint (default: local endpoints only)
+    SETU_LLM_REASONING    reasoning effort for providers that support it (e.g. "none" for Gemini 3.x; reasoning
+                          tokens otherwise count against the reply budget)
+    SETU_LLM_TIMEOUT      seconds, default 20
+    SETU_LLM_RETRIES      default 1
 
-Only local endpoints are accepted (localhost, 127.0.0.1, private network or `.local` hosts), so learner data never
-reaches a commercial API by misconfiguration. Every call returns a `Completion` with the text, latency, token usage
+By default only local endpoints are accepted (localhost, private network, `.local`). A hosted provider must be
+switched on explicitly with SETU_LLM_ALLOW_HOSTED=1 (user decision, Nov 2026). What the agents send is content, not
+learner text: Raju gets the rule title, the Hindi meaning and permitted words; the coach gets the rule title and
+Raju's sentence; the friend gets the approved lines. No learner answer or identity is sent. Every call returns a `Completion` with the text, latency, token usage
 and error, which the caller logs to `model_call`. `MockProvider` exists for tests only and says so in its name.
 """
 import dataclasses
@@ -67,11 +73,17 @@ class OpenAICompatible:
     """A self-hosted OpenAI-compatible chat endpoint."""
 
     def __init__(self, base_url: str, model: str, *, timeout: float = 20.0, retries: int = 1,
-                 transport: httpx.BaseTransport | None = None):
-        if not is_local(base_url):
-            raise NotLocal(f"{base_url} is not a local or private-network endpoint")
+                 transport: httpx.BaseTransport | None = None, api_key: str | None = None, allow_hosted: bool = False,
+                 reasoning_effort: str | None = None):
+        if not is_local(base_url) and not allow_hosted:
+            raise NotLocal(f"{base_url} is not a local or private-network endpoint (set SETU_LLM_ALLOW_HOSTED=1)")
+        if not is_local(base_url) and not base_url.startswith("https://"):
+            raise NotLocal("a hosted endpoint must use https")
         self.base_url, self.model, self.timeout, self.retries = base_url.rstrip("/"), model, timeout, retries
-        self._client = httpx.Client(timeout=timeout, transport=transport)
+        self.hosted = not is_local(base_url)
+        self.reasoning_effort = reasoning_effort
+        headers = {"Authorization": f"Bearer {api_key}"} if api_key else {}
+        self._client = httpx.Client(timeout=timeout, transport=transport, headers=headers)
 
     @classmethod
     def from_environment(cls) -> "OpenAICompatible | None":
@@ -80,13 +92,18 @@ class OpenAICompatible:
             return None
         return cls(url, os.environ.get("SETU_LLM_MODEL", "local-model"),
                    timeout=float(os.environ.get("SETU_LLM_TIMEOUT", "20")),
-                   retries=int(os.environ.get("SETU_LLM_RETRIES", "1")))
+                   retries=int(os.environ.get("SETU_LLM_RETRIES", "1")),
+                   api_key=os.environ.get("SETU_LLM_API_KEY") or None,
+                   allow_hosted=os.environ.get("SETU_LLM_ALLOW_HOSTED") == "1",
+                   reasoning_effort=os.environ.get("SETU_LLM_REASONING") or None)
 
     def complete(self, messages, *, max_tokens: int = 200, temperature: float = 0.4) -> Completion:
         body = {"model": self.model, "messages": messages, "max_tokens": max_tokens, "temperature": temperature}
+        if self.reasoning_effort:
+            body["reasoning_effort"] = self.reasoning_effort
         h, error = request_hash(messages), None
         start = time.monotonic()
-        for _ in range(self.retries + 1):
+        for attempt in range(self.retries + 1):
             try:
                 r = self._client.post(f"{self.base_url}/chat/completions", json=body)
                 r.raise_for_status()
@@ -95,6 +112,10 @@ class OpenAICompatible:
                 usage = data.get("usage") or {}
                 return Completion(text, data.get("model", self.model), int((time.monotonic() - start) * 1000),
                                   usage.get("prompt_tokens"), usage.get("completion_tokens"), None, h)
+            except httpx.HTTPStatusError as e:  # never echo the request (it carries the key header)
+                error = f"HTTPStatusError: {e.response.status_code}"
+                if e.response.status_code in (429, 503) and attempt < self.retries:
+                    time.sleep(min(8.0, 1.0 * 2 ** attempt))  # back off when the provider is overloaded
             except (httpx.HTTPError, KeyError, IndexError, ValueError, TypeError) as e:
                 error = f"{type(e).__name__}: {e}"[:300]
         return Completion(None, self.model, int((time.monotonic() - start) * 1000), error=error, request_hash=h)

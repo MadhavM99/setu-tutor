@@ -1,0 +1,76 @@
+{
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+ "hosted": true,
+ "reasoning_effort": "none",
+ "cases": 29,
+ "methods": {
+  "tool": {
+   "n": 29,
+   "valid_rate": 0.1724137931034483,
+   "planting_precision": 1.0,
+   "leak_rate": 0.06896551724137931,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.8275862068965517,
+   "calls_per_case": 2.689655172413793,
+   "median_latency_ms": 8270.5,
+   "tokens_per_case": 69.0
+  },
+  "resample": {
+   "n": 29,
+   "valid_rate": 0.0,
+   "planting_precision": 0.0,
+   "leak_rate": 0.0,
+   "oov_rate": 0.0,
+   "fallback_rate": 1.0,
+   "calls_per_case": 3.0,
+   "median_latency_ms": 8275,
+   "tokens_per_case": 0.0
+  },
+  "prompt_only": {
+   "n": 29,
+   "valid_rate": 0.0,
+   "planting_precision": 0.0,
+   "leak_rate": 0.0,
+   "oov_rate": 0.0,
+   "fallback_rate": 1.0,
+   "calls_per_case": 1.0,
+   "median_latency_ms": 8265,
+   "tokens_per_case": 0.0
+  }
+ },
+ "coach": {
+  "n": 29,
+  "model_hint_shown_rate": 0.0,
+  "answer_leak_rate": 0.0,
+  "not_hindi_rate": 0.0,
+  "no_reply_rate": 1.0,
+  "fallback_rate": 1.0,
+  "median_latency_ms": 8283,
+  "tokens_per_case": 0.0,
+  "examples": []
+ },
+ "friend": {
+  "plain": {
+   "n": 12,
+   "model_pick_rate": 0.0,
+   "shown_approved_rate": 1.0,
+   "median_latency_ms": 8261.0
+  },
+  "injection": {
+   "n": 12,
+   "model_pick_rate": 0.0,
+   "shown_approved_rate": 1.0,
+   "median_latency_ms": 8277.5
+  }
+ },
+ "outage": {
+  "raju_fell_back_to_bank": true,
+  "coach_fell_back": true,
+  "friend_showed_approved": true,
+  "errors": [
+   "HTTPStatusError: 400"
+  ]
+ }
+}

@@ -27,10 +27,35 @@ def reply(content, usage=None):
 # ---------------------------------------------------------------- client
 
 
-def test_the_client_refuses_non_local_endpoints():
+def test_the_client_refuses_hosted_endpoints_unless_explicitly_allowed_and_https():
     with pytest.raises(llm.NotLocal):
-        llm.OpenAICompatible("https://api.openai.com/v1", "gpt")
+        llm.OpenAICompatible("https://api.groq.com/openai/v1", "m")
+    with pytest.raises(llm.NotLocal):
+        llm.OpenAICompatible("http://api.example.com/v1", "m", allow_hosted=True)
+    assert llm.OpenAICompatible("https://api.groq.com/openai/v1", "m", allow_hosted=True).hosted
     assert llm.is_local("http://localhost:1234/v1") and llm.is_local("http://192.168.1.5:11434/v1")
+
+
+def test_a_hosted_key_is_sent_as_a_bearer_header_and_never_appears_in_errors():
+    seen = []
+
+    def handler(request):
+        seen.append(request.headers.get("authorization"))
+        return httpx.Response(401, json={"error": "bad key"})
+    c = llm.OpenAICompatible("https://api.groq.com/openai/v1", "m", allow_hosted=True, api_key="sk-secret-123",
+                             transport=httpx.MockTransport(handler)).complete([{"role": "user", "content": "x"}])
+    assert seen[0] == "Bearer sk-secret-123" and "sk-secret" not in (c.error or "") and c.error.endswith("401")
+
+
+def test_from_environment_reads_the_hosted_settings(monkeypatch):
+    monkeypatch.setenv("SETU_LLM_URL", "https://openrouter.ai/api/v1")
+    monkeypatch.setenv("SETU_LLM_MODEL", "meta-llama/llama-3.3-70b-instruct")
+    monkeypatch.setenv("SETU_LLM_API_KEY", "k")
+    monkeypatch.delenv("SETU_LLM_ALLOW_HOSTED", raising=False)
+    with pytest.raises(llm.NotLocal):
+        llm.OpenAICompatible.from_environment()
+    monkeypatch.setenv("SETU_LLM_ALLOW_HOSTED", "1")
+    assert llm.OpenAICompatible.from_environment().hosted
 
 
 def test_the_client_records_usage_latency_and_strips_reasoning():
@@ -110,7 +135,8 @@ def test_a_hint_without_the_answer_is_used_and_a_leaky_or_latin_one_is_not():
     good = coach.hint(llm.MockProvider(['{"hint": "सवाल का निशान वाक्य के अंत में देखिए।"}']), ITEM,
                       rule_title="सवाल", approved=("generic", None), wrong_sentence="క్యా నువ్వు వస్తావు")
     assert good.source == "model" and good.text.startswith("सवाल")
-    for bad in ('{"hint": "लिखिए నువ్వు వస్తావా"}', '{"hint": "Write vastava"}', "not json"):
+    for bad in ('{"hint": "लिखिए నువ్వు వస్తావా"}', '{"hint": "Write vastava"}', "not json",
+                '{"hint": "निषेध (మరియు కాదు అన్న భావం) देखिए"}'):
         h = coach.hint(llm.MockProvider([bad]), ITEM, rule_title="सवाल", approved=("l1_rule", "मंज़ूर इशारा"),
                        wrong_sentence="క్యా నువ్వు వస్తావు")
         assert (h.text, h.source) == ("मंज़ूर इशारा", "approved") and h.rejected

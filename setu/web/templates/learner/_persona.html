@@ -1,0 +1,8 @@
+{# A persona speaking: `who` is raju | coach | friend; the bubble holds `caller()` content. #}
+{% macro persona(who) %}
+<div class="persona persona-{{ who }}">
+  {% set initial_key = "persona." ~ who ~ "_initial" %}
+  <span class="avatar" aria-hidden="true">{{ t(initial_key) }}</span>
+  <div class="bubble"><span class="who">{{ t("persona." ~ who) }}</span>{{ caller() }}</div>
+</div>
+{% endmacro %}

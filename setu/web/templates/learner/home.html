@@ -1,16 +1,27 @@
 {% extends "base.html" %}
+{# One recommended lesson, chosen from the learner's real state (setu/web/next_lesson.py). #}
 {% block content %}
-<h1>{{ t("home.greeting") }}</h1>
-<p>{{ t("home.signed_in_as", handle=user.handle) }}</p>
-<h2>{{ t("home.today") }}</h2>
-<ul class="stack">
-  <li><a href="/learn">{{ t("page.letters") }}</a></li>
-  <li><a href="/learn/aksharas">{{ t("learn.aksharas_link") }}</a></li>
-  <li><a href="/learn/words">{{ t("learn.words_link") }}</a></li>
-  <li><a href="/learn/chunks">{{ t("learn.chunks_link") }}</a></li>
-  <li><a href="/learn/rules">{{ t("learn.rules_link") }}</a></li>
-  <li><a href="/learn/scenes">{{ t("learn.scenes_link") }}</a></li>
-  <li><a href="/ladder">{{ t("learn.ladder_link") }}</a></li>
-  <li><a href="/learn/placement">{{ t("learn.placement_link") }}</a></li>
-</ul>
+<section class="hello">
+  <p class="eyebrow">{{ t("home.greeting") }}</p>
+  <p class="stage">{{ t("home.stage") }} <strong>{{ t(home.stage_key) }}</strong></p>
+  <div class="meter" role="img" aria-label="{{ t('home.progress_label') }}"><span style="width: {{ ((100 * home.done / home.total) if home.total else 0)|round|int }}%"></span></div>
+</section>
+{% if home.lesson %}
+{% set l = home.lesson %}
+<section class="next" aria-labelledby="next-title">
+  <p class="eyebrow">{{ t("home.review_now") if l.review else t("home.next_lesson") }}</p>
+  <h1 id="next-title">{{ t(l.title_key) }}</h1>
+  <p class="why">{{ why }}</p>
+  <p class="meta">{{ t("home.minutes", n=l.minutes) }}</p>
+  <a class="button primary big" href="{{ l.path }}">{{ t("home.start") }}</a>
+</section>
+{% else %}
+<section class="next">
+  <h1>{{ t("home.all_done") }}</h1>
+  <p class="why">{{ t("home.all_done_help") }}</p>
+  <a class="button" href="/ladder">{{ t("nav.progress") }}</a>
+</section>
+{% endif %}
+<p class="quiet"><a href="/learn/placement">{{ t("learn.placement_link") }}</a></p>
+<p class="quiet">{{ t("home.signed_in_as", handle=user.handle) }}</p>
 {% endblock %}

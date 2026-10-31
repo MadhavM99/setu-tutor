@@ -39,7 +39,34 @@ def home(request: Request):
     user = optional_user(request)
     if user is None:
         return RedirectResponse("/login", status_code=303)
-    return render(request, "learner/home.html", title_key="page.home", user=user)
+    if user.role == "teacher":
+        return RedirectResponse("/teacher", status_code=303)
+    from . import next_lesson
+
+    with request.app.state.db.tx() as c:
+        h = next_lesson.home(c, user.learner_id)
+    t = request.app.state.templates.globals["t"]
+    why = None
+    if h.lesson is not None:
+        args = {k: (t(v) if k.endswith("_key") else v) for k, v in h.lesson.reason_args.items()}
+        why = t(h.lesson.reason_key, **{k.removesuffix("_key"): v for k, v in args.items()})
+    return render(request, "learner/home.html", title_key="page.home", user=user, home=h, why=why, nav="today")
+
+
+@router.get("/review", response_class=HTMLResponse)
+def review(request: Request):
+    """समीक्षा: the activity with the earliest due review (the activity itself serves due cards first)."""
+    user = optional_user(request)
+    if user is None:
+        return RedirectResponse("/login", status_code=303)
+    from . import next_lesson
+
+    with request.app.state.db.tx() as c:
+        lesson = next_lesson.recommend(c, user.learner_id)
+    if lesson is not None and lesson.review:
+        return RedirectResponse(lesson.path, status_code=303)
+    return render(request, "learner/message.html", title_key="page.review_learner", user=user,
+                  message_key="home.no_review", nav="review")
 
 
 @router.get("/login", response_class=HTMLResponse)

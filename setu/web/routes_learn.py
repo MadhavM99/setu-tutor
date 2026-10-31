@@ -167,7 +167,9 @@ def _page(request, user, act, exchange_id, task, views, meta, keys, buffer=""):
     by_id = {x.id: x for x in views}
     labels = [(o, meta[o[len(LP.TRAP):]].trap if o.startswith(LP.TRAP) else by_id[o].label)
               for o in task.options if o in by_id or o.startswith(LP.TRAP)]
+    step_total = len(act.chain)
     return render(request, f"learner/practice_{task.type}.html", title_key=f"page.{act.name}", user=user, act=act,
+                  step_n=step_total - len(task.chain), step_total=step_total,
                   exchange_id=exchange_id, unit=by_id[task.letter_id], meta=meta[task.letter_id],
                   options=[by_id[o] for o in task.options if o in by_id], labels=labels, keys=keys, buffer=buffer)
 

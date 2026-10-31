@@ -170,7 +170,9 @@ def _keys(c):
 
 def _page(request, user, c, script, row, line, step, buffer=""):
     tpl = "learner/scene_comprehend.html" if row.task["step"] == "comprehend" else "learner/scene_reply.html"
+    total = c.execute(text("SELECT count(*) FROM learner_scene_line WHERE scene_id = :s"), {"s": script.scene_id}).scalar()
     return render(request, tpl, title_key="page.scenes", user=user, script=script, line=line, step=step,
+                  step_n=line.n, step_total=total,
                   exchange_id=row.id, shown=row.shown_text, act=Board(f"{ROOT}/{script.scene_id}"), keys=_keys(c),
                   buffer=buffer, options=list(enumerate(line.options_hi or [])))
 
@@ -190,7 +192,8 @@ def scenes(request: Request):
         if not rows:
             return _message(request, user, "scene.not_ready")
         listed = [(r, not _missing(c, user.learner_id, _script(c, r.scene_id))) for r in rows]
-    return render(request, "learner/scene_list.html", title_key="page.scenes", user=user, scenes=listed, root=ROOT)
+    return render(request, "learner/scene_list.html", title_key="page.scenes", user=user, scenes=listed, root=ROOT,
+                  nav="talk")
 
 
 @router.get(ROOT + "/{scene_id}", response_class=HTMLResponse)

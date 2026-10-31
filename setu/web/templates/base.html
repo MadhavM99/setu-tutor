@@ -6,21 +6,38 @@
   <title>{{ t(title_key) }} · {{ t("app.name") }}</title>
   <link rel="stylesheet" href="/static/css/setu.css">
 </head>
-<body>
+{# Two shells: the app (four learner destinations) and a focused lesson (progress + exit only). A template sets
+   `lesson = true` for the second, `nav` for the highlighted destination. #}
+{% set shell = "is-lesson" if lesson is defined and lesson else "is-app" %}
+<body class="{{ shell }}">
   <a class="skip" href="#main">{{ t("nav.skip") }}</a>
+  {% if lesson is defined and lesson %}
+  <header class="lesson-bar">
+    <a class="lesson-exit" href="/" aria-label="{{ t('lesson.exit') }}">{{ t("lesson.exit_short") }}</a>
+    {% if step_n is defined and step_total is defined and step_total %}
+    <div class="lesson-progress" role="progressbar" aria-valuemin="0" aria-valuemax="{{ step_total }}" aria-valuenow="{{ step_n }}" aria-label="{{ t('lesson.progress') }}"><span style="width: {{ (100 * step_n / step_total)|round|int }}%"></span></div>
+    {% else %}<div class="lesson-progress" aria-hidden="true"><span style="width: 0"></span></div>{% endif %}
+    <span class="brand-mini">{{ t("app.name") }}</span>
+  </header>
+  {% else %}
   <header class="top">
-    <span class="brand">{{ t("app.name") }} <span class="tagline">{{ t("app.tagline") }}</span></span>
+    <a class="brand" href="/">{{ t("app.name") }}<span class="tagline">{{ t("app.tagline") }}</span></a>
     {% if user %}
-    <nav aria-label="{{ t('a11y.site_nav') }}">
-      <a href="/">{{ t("nav.home") }}</a>
-      <a href="/learn">{{ t("nav.letters") }}</a>
-      {% if user.role in ("teacher", "admin") %}<a href="/teacher">{{ t("nav.teacher") }}</a>{% endif %}
-      <form method="post" action="/logout" class="inline">
-        <button type="submit">{{ t("btn.signout") }}</button>
-      </form>
+    <nav class="nav" aria-label="{{ t('a11y.site_nav') }}">
+      {% if user.role in ("teacher", "admin") %}
+      <a href="/teacher">{{ t("nav.teacher") }}</a>
+      {% else %}
+      {% set here = nav if nav is defined else "" %}
+      <a href="/" {% if here == "today" %}aria-current="page"{% endif %}>{{ t("nav.today") }}</a>
+      <a href="/ladder" {% if here == "progress" %}aria-current="page"{% endif %}>{{ t("nav.progress") }}</a>
+      <a href="/review" {% if here == "review" %}aria-current="page"{% endif %}>{{ t("nav.review") }}</a>
+      <a href="/learn/scenes" {% if here == "talk" %}aria-current="page"{% endif %}>{{ t("nav.talk") }}</a>
+      {% endif %}
     </nav>
+    <form method="post" action="/logout" class="signout"><button type="submit" class="link">{{ t("btn.signout") }}</button></form>
     {% endif %}
   </header>
+  {% endif %}
   {% if demo %}<p class="demo-banner" role="note">{{ t("app.demo_banner") }}</p>{% endif %}
   <main id="main" aria-label="{{ t('a11y.main') }}">
     {% if error_key is defined and error_key %}<p class="error" role="alert">{{ t(error_key) }}</p>{% endif %}

@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
 {% block content %}
+<p class="eyebrow">{{ t("lesson.independent") }}</p>
 <h1>{{ t(act.text.recall_prompt, twin=unit.label) }}</h1>
 {% set telugu = true %}{% include "learner/_keyboard.html" %}
 {% endblock %}

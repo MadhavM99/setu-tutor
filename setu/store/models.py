@@ -1068,6 +1068,8 @@ class ModelCall(Base):
     latency_ms = Column(Integer)
     error = Column(Text)
     created_at = now()
+    prompt_tokens = Column(Integer)  # migration 0015
+    completion_tokens = Column(Integer)
     __table_args__ = (one_of("agent", "classmate", "coach", "friend", "teacher"),)
 
 

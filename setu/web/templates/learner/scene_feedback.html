@@ -1,12 +1,11 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
+{% from "learner/_persona.html" import persona %}
 {% block content %}
-{% if fallback %}
-<h1>{{ t("scene.fallback") }}</h1>
-<p>{{ t(outcome_key) }}</p>
-{% else %}
-<h1>{{ t(outcome_key) }}</h1>
-{% endif %}
-<p>{{ t("scene.ravi_understands") }}</p>
-<p class="letter-big">{{ te(line.replies[0]) }}</p>
-<p><a class="button" href="{{ here }}">{{ t("btn.next") }}</a></p>
+{% set tone = "unsure" if fallback else ("good" if outcome_key == "fb.correct" else "bad") %}
+<div class="feedback {{ tone }}" role="status">
+  <h1>{{ t("scene.fallback") if fallback else t(outcome_key) }}</h1>
+  {% if fallback %}<p>{{ t(outcome_key) }}</p>{% endif %}
+</div>
+{% call persona("friend") %}<p>{{ t("scene.ravi_understands") }}</p><p class="letter-big">{{ te(line.replies[0]) }}</p>{% endcall %}
+<a class="button primary big" href="{{ here }}">{{ t("btn.next") }}</a>
 {% endblock %}

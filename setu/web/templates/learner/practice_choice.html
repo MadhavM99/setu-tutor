@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
 {% block content %}
+<p class="eyebrow">{{ t("lesson.guided") }}</p>
 <h1>{{ t(act.text.choice_prompt, twin=unit.label) }}</h1>
 <form method="post" action="{{ act.path }}/answer" class="keys">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">

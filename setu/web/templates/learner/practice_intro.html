@@ -1,14 +1,16 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
 {% block content %}
-<h1>{{ meta.group_hi if act.intro_per_group or meta.setup_hi else t(act.text.new) }}</h1>
-<p class="letter-big">{{ te(unit.telugu) }}</p>
-<p>{{ t(act.text.twin_is, twin=unit.label) }}</p>
+<p class="eyebrow">{{ meta.group_hi if act.intro_per_group or meta.setup_hi else t(act.text.new) }}</p>
+<div class="exercise-card">
+  <p class="letter-big">{{ te(unit.telugu) }}</p>
+  <p class="prompt" style="text-align:center">{{ t(act.text.twin_is, twin=unit.label) }}</p>
+</div>
 {% if meta.setup_hi %}<p>{{ meta.setup_hi }}</p>{% endif %}
 {% if meta.cognate_of %}<p>{{ t("word.cognate", hindi=meta.cognate_of) }}</p>{% endif %}
-{% if meta.trap %}<p><strong>{{ t("word.false_friend", hindi=meta.trap) }}</strong></p>{% endif %}
-{% if meta.note_hi %}<p>{{ meta.note_hi }}</p>{% endif %}
+{% if meta.trap %}<p class="notice"><strong>{{ t("word.false_friend", hindi=meta.trap) }}</strong></p>{% endif %}
+{% if meta.note_hi %}<p class="help">{{ meta.note_hi }}</p>{% endif %}
 <form method="post" action="{{ act.path }}/continue">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
-  <button type="submit">{{ t("btn.next") }}</button>
+  <button type="submit" class="big">{{ t("btn.next") }}</button>
 </form>
 {% endblock %}

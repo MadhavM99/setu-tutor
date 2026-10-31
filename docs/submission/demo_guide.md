@@ -2,26 +2,47 @@
 
 ```bash
 cd ~/Developer/setu-tutor
-scripts/run_demo.sh            # starts Postgres (Docker), rebuilds the isolated setu_demo DB, serves http://127.0.0.1:8000
-# prints the learner and teacher logins (passphrase: डेमो पासवर्ड बारह); SKIP_SEED=1 keeps the existing demo DB
+scripts/run_demo.sh            # Postgres (Docker) + isolated setu_demo DB + app on http://127.0.0.1:8000
+                               # prints a learner and a teacher login (passphrase: डेमो पासवर्ड बारह)
 ```
 
-Optional real model (self-hosted): in another terminal `~/.lmstudio/bin/lms server start && ~/.lmstudio/bin/lms load
-qwen/qwen3.5-9b`, then start the demo with `SETU_LLM_URL=http://localhost:1234/v1 SETU_LLM_MODEL=qwen/qwen3.5-9b
-scripts/run_demo.sh`. Without it every agent uses its approved/bank fallback (the page says which).
+Real model (hosted, optional): put these in your shell (never in a file in the repo), then start the demo:
 
-Open **http://127.0.0.1:8000** → अंदर आएँ → the printed learner handle + passphrase. Every page shows the demo banner.
+```bash
+export SETU_LLM_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+export SETU_LLM_MODEL=gemini-3.5-flash
+export SETU_LLM_API_KEY=...            # your key
+export SETU_LLM_ALLOW_HOSTED=1 SETU_LLM_REASONING=none SETU_LLM_RETRIES=3
+SKIP_SEED=1 scripts/run_demo.sh
+```
+
+Without them every agent uses its approved/bank fallback. Each Raju turn's last card says which ("मॉडल ने लिखा, जाँच
+में पास हुआ" or "मंज़ूर वाक्य-भंडार से").
+
+## The learning experience
+
+- **आज सीखें (home):** one recommended lesson, chosen from the learner's real state (due reviews first, then a rule
+  Raju forgot, then the next unlocked activity in ladder order, then Raju practice, then conversations), with the reason,
+  the estimated minutes and one "पाठ शुरू करें" button. A small bar shows overall progress and the current stage.
+- **Lesson screens:** one exercise per screen, a progress bar and an exit (×), nothing else. Each new item: intro card
+  (example + Hindi twin/meaning) → guided step (pick) → independent step (write on the Telugu keyboard or type) →
+  immediate feedback.
+- **Raju (राजू · आपका सहपाठी):** writes a sentence with one planted Hindi-habit error; the learner corrects it or says
+  it is right. **दीदी (coach)** appears after a first miss with a hint that never holds the answer; after a second
+  miss she shows the answer to copy. **रवि (Telugu friend)** speaks approved lines in conversations.
+- **मेरी प्रगति:** the ladder (can do · learning · later). **समीक्षा:** goes straight to whatever is due.
+  **बातचीत:** the conversation scenes.
+
+## Steps
 
 | Step | Where | What to show |
 |---|---|---|
-| Dashboard | `/` | links to every activity |
-| Letters, aksharas | `/learn/letters`, `/learn/aksharas` | twin intro → choice (recognition) → cue-free recall on the Telugu keyboard; aksharas unlock after their letters |
-| Words, chunks | `/learn/words`, `/learn/chunks` | cognates, false-friend trap, built recall; chunks inside scenes |
-| Placement | `/learn/placement` | adaptive test from L2; "बस, यहीं से शुरू करें" |
-| Ladder | `/ladder` | can do · learning (placed: पक्का करना बाकी) · later, one explained next step |
-| **Raju** | `/learn/rules` | new rule card → own sentence (type the Telugu for the Hindi meaning, e.g. तुम आ रहे हो क्या → నువ్వు వస్తావా) → Raju appears (demo threshold 1 rule) with a planted error → type the planted sentence unchanged to see the **coach hint**, then the correction; the last card shows **इस बार क्या हुआ**: Raju's sentence (model or bank), your answer, the checker's verdict, Raju's new state |
-| **Native friend** | `/learn/scenes` | opens after the scene's chunks are mastered or placed (fastest: pass placement) → comprehension → own reply; an unexpected reply gives the Hindi fallback |
-| Teacher | log in with the teacher handle → `/teacher` | content review, the unsure queue (settle an answer), rule review |
+| Home | `/` | one lesson, its reason and time |
+| Lesson | "पाठ शुरू करें" | intro → pick → write → feedback |
+| Raju + coach | `/learn/rules` | write the Telugu for the Hindi meaning; once Raju appears, submit his sentence unchanged → दीदी's hint; then correct it → the card shows the verdict and Raju's new state |
+| Conversation | pass `/learn/placement` first, then `/learn/scenes` | रवि's line → what did he mean → your reply |
+| Progress | `/ladder` | |
+| Teacher | teacher login → `/teacher` | review, the unsure queue |
 
-Mobile: the pages are single-column HTML; check at a narrow browser width. No screenshots were captured (no
-screenshot tool is installed in the environment).
+Screenshots (desktop and mobile) are in `docs/submission/screenshots/` (`python -m scripts.screenshots <handle>
+<passphrase>` re-captures them).

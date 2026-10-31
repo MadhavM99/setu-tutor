@@ -1,13 +1,13 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
+{% from "learner/_persona.html" import persona %}
 {# The friend's approved line, then a comprehension question in Hindi (multiple choice: recognition only). #}
 {% block content %}
-<p>{{ script.title_hi }}</p>
-<p>{{ t("scene.friend_says") }}</p>
-<p class="letter-big">{{ te(shown) }}</p>
+<p class="eyebrow">{{ script.title_hi }}</p>
+{% call persona("friend") %}<p class="letter-big">{{ te(shown) }}</p>{% endcall %}
 <h1>{{ line.question_hi }}</h1>
-<form method="post" action="{{ act.path }}/answer" class="stack">
+<form method="post" action="{{ act.path }}/answer" class="options">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   <input type="hidden" name="n" value="1">
-  {% for i, o in options %}<button type="submit" name="choice" value="{{ i }}">{{ o }}</button>{% endfor %}
+  {% for i, o in options %}<button type="submit" name="choice" value="{{ i }}" class="option">{{ o }}</button>{% endfor %}
 </form>
 {% endblock %}

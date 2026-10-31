@@ -267,4 +267,4 @@ def ladder_page(request: Request):
     with request.app.state.db.tx() as c:
         can, now, later, nxt = ladder(c, user.learner_id)
     return render(request, "learner/ladder.html", title_key="page.ladder", user=user, can=can, now=now, later=later,
-                  nxt=nxt)
+                  nxt=nxt, nav="progress")

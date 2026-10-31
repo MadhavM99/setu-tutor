@@ -1,5 +1,5 @@
-/* Calm, readable, self-contained (E-15): fonts served by the app, base size 18px, WCAG AA contrast,
-   visible focus, nothing loaded from another host. */
+/* SETU design system v2. Calm, warm, self-contained (E-15): fonts served by the app, nothing loaded from another
+   host, base size 18px, WCAG AA contrast, visible focus, reduced motion respected. One primary colour (deep teal). */
 @font-face { font-family: "Setu Devanagari"; font-weight: 400; font-display: swap;
   src: url("/static/fonts/noto-sans-devanagari-devanagari-400-normal.woff2") format("woff2"); }
 @font-face { font-family: "Setu Devanagari"; font-weight: 700; font-display: swap;
@@ -9,28 +9,157 @@
 @font-face { font-family: "Setu Telugu"; font-weight: 700; font-display: swap;
   src: url("/static/fonts/noto-sans-telugu-telugu-700-normal.woff2") format("woff2"); }
 
-:root { --ink: #1b1f24; --muted: #4a525c; --paper: #fbfaf7; --line: #d6d3cc; --accent: #2c4f86; --alert: #8a1c1c; }
-html { font-size: 18px; }
-body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.6;
+:root {
+  --paper: #f7f3ec;          /* warm neutral background */
+  --surface: #fffdf9;        /* raised surface */
+  --ink: #1f1c18;
+  --muted: #5e574d;
+  --line: #e6dfd3;
+  --primary: #1d6b62;        /* the one brand colour */
+  --primary-ink: #ffffff;
+  --primary-soft: #e3efec;
+  --good: #1d6b62; --good-soft: #e3efec;
+  --warn: #8a4b0f; --warn-soft: #f8ecdc;
+  --bad: #9b2c2c;  --bad-soft: #f8e5e3;
+  --radius: 14px; --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(40, 30, 10, .06), 0 6px 24px rgba(40, 30, 10, .06);
+  --space: 1rem;
+}
+* { box-sizing: border-box; }
+html { font-size: 18px; -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink); line-height: 1.65;
   font-family: "Setu Devanagari", "Setu Telugu", system-ui, sans-serif; }
-[lang="te"] { font-family: "Setu Telugu", "Setu Devanagari", system-ui, sans-serif; font-size: 1.15em; }
+[lang="te"] { font-family: "Setu Telugu", "Setu Devanagari", system-ui, sans-serif; font-size: 1.12em; line-height: 1.8; }
+h1 { font-size: 1.75rem; line-height: 1.3; margin: .25rem 0 .75rem; letter-spacing: -.01em; }
+h2 { font-size: 1.2rem; margin: 1.75rem 0 .5rem; }
+p { margin: .5rem 0; }
+a { color: var(--primary); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
 .skip { position: absolute; left: -999px; }
-.skip:focus { left: 1rem; top: 1rem; background: var(--paper); padding: .5rem; }
-.top { display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;
-  padding: .75rem 1rem; border-bottom: 1px solid var(--line); }
-.brand { font-weight: 700; } .tagline { font-weight: 400; color: var(--muted); margin-inline-start: .5rem; }
-nav { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-main { max-width: 38rem; margin: 2rem auto; padding: 0 1rem; }
-a { color: var(--accent); } a:focus, button:focus, input:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
-.stack { display: grid; gap: .5rem; max-width: 24rem; }
-input { font: inherit; padding: .5rem; border: 1px solid var(--muted); border-radius: 4px; background: #fff; }
-button, .button { font: inherit; padding: .5rem 1rem; border: 1px solid var(--accent); border-radius: 4px;
-  background: var(--accent); color: #fff; cursor: pointer; text-decoration: none; display: inline-block; }
-form.inline { display: inline; } form.inline button { background: transparent; color: var(--accent); }
+.skip:focus { left: 1rem; top: 1rem; background: var(--surface); padding: .5rem; z-index: 10; }
+
+/* ---------------------------------------------------------------- app shell */
+.top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 1.5rem;
+  padding: .7rem max(1rem, calc((100vw - 60rem) / 2)); background: rgba(247, 243, 236, .92);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); }
+.brand { font-weight: 700; font-size: 1.25rem; color: var(--ink); text-decoration: none; display: flex; align-items: baseline; gap: .5rem; }
+.tagline { font-weight: 400; font-size: .85rem; color: var(--muted); }
+.nav { display: flex; gap: .25rem; margin-inline-start: auto; }
+.nav a { padding: .45rem .9rem; border-radius: 999px; color: var(--muted); text-decoration: none; font-size: .95rem; }
+.nav a:hover { color: var(--ink); background: var(--surface); }
+.nav a[aria-current="page"] { background: var(--primary-soft); color: var(--primary); font-weight: 700; }
+.signout { margin: 0; }
+button.link { background: none; border: 0; color: var(--muted); padding: .4rem .2rem; font-size: .85rem; min-height: 0; }
+main { max-width: 38rem; margin: 2.5rem auto 6rem; padding: 0 1.25rem; }
+.demo-banner { max-width: 38rem; margin: 1rem auto 0; padding: .55rem .9rem; border-radius: var(--radius-sm);
+  background: var(--warn-soft); color: var(--warn); font-size: .85rem; }
+
+@media (max-width: 640px) {
+  .top { gap: .75rem; padding: .6rem 1rem; }
+  .tagline { display: none; }
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; justify-content: space-around; margin: 0; padding: .4rem .5rem
+    calc(.4rem + env(safe-area-inset-bottom)); background: var(--surface); border-top: 1px solid var(--line); z-index: 6; }
+  .nav a { font-size: .85rem; padding: .5rem .6rem; }
+  .signout { margin-inline-start: auto; }
+  main { margin-top: 1.5rem; }
+  h1 { font-size: 1.5rem; }
+}
+
+/* ---------------------------------------------------------------- lesson shell (focused) */
+.lesson-bar { display: flex; align-items: center; gap: 1rem; padding: .9rem max(1rem, calc((100vw - 38rem) / 2)); }
+.lesson-exit { display: inline-flex; align-items: center; justify-content: center; width: 2.4rem; height: 2.4rem;
+  border-radius: 50%; color: var(--muted); text-decoration: none; font-size: 1.4rem; background: var(--surface);
+  border: 1px solid var(--line); }
+.lesson-progress { flex: 1; height: .55rem; border-radius: 999px; background: var(--line); overflow: hidden; }
+.lesson-progress span { display: block; height: 100%; background: var(--primary); border-radius: 999px;
+  transition: width .4s ease; }
+.brand-mini { font-weight: 700; color: var(--muted); font-size: .9rem; }
+.is-lesson main { margin-top: 1rem; }
+
+/* ---------------------------------------------------------------- home */
+.eyebrow { text-transform: none; font-size: .9rem; font-weight: 700; color: var(--primary); margin: 0 0 .25rem; }
+.hello { margin-bottom: 1.5rem; }
+.hello .eyebrow { font-size: 1.35rem; color: var(--ink); }
+.stage { color: var(--muted); margin: .25rem 0 .5rem; }
+.meter { height: .5rem; max-width: 16rem; border-radius: 999px; background: var(--line); overflow: hidden; }
+.meter span { display: block; height: 100%; background: var(--primary); }
+.next { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.75rem 1.5rem 1.6rem; }
+.next h1 { font-size: 2rem; }
+.why { color: var(--muted); }
+.meta { color: var(--muted); font-size: .9rem; margin-bottom: 1.25rem; }
+.quiet { margin-top: 2rem; font-size: .9rem; color: var(--muted); }
+
+/* ---------------------------------------------------------------- controls */
+input, textarea, select { font: inherit; width: 100%; padding: .75rem .9rem; border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm); background: var(--surface); color: var(--ink); }
+input:focus, textarea:focus, select:focus { border-color: var(--primary); }
+textarea { min-height: 6rem; }
+label { font-size: .95rem; color: var(--muted); }
+button, .button { font: inherit; font-weight: 700; min-height: 2.9rem; padding: .65rem 1.3rem; border-radius: 999px;
+  border: 1.5px solid var(--primary); background: var(--surface); color: var(--primary); cursor: pointer;
+  text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  transition: background .15s ease, transform .1s ease; }
+button:hover, .button:hover { background: var(--primary-soft); }
+button:active, .button:active { transform: translateY(1px); }
+button[type="submit"]:not(.key):not(.option):not(.link):not(.secondary), .button.primary {
+  background: var(--primary); color: var(--primary-ink); }
+button[type="submit"]:not(.key):not(.option):not(.link):not(.secondary):hover, .button.primary:hover { background: #175a52; }
+button:disabled { opacity: .45; cursor: default; }
+.big { font-size: 1.05rem; padding: .85rem 2rem; }
+.stack { display: grid; gap: .75rem; }
+form { margin: 1rem 0; }
+form.inline { display: inline; }
+
+/* ---------------------------------------------------------------- exercises */
+.prompt { font-size: 1.4rem; }
+.letter-big { font-size: 3.6rem; line-height: 1.25; margin: .75rem 0; text-align: center; }
+.exercise-card { background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; }
+.keys { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1rem 0; }
+.key { min-width: 3.1rem; min-height: 3.1rem; font-size: 1.35rem; font-weight: 400; background: var(--surface);
+  color: var(--ink); border: 1.5px solid var(--line); border-radius: var(--radius-sm); padding: .2rem .6rem; }
+.key:hover { border-color: var(--primary); background: var(--primary-soft); }
+.options { display: grid; gap: .6rem; }
+.option { justify-content: flex-start; width: 100%; padding: .9rem 1.1rem; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--ink); font-weight: 400; font-size: 1.15rem; }
+.option:hover { border-color: var(--primary); background: var(--primary-soft); }
+.answer-so-far { text-align: center; color: var(--muted); }
+.answer-so-far .letter-big { display: block; min-height: 4.5rem; }
+
+/* ---------------------------------------------------------------- feedback */
+.feedback { border-radius: var(--radius); padding: 1.25rem 1.4rem; margin: 0 0 1rem; }
+.feedback h1 { margin-top: 0; font-size: 1.5rem; }
+.feedback.good { background: var(--good-soft); color: #134a43; }
+.feedback.bad { background: var(--bad-soft); color: #6f1e1e; }
+.feedback.unsure { background: var(--warn-soft); color: var(--warn); }
+.error { background: var(--bad-soft); color: var(--bad); padding: .6rem .9rem; border-radius: var(--radius-sm); }
+.notice { background: var(--warn-soft); padding: .6rem .9rem; border-radius: var(--radius-sm); }
 .help { color: var(--muted); font-size: .9rem; }
-.error { color: var(--alert); border-inline-start: 4px solid var(--alert); padding-inline-start: .75rem; }
-.notice { border-inline-start: 4px solid var(--muted); padding-inline-start: .75rem; }
-.handle { font-size: 1.4rem; font-weight: 700; }
-.letter-big { font-size: 3.5rem; margin: .5rem 0; }
-.keys { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0; }
-.key { min-width: 3rem; min-height: 3rem; font-size: 1.4rem; background: #fff; color: var(--ink); border-color: var(--muted); }
+.handle { font-size: 1.5rem; font-weight: 700; letter-spacing: .05em; }
+
+/* ---------------------------------------------------------------- personas: Raju, the coach, Ravi */
+.persona { display: flex; gap: .75rem; align-items: flex-start; margin: 1rem 0; animation: rise .25s ease both; }
+.avatar { flex: none; width: 2.75rem; height: 2.75rem; border-radius: 50%; display: grid; place-items: center;
+  font-weight: 700; font-size: 1rem; color: #fff; }
+.persona-raju .avatar { background: #b4632a; }
+.persona-coach .avatar { background: var(--primary); }
+.persona-friend .avatar { background: #5a4f9c; }
+.bubble { position: relative; background: var(--surface); border-radius: 4px var(--radius) var(--radius) var(--radius);
+  padding: .8rem 1.1rem; box-shadow: var(--shadow); max-width: 100%; }
+.bubble .who { display: block; font-size: .8rem; font-weight: 700; color: var(--muted); margin-bottom: .15rem; }
+.bubble .letter-big { font-size: 1.9rem; text-align: start; margin: .2rem 0; }
+.persona-coach .bubble { background: var(--primary-soft); }
+.trace { margin-top: 1.5rem; padding: 1rem 1.2rem; border-radius: var(--radius-sm); border: 1px dashed var(--line);
+  color: var(--muted); font-size: .9rem; }
+.trace h2 { margin: 0 0 .25rem; font-size: .95rem; }
+
+/* ---------------------------------------------------------------- lists, tables (progress, teacher) */
+ul.plain { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+ul.plain li { padding: .55rem .9rem; background: var(--surface); border-radius: var(--radius-sm); }
+table { border-collapse: collapse; width: 100%; font-size: .9rem; background: var(--surface); }
+th, td { text-align: start; padding: .5rem .6rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.is-app main:has(table) { max-width: 60rem; }
+dl dt { font-weight: 700; margin-top: .6rem; } dl dd { margin: 0; }
+mark { background: var(--warn-soft); color: var(--warn); border-radius: 4px; padding: 0 .15em; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

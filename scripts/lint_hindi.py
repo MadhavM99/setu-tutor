@@ -18,7 +18,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 LATIN = re.compile(r"[A-Za-z]")
 GROUPS = {"app", "nav", "page", "a11y", "onb", "form", "btn", "home", "consent", "tch", "err", "fb", "hint",
-          "ladder", "res", "raju", "lang", "learn", "word", "chunk", "place", "scene"}
+          "ladder", "res", "raju", "lang", "learn", "word", "chunk", "place", "scene", "lesson", "persona", "stage"}
 VISIBLE_ATTRS = {"alt", "title", "placeholder", "aria-label", "aria-description"}
 EXTERNAL = re.compile(r"^\s*(https?:)?//", re.IGNORECASE)
 JINJA_COMMENT = re.compile(r"\{#.*?#\}", re.DOTALL)

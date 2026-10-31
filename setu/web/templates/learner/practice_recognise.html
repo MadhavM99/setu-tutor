@@ -1,6 +1,7 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
 {% block content %}
+<p class="eyebrow">{{ t("lesson.independent") }}</p>
 <h1>{{ t("learn.recognise_prompt") }}</h1>
-<p class="letter-big">{{ te(unit.telugu) }}</p>
+<div class="exercise-card"><p class="letter-big">{{ te(unit.telugu) }}</p></div>
 {% set telugu = false %}{% include "learner/_keyboard.html" %}
 {% endblock %}

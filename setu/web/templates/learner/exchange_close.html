@@ -1,21 +1,21 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% set lesson = true %}
+{% from "learner/_persona.html" import persona %}
 {% block content %}
-<h1>{{ t(outcome_key) }}</h1>
-{% if turn_kind == "planted" %}
-<p>{{ t("raju.his_error") }}</p>
-<p class="letter-big">{{ te(item.wrong_form) }}</p>
-{% elif turn_kind == "no_error" and not correct %}
-<p>{{ t("raju.was_right") }}</p>
-{% endif %}
-<p>{{ t("raju.correct_is") }}</p>
-<p class="letter-big">{{ te(item.correct_form) }}</p>
-{% if taught %}<p>{{ t("raju.learned") }}</p>{% endif %}
-<section class="stack" aria-label="{{ t('raju.trace') }}">
+{% set tone = "good" if correct else ("unsure" if outcome_key == "fb.unsure" else "bad") %}
+<div class="feedback {{ tone }}" role="status">
+  <h1>{{ t(outcome_key) }}</h1>
+  {% if turn_kind == "planted" %}<p>{{ t("raju.his_error") }} {{ te(item.wrong_form) }}</p>
+  {% elif turn_kind == "no_error" and not correct %}<p>{{ t("raju.was_right") }}</p>{% endif %}
+  <p>{{ t("raju.correct_is") }}</p>
+  <p class="letter-big">{{ te(item.correct_form) }}</p>
+</div>
+{% if taught %}{% call persona("raju") %}<p>{{ t("raju.learned") }}</p>{% endcall %}{% endif %}
+<a class="button primary big" href="{{ act.path }}">{{ t("btn.next") }}</a>
+<section class="trace" aria-label="{{ t('raju.trace') }}">
   <h2>{{ t("raju.trace") }}</h2>
   {% if turn_kind != "own" %}<p>{{ t("raju.trace_shown") }} {{ te(shown) }} — {{ t(src_key) }}</p>{% endif %}
   {% if first %}<p>{{ t("raju.trace_answer") }} {% if first.raw_text %}{{ te(first.raw_text) }}{% else %}{{ t("raju.says_correct") }}{% endif %}</p>
   <p>{{ t("raju.trace_verdict") }} {{ t("raju.v." ~ first.outcome) }}</p>{% endif %}
   <p>{{ t("raju.trace_state") }} {{ t(state_key) }}</p>
 </section>
-<p><a class="button" href="{{ act.path }}">{{ t("btn.next") }}</a></p>
 {% endblock %}
