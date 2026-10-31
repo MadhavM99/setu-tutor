@@ -1,4 +1,4 @@
-# SETU Tutor — mid-submission report (31 Oct 2026)
+# SETU Tutor — mid-submission report (31 Oct 2026; updated 1 Nov 2026)
 
 Hindi-first Telugu tutor in which the learner teaches a weaker AI classmate (Raju) by correcting his Hindi-transfer
 errors. Specification: paper "Teaching the Machine in Your Mother Tongue" (v8) and the Phase 0 package in `docs/`.
@@ -16,6 +16,7 @@ Supporting files: [architecture](architecture_summary.md) · [datasets](dataset_
 | 3 Learner slices S1–S8 (letters, aksharas, words, chunks, correction exchange, re-teaching, placement + ladder, scenes) | complete | module tests only; no learner data |
 | 4.1 Teacher console I (native review, unsure queue) | complete | tests |
 | 4.2 Rule review/promotion, variants, κ | implemented, paused (commit `8f0bf24`, docs pending) | tests |
+| Redesign (1 Nov): learner UI (one recommended lesson, focused lessons, personas, 4-item nav, new design system, screenshots in `screenshots/`); hosted-model support verified with real Gemini calls; sim-0.2 | implemented | UI checked in a real browser at desktop and mobile widths; real Raju call shown in the live app; baselines rate-limited |
 | Mid-submission sprint: self-hosted model client; Raju, coach, friend model integration; demo DB; simulator; generation-baseline harness | implemented | agents tested with a test mock only; simulator run; **no real-model run yet** |
 
 Commits: one per slice on `redesign/phase0-spec` (`git log --oneline`, 30+ commits). Tests: see §10.
@@ -40,6 +41,15 @@ Raju forgetting on/off; progressive hints vs direct answers; no-error share 0 / 
 A-only assumed effects on/off; half-life sensitivity. All **ran in the simulator**; results in §5.
 
 ## 5. Results (simulation — not human evidence)
+
+**Update 1 Nov 2026.** A validity review of the simulator below found an ad-hoc memory model, assumed A-only effects
+switched on by default, and unequal time on task. The improved `sim-0.2` (FSRS memory, A-only effects off, matched
+time) **reverses the ranking**: day-7 recall A 0.253, B 0.335, C 0.306 (A−B −0.082 [−0.089, −0.075]; A−C −0.053
+[−0.060, −0.047]). The two simulations disagree because they model memory differently; neither is evidence about
+people. The one pattern both share: A is not better than C on recall. Details, the validity review and the rejected
+runs: [experiment_results.md](experiment_results.md) §B, §C, §E. Real-model measurements: §D (real inference works;
+the 29-case comparison was rate-limited and has to be re-run). The original `sim-0.1` summary follows.
+
 
 n = 100 simulated learners per condition (20 matched profiles × 5 seeds). Day-7 cue-free recall:
 
