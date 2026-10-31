@@ -1,4 +1,5 @@
 """FastAPI application factory."""
+import datetime as dt
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -54,6 +55,7 @@ class _LazyWriter:
 def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> FastAPI:
     app = FastAPI(title="setu", version=__version__, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.db = AppDatabase(engine)
+    app.state.clock = lambda: dt.datetime.now(dt.UTC)  # replaced in tests to move through days
     app.state.writer = _LazyWriter(app.state.db)
     app.state.cookie_secure = cookie_secure
     app.state.catalog = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")

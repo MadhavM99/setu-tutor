@@ -5,6 +5,7 @@
 {% if turn_kind == "own" %}
 <h1>{{ t("raju.own_prompt", meaning=shown) }}</h1>
 {% else %}
+{% if replant %}<p>{{ t("raju.forgot") }}</p>{% endif %}
 <p>{{ t("raju.wrote") }}</p>
 <p class="letter-big">{{ te(shown) }}</p>
 <h1>{{ t("raju.asks") }}</h1>

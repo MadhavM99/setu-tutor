@@ -133,3 +133,9 @@ def test_an_unseen_own_sentence_is_unsure_and_choices_are_refused():
 def test_copy_reasons_name_the_planted_error():
     assert X.is_copy("planted_error_present") and X.is_copy("planted_error_unchanged")
     assert not X.is_copy("accepted_form")
+
+
+def test_a_re_plant_never_repeats_the_last_sentence_even_with_a_single_item():
+    items = [X.ItemView("HI-TE-002-a", uuid.uuid4(), "HI-TE-002")]
+    assert X.pick_item(items, "HI-TE-002", last_item="HI-TE-002-a", seed=0, turn=0, fresh_only=True) is None
+    assert X.pick_item(items, "HI-TE-002", last_item=None, seed=0, turn=0, fresh_only=True).item_id == "HI-TE-002-a"

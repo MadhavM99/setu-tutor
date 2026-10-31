@@ -99,12 +99,17 @@ def own_rule(rules: Sequence[OwnRule], *, new_this_session: int, seed: int, turn
     return random.Random(f"{seed}:own:{turn}").choice(seen).rule_id, False
 
 
-def pick_item(items: Sequence[ItemView], rule_id: str, *, last_item: str | None, seed: int, turn: int):
-    """A practice item of the rule; never the item used last time when the rule has another (spec §5)."""
+def pick_item(items: Sequence[ItemView], rule_id: str, *, last_item: str | None, seed: int, turn: int,
+              fresh_only: bool = False):
+    """A practice item of the rule; never the item used last time when the rule has another (spec §5). With
+    `fresh_only` (a planted re-teach) the last sentence is never repeated: None if the rule has no other item."""
     pool = sorted((i for i in items if i.rule_id == rule_id), key=lambda i: i.item_id)
     if not pool:
         return None
-    fresh = [i for i in pool if i.item_id != last_item] or pool
+    fresh = [i for i in pool if i.item_id != last_item]
+    if not fresh and fresh_only:
+        return None
+    fresh = fresh or pool
     return random.Random(f"{seed}:item:{turn}").choice(fresh)
 
 

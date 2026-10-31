@@ -391,3 +391,14 @@ private (`_issue_verdict`) and the import-boundary test keeps it inside the chec
 - Not built yet: the Devanagari reading-aid toggle and its fading (P8b-05), the confidence slider (research flag),
   the session summary ("आज आपने ये सीखा"), mirror mode, and the model classmate and coach (Phase 4).
 
+## 15. Implementation notes: re-teaching (slice S6, 31 Oct 2026)
+
+- The forgetting scan runs before a new `/learn/rules` session is planned and at no other time, so a rule taught in
+  a session is never forgotten and re-planted inside it. The planner puts forgotten rules first.
+- A planted turn uses an item other than the last one the learner saw for that rule (`pick_item(fresh_only=True)`).
+  If the rule has no other approved item, the turn becomes an own sentence instead of repeating the sentence.
+- A re-plant shows the fixed line "राजू यह नियम पहले सीख चुका था, पर भूल गया।" above Raju's sentence.
+- `app.state.clock` supplies the time for forgetting and for evidence dates (tests replace it to move through days).
+- Not built: weak-prerequisite repair (learning-ladder §4); it needs blame tags in item metadata, and per its spec
+  nothing is flagged without them.
+

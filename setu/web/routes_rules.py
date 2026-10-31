@@ -141,8 +141,9 @@ def _state(c, learner_id, row) -> X.Step:
     return X.step(_turn_kind(row), answers, why_due=due)
 
 
-def _create(c, session, turn: int, turn_kind: str, rule, item=None, *, intro=False):
-    task = {"activity": NAME, "turn": turn, "turn_kind": turn_kind, "step": "intro" if intro else "exchange"}
+def _create(c, session, turn: int, turn_kind: str, rule, item=None, *, intro=False, replant=False):
+    task = {"activity": NAME, "turn": turn, "turn_kind": turn_kind, "step": "intro" if intro else "exchange",
+            "replant": replant}
     if intro:
         kind, planted, shown = "learn", None, None
     elif turn_kind == "planted":
@@ -189,9 +190,14 @@ def _next_turn(c, learner_id, rules, items):
         rule = rules[rule_id]
         if intro:
             return _create(c, session, pos, kind, rule, intro=True), True
-        item = X.pick_item(views, rule_id, last_item=_last_item(c, learner_id, rule_id), seed=session.seed, turn=pos)
+        item = X.pick_item(views, rule_id, last_item=_last_item(c, learner_id, rule_id), seed=session.seed, turn=pos,
+                           fresh_only=kind == "planted")
+        if item is None and kind == "planted":  # never re-plant the exact last sentence: own sentence instead
+            kind = "own"
+            item = X.pick_item(views, rule_id, last_item=None, seed=session.seed, turn=pos)
         if item is not None:
-            return _create(c, session, pos, kind, rule, items[item.version_id]), True
+            replant = kind == "planted" and rule.classmate_state == "forgotten"
+            return _create(c, session, pos, kind, rule, items[item.version_id], replant=replant), True
     c.execute(text("UPDATE session SET ended_at = now() WHERE id = :s"), {"s": session.id})
     return None, True
 
@@ -224,7 +230,7 @@ def _render(request, user, c, row, step, rules, items, buffer=""):
     item = items[row.item_version_id]
     hint = _hint(c, row, rules, items) if step.name == "hint" else None
     return render(request, "learner/exchange.html", title_key="page.rules", user=user, item=item,
-                  shown=row.shown_text, hint=hint, keys=_keys(c), **ctx)
+                  shown=row.shown_text, hint=hint, keys=_keys(c), replant=bool(row.task.get("replant")), **ctx)
 
 
 def _message(request, user, key, more=False):
@@ -253,7 +259,8 @@ def rules_page(request: Request):
                 return _render(request, user, c, last, step, rules, items)
         has_session = _open_session(c, user.learner_id) is not None
     if not has_session:
-        forget_due(request.app.state.db.engine, request.app.state.writer, user.learner_id)  # P8b-01, at session start
+        forget_due(request.app.state.db.engine, request.app.state.writer, user.learner_id,
+                   at=request.app.state.clock())  # P8b-01: only when a session starts, never mid-session
         with request.app.state.db.tx() as c:
             rules, items = _bank(c, user.learner_id)
             _new_session(c, user.learner_id, rules)
@@ -371,7 +378,7 @@ async def rules_answer(request: Request):
              "aids": json.dumps(aids), "ht": hint_type, "ar": step.revealed, "k": f"{row.id}:{step.n}"}).scalar()
     if inserted is None:  # a concurrent duplicate submission
         return RedirectResponse(PATH, status_code=303)
-    request.app.state.writer.record_verdict(result.verdict, skill=target)
+    request.app.state.writer.record_verdict(result.verdict, skill=target, at=request.app.state.clock())
     with request.app.state.db.tx() as c:
         answers = _answers(c, row.id)
         if _state(c, user.learner_id, row).name != "close":
