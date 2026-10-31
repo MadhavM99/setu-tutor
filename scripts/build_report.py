@@ -51,7 +51,7 @@ def recall_chart(sim1, sim2) -> str:
     plot_h = h - top - bottom
     gw = (w - left - 20) / len(groups)
     bw = 34
-    y = lambda v: top + plot_h * (1 - v / ymax)  # noqa: E731
+    y = lambda v: top + plot_h * (1 - v / ymax)
     parts = [f'<svg viewBox="0 0 {w} {h}" role="img" aria-label="Day-7 recall by condition and simulator version">']
     for t in (0, 0.1, 0.2, 0.3, 0.4):
         parts.append(f'<line x1="{left}" x2="{w - 10}" y1="{y(t):.1f}" y2="{y(t):.1f}" stroke="#e8e6e0"/>'
@@ -101,8 +101,8 @@ def build():
     sim1, sim2 = load("reports/simulation/results.json"), load("reports/simulation_v2/results.json")
     card = load("reports/scorecard-2026-10-31-heldout.json")
     base_run1 = load("reports/generation_baselines_run1_rate_limited.json")
-    commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT, capture_output=True, text=True).stdout.strip()
-    log = subprocess.run(["git", "log", "--reverse", "--format=%h|%ad|%s", "--date=short"], cwd=ROOT,
+    commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], check=True, cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    log = subprocess.run(["git", "log", "--reverse", "--format=%h|%ad|%s", "--date=short"], check=True, cwd=ROOT,
                          capture_output=True, text=True).stdout.strip().splitlines()
 
     shots = [("01-home", "Home: one recommended lesson with its reason and time"),
