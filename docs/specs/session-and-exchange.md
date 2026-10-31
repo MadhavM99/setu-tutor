@@ -359,3 +359,35 @@ private (`_issue_verdict`) and the import-boundary test keeps it inside the chec
 - `classmate_vl` (migration 0006): a learner's seen words are their word cards plus the words of every item
   sentence shown to them (surface tokens). The planted rule's target forms are added per turn by the leak filter.
   Readable by `setu_read`.
+
+## 14. Implementation notes: correction exchange (slice S5, 31 Oct 2026)
+
+`setu/domain/exchange.py` (`exchange-1`, pure), `checker.check_own`, `setu/web/routes_rules.py` (`/learn/rules`).
+
+- **Session:** planned once with planner-1 at the learner's band L4; the turns, config and seed are stored in
+  `session.config_snapshot`. When the plan is used up the session is ended and a new one can be started. The
+  forgetting scan (P8b-01) runs before each new session is planned.
+- **Before the classmate is active** (fewer than three ready rules) every turn is an own sentence. An unseen rule is
+  introduced with its Hindi title and explanation (at most two new rules per session), and the learner writes the
+  Telugu for one of its items' Hindi meanings. A rule is *ready* after one checked, cue-free correct answer.
+- **Mock classmate:** shows the bank's planted sentence (planted turn) or the correct sentence (no-error turn),
+  framed by fixed Hindi templates. No model is called and nothing else is said.
+- **Ladder:** cue-free answer → one fixed hint (cue 1, `hint_type` recorded) → the correct sentence to copy once (cue 2,
+  after reveal, no skill evidence) → close. A false alarm on a no-error turn closes at once. Unsure closes at once
+  and goes to the teacher queue. The close shows the planted error next to its correction (R-13).
+- **Hints:** the first approved hint in the order recast, l1_rule, contrast that passes `check_hint` again for this
+  item when served; otherwise the generic line. The `only` argument is the hint-type arm (P-OPT-03).
+- **Why?** after every third checked, cue-free correct fix of a planted sentence; checked with
+  `check_explanation` and logged with no skill or classmate update (P8b-02).
+- **Own sentences** are checked like fixes (`check_own`, kind `own`). A sentence that still carries the Hindi habit
+  of a rule the learner has taught the classmate is logged as a `copy_event` by the OutcomeWriter (M-37).
+
+**Deviations and gaps:**
+- A correct fix after a hint is shown as correct but does **not** teach the classmate: the writer and the database
+  allow only cue-free fixes (R-INPUT). The rule stays plantable and comes back.
+- Own-sentence tasks use the rule's practice items (Hindi meaning → accepted forms), not `own_task` frames, because
+  no approved frames exist yet. Other correct sentences are therefore unsure (teacher queue).
+- The importer does not read hints, so every rule uses the generic hint until teachers write hints.
+- Not built yet: the Devanagari reading-aid toggle and its fading (P8b-05), the confidence slider (research flag),
+  the session summary ("आज आपने ये सीखा"), mirror mode, and the model classmate and coach (Phase 4).
+

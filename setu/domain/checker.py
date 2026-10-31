@@ -114,6 +114,30 @@ def check_fix(*, attempt_id, raw: str, item: ItemKey, response_mode: str, no_err
     return result(outcome, reason, n, forgiveness=forgiveness, matched=matched)
 
 
+def check_own(*, attempt_id, raw: str, item: ItemKey, response_mode: str, transliterator=None) -> CheckResult:
+    """Check the learner's own sentence for an item's Hindi meaning (F-OWN): the same order as a fix, so a sentence
+    that still carries the rule's Hindi habit is wrong (`planted_error_*`, logged as a copy event), and an unseen
+    form is unsure. Kind `own`: production evidence that never teaches the classmate."""
+    mode = _mode(response_mode)
+    if mode == "multiple_choice":
+        raise ValueError("multiple-choice answers are recognition: use check_choice")
+
+    def result(outcome, reason, n=None, match=None):
+        v = _issue_verdict(attempt_id=attempt_id, outcome=outcome, kind="own", reason_code=reason)
+        return CheckResult(v, n, match.forgiveness if match else (), match.form if match else None, mode)
+
+    n = normalise.normalise_answer(raw, target_script=item.target_script, transliterator=transliterator)
+    if n.status == "empty":
+        return result("wrong", "empty", n)
+    if n.status in _UNREADABLE:
+        return result("unsure", f"input_{n.status}", n)
+    accepted = [normalise.canonical(f) for f in [item.correct_form, *item.accepted_forms] if f]
+    outcome, reason, match = _classify(n, item, accepted)
+    if n.status == "transliterated":
+        return result("unsure", "romanised_match" if outcome == "correct" else f"romanised_{reason}", n)
+    return result(outcome, reason, n, match)
+
+
 def _classify(n: normalise.Normalised, item: ItemKey, accepted: list[str]):
     texts = n.candidates or (n.text,)
     wrong = normalise.canonical(item.wrong_form) if item.wrong_form else None

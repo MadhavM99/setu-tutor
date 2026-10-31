@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<p>{{ t("raju.step", n=n, total=total) }}</p>
+<h1>{{ t("raju.intro_new") }}</h1>
+<h2>{{ rule.title_hi }}</h2>
+{% if rule.l1_explanation_hi %}<p>{{ rule.l1_explanation_hi }}</p>{% endif %}
+<p>{{ t("raju.intro_then") }}</p>
+<form method="post" action="{{ act.path }}/continue">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <button type="submit">{{ t("btn.next") }}</button>
+</form>
+{% endblock %}

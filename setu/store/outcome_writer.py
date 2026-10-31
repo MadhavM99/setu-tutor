@@ -12,6 +12,8 @@ writer privileges even if it connects as the owner. Every change is appended to 
 From slice 2.6 a verdict may also name the FSRS card (`CardTarget`) and the skill (`SkillTarget`) it is evidence
 for; the writer then updates the card and its review log (the rating comes from the verdict and the attempt's cue
 level) and the mastery tracker, skill evidence and status, all in the same transaction. Unsure changes nothing.
+From slice S5 an own sentence that still has the Hindi habit of a rule the learner taught the classmate is logged
+as a `copy_event` (M-37).
 """
 import dataclasses
 import datetime as dt
@@ -22,7 +24,7 @@ import uuid
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import Connection, Engine
 
-from setu.domain import scheduler
+from setu.domain import exchange, scheduler
 from setu.domain.checker import INDEPENDENT_MODES
 from setu.domain.verdict import is_minted
 
@@ -149,6 +151,8 @@ class OutcomeWriter:
                 self._review_card(c, context, card, v, verdict_id, at)
             if skill is not None:
                 self._update_skill(c, context, skill, v, verdict_id, at)
+            if v.kind == "own" and exchange.is_copy(v.reason_code):
+                self._maybe_copy(c, context, v.attempt_id, verdict_id)
             change = event_id = None
             if v.outcome == "correct" and v.kind == "fix":
                 change, event_id = self._maybe_teach(c, context, "checker", {"verdict_id": str(verdict_id)})
@@ -223,6 +227,17 @@ class OutcomeWriter:
              "cf": m.cuefree_successes, "prod": m.production_successes, "last": tracker.last_practised, "due": due,
              "status": m.status, "ev": event_id, "a": tracker.alpha, "b": tracker.beta, "h": tracker.half_life_days,
              "tv": tracker.version})
+
+    def _maybe_copy(self, c: Connection, context: dict, attempt_id, verdict_id):
+        """M-37: the learner's own sentence carries the Hindi habit of a rule they already taught the classmate."""
+        if not context["rule_id"] or c.execute(
+                text("SELECT 1 FROM classmate_rule_state WHERE learner_id = :l AND rule_id = :r"),
+                {"l": context["learner_id"], "r": context["rule_id"]}).first() is None:
+            return
+        c.execute(text("INSERT INTO copy_event (learner_id, rule_id, attempt_id) VALUES (:l, :r, :a)"),
+                  {"l": context["learner_id"], "r": context["rule_id"], "a": attempt_id})
+        self._event(c, "checker", "copy_event", {"learner_id": str(context["learner_id"]),
+                                                 "rule_id": context["rule_id"], "verdict_id": str(verdict_id)})
 
     @staticmethod
     def _attempt_context(c: Connection, attempt_id) -> dict:

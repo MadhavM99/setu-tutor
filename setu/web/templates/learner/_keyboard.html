@@ -12,6 +12,7 @@
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   <input type="hidden" name="buffer" value="{{ buffer }}">
   <input type="hidden" name="built" value="1">
+  {% if step is defined and step.n %}<input type="hidden" name="n" value="{{ step.n }}">{% endif %}
   <button type="submit"{% if not buffer %} disabled{% endif %}>{{ t("btn.check") }}</button>
 </form>
 {% else %}
@@ -22,6 +23,7 @@
 {% endif %}
 <form method="post" action="{{ act.path }}/answer" class="stack">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  {% if step is defined and step.n %}<input type="hidden" name="n" value="{{ step.n }}">{% endif %}
   <label for="typed">{{ t("learn.or_type") }}</label>
   <input id="typed" name="typed" maxlength="{{ act.max_len }}" autocomplete="off">
   <button type="submit">{{ t("btn.check") }}</button>

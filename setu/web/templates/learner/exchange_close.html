@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t(outcome_key) }}</h1>
+{% if turn_kind == "planted" %}
+<p>{{ t("raju.his_error") }}</p>
+<p class="letter-big">{{ te(item.wrong_form) }}</p>
+{% elif turn_kind == "no_error" and not correct %}
+<p>{{ t("raju.was_right") }}</p>
+{% endif %}
+<p>{{ t("raju.correct_is") }}</p>
+<p class="letter-big">{{ te(item.correct_form) }}</p>
+{% if taught %}<p>{{ t("raju.learned") }}</p>{% endif %}
+<p><a class="button" href="{{ act.path }}">{{ t("btn.next") }}</a></p>
+{% endblock %}

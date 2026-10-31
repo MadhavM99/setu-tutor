@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{# One correction, no-error or own-sentence turn. The box always starts empty; the hint never holds the answer. #}
+{% block content %}
+<p>{{ t("raju.step", n=n, total=total) }}</p>
+{% if turn_kind == "own" %}
+<h1>{{ t("raju.own_prompt", meaning=shown) }}</h1>
+{% else %}
+<p>{{ t("raju.wrote") }}</p>
+<p class="letter-big">{{ te(shown) }}</p>
+<h1>{{ t("raju.asks") }}</h1>
+{% endif %}
+{% if step.name == "hint" %}
+<p>{{ t("hint.not_yet") }}</p>
+<p><strong>{{ t("hint.title") }}</strong> {{ hint[1] if hint[1] else t("hint.generic") }}</p>
+{% elif step.name == "copy" %}
+<p>{{ t("raju.copy") }}</p>
+<p class="letter-big">{{ te(item.correct_form) }}</p>
+{% endif %}
+{% if step.name == "why" %}
+<h2>{{ t("raju.why") }}</h2>
+<form method="post" action="{{ act.path }}/answer" class="stack">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <input type="hidden" name="n" value="{{ step.n }}">
+  <label for="explanation">{{ t("raju.why_help") }}</label>
+  <textarea id="explanation" name="explanation" maxlength="300"></textarea>
+  <button type="submit">{{ t("btn.check") }}</button>
+</form>
+{% else %}
+{% if turn_kind != "own" and step.name != "copy" %}
+<form method="post" action="{{ act.path }}/answer">
+  <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
+  <input type="hidden" name="n" value="{{ step.n }}">
+  <button type="submit" name="says_correct" value="1">{{ t("raju.says_correct") }}</button>
+</form>
+<p>{{ t("raju.or_fix") }}</p>
+{% endif %}
+{% set telugu = true %}{% include "learner/_keyboard.html" %}
+{% endif %}
+{% endblock %}

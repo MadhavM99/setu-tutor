@@ -2,5 +2,6 @@
 {% block content %}
 <h1>{{ t(title_key) }}</h1>
 <p>{{ t(message_key) }}</p>
+{% if more_path is defined and more_path %}<p><a class="button" href="{{ more_path }}">{{ t("raju.more") }}</a></p>{% endif %}
 <p><a href="/">{{ t("nav.home") }}</a></p>
 {% endblock %}
