@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("tch.r.title") }}</h1>
+<p>{{ t("tch.r.rule_help") }}</p>
+<table>
+  <thead><tr><th>{{ t("tch.r.rule") }}</th><th>{{ t("tch.r.title_col") }}</th><th>{{ t("tch.status") }}</th><th>{{ t("tch.r.reviews") }}</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+  <tr>
+    <td><a href="/teacher/rules/{{ r.rule_id }}">{{ r.rule_id }}</a></td>
+    <td>{{ r.title_hi or "—" }}</td>
+    <td>{{ t("tch.r.life." ~ r.lifecycle) }}{% if r.issues %} · {{ t("tch.r.issues_n", n=r.issues) }}{% endif %}{% if r.state == "needs_third" %} · <strong>{{ t("tch.r.third_needed") }}</strong>{% endif %}</td>
+    <td>{{ r.reviews }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<p><a href="/teacher/agreement">{{ t("tch.k.link") }}</a></p>
+{% endblock %}

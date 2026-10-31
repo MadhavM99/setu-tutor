@@ -13,6 +13,7 @@
     <input type="hidden" name="queue_item_id" value="{{ it.id }}">
     <label for="note-{{ it.id }}">{{ t("tch.comment") }}</label>
     <input id="note-{{ it.id }}" name="note_hi" maxlength="500">
+    <label><input type="checkbox" name="propose" value="1"> {{ t("tch.propose") }}</label>
     <button type="submit" name="outcome" value="correct">{{ t("tch.o_correct") }}</button>
     <button type="submit" name="outcome" value="partial">{{ t("tch.o_partial") }}</button>
     <button type="submit" name="outcome" value="wrong">{{ t("tch.o_wrong") }}</button>

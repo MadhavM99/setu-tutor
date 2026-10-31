@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ t("tch.k.title") }}</h1>
+{% if message_key is defined and message_key %}<p role="status">{{ t(message_key) }}</p>{% endif %}
+<p>{{ t("tch.k.explain") }}</p>
+<p>{{ t("tch.k.pairs_n", n=a.pairs) }}</p>
+<ul>
+{% for metric, r in a.metrics.items() %}
+  <li>{{ t("tch.k.m." ~ metric) }}: {% if r.value is none %}{{ t(r.key) }}{% else %}{{ r.value }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% if a.disputed %}<h2>{{ t("tch.k.disputed") }}</h2><ul>{% for rid in a.disputed %}<li><a href="/teacher/rules/{{ rid }}">{{ rid }}</a></li>{% endfor %}</ul>{% endif %}
+<form method="post" action="/teacher/agreement">
+  <input type="hidden" name="batch" value="{{ batch }}">
+  <button type="submit">{{ t("tch.k.store") }}</button>
+</form>
+{% endblock %}

@@ -11,9 +11,10 @@ from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from sqlalchemy import text
 
-from setu.store.content_review import KINDS, ContentReviewer, ReviewRefused
+from setu.store.content_review import KINDS, ReviewRefused
 from setu.store.outcome_writer import ResolutionRefused
 from setu.store.resolution import MIN_KEY_BYTES, TeacherResolution
+from setu.store.rule_promotion import CONSOLE_BATCH, RuleForm, RuleReviewer
 
 from .routes_ui import form_data, optional_user, render
 
@@ -32,9 +33,9 @@ def _teacher(request):
     return user, None
 
 
-def _reviewer(request) -> ContentReviewer:
+def _reviewer(request) -> RuleReviewer:
     if getattr(request.app.state, "reviewer", None) is None:
-        request.app.state.reviewer = ContentReviewer.from_environment(fallback=request.app.state.db.engine)
+        request.app.state.reviewer = RuleReviewer.from_environment(fallback=request.app.state.db.engine)
     return request.app.state.reviewer
 
 
@@ -213,4 +214,109 @@ async def settle(request: Request):
         request.app.state.writer.apply_resolution(resolution)
     except ResolutionRefused:
         return _queue_page(request, user, message="tch.already_settled", status=409)
+    if data.get("propose") and outcome == "correct":  # F4: a proposal only; two native approvals still needed
+        with request.app.state.db.tx() as c:
+            row = c.execute(text("SELECT coalesce(a.normalised_text, a.raw_text) AS form, e.item_version_id FROM "
+                                 "teacher_queue_item q JOIN verdict v ON v.id = q.verdict_id JOIN attempt a ON "
+                                 "a.id = v.attempt_id JOIN exchange e ON e.id = a.exchange_id WHERE q.id = :q"),
+                            {"q": qid}).first()
+        if row is not None:
+            _reviewer(request).propose_variant(item_version_id=row.item_version_id, form=row.form,
+                                               teacher_id=user.learner_id, queue_item_id=qid)
     return _queue_page(request, user, message="tch.settled")
+
+
+# ---------------------------------------------------------------- rules (F1) and agreement (F2)
+
+
+@router.get("/teacher/rules", response_class=HTMLResponse)
+def rules(request: Request, lifecycle: str | None = None, direction: str | None = None):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    rows = [r for r in _reviewer(request).overview()
+            if (not lifecycle or r["lifecycle"] == lifecycle) and (not direction or r["direction"] == direction)]
+    return render(request, "teacher/rules.html", title_key="page.rules_review", user=user, rows=rows)
+
+
+def _rule_page(request, user, rule_id, message=None, status=200):
+    d = _reviewer(request).detail(rule_id, user.learner_id)
+    if d is None:
+        return RedirectResponse("/teacher/rules", status_code=303)
+    return render(request, "teacher/rule.html", title_key="page.rules_review", user=user, d=d, rule_id=rule_id,
+                  message_key=message, status=status, bands=("L0", "L1", "L2", "L3", "L4", "L5"))
+
+
+@router.get("/teacher/rules/{rule_id}", response_class=HTMLResponse)
+def rule(request: Request, rule_id: str):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    return _rule_page(request, user, rule_id)
+
+
+def _int(data, key):
+    try:
+        return int(str(data.get(key, "")))
+    except ValueError:
+        return 0
+
+
+@router.post("/teacher/rules/{rule_id}/review", response_class=HTMLResponse)
+async def rule_review(request: Request, rule_id: str):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    data = await form_data(request)
+    form = RuleForm(language=str(data.get("language", "")), native=bool(data.get("native")),
+                    acceptable_natural=_int(data, "acceptable_natural"), category_ok=str(data.get("category_ok")) == "1",
+                    explanation_ok=_int(data, "explanation_ok"), band_fit=str(data.get("band_fit", "")),
+                    confidence=_int(data, "confidence"), decision=str(data.get("decision", "")),
+                    comments_hi=str(data.get("comments_hi", "")).strip()[:500] or None)
+    try:
+        key = _reviewer(request).review_rule(rule_id, str(data.get("rule_version_id", "")), user.learner_id, form)
+    except ReviewRefused as e:
+        return _rule_page(request, user, rule_id, message=e.key, status=409)
+    return _rule_page(request, user, rule_id, message=key)
+
+
+async def _step(request, rule_id, method):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    data = await form_data(request)
+    try:
+        key = getattr(_reviewer(request), method)(rule_id, str(data.get("rule_version_id", "")), user.learner_id)
+    except ReviewRefused as e:
+        return _rule_page(request, user, rule_id, message=e.key, status=409)
+    return _rule_page(request, user, rule_id, message=key)
+
+
+@router.post("/teacher/rules/{rule_id}/activate", response_class=HTMLResponse)
+async def rule_activate(request: Request, rule_id: str):
+    return await _step(request, rule_id, "activate")
+
+
+@router.post("/teacher/rules/{rule_id}/deprecate", response_class=HTMLResponse)
+async def rule_deprecate(request: Request, rule_id: str):
+    return await _step(request, rule_id, "deprecate")
+
+
+@router.get("/teacher/agreement", response_class=HTMLResponse)
+def agreement_page(request: Request, batch: str = CONSOLE_BATCH):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    return render(request, "teacher/agreement.html", title_key="page.agreement", user=user, batch=batch,
+                  a=_reviewer(request).agreement(batch))
+
+
+@router.post("/teacher/agreement", response_class=HTMLResponse)
+async def agreement_store(request: Request):
+    user, deny = _teacher(request)
+    if deny:
+        return deny
+    batch = str((await form_data(request)).get("batch", CONSOLE_BATCH))[:80]
+    a = _reviewer(request).agreement(batch, store=True, teacher_id=user.learner_id)
+    return render(request, "teacher/agreement.html", title_key="page.agreement", user=user, batch=batch, a=a,
+                  message_key="tch.k.stored")

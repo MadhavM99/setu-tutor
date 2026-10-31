@@ -580,8 +580,13 @@ class RuleReview(Base):
     comments_hi = Column(Text)
     round = Column(Integer, nullable=False, server_default=text("1"))
     created_at = now()
+    decision = Column(Text, nullable=False)  # migration 0014: approve | reject | uncertain
+    native_speaker = Column(Boolean, nullable=False, server_default=text("false"))
+    batch = Column(Text)  # agreement batch label (F2)
     __table_args__ = (
         UniqueConstraint("rule_version_id", "reviewer_id", "round", name="uq_rule_review_once_per_round"),
+        one_of("decision", "approve", "reject", "uncertain"),
+        *no_latin("comments_hi"),
         one_of("language", "hi", "te"),
         CheckConstraint("acceptable_natural BETWEEN 1 AND 5 AND explanation_ok BETWEEN 1 AND 5 "
                         "AND confidence BETWEEN 1 AND 5", name="likert_1_to_5"),
@@ -1009,7 +1014,7 @@ class ContentReview(Base):
     created_at = now()
     __table_args__ = (
         one_of("target_kind", "letter", "akshara", "lexeme", "chunk", "scene", "scene_script", "scene_line",
-               "scene_reply_variant"),
+               "scene_reply_variant", "accepted_variant"),
         one_of("decision", "approve", "reject"),
         *no_latin("comment_hi"),
     )

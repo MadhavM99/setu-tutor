@@ -240,9 +240,11 @@ def test_a_run_has_comprehension_independent_and_assisted_production_and_a_safe_
     assert one(engine, "SELECT count(*) AS n FROM teacher_queue_item q JOIN verdict v ON v.id = q.verdict_id JOIN "
                        "attempt a ON a.id = v.attempt_id JOIN exchange e ON e.id = a.exchange_id JOIN session s ON "
                        "s.id = e.session_id WHERE s.learner_id = :l", l=learner).n == 1
-    ev = one(engine, "SELECT task_type, production, cue_level FROM skill_evidence WHERE learner_id = :l AND "
-                     "skill_id = :s ORDER BY id LIMIT 1", l=learner, s=f"L5.scene.{SID}.PR")
-    assert (ev.task_type, ev.production, ev.cue_level) == ("scene_reply", True, 0)
+    ev = engine.connect().execute(text("SELECT task_type, production, cue_level FROM skill_evidence WHERE "
+                                       "learner_id = :l AND skill_id = :s ORDER BY cue_level"),
+                                  {"l": learner, "s": f"L5.scene.{SID}.PR"}).all()
+    assert [(e.task_type, e.production, e.cue_level) for e in ev] == [
+        ("scene_reply", True, 0), ("scene_reply", True, 0), ("scene_reply", True, 1)]  # line 1, line 2 miss, hint
 
 
 # ---------------------------------------------------------------- variants

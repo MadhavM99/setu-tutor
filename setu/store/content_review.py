@@ -61,6 +61,10 @@ KINDS = {
                        (("telugu", "tch.f.telugu", TELUGU), ("question_hi", "tch.f.question", HINDI),
                         ("options_hi", "tch.f.options", HINDI), ("reply_goal_hi", "tch.f.goal", HINDI),
                         ("replies", "tch.f.replies", TELUGU), ("hint_hi", "tch.f.hint", HINDI)), "scene_id, n"),
+    "accepted_variant": Kind("accepted_variant", "id", "status", "approvals",
+                             "md5(form || register || coalesce(region, ''))",
+                             (("form", "tch.f.telugu", TELUGU), ("register", "tch.f.register", HINDI),
+                              ("region", "tch.f.region", HINDI)), "id", pending=("proposed",)),
     "scene_reply_variant": Kind("scene_reply_variant", "id", "status", "approvals", "md5(form)",
                                 (("form", "tch.f.telugu", TELUGU),), "created_at", pending=("proposed",)),
 }
