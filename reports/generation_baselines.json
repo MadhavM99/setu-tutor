@@ -1,0 +1,4 @@
+{
+ "status": "not_run",
+ "reason": "no self-hosted model endpoint (SETU_LLM_URL unset)"
+}

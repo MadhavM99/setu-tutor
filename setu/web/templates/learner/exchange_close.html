@@ -10,5 +10,12 @@
 <p>{{ t("raju.correct_is") }}</p>
 <p class="letter-big">{{ te(item.correct_form) }}</p>
 {% if taught %}<p>{{ t("raju.learned") }}</p>{% endif %}
+<section class="stack" aria-label="{{ t('raju.trace') }}">
+  <h2>{{ t("raju.trace") }}</h2>
+  {% if turn_kind != "own" %}<p>{{ t("raju.trace_shown") }} {{ te(shown) }} — {{ t(src_key) }}</p>{% endif %}
+  {% if first %}<p>{{ t("raju.trace_answer") }} {% if first.raw_text %}{{ te(first.raw_text) }}{% else %}{{ t("raju.says_correct") }}{% endif %}</p>
+  <p>{{ t("raju.trace_verdict") }} {{ t("raju.v." ~ first.outcome) }}</p>{% endif %}
+  <p>{{ t("raju.trace_state") }} {{ t(state_key) }}</p>
+</section>
 <p><a class="button" href="{{ act.path }}">{{ t("btn.next") }}</a></p>
 {% endblock %}

@@ -6,6 +6,7 @@ _meta:
   digits: devanagari          # counts are shown with Devanagari digits; codes and handles keep 0-9 for typing
 
 app:
+  demo_banner: "डेमो: यह प्रदर्शन वाला डेटाबेस है। यहाँ की तेलुगु सामग्री डेमो-जाँचकर्ताओं ने मंज़ूर की है, असली तेलुगु मातृभाषियों ने नहीं।"
   name: "सेतु"
   tagline: "हिंदी से तेलुगु"
 
@@ -72,6 +73,7 @@ btn:
 home:
   greeting: "नमस्ते!"
   signed_in_as: "आप पहचान-संख्या {handle} से अंदर हैं।"
+  today: "आज क्या करें"
   coming_soon: "अभ्यास का हिस्सा अभी तैयार किया जा रहा है।"
 
 
@@ -315,6 +317,22 @@ raju:
   done: "यह अभ्यास पूरा हुआ।"
   more: "एक और अभ्यास"
   step: "{total} में से {n}"
+  trace: "इस बार क्या हुआ"
+  trace_shown: "राजू का वाक्य:"
+  src_model: "मॉडल ने लिखा, जाँच में पास हुआ"
+  src_bank: "मंज़ूर वाक्य-भंडार से"
+  trace_answer: "आपका पहला जवाब:"
+  trace_verdict: "जाँचने वाले का फ़ैसला:"
+  trace_state: "राजू अब:"
+  v:
+    correct: "सही"
+    partial: "आंशिक"
+    wrong: "गलत"
+    unsure: "तय नहीं (शिक्षक देखेंगे)"
+  st:
+    unknown: "यह नियम नहीं जानता"
+    taught: "यह नियम जानता है"
+    forgotten: "यह नियम भूल गया है"
 
 hint:
   title: "एक इशारा:"

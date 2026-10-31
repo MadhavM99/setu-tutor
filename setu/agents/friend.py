@@ -44,3 +44,29 @@ def choose_line(line: ApprovedLine, proposal: str | None, *, seen_words, scene_w
     out_of_band = tuple(w for w in tokens(text) if w not in known and not w.isdigit())
     level = leakfilter.check_level(text, seen_words=seen_words, scene_words=scene_words, learner_band=learner_band)
     return FriendLine(text, source, rejected, out_of_band, level.hindi_share)
+
+
+class ModelPicker:
+    """Lets a self-hosted model choose among the approved forms of a line (it is shown them numbered and answers
+    with a number). Whatever it answers, `choose_line` shows only an exact approved form."""
+
+    SYSTEM = ("तुम रवि हो, एक तेलुगु दोस्त। नीचे दी गई मंज़ूर पंक्तियों में से अभी के लिए सबसे ठीक पंक्ति का नंबर चुनो। "
+              "नई पंक्ति मत लिखो। जवाब सिर्फ़ JSON में: {\"choice\": नंबर}")
+
+    def __init__(self, provider):
+        self.provider = provider
+        self.last = None  # the last Completion, for the caller to log
+
+    def __call__(self, line_text: str, context: dict, variants: tuple = ()) -> str:
+        from .llm import parse_json
+
+        options = [line_text, *variants]
+        listing = "\n".join(f"{i}. {o}" for i, o in enumerate(options))
+        self.last = self.provider.complete([{"role": "system", "content": self.SYSTEM},
+                                            {"role": "user", "content": f"दृश्य {context.get('scene_id')}:\n{listing}"}],
+                                           max_tokens=20, temperature=0.0)
+        obj = parse_json(self.last.text, ("choice",)) if self.last.ok else None
+        try:
+            return options[int(obj["choice"])] if obj else ""
+        except (ValueError, TypeError, IndexError):
+            return ""

@@ -21,6 +21,7 @@
     </nav>
     {% endif %}
   </header>
+  {% if demo %}<p class="demo-banner" role="note">{{ t("app.demo_banner") }}</p>{% endif %}
   <main id="main" aria-label="{{ t('a11y.main') }}">
     {% if error_key is defined and error_key %}<p class="error" role="alert">{{ t(error_key) }}</p>{% endif %}
     {% block content %}{% endblock %}

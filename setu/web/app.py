@@ -1,5 +1,6 @@
 """FastAPI application factory."""
 import datetime as dt
+import os
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -12,6 +13,8 @@ from sqlalchemy.engine import Engine
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from setu import __version__
+from setu.agents import friend
+from setu.agents.llm import NotLocal, OpenAICompatible
 
 from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
@@ -25,6 +28,13 @@ from .routes_teacher import router as teacher_router
 from .routes_ui import router as ui_router
 
 HERE = Path(__file__).resolve().parent
+
+
+def _self_hosted_model():
+    try:
+        return OpenAICompatible.from_environment()
+    except NotLocal:  # refuse a non-local endpoint rather than send learner text to it
+        return None
 ROOT = HERE.parents[1]
 
 
@@ -36,6 +46,7 @@ def _templates(catalog: Catalog) -> Environment:
         num=catalog.number,
         # Telugu always sits in an element marked lang="te" (screen readers, fonts).
         te=lambda s: Markup('<span lang="te">') + escape(s) + Markup("</span>"),
+        demo=os.environ.get("SETU_DEMO") == "1",  # a demo database: content approved by demo reviewers only
     )
     return env
 
@@ -59,7 +70,8 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app = FastAPI(title="setu", version=__version__, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.db = AppDatabase(engine)
     app.state.clock = lambda: dt.datetime.now(dt.UTC)  # replaced in tests to move through days
-    app.state.friend_model = None  # a model may only pick an approved line (setu/agents/friend.py)
+    app.state.llm = _self_hosted_model()  # None without SETU_LLM_URL: every agent uses its approved fallback
+    app.state.friend_model = friend.ModelPicker(app.state.llm) if app.state.llm else None  # picks approved lines only
     app.state.writer = _LazyWriter(app.state.db)
     app.state.cookie_secure = cookie_secure
     app.state.catalog = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")
@@ -91,4 +103,4 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     return app
 
 
-app = create_app()
+app = create_app(cookie_secure=os.environ.get("SETU_COOKIE_SECURE", "1") != "0")  # 0 only for local http demos

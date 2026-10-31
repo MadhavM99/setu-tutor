@@ -121,6 +121,10 @@ def _create(c, request, run, script, line, step):
                          ":t, CAST(:task AS jsonb)) RETURNING id"),
                     {"s": run.id, "src": said.source if said else "bank", "t": shown,
                      "task": json.dumps(task)}).scalar_one()
+    picker = getattr(request.app.state, "friend_model", None)
+    if said and isinstance(picker, friend.ModelPicker) and picker.last is not None:
+        from .routes_rules import log_call
+        log_call(c, eid, "friend", picker.last, rejected=said.rejected)
     if said:
         _event(c, run.id, script.scene_id, "line_shown", exchange_id=eid, oov=said.out_of_band,
                hindi_share=said.hindi_share, data={"line": line.n, "source": said.source,
