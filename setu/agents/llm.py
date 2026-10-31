@@ -13,7 +13,7 @@ servers. Configuration comes only from the environment (no secrets in source):
     SETU_LLM_RETRIES      default 1
 
 By default only local endpoints are accepted (localhost, private network, `.local`). A hosted provider must be
-switched on explicitly with SETU_LLM_ALLOW_HOSTED=1 (user decision, Nov 2026). What the agents send is content, not
+switched on explicitly with SETU_LLM_ALLOW_HOSTED=1 (user decision, 31 Oct 2026). What the agents send is content, not
 learner text: Raju gets the rule title, the Hindi meaning and permitted words; the coach gets the rule title and
 Raju's sentence; the friend gets the approved lines. No learner answer or identity is sent. Every call returns a `Completion` with the text, latency, token usage
 and error, which the caller logs to `model_call`. `MockProvider` exists for tests only and says so in its name.

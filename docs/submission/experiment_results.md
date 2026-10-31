@@ -1,4 +1,4 @@
-# Experiment results (mid-submission; updated 1 Nov 2026)
+# Experiment results (mid-submission; updated 31 Oct 2026)
 
 Sections: **A.** original simulation `sim-0.1` (unchanged) · **B.** validity review · **C.** improved simulation
 `sim-0.2` · **D.** real-model measurements · **E.** rejected or exploratory runs.
@@ -188,7 +188,7 @@ changed after seeing results (one modelling bug was corrected, see E).
 ### What `sim-0.2` shows (simulation only)
 
 1. **The result reverses `sim-0.1`.** Under FSRS memory with the app's rating rules, A (reverse learning) has the
-   **lowest** day-7 recall: A−B −0.082 [−0.089, −0.075], A−C −0.053 [−0.060, −0.047] with matched exchanges; −0.108
+   **lowest** day-7 recall: A−B −0.076 [−0.081, −0.071], A−C −0.053 [−0.060, −0.047] with matched exchanges; −0.101
    and −0.063 with matched time. Production and transfer follow the same order.
 2. **Why, mechanically:** a correction made with the rest of Raju's sentence visible is a *cued* answer (rated Hard),
    and a missed planted error is a failed retrieval (rated Again: a lapse that resets stability). B (study the error
@@ -208,7 +208,7 @@ counted. The single robust pattern across both: **A is not better than C on reca
 The design questions that would decide it — whether correcting a planted error is retrieval or recognition, and how
 much missed errors cost — need the human pilot (Phase 6), not more simulation.
 
-## D. Real-model measurements (hosted `gemini-3.5-flash`, 1 Nov 2026)
+## D. Real-model measurements (hosted `gemini-3.5-flash`, 31 Oct 2026)
 
 **Real inference works**, but **the 29-case baseline comparison is not yet valid**: the free-tier quota of the key
 ran out during the run ("You exceeded your current quota, please check your plan and billing details"), so most calls

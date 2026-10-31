@@ -41,7 +41,7 @@ def hint(provider, item, *, rule_title: str, approved: tuple[str, str | None], w
     if text and not _DEVANAGARI.search(text):
         reasons.append("NOT_HINDI")
     if text and _TELUGU.search(text):  # a model hint is Hindi only: no Telugu the learner may not know (real-model
-        reasons.append("TELUGU_IN_HINT")  # finding, Nov 2026: hints mixed in unseen Telugu words)
+        reasons.append("TELUGU_IN_HINT")  # finding, 31 Oct 2026: hints mixed in unseen Telugu words)
     if not reasons:
         return CoachHint(text, "l1_rule", "model", (), c)
     return CoachHint(approved[1], approved[0], "approved" if approved[1] else "generic", tuple(reasons), c)

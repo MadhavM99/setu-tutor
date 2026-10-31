@@ -1,4 +1,4 @@
-# SETU Tutor — mid-submission report (31 Oct 2026; updated 1 Nov 2026)
+# SETU Tutor — mid-submission report (31 Oct 2026; updated 31 Oct 2026)
 
 Hindi-first Telugu tutor in which the learner teaches a weaker AI classmate (Raju) by correcting his Hindi-transfer
 errors. Specification: paper "Teaching the Machine in Your Mother Tongue" (v8) and the Phase 0 package in `docs/`.
@@ -42,9 +42,9 @@ A-only assumed effects on/off; half-life sensitivity. All **ran in the simulator
 
 ## 5. Results (simulation — not human evidence)
 
-**Update 1 Nov 2026.** A validity review of the simulator below found an ad-hoc memory model, assumed A-only effects
+**Update 31 Oct 2026.** A validity review of the simulator below found an ad-hoc memory model, assumed A-only effects
 switched on by default, and unequal time on task. The improved `sim-0.2` (FSRS memory, A-only effects off, matched
-time) **reverses the ranking**: day-7 recall A 0.253, B 0.335, C 0.306 (A−B −0.082 [−0.089, −0.075]; A−C −0.053
+time) **reverses the ranking**: day-7 recall A 0.253, B 0.329, C 0.306 (A−B −0.076 [−0.081, −0.071]; A−C −0.053
 [−0.060, −0.047]). The two simulations disagree because they model memory differently; neither is evidence about
 people. The one pattern both share: A is not better than C on recall. Details, the validity review and the rejected
 runs: [experiment_results.md](experiment_results.md) §B, §C, §E. Real-model measurements: §D (real inference works;

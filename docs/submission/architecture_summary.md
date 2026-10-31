@@ -30,13 +30,13 @@ model (self-hosted, optional) ──► proposal ──► leak filter / approve
 - Every model call is logged in `model_call` (agent, model, prompt version, request hash, reply, latency, why
   rejected). Token usage is returned by the client; it is not yet stored in the database (column missing).
 
-## Model configuration (updated 1 Nov 2026)
+## Model configuration (updated 31 Oct 2026)
 
 | Setting | Value used for the evaluation | Where |
 |---|---|---|
 | Provider | Google Gemini, OpenAI-compatible endpoint (`https://generativelanguage.googleapis.com/v1beta/openai/`) | `SETU_LLM_URL` |
 | Model | `gemini-3.5-flash` (requested `gemini-3.8-flash` returned 503 "high demand"; `gemini-3.7-flash` returned 429) | `SETU_LLM_MODEL` |
-| Hosted endpoints | off by default; enabled with `SETU_LLM_ALLOW_HOSTED=1` (https only) | user decision, 1 Nov 2026 (reverses the earlier self-hosted-only default) |
+| Hosted endpoints | off by default; enabled with `SETU_LLM_ALLOW_HOSTED=1` (https only) | user decision, 31 Oct 2026 (reverses the earlier self-hosted-only default) |
 | Key | `SETU_LLM_API_KEY`, environment only; never logged, stored or committed | — |
 | Reasoning | `SETU_LLM_REASONING=none` (Gemini 3.x reasoning tokens otherwise consume the reply budget and truncate JSON) | — |
 | Retries | 3, with back-off on 429/503 | `SETU_LLM_RETRIES` |
