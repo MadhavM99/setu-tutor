@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ script.title_hi }}</h1>
+<p>{{ script.setup_hi }}</p>
+{% if missing %}
+<p>{{ t("scene.locked") }}</p>
+<ul>{% for name in missing %}<li>{{ t("scene.needs", name=name) if name else t("scene.needs_earlier") }}</li>{% endfor %}</ul>
+<p><a href="/learn/chunks">{{ t("learn.chunks_link") }}</a></p>
+{% else %}
+<p><strong>{{ t("scene.objective") }}</strong> {{ script.objective_hi }}</p>
+<p>{{ script.instructions_hi }}</p>
+<form method="post" action="{{ start_path }}">
+  <button type="submit">{{ t("btn.start") }}</button>
+</form>
+{% endif %}
+{% endblock %}

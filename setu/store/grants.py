@@ -117,7 +117,18 @@ PLAN_V7["setu_app"] += [("chunk", "SELECT", None)]
 PLAN_V7["setu_writer"] += [("chunk", "SELECT", None)]
 VIEW_GRANTS_V4 = {**VIEW_GRANTS_V3, "learner_chunk": VIEW_GRANTS["learner_rule_version"]}
 
-GRANT_PLAN = PLAN_V7  # the current plan
+# Plan V8 (migration 0012, slice S8): L5 scene scripts and reply variants are draft-bearing content (the read role
+# sees them only through the learner views); scene telemetry is an operational record written by the web layer.
+PLAN_V8 = {role: list(specs) for role, specs in PLAN_V7.items()}
+PLAN_V8["setu_content"] += [(t, "SELECT, INSERT, UPDATE", None) for t in ("scene_script", "scene_reply_variant")]
+PLAN_V8["setu_app"] += [("scene_script", "SELECT", None), ("scene_reply_variant", "SELECT", None),
+                        ("scene_event", "SELECT, INSERT", None)]
+PLAN_V8["setu_writer"] += [("scene_script", "SELECT", None), ("scene_reply_variant", "SELECT", None),
+                           ("scene_event", "SELECT", None)]
+VIEW_GRANTS_V5 = {**VIEW_GRANTS_V4, "learner_scene_script": VIEW_GRANTS["learner_rule_version"],
+                  "learner_scene_reply_variant": VIEW_GRANTS["learner_rule_version"]}
+
+GRANT_PLAN = PLAN_V8  # the current plan
 
 # Sequences used by identity-less tables: only the ledger sequence, used by the writer via its trigger.
 SEQUENCE_GRANTS = {"event_ledger_id_seq": ("setu_writer",)}

@@ -20,6 +20,7 @@ from .routes_auth import router as auth_router
 from .routes_ladder import router as ladder_router
 from .routes_learn import router as learn_router
 from .routes_rules import router as rules_router
+from .routes_scenes import router as scenes_router
 from .routes_ui import router as ui_router
 
 HERE = Path(__file__).resolve().parent
@@ -57,6 +58,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app = FastAPI(title="setu", version=__version__, docs_url=None, redoc_url=None, openapi_url=None)
     app.state.db = AppDatabase(engine)
     app.state.clock = lambda: dt.datetime.now(dt.UTC)  # replaced in tests to move through days
+    app.state.friend_model = None  # a model may only pick an approved line (setu/agents/friend.py)
     app.state.writer = _LazyWriter(app.state.db)
     app.state.cookie_secure = cookie_secure
     app.state.catalog = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")
@@ -82,6 +84,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.include_router(ui_router)
     app.include_router(rules_router)  # before /learn/{name}
     app.include_router(ladder_router)
+    app.include_router(scenes_router)  # before /learn/{name}
     app.include_router(learn_router)
     return app
 

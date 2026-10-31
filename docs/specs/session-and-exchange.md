@@ -402,3 +402,29 @@ private (`_issue_verdict`) and the import-boundary test keeps it inside the chec
 - Not built: weak-prerequisite repair (learning-ladder §4); it needs blame tags in item metadata, and per its spec
   nothing is flagged without them.
 
+## 16. Implementation notes: scenes and the native friend (slice S8, 31 Oct 2026)
+
+- **Content:** `content/hi-te/scene_scripts.yaml`, one script per scene (01 auto stand, 02 mess, 03 landlord, 04
+  home and everyday talk). Each has an objective, band L5, prerequisites (the scene's L3 chunk recall skill),
+  required and permitted vocabulary, and three friend lines. Each line has a Hindi comprehension question with
+  options, a Hindi reply goal, accepted replies and a Hindi hint. All drafted by a language model and unreviewed.
+- **Validation:** every Telugu word in lines and replies must be in the scene vocabulary; a hint may not contain a
+  reply (Telugu or Devanagari); at least two lines ask for a reply; Hindi fields have no Latin; content files cannot
+  claim approval.
+- **Visibility:** `learner_scene_script` needs the script, its scene and every line approved, each with two speaker
+  approvals (database checks). One unapproved line disables the whole scene. Reply variants count only when approved
+  by two speakers.
+- **Friend:** `setu/agents/friend.py` (`friend-1`). The route asks `app.state.friend_model` (none by default) for a
+  proposal; it is used only if it is exactly the approved line, otherwise rejected (`NOT_APPROVED`, logged on the
+  `line_shown` event) and the approved line is shown.
+- **Run:** comprehension (multiple choice, recognition, cue 1) → own reply (typed or compose keyboard, cue 0) →
+  near miss or empty: the approved hint (cue 1, `hint_type = generic`) → second miss: an approved reply to copy (cue
+  2, after reveal, no skill evidence) → unexpected reply: unsure, teacher queue, fixed Hindi fallback, the scene
+  continues. Skills `L5.scene.<id>.RD` (comprehension) and `.PR` (reply).
+- **Telemetry (`scene_event`):** `started`, `line_shown` (source, rejected proposals, out-of-band words, Hindi
+  share), `hint`, `fallback`, `completed` (comprehension, independent and assisted production, unsure replies and
+  opportunities, hints, fallbacks, out-of-band words, vocabulary introduced and recalled, mean Hindi share, time on
+  task); the session records `time_on_task_s`.
+- **Not built:** scene 05 (college) script, audio, teacher approval of scripts and variants in the console, the model
+  friend itself, out-of-band words against the learner's own seen words (v1 uses the scene vocabulary).
+

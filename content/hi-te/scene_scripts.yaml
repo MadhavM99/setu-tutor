@@ -1,0 +1,211 @@
+# L5 scene scripts for the native friend (रवि). Model-drafted, unreviewed: nothing here reaches learners until two
+# native speakers approve the script and every line, and its scene is approved. The friend says only these lines
+# (or an approved variant); learner replies are accepted only in the forms listed here or approved variants.
+# Every Telugu word must be in the scene's vocabulary. Spoken forms need native confirmation (P8b-14).
+- scene_id: hi-te-scene-01
+  band: L5
+  objective_hi: ऑटो वाले से जगह, किराया और रुकने की बात कर पाना।
+  instructions_hi: ऑटो वाला रवि तेलुगु में बोलेगा। पहले बताइए उसने क्या कहा, फिर तेलुगु में जवाब लिखिए।
+  prerequisites: [L3.chunk.hi-te-scene-01.RCL]
+  vocabulary:
+    required: [చార్మినార్, వెళ్ళాలి, చాలా, ఎక్కువ, ఇక్కడ, ఆపండి]
+    permitted: [ఎక్కడికి, వంద, రూపాయలు, సరే, కూర్చోండి, కి]
+  review_status: draft
+  provenance: &prov
+  - source: drafted by a language model (Claude) in slice S8, 31 Oct 2026; unreviewed. Every Telugu line, reply,
+      question and hint needs two native speakers and a teacher before use
+  lines:
+  - n: 1
+    telugu: "ఎక్కడికి వెళ్ళాలి?"
+    question_hi: "ऑटो वाला क्या पूछ रहा है?"
+    options_hi:
+    - "कहाँ जाना है?"
+    - "कितने पैसे लगेंगे?"
+    - "आपका नाम क्या है?"
+    answer: 0
+    reply_goal_hi: "बताइए कि आपको चारमीनार जाना है।"
+    replies:
+    - "చార్మినార్ వెళ్ళాలి"
+    - "చార్మినార్"
+    hint_hi: "पहले जगह का नाम, फिर ‘जाना है’ वाला शब्द।"
+    review_status: draft
+  - n: 2
+    telugu: "వంద రూపాయలు"
+    question_hi: "वह कितना किराया बता रहा है?"
+    options_hi:
+    - "सौ रुपये"
+    - "दस रुपये"
+    - "हज़ार रुपये"
+    answer: 0
+    reply_goal_hi: "कहिए कि यह बहुत ज़्यादा है।"
+    replies:
+    - "చాలా ఎక్కువ"
+    hint_hi: "दो शब्द — ‘बहुत’ और ‘ज़्यादा’।"
+    review_status: draft
+  - n: 3
+    telugu: "సరే, కూర్చోండి"
+    question_hi: "ऑटो वाले ने क्या कहा?"
+    options_hi:
+    - "ठीक है, बैठिए।"
+    - "नहीं जाऊँगा।"
+    - "मीटर ख़राब है।"
+    answer: 0
+    reply_goal_hi: "पहुँचने पर कहिए कि यहाँ रोकिए।"
+    replies:
+    - "ఇక్కడ ఆపండి"
+    hint_hi: "‘यहाँ’ वाला शब्द और रुकने को कहने वाला शब्द।"
+    review_status: draft
+- scene_id: hi-te-scene-02
+  band: L5
+  objective_hi: मेस में खाना माँगना, प्लेट के बारे में पूछना और खाने के बारे में बताना।
+  instructions_hi: मेस में रवि तेलुगु में बोलेगा। पहले बताइए उसने क्या कहा, फिर तेलुगु में जवाब लिखिए।
+  prerequisites: [L3.chunk.hi-te-scene-02.RCL]
+  vocabulary:
+    required: [అన్నం, కావాలి, ప్లేట్, ఉందా, బాగుంది]
+    permitted: [ఏం, ఇదిగో, తీసుకోండి, కూర, ఎలా, ఉంది]
+  review_status: draft
+  provenance: *prov
+  lines:
+  - n: 1
+    telugu: "ఏం కావాలి?"
+    question_hi: "रवि क्या पूछ रहा है?"
+    options_hi:
+    - "क्या चाहिए?"
+    - "कहाँ जा रहे हो?"
+    - "कितने बजे हैं?"
+    answer: 0
+    reply_goal_hi: "कहिए कि आपको चावल चाहिए।"
+    replies:
+    - "అన్నం కావాలి"
+    hint_hi: "चावल वाला शब्द और ‘चाहिए’ वाला शब्द।"
+    review_status: draft
+  - n: 2
+    telugu: "ఇదిగో, తీసుకోండి"
+    question_hi: "रवि ने क्या कहा?"
+    options_hi:
+    - "यह लीजिए।"
+    - "खाना ख़त्म हो गया।"
+    - "बाद में आइए।"
+    answer: 0
+    reply_goal_hi: "पूछिए कि प्लेट है क्या।"
+    replies:
+    - "ప్లేట్ ఉందా"
+    hint_hi: "सवाल का निशान ‘है’ वाले शब्द के अंत में लगता है।"
+    review_status: draft
+  - n: 3
+    telugu: "కూర ఎలా ఉంది?"
+    question_hi: "रवि क्या पूछ रहा है?"
+    options_hi:
+    - "सब्ज़ी कैसी है?"
+    - "पानी कहाँ है?"
+    - "खाना कितने का है?"
+    answer: 0
+    reply_goal_hi: "कहिए कि अच्छी है।"
+    replies:
+    - "బాగుంది"
+    hint_hi: "‘अच्छा है’ के लिए एक ही शब्द।"
+    review_status: draft
+- scene_id: hi-te-scene-03
+  band: L5
+  objective_hi: मकान-मालिक से आदर के साथ कमरे और किराए की बात कर पाना।
+  instructions_hi: मकान-मालिक तेलुगु में बोलेंगे। पहले बताइए उन्होंने क्या कहा, फिर आदर से तेलुगु में जवाब लिखिए।
+  prerequisites: [L3.chunk.hi-te-scene-03.RCL]
+  vocabulary:
+    required: [నమస్కారం, అండి, అద్దె, ఎంత, సరే]
+    permitted: [రండి, ఇదే, గది, చూడండి, నెలకు, ఐదు, వేలు]
+  review_status: draft
+  provenance: *prov
+  lines:
+  - n: 1
+    telugu: "నమస్కారం, రండి"
+    question_hi: "मकान-मालिक ने क्या कहा?"
+    options_hi:
+    - "नमस्ते, आइए।"
+    - "बाहर जाइए।"
+    - "कल आना।"
+    answer: 0
+    reply_goal_hi: "आदर से नमस्ते कहिए।"
+    replies:
+    - "నమస్కారం అండి"
+    - "నమస్కారం"
+    hint_hi: "नमस्ते वाला शब्द, और आदर के लिए अंत में ‘जी’ जैसा शब्द।"
+    review_status: draft
+  - n: 2
+    telugu: "ఇదే గది, చూడండి"
+    question_hi: "वे क्या कह रहे हैं?"
+    options_hi:
+    - "यही कमरा है, देखिए।"
+    - "कमरा ख़ाली नहीं है।"
+    - "पहले किराया दीजिए।"
+    answer: 0
+    reply_goal_hi: "आदर से पूछिए कि किराया कितना है।"
+    replies:
+    - "అద్దె ఎంత అండి"
+    - "అద్దె ఎంత"
+    hint_hi: "पहले किराए वाला शब्द, फिर ‘कितना’, फिर आदर वाला शब्द।"
+    review_status: draft
+  - n: 3
+    telugu: "నెలకు ఐదు వేలు"
+    question_hi: "किराया कितना है?"
+    options_hi:
+    - "महीने के पाँच हज़ार"
+    - "दिन के पाँच सौ"
+    - "महीने के पचास"
+    answer: 0
+    reply_goal_hi: "आदर से कहिए कि ठीक है।"
+    replies:
+    - "సరే అండి"
+    hint_hi: "‘ठीक है’ वाला शब्द और आदर वाला शब्द।"
+    review_status: draft
+- scene_id: hi-te-scene-04
+  band: L5
+  objective_hi: घर वालों से रोज़ की छोटी बातचीत — हाल-चाल, खाना और घर आने की बात।
+  instructions_hi: घर से फ़ोन आया है। तेलुगु में जो पूछा गया, पहले वह बताइए, फिर तेलुगु में जवाब लिखिए।
+  prerequisites: [L3.chunk.hi-te-scene-04.RCL]
+  vocabulary:
+    required: [బాగున్నాను, అవును, చేశాను, రేపు, వస్తాను]
+    permitted: [ఎలా, ఉన్నావు, నేను, భోజనం, చేశావా, ఇంటికి, ఎప్పుడు, వస్తావు]
+  review_status: draft
+  provenance: *prov
+  lines:
+  - n: 1
+    telugu: "ఎలా ఉన్నావు?"
+    question_hi: "क्या पूछा जा रहा है?"
+    options_hi:
+    - "कैसे हो?"
+    - "कहाँ हो?"
+    - "क्या खाया?"
+    answer: 0
+    reply_goal_hi: "कहिए कि आप ठीक हैं।"
+    replies:
+    - "నేను బాగున్నాను"
+    - "బాగున్నాను"
+    hint_hi: "‘ठीक हूँ’ के लिए एक शब्द काफ़ी है।"
+    review_status: draft
+  - n: 2
+    telugu: "భోజనం చేశావా?"
+    question_hi: "क्या पूछा जा रहा है?"
+    options_hi:
+    - "खाना खाया?"
+    - "सो गए?"
+    - "पढ़ाई की?"
+    answer: 0
+    reply_goal_hi: "कहिए — हाँ, खा लिया।"
+    replies:
+    - "అవును చేశాను"
+    - "చేశాను"
+    hint_hi: "‘हाँ’ वाला शब्द और ‘कर लिया’ वाला शब्द।"
+    review_status: draft
+  - n: 3
+    telugu: "ఇంటికి ఎప్పుడు వస్తావు?"
+    question_hi: "क्या पूछा जा रहा है?"
+    options_hi:
+    - "घर कब आओगे?"
+    - "घर कहाँ है?"
+    - "कौन आएगा?"
+    answer: 0
+    reply_goal_hi: "कहिए कि कल आऊँगा।"
+    replies:
+    - "రేపు వస్తాను"
+    hint_hi: "‘कल’ वाला शब्द और ‘आऊँगा’ वाला शब्द।"
+    review_status: draft

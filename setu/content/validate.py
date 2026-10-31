@@ -52,6 +52,7 @@ class ContentTree:
     letters_l0: list = dataclasses.field(default_factory=list)
     aksharas: list = dataclasses.field(default_factory=list)
     chunks: list = dataclasses.field(default_factory=list)
+    scene_scripts: list = dataclasses.field(default_factory=list)
     root: Path | None = None
 
 
@@ -92,6 +93,8 @@ def load_tree(root: Path) -> ContentTree:
         aksharas=(_yaml(root / "hi-te/script/aksharas.yaml") or []) if (root / "hi-te/script/aksharas.yaml").exists()
         else [],
         chunks=(_yaml(root / "hi-te/chunks.yaml") or []) if (root / "hi-te/chunks.yaml").exists() else [],
+        scene_scripts=(_yaml(root / "hi-te/scene_scripts.yaml") or [])
+        if (root / "hi-te/scene_scripts.yaml").exists() else [],
         root=root,
     )
 
@@ -377,6 +380,76 @@ def _validate_chunk(chunk, seen, scene_ids) -> Result:
     return res
 
 
+SCRIPT_FIELDS = ("band", "objective_hi", "instructions_hi", "prerequisites", "vocabulary", "lines")
+LINE_FIELDS = ("telugu", "question_hi", "options_hi", "reply_goal_hi", "hint_hi")
+MIN_PRODUCTIONS = 2
+
+
+def _validate_scene_script(script, scene_ids) -> Result:
+    """L5 scene script (S8): band, objective, prerequisites, vocabulary; each friend line with a comprehension
+    question and a reply goal. Every Telugu word must be in the scene vocabulary; hints never hold a reply; at least
+    MIN_PRODUCTIONS lines ask for a reply. Content files may not claim approval (two speakers in the console)."""
+    from setu.domain.normalise import canonical, to_devanagari
+
+    res = Result([], {})
+    sid = f"script:{script.get('scene_id', '?')}"
+
+    def err(code, detail=""):
+        res.add(sid, _err(f"scene-script:{code}", detail))
+
+    _approval_claims(res, sid, script, status_field="review_status", allowed=IMPORTABLE["review_status"])
+    if script.get("scene_id") not in scene_ids:
+        err("unknown_scene", str(script.get("scene_id")))
+    for f in SCRIPT_FIELDS:
+        if not script.get(f):
+            err("missing_field", f)
+    if script.get("band") not in (None, "L5"):
+        err("bad_band", str(script.get("band")))
+    for f in ("objective_hi", "instructions_hi"):
+        if isinstance(script.get(f), str) and LATIN.search(script[f]):
+            err("latin_in_hindi", f)
+    for pre in script.get("prerequisites") or []:
+        if not isinstance(pre, str) or not pre.startswith(("L0.", "L1.", "L2.", "L3.", "L4.")):
+            err("bad_prerequisite", str(pre))
+    vocab = script.get("vocabulary") or {}
+    words = {canonical(w) for w in (vocab.get("required") or []) + (vocab.get("permitted") or [])}
+    if not vocab.get("required"):
+        err("missing_field", "vocabulary.required")
+    lines = script.get("lines") or []
+    if sum(1 for x in lines if x.get("replies")) < MIN_PRODUCTIONS and lines:
+        err("too_few_productions", f"at least {MIN_PRODUCTIONS} lines must ask for a reply")
+    for k, line in enumerate(lines, 1):
+        lid = f"{sid}#{line.get('n', k)}"
+        _approval_claims(res, lid, line, status_field="review_status", allowed=IMPORTABLE["review_status"])
+        if line.get("n") != k:
+            err("bad_line_order", lid)
+        for f in LINE_FIELDS:
+            if not line.get(f):
+                err("missing_field", f"{lid}.{f}")
+        hindi = [line.get("question_hi"), line.get("reply_goal_hi"), line.get("hint_hi"), *(line.get("options_hi") or [])]
+        if any(isinstance(h, str) and LATIN.search(h) for h in hindi):
+            err("latin_in_hindi", lid)
+        opts = line.get("options_hi") or []
+        if len(set(opts)) < 2 or not isinstance(line.get("answer"), int) or not 0 <= line["answer"] < len(opts):
+            err("bad_answer", lid)
+        for t in [line.get("telugu"), *(line.get("replies") or [])]:
+            if not t:
+                continue
+            _check_target_text(res, lid, "telugu", t, "HI->TE")
+            outside = [w for w in tokenize.tokens(t) if w not in words]
+            if outside:
+                err("oov_word", f"{lid}: {' '.join(outside)}")
+        reply_words = {w for r in line.get("replies") or [] for w in tokenize.tokens(r)}
+        hint = canonical(line.get("hint_hi") or "")
+        hint_words = set(hint.split())
+        if any(canonical(r) in hint for r in line.get("replies") or []) or hint_words & (
+                reply_words | {to_devanagari(w) for w in reply_words}):
+            err("hint_has_answer", lid)
+    if not script.get("provenance"):
+        err("missing_provenance")
+    return res
+
+
 def validate_tree(tree: ContentTree) -> Result:
     res = Result([], {})
     rule_ids, item_owner, sentences = set(), {}, {}
@@ -422,6 +495,8 @@ def validate_tree(tree: ContentTree) -> Result:
     seen_chunks, scene_ids = set(), {s.get("id") for s in tree.scenes}
     for chunk in tree.chunks:
         res.merge(_validate_chunk(chunk, seen_chunks, scene_ids))
+    for script in tree.scene_scripts:
+        res.merge(_validate_scene_script(script, scene_ids))
     seen_aksharas = set()
     for unit in tree.aksharas:
         res.merge(_validate_akshara(unit, seen_aksharas, seen_letters))

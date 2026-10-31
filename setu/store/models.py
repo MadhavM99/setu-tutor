@@ -636,10 +636,68 @@ class SceneLine(Base):
     telugu = Column(Text, nullable=False)
     expected_reply_frames = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
     review_status = Column(Text, nullable=False, server_default="draft")
+    # migration 0012 (slice S8): the comprehension question, the reply goal, accepted replies, the hint, approvals
+    question_hi = Column(Text)
+    options_hi = Column(JSONB)
+    answer_index = Column(Integer)
+    reply_goal_hi = Column(Text)
+    hint_hi = Column(Text)
+    content_hash = Column(Text)
+    replies = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
     __table_args__ = (
         UniqueConstraint("scene_id", "n", name="uq_scene_line_scene_id_n"),
         one_of("review_status", *REVIEW),
         *no_latin("telugu"),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("question_hi", "reply_goal_hi", "hint_hi"),
+        CheckConstraint("setu_no_latin(options_hi::text)", name="options_hi_no_latin"),
+    )
+
+
+class SceneScript(Base):
+    """An L5 scene script for the native friend (migration 0012). Learners see it only when it, its scene and every
+    line are approved (`learner_scene_script`); approval needs two native speakers."""
+
+    __tablename__ = "scene_script"
+    scene_id = Column(ForeignKey("scene.id"), primary_key=True)
+    band = Column(Text, nullable=False, server_default="L5")
+    objective_hi = Column(Text, nullable=False)
+    instructions_hi = Column(Text, nullable=False)
+    prerequisites = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    vocab_required = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
+    vocab_permitted = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
+    review_status = Column(Text, nullable=False, server_default="draft")
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
+    content_hash = Column(Text)
+    __table_args__ = (
+        CheckConstraint("band = 'L5'", name="band_l5"),
+        one_of("review_status", *REVIEW),
+        CheckConstraint("review_status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("objective_hi", "instructions_hi"),
+    )
+
+
+class SceneReplyVariant(Base):
+    """Another accepted wording of a learner reply (migration 0012); used only when approved by two speakers."""
+
+    __tablename__ = "scene_reply_variant"
+    id = uuid_pk()
+    line_id = fk("scene_line.id")
+    form = Column(Text, nullable=False)
+    status = Column(Text, nullable=False, server_default="proposed")
+    approvals = Column(JSONB, nullable=False, server_default=text("'[]'::jsonb"))
+    provenance = provenance()
+    created_at = now()
+    __table_args__ = (
+        one_of("status", "proposed", "approved", "rejected"),
+        CheckConstraint("status <> 'approved' OR jsonb_array_length(approvals) >= 2",
+                        name="approved_needs_two"),
+        *no_latin("form"),
     )
 
 
@@ -931,6 +989,26 @@ class FsrsReviewLog(Base):
         CheckConstraint(CUE_LEVEL, name="cue_level"),
         # memory-assistant.md F-MEM-8: with a cue visible, the rating is capped at Hard (2)
         CheckConstraint("cue_level = 0 OR rating <= 2", name="cue_caps_rating_at_hard"),
+    )
+
+
+class SceneEvent(Base):
+    """Scene telemetry (migration 0012): start, each friend line shown (with out-of-band words and Hindi share), hints,
+    fallbacks and completion with its measures. Operational, written by the web layer; never learning state."""
+
+    __tablename__ = "scene_event"
+    id = uuid_pk()
+    session_id = fk("session.id")
+    scene_id = fk("scene.id")
+    exchange_id = fk("exchange.id", nullable=True)
+    event = Column(Text, nullable=False)
+    oov_words = Column(ARRAY(Text), nullable=False, server_default=text("'{}'::text[]"))
+    hindi_share = Column(Float)
+    data = Column(JSONB, nullable=False, server_default=text("'{}'::jsonb"))
+    created_at = now()
+    __table_args__ = (
+        one_of("event", "started", "line_shown", "hint", "fallback", "completed"),
+        CheckConstraint("hindi_share IS NULL OR (hindi_share >= 0 AND hindi_share <= 1)", name="hindi_share_range"),
     )
 
 

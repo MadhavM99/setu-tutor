@@ -39,6 +39,8 @@ class ImportResult:
     letters_written: int = 0
     aksharas_written: int = 0
     chunks_written: int = 0
+    scene_scripts_written: int = 0
+    scene_lines_written: int = 0
     skills_written: int = 0
     unchanged: int = 0
 
@@ -90,6 +92,7 @@ def import_tree(engine: Engine, tree: ContentTree, *, report: Result | None = No
         for scene in tree.scenes:
             _scene(c, scene, result)
         _chunks_and_skills(c, tree.chunks, result)
+        _scene_scripts_and_skills(c, tree.scene_scripts, result)
     return result
 
 
@@ -434,3 +437,74 @@ def _chunks_and_skills(c, chunks, result):
             result.chunks_written += 1
         else:
             result.unchanged += 1
+
+
+# ---------------------------------------------------------------- L5 scene scripts (slice S8)
+
+
+def scene_skill_id(scene_id: str, modality: str) -> str:
+    return f"L5.scene.{scene_id}.{modality}"
+
+
+def write_scene_script(c, script, result=None) -> None:
+    """Insert or update one scene script and its lines as drafts. Approved content is never changed here."""
+    result = result or ImportResult()
+    sid = script["scene_id"]
+    vocab = script.get("vocabulary") or {}
+    digest = sha256_of({k: v for k, v in script.items() if k != "lines"})
+    row = c.execute(text("SELECT content_hash, review_status FROM scene_script WHERE scene_id = :s"), {"s": sid}).first()
+    values = {"s": sid, "band": script["band"], "obj": script["objective_hi"], "ins": script["instructions_hi"],
+              "pre": _j(script["prerequisites"]), "req": list(vocab.get("required") or []),
+              "per": list(vocab.get("permitted") or []), "prov": _j(script["provenance"]), "h": digest}
+    if row is None:
+        c.execute(text("INSERT INTO scene_script (scene_id, band, objective_hi, instructions_hi, prerequisites, "
+                       "vocab_required, vocab_permitted, review_status, provenance, content_hash) VALUES (:s, :band, "
+                       ":obj, :ins, CAST(:pre AS jsonb), :req, :per, 'draft', CAST(:prov AS jsonb), :h)"), values)
+        result.scene_scripts_written += 1
+    elif row.content_hash != digest:
+        if row.review_status != "draft":
+            raise ImportRefused(f"{sid}: scene script is '{row.review_status}'; edit it in the teacher console")
+        c.execute(text("UPDATE scene_script SET band = :band, objective_hi = :obj, instructions_hi = :ins, "
+                       "prerequisites = CAST(:pre AS jsonb), vocab_required = :req, vocab_permitted = :per, "
+                       "provenance = CAST(:prov AS jsonb), content_hash = :h WHERE scene_id = :s"), values)
+        result.scene_scripts_written += 1
+    else:
+        result.unchanged += 1
+    for line in script["lines"]:
+        digest = sha256_of(line)
+        row = c.execute(text("SELECT content_hash, review_status FROM scene_line WHERE scene_id = :s AND n = :n"),
+                        {"s": sid, "n": line["n"]}).first()
+        values = {"s": sid, "n": line["n"], "te": line["telugu"], "q": line["question_hi"],
+                  "o": _j(line["options_hi"]), "a": line["answer"], "g": line["reply_goal_hi"], "hint": line["hint_hi"],
+                  "r": list(line.get("replies") or []), "prov": _j(script["provenance"]), "h": digest}
+        if row is None:
+            c.execute(text("INSERT INTO scene_line (scene_id, n, speaker, telugu, question_hi, options_hi, answer_index, "
+                           "reply_goal_hi, hint_hi, replies, review_status, provenance, content_hash) VALUES (:s, :n, "
+                           "'friend', :te, :q, CAST(:o AS jsonb), :a, :g, :hint, :r, 'draft', CAST(:prov AS jsonb), "
+                           ":h)"), values)
+            result.scene_lines_written += 1
+        elif row.content_hash != digest:
+            if row.review_status != "draft":
+                raise ImportRefused(f"{sid}#{line['n']}: scene line is '{row.review_status}'; edit it in the "
+                                    "teacher console")
+            c.execute(text("UPDATE scene_line SET telugu = :te, question_hi = :q, options_hi = CAST(:o AS jsonb), "
+                           "answer_index = :a, reply_goal_hi = :g, hint_hi = :hint, replies = :r, "
+                           "provenance = CAST(:prov AS jsonb), content_hash = :h WHERE scene_id = :s AND n = :n"),
+                      values)
+            result.scene_lines_written += 1
+        else:
+            result.unchanged += 1
+
+
+def _scene_scripts_and_skills(c, scripts, result):
+    for script in scripts:
+        sid = script["scene_id"]
+        requires = [r for r in script["prerequisites"]
+                    if c.execute(text("SELECT 1 FROM skill WHERE id = :s"), {"s": r}).first()]
+        rd = scene_skill_id(sid, "RD")
+        _skill(c, result, rd, band="L5", family="scene", target=sid, modality="RD", direction="HI->TE",
+               requires=requires)
+        _skill(c, result, scene_skill_id(sid, "PR"), band="L5", family="scene", target=sid, modality="PR",
+               direction="HI->TE", requires=requires)
+        write_scene_script(c, script, result)
+

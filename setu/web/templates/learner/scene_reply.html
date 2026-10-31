@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{# The learner's own reply. The box starts empty; the hint is the line's approved Hindi hint, never the reply. #}
+{% block content %}
+<p>{{ script.title_hi }}</p>
+<p>{{ t("scene.friend_says") }}</p>
+<p class="letter-big">{{ te(line.telugu) }}</p>
+<p>{{ t("scene.meant", meaning=line.options_hi[line.answer_index]) }}</p>
+<h1>{{ line.reply_goal_hi }}</h1>
+{% if step.name == "hint" %}
+<p>{{ t("hint.not_yet") }}</p>
+<p><strong>{{ t("hint.title") }}</strong> {{ line.hint_hi }}</p>
+{% elif step.name == "copy" %}
+<p>{{ t("scene.copy") }}</p>
+<p class="letter-big">{{ te(line.replies[0]) }}</p>
+{% endif %}
+{% set telugu = true %}{% include "learner/_keyboard.html" %}
+{% endblock %}
