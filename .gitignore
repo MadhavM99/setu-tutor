@@ -6,3 +6,5 @@ runs/
 .venv/
 *.egg-info/
 build/
+.env
+.env.*

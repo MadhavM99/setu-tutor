@@ -1,0 +1,185 @@
+{
+ "note": "Frozen 2026-11-12 (TASKS.md task 4). Evaluation sets for the final submission. Do not edit after results start.",
+ "frozen_at": "2026-11-12",
+ "planting_cases": [
+  {
+   "item_id": "HI-TE-001-a",
+   "rule_id": "HI-TE-001",
+   "wrong_form": "క్యా నువ్వు వస్తావు",
+   "correct_form": "నువ్వు వస్తావా"
+  },
+  {
+   "item_id": "HI-TE-001-b",
+   "rule_id": "HI-TE-001",
+   "wrong_form": "క్యా ఇది పుస్తకం",
+   "correct_form": "ఇది పుస్తకమా"
+  },
+  {
+   "item_id": "HI-TE-002-a",
+   "rule_id": "HI-TE-002",
+   "wrong_form": "ఇది పుస్తకం ఉంది",
+   "correct_form": "ఇది పుస్తకం"
+  },
+  {
+   "item_id": "HI-TE-002-b",
+   "rule_id": "HI-TE-002",
+   "wrong_form": "అది పెన్ను ఉంది",
+   "correct_form": "అది పెన్ను"
+  },
+  {
+   "item_id": "HI-TE-003-a",
+   "rule_id": "HI-TE-003",
+   "wrong_form": "నేను ఒక పుస్తకం ఉంది",
+   "correct_form": "నాకు ఒక పుస్తకం ఉంది"
+  },
+  {
+   "item_id": "HI-TE-003-b",
+   "rule_id": "HI-TE-003",
+   "wrong_form": "నువ్వు ఒక పెన్ను ఉంది",
+   "correct_form": "నీకు ఒక పెన్ను ఉంది"
+  },
+  {
+   "item_id": "HI-TE-004-a",
+   "rule_id": "HI-TE-004",
+   "wrong_form": "నేను ఇల్లు లో ఉన్నాను",
+   "correct_form": "నేను ఇంట్లో ఉన్నాను"
+  },
+  {
+   "item_id": "HI-TE-004-b",
+   "rule_id": "HI-TE-004",
+   "wrong_form": "నేను గది లో ఉన్నాను",
+   "correct_form": "నేను గదిలో ఉన్నాను"
+  },
+  {
+   "item_id": "HI-TE-005-a",
+   "rule_id": "HI-TE-005",
+   "wrong_form": "నేను వస్తాను కాదు",
+   "correct_form": "నేను రాను"
+  },
+  {
+   "item_id": "HI-TE-005-b",
+   "rule_id": "HI-TE-005",
+   "wrong_form": "అతను వస్తాడు కాదు",
+   "correct_form": "అతను రాడు"
+  },
+  {
+   "item_id": "HI-TE-006-a",
+   "rule_id": "HI-TE-006",
+   "wrong_form": "మనం వెళ్తున్నాం",
+   "correct_form": "మేము వెళ్తున్నాం"
+  },
+  {
+   "item_id": "HI-TE-006-b",
+   "rule_id": "HI-TE-006",
+   "wrong_form": "మేము వెళ్తున్నాం",
+   "correct_form": "మనం వెళ్తున్నాం"
+  },
+  {
+   "item_id": "HI-TE-007-a",
+   "rule_id": "HI-TE-007",
+   "wrong_form": "అతను టీచరు",
+   "correct_form": "ఆమె టీచరు"
+  },
+  {
+   "item_id": "HI-TE-007-b",
+   "rule_id": "HI-TE-007",
+   "wrong_form": "ఆమె డాక్టరు",
+   "correct_form": "అతను డాక్టరు"
+  },
+  {
+   "item_id": "HI-TE-008-a",
+   "rule_id": "HI-TE-008",
+   "wrong_form": "ఆమె వస్తాడు",
+   "correct_form": "ఆమె వస్తుంది"
+  },
+  {
+   "item_id": "HI-TE-008-b",
+   "rule_id": "HI-TE-008",
+   "wrong_form": "అతను వస్తుంది",
+   "correct_form": "అతను వస్తాడు"
+  },
+  {
+   "item_id": "HI-TE-009-a",
+   "rule_id": "HI-TE-009",
+   "wrong_form": "మీరు వస్తావా",
+   "correct_form": "మీరు వస్తారా"
+  },
+  {
+   "item_id": "HI-TE-009-b",
+   "rule_id": "HI-TE-009",
+   "wrong_form": "మీరు తింటావు",
+   "correct_form": "మీరు తింటారు"
+  },
+  {
+   "item_id": "HI-TE-010-a",
+   "rule_id": "HI-TE-010",
+   "wrong_form": "ఇది జో పుస్తకం నేను చదివాను",
+   "correct_form": "ఇది నేను చదివిన పుస్తకం"
+  },
+  {
+   "item_id": "HI-TE-011-a",
+   "rule_id": "HI-TE-011",
+   "wrong_form": "అతనికి పుస్తకం చదివాడు",
+   "correct_form": "అతను పుస్తకం చదివాడు"
+  },
+  {
+   "item_id": "HI-TE-011-b",
+   "rule_id": "HI-TE-011",
+   "wrong_form": "నాకు అన్నం తిన్నాను",
+   "correct_form": "నేను అన్నం తిన్నాను"
+  },
+  {
+   "item_id": "HI-TE-012-a",
+   "rule_id": "HI-TE-012",
+   "wrong_form": "నేను అమ్మ పిలిచాను",
+   "correct_form": "నేను అమ్మను పిలిచాను"
+  },
+  {
+   "item_id": "HI-TE-012-b",
+   "rule_id": "HI-TE-012",
+   "wrong_form": "నేను నాన్న చూశాను",
+   "correct_form": "నేను నాన్నను చూశాను"
+  },
+  {
+   "item_id": "HI-TE-013-a",
+   "rule_id": "HI-TE-013",
+   "wrong_form": "నేను తింటాను ఉన్నాను",
+   "correct_form": "నేను తింటున్నాను"
+  },
+  {
+   "item_id": "HI-TE-013-b",
+   "rule_id": "HI-TE-013",
+   "wrong_form": "నేను వెళ్తాను ఉన్నాను",
+   "correct_form": "నేను వెళ్తున్నాను"
+  },
+  {
+   "item_id": "HI-TE-014-a",
+   "rule_id": "HI-TE-014",
+   "wrong_form": "ఇది కోసం నీ",
+   "correct_form": "ఇది నీ కోసం"
+  },
+  {
+   "item_id": "HI-TE-014-b",
+   "rule_id": "HI-TE-014",
+   "wrong_form": "ఇది కోసం నా",
+   "correct_form": "ఇది నా కోసం"
+  },
+  {
+   "item_id": "HI-TE-015-a",
+   "rule_id": "HI-TE-015",
+   "wrong_form": "నేను ఇంట్లో వెళ్తున్నాను",
+   "correct_form": "నేను ఇంటికి వెళ్తున్నాను"
+  },
+  {
+   "item_id": "HI-TE-015-b",
+   "rule_id": "HI-TE-015",
+   "wrong_form": "నేను బడిలో వెళ్తాను",
+   "correct_form": "నేను బడికి వెళ్తాను"
+  }
+ ],
+ "planting_sha256": "f673ac5001fd1c7f8131cfea7f8513e8dcb2da8754d2146d1a5ee7b09a743128",
+ "attacks_file": "tests/eval_sets/attacks.jsonl",
+ "attacks_sha256": "e23fe6386d3d5c709b1c627f81bb084e956392260da39fffccff12e64b08e695",
+ "stage_a_heldout_manifest": "tests/stage_a/heldout-manifest.json",
+ "stage_a_heldout_sha256": "c232c5e2b7ea959aaa8f4136879a5bba92cf2be45319f5307d2455f9e5250c0c"
+}
