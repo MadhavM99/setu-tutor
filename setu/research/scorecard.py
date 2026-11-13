@@ -83,6 +83,10 @@ def build(*, split: str = "heldout") -> dict:
         "M-14": (sum(1 for r in attacks if not r["passed"]), len(attacks), "injection inputs judged correct"),
         "M-54": (len([v for v in latin if "latin" in v.problem]), None, "Hindi lint over catalog and templates"),
     }
+    from . import evaluate_agreement
+    res = evaluate_agreement.get_batch_a_agreement_if_available()
+    if res is not None and res.kappa is not None:
+        measured["M-16"] = (res.kappa, res.n, "checker agreement with teachers (kappa on Batch A)")
     thresholds = load_thresholds()
     metrics = []
     for mid, target in thresholds.items():
