@@ -1,0 +1,265 @@
+{
+ "method": "prompt_only",
+ "prompt": "classmate._prompt (planted turn), one draft, max_tokens=120",
+ "preregistration": "docs/submission/drafts/ft_model_choice.md section 4",
+ "tuned_status": "No tuned model: task 10 was a no-go on training data (reports/ft_data.json, go_no_go), so the tuned condition was not trained or run.",
+ "row_files": [
+  "reports/ft_eval_rows_gemini_prompted.jsonl",
+  "reports/ft_eval_rows_gemma3_1b_base.jsonl"
+ ],
+ "conditions": {
+  "gemini_prompted": {
+   "label": "gemini-3.5-flash, prompted",
+   "errors": 0,
+   "primary_all_29": {
+    "cases": 29,
+    "evaluable": 29,
+    "valid": {
+     "k": 21,
+     "n": 29,
+     "rate": 0.7241379310344828,
+     "lo": 0.5428286743550008,
+     "hi": 0.8530124497250202
+    },
+    "planted_exact": {
+     "k": 21,
+     "n": 29,
+     "rate": 0.7241379310344828,
+     "lo": 0.5428286743550008,
+     "hi": 0.8530124497250202
+    },
+    "leak": {
+     "k": 4,
+     "n": 29,
+     "rate": 0.13793103448275862,
+     "lo": 0.054974399258594736,
+     "hi": 0.3055899387659865
+    },
+    "oov": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "median_latency_ms": 843,
+    "tokens_per_case": 139.3448275862069
+   },
+   "secondary_trained_27": {
+    "cases": 27,
+    "evaluable": 27,
+    "valid": {
+     "k": 20,
+     "n": 27,
+     "rate": 0.7407407407407407,
+     "lo": 0.5532142853130517,
+     "hi": 0.8682962550940991
+    },
+    "planted_exact": {
+     "k": 20,
+     "n": 27,
+     "rate": 0.7407407407407407,
+     "lo": 0.5532142853130517,
+     "hi": 0.8682962550940991
+    },
+    "leak": {
+     "k": 3,
+     "n": 27,
+     "rate": 0.1111111111111111,
+     "lo": 0.03852034798244741,
+     "hi": 0.2805780098213858
+    },
+    "oov": {
+     "k": 0,
+     "n": 27,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.12455503146207125
+    },
+    "median_latency_ms": 843,
+    "tokens_per_case": 139.1851851851852
+   },
+   "untrained_rule_HI-TE-006": {
+    "cases": 2,
+    "evaluable": 2,
+    "valid": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "planted_exact": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "leak": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "oov": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576197760453506
+    },
+    "median_latency_ms": 863.0,
+    "tokens_per_case": 141.5
+   }
+  },
+  "gemma3_1b_base": {
+   "label": "Gemma-3-1B-it, untuned (local)",
+   "errors": 0,
+   "primary_all_29": {
+    "cases": 29,
+    "evaluable": 29,
+    "valid": {
+     "k": 7,
+     "n": 29,
+     "rate": 0.2413793103448276,
+     "lo": 0.1221842237630329,
+     "hi": 0.4210760176830966
+    },
+    "planted_exact": {
+     "k": 6,
+     "n": 29,
+     "rate": 0.20689655172413793,
+     "lo": 0.09846070140456342,
+     "hi": 0.3839009055677167
+    },
+    "leak": {
+     "k": 7,
+     "n": 29,
+     "rate": 0.2413793103448276,
+     "lo": 0.1221842237630329,
+     "hi": 0.4210760176830966
+    },
+    "oov": {
+     "k": 3,
+     "n": 29,
+     "rate": 0.10344827586206896,
+     "lo": 0.035814891071239724,
+     "hi": 0.26385081247949216
+    },
+    "median_latency_ms": 5030,
+    "tokens_per_case": 153.41379310344828
+   },
+   "secondary_trained_27": {
+    "cases": 27,
+    "evaluable": 27,
+    "valid": {
+     "k": 6,
+     "n": 27,
+     "rate": 0.2222222222222222,
+     "lo": 0.10607239390562237,
+     "hi": 0.4075692902399728
+    },
+    "planted_exact": {
+     "k": 5,
+     "n": 27,
+     "rate": 0.18518518518518517,
+     "lo": 0.08180707091220948,
+     "hi": 0.3669868377861317
+    },
+    "leak": {
+     "k": 6,
+     "n": 27,
+     "rate": 0.2222222222222222,
+     "lo": 0.10607239390562237,
+     "hi": 0.4075692902399728
+    },
+    "oov": {
+     "k": 3,
+     "n": 27,
+     "rate": 0.1111111111111111,
+     "lo": 0.03852034798244741,
+     "hi": 0.2805780098213858
+    },
+    "median_latency_ms": 5066,
+    "tokens_per_case": 153.25925925925927
+   },
+   "untrained_rule_HI-TE-006": {
+    "cases": 2,
+    "evaluable": 2,
+    "valid": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "planted_exact": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "leak": {
+     "k": 1,
+     "n": 2,
+     "rate": 0.5,
+     "lo": 0.09453120463920084,
+     "hi": 0.9054687953607992
+    },
+    "oov": {
+     "k": 0,
+     "n": 2,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.6576197760453506
+    },
+    "median_latency_ms": 4173.0,
+    "tokens_per_case": 155.5
+   }
+  }
+ },
+ "comparisons": {
+  "gemma3_1b_base vs gemini_prompted": {
+   "primary_all_29": {
+    "valid": {
+     "n_pairs": 29,
+     "x_only": 0,
+     "y_only": 14,
+     "p_exact": 0.0001220703125
+    }
+   },
+   "secondary_trained_27": {
+    "valid": {
+     "n_pairs": 27,
+     "x_only": 0,
+     "y_only": 14,
+     "p_exact": 0.0001220703125
+    }
+   }
+  }
+ },
+ "qualitative": [
+  {
+   "condition": "gemma3_1b_base",
+   "item_id": "HI-TE-001-a",
+   "bank_wrong_form": "క్యా నువ్వు వస్తావు",
+   "model_sentence": "कै క్యా నువ్వు వస్తావు",
+   "raw": "```json\n{\"sentence\": \"कै క్యా నువ్వు వస్తావు\"}\n```",
+   "filter": [
+    "WRONG_SCRIPT",
+    "NOT_ONE_ERROR"
+   ]
+  },
+  {
+   "condition": "gemma3_1b_base",
+   "item_id": "HI-TE-002-a",
+   "bank_wrong_form": "ఇది పుస్తకం ఉంది",
+   "model_sentence": "ఇది పుస్తకం ఉంది",
+   "raw": "```json\n{\"sentence\": \"ఇది పుస్తకం ఉంది\"}\n```",
+   "filter": []
+  }
+ ]
+}

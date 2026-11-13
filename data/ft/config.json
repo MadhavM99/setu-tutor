@@ -1,0 +1,8 @@
+{
+ "max_region": 4,
+ "near_duplicate": 0.3,
+ "calls_per_rule": 8,
+ "rules": "HI->TE",
+ "generation_system_prompt": "You write training data for a Telugu tutor. For the grammar rule given, write NEW pairs: a correct, simple Telugu sentence a beginner could say, and the same sentence with exactly ONE mistake of this rule, the mistake a Hindi speaker makes. Change nothing else. Use only words from the word list. Reply with JSON only: {\"pairs\": [{\"hindi\": \"...\", \"correct\": \"...\", \"wrong\": \"...\"}]}",
+ "model": "gemini-3.5-flash"
+}

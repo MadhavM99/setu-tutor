@@ -1,0 +1,260 @@
+{
+ "validator": {
+  "recall_on_frozen": {
+   "n": 29,
+   "accepted": 29,
+   "rejected": []
+  },
+  "false_accepts_synthetic": {
+   "by_kind": {
+    "no_edit": {
+     "n": 29,
+     "accepted": 0
+    },
+    "reversed": {
+     "n": 29,
+     "accepted": 2
+    },
+    "wrong_rule": {
+     "n": 784,
+     "accepted": 0
+    },
+    "double_edit": {
+     "n": 27,
+     "accepted": 0
+    }
+   },
+   "n": 869,
+   "accepted": 2,
+   "examples": [
+    {
+     "kind": "reversed",
+     "rule_id": "HI-TE-006",
+     "src": "HI-TE-006-a",
+     "correct": "మనం వెళ్తున్నాం",
+     "wrong": "మేము వెళ్తున్నాం"
+    },
+    {
+     "kind": "reversed",
+     "rule_id": "HI-TE-006",
+     "src": "HI-TE-006-b",
+     "correct": "మేము వెళ్తున్నాం",
+     "wrong": "మనం వెళ్తున్నాం"
+    }
+   ]
+  },
+  "note": "research validator, weaker than the app leak filter; checks form, not meaning"
+ },
+ "data": {
+  "accepted": 23,
+  "rejected": 139,
+  "by_source": {
+   "gemini": 23
+  },
+  "by_rule": {
+   "HI-TE-001": 0,
+   "HI-TE-002": 21,
+   "HI-TE-003": 2,
+   "HI-TE-004": 0,
+   "HI-TE-005": 0,
+   "HI-TE-006": 0,
+   "HI-TE-007": 0,
+   "HI-TE-008": 0,
+   "HI-TE-009": 0,
+   "HI-TE-010": 0,
+   "HI-TE-011": 0,
+   "HI-TE-012": 0,
+   "HI-TE-013": 0,
+   "HI-TE-014": 0,
+   "HI-TE-015": 0,
+   "TE-HI-001": 0,
+   "TE-HI-002": 0,
+   "TE-HI-003": 0,
+   "TE-HI-004": 0,
+   "TE-HI-005": 0,
+   "TE-HI-006": 0,
+   "TE-HI-007": 0,
+   "TE-HI-008": 0,
+   "TE-HI-009": 0,
+   "TE-HI-010": 0
+  },
+  "rejection_reasons": {
+   "NEAR_FROZEN": 56,
+   "NOT_RULE_ERROR": 19,
+   "CORRECT_OOV": 56,
+   "WRONG_OOV": 33,
+   "EDIT_SHAPE": 18,
+   "DUPLICATE": 31,
+   "FROZEN_CASE": 1
+  },
+  "coverage": {
+   "hi_te_trainable": "2 of 14",
+   "scope": "HI->TE only: the validator checks Telugu sentences; HI-TE-006 excluded because its right form (మేము vs మనం) depends on the meaning, which a pair cannot show",
+   "te_hi": "out of scope (0 of 10)"
+  },
+  "frozen_cases_by_direction": {
+   "HI->TE": 29,
+   "TE->HI": 0
+  },
+  "pairs_per_frozen_rule": {
+   "HI-TE-001": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-002": {
+    "pairs": 21,
+    "met": true,
+    "note": null
+   },
+   "HI-TE-003": {
+    "pairs": 2,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-004": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-005": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-006": {
+    "pairs": 0,
+    "met": false,
+    "note": "excluded (meaning-dependent): cannot be met"
+   },
+   "HI-TE-007": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-008": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-009": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-010": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-011": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-012": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-013": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-014": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   },
+   "HI-TE-015": {
+    "pairs": 0,
+    "met": false,
+    "note": null
+   }
+  },
+  "generation": {
+   "calls": 57,
+   "ok_calls": 18,
+   "errors": {
+    "HTTPStatusError: 429": 39
+   },
+   "tokens": 17161
+  },
+  "funnel_gemini": {
+   "source": "gemini",
+   "calls": 57,
+   "calls_with_reply": 18,
+   "call_errors": {
+    "HTTPStatusError: 429": 39
+   },
+   "candidates": 144,
+   "stages": [
+    {
+     "check": "form_and_vocabulary",
+     "removed": 73,
+     "remaining": 71
+    },
+    {
+     "check": "one_edit_of_this_rule",
+     "removed": 13,
+     "remaining": 58
+    },
+    {
+     "check": "not_a_frozen_case_or_near_duplicate",
+     "removed": 4,
+     "remaining": 54
+    },
+    {
+     "check": "not_a_duplicate",
+     "removed": 31,
+     "remaining": 23
+    }
+   ],
+   "accepted": 23
+  },
+  "go_no_go": {
+   "go": false,
+   "go_strict": false,
+   "decision_rule": "go uses pairs_per_frozen_rule WITHOUT HI-TE-006 (decided 13 Nov 2026, before any data was generated): HI-TE-006 is excluded from training by design because its right form (మేము vs మనం) depends on the meaning, which a pair cannot show. go_strict, which counts it, can never be met.",
+   "checks": {
+    "rules_covered": {
+     "value": "2 of 14",
+     "need": ">= 12",
+     "met": false
+    },
+    "total_pairs": {
+     "value": 23,
+     "need": ">= 200",
+     "met": false
+    },
+    "pairs_per_frozen_rule": {
+     "need": ">= 10 for every HI->TE rule in the frozen cases",
+     "met": false,
+     "met_excluding_meaning_dependent": false,
+     "failing": [
+      "HI-TE-001",
+      "HI-TE-003",
+      "HI-TE-004",
+      "HI-TE-005",
+      "HI-TE-006",
+      "HI-TE-007",
+      "HI-TE-008",
+      "HI-TE-009",
+      "HI-TE-010",
+      "HI-TE-011",
+      "HI-TE-012",
+      "HI-TE-013",
+      "HI-TE-014",
+      "HI-TE-015"
+     ]
+    },
+    "validator_recall": {
+     "value": 1.0,
+     "need": ">= 0.9",
+     "met": true
+    }
+   }
+  }
+ }
+}

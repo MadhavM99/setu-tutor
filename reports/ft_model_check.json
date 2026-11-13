@@ -1,0 +1,266 @@
+{
+ "corpus": {
+  "telugu_runs": 897,
+  "hindi_runs": 1355,
+  "known_telugu_words": 97
+ },
+ "models": {
+  "Qwen2.5-1.5B-Instruct": {
+   "hf_id": "Qwen/Qwen2.5-1.5B-Instruct",
+   "vocab_size": 151643,
+   "telugu": {
+    "runs": 897,
+    "words": 1185,
+    "tokens": 7135,
+    "tokens_per_word": 6.021,
+    "unk_tokens": 0
+   },
+   "hindi": {
+    "runs": 1355,
+    "words": 2774,
+    "tokens": 10232,
+    "tokens_per_word": 3.689,
+    "unk_tokens": 0
+   },
+   "readability": {
+    "device": "cpu",
+    "seconds": 215.1,
+    "outputs": [
+     {
+      "hindi": "मुझे चाय पसंद है।",
+      "output": "ఈ మాన్వంగా సుక్కోలేది.",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 3,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "यह मेरी किताब है।",
+      "output": "ఈ ప్రతిష్కారము అనేది మీరు చేయబడిం",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 5,
+      "known_word_share": 0.2
+     },
+     {
+      "hindi": "तुम कहाँ रहते हो?",
+      "output": "మీరు కనుగొనినది తల్లి భాషలో: \"వేలెడ",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 5,
+      "known_word_share": 0.2
+     },
+     {
+      "hindi": "मुझे पानी चाहिए।",
+      "output": "ఈ ప్రశ్నకు సమాధానం లేదో తెలుగులో �",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 5,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "वह स्कूल में पढ़ती है।",
+      "output": "ఈ స్కూలులో పేర్పడీ ఉంది.",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 4,
+      "known_word_share": 0.25
+     },
+     {
+      "hindi": "हम कल बाज़ार जाएँगे।",
+      "output": "మేము కళారంగా చేయలోవి.",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 3,
+      "known_word_share": 0.333
+     },
+     {
+      "hindi": "मेरा नाम राजू है।",
+      "output": "రాజు అని మీద నమోదంగా వచ్చాడేవారు.",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 5,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "आज मौसम अच्छा है।",
+      "output": "ఈ ముందు ప్రభుత్వ సాయుచితం ఉన్నాయ",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 5,
+      "known_word_share": 0.0
+     }
+    ],
+    "mean_telugu_letter_share": 1.0,
+    "mean_known_word_share": 0.123,
+    "outputs_with_telugu": 8
+   }
+  },
+  "Llama-3.2-1B-Instruct": {
+   "hf_id": "unsloth/Llama-3.2-1B-Instruct",
+   "vocab_size": 128000,
+   "telugu": {
+    "runs": 897,
+    "words": 1185,
+    "tokens": 8412,
+    "tokens_per_word": 7.099,
+    "unk_tokens": 0
+   },
+   "hindi": {
+    "runs": 1355,
+    "words": 2774,
+    "tokens": 6597,
+    "tokens_per_word": 2.378,
+    "unk_tokens": 0
+   },
+   "readability": {
+    "device": "cpu",
+    "seconds": 291.1,
+    "outputs": [
+     {
+      "hindi": "मुझे चाय पसंद है।",
+      "output": "मुझे चाय पसंद है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "यह मेरी किताब है।",
+      "output": "यह मेरी किताब है",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "तुम कहाँ रहते हो?",
+      "output": "తమ్ముడు ఎలా ఉంటాడు?",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 3,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "मुझे पानी चाहिए।",
+      "output": "मुझे पानी चाहिए",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "वह स्कूल में पढ़ती है।",
+      "output": "वह स्कूल में पढ़ती है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "हम कल बाज़ार जाएँगे।",
+      "output": "हम कल बाज़ार जाएँगे",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "मेरा नाम राजू है।",
+      "output": "मेरा नाम राजू है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "आज मौसम अच्छा है।",
+      "output": "आज मौसम अच्छा है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     }
+    ],
+    "mean_telugu_letter_share": 0.125,
+    "mean_known_word_share": 0.0,
+    "outputs_with_telugu": 1
+   }
+  },
+  "Gemma-3-1B-it": {
+   "hf_id": "unsloth/gemma-3-1b-it",
+   "vocab_size": 262144,
+   "telugu": {
+    "runs": 897,
+    "words": 1185,
+    "tokens": 2335,
+    "tokens_per_word": 1.97,
+    "unk_tokens": 0
+   },
+   "hindi": {
+    "runs": 1355,
+    "words": 2774,
+    "tokens": 4033,
+    "tokens_per_word": 1.454,
+    "unk_tokens": 0
+   },
+   "readability": {
+    "device": "cpu",
+    "seconds": 1473.3,
+    "outputs": [
+     {
+      "hindi": "मुझे चाय पसंद है।",
+      "output": "मुझे चाय पसंद है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "यह मेरी किताब है।",
+      "output": "ఇది నా పుస్తకం.",
+      "telugu_letter_share": 1.0,
+      "telugu_words": 3,
+      "known_word_share": 1.0
+     },
+     {
+      "hindi": "तुम कहाँ रहते हो?",
+      "output": "तुम ఇక్కడ ఉంటావా?",
+      "telugu_letter_share": 0.778,
+      "telugu_words": 2,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "मुझे पानी चाहिए।",
+      "output": "मुझे पानी चाहिए।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "वह स्कूल में पढ़ती है।",
+      "output": "वह स्कूल में पढ़ती है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "हम कल बाज़ार जाएँगे।",
+      "output": "हम कल बाज़ार जाएँगे।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "मेरा नाम राजू है।",
+      "output": "मेरा नाम राजू है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     },
+     {
+      "hindi": "आज मौसम अच्छा है।",
+      "output": "आज मौसम अच्छा है।",
+      "telugu_letter_share": 0.0,
+      "telugu_words": 0,
+      "known_word_share": 0.0
+     }
+    ],
+    "mean_telugu_letter_share": 0.222,
+    "mean_known_word_share": 0.125,
+    "outputs_with_telugu": 2
+   }
+  }
+ },
+ "recommendation": {
+  "model": "Qwen2.5-1.5B-Instruct",
+  "hf_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "passed_readability": [
+   "Qwen2.5-1.5B-Instruct"
+  ],
+  "rule": "lowest Telugu tokens/word among models with mean Telugu-script share >= 0.8 and >= 6/8 Telugu outputs; ties by known-word share"
+ }
+}

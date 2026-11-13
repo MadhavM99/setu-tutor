@@ -1,0 +1,33 @@
+{
+ "seed": 13,
+ "val_fraction": 0.1,
+ "near_threshold": 0.3,
+ "train": 22,
+ "val": 1,
+ "groups": 6,
+ "dropped_frozen_overlap": {},
+ "by_rule": {
+  "HI-TE-002": {
+   "train": 20,
+   "val": 1
+  },
+  "HI-TE-003": {
+   "train": 2,
+   "val": 0
+  }
+ },
+ "by_source": {
+  "train": {
+   "gemini": 22
+  },
+  "val": {
+   "gemini": 1
+  }
+ },
+ "val_train_near_duplicates": 0,
+ "sha256_16": {
+  "train": "4030532a5350f027",
+  "val": "58e6b821c45d5c84"
+ },
+ "note": "near-duplicate grouping is within a rule (plus identical correct sentences across rules)"
+}
