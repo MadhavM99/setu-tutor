@@ -58,6 +58,33 @@ def cases():
         yield rule, it, leakfilter.Context(item=key, turn="planted", seen_words=seen)
 
 
+def raju_row(t: classmate.RajuTurn, it: dict) -> dict:
+    """One planting case's generation outcome (shared with `tool_eval`)."""
+    reasons = [r for d in t.drafts for r in d.reasons]
+    answered = [d for d in t.drafts if d.completion.ok]
+    return {"evaluable": bool(answered), "provider_errors": len(t.drafts) - len(answered),
+            "valid": t.source == "model", "planted": t.source == "model" and t.text == it["wrong_form"],
+            "leak": "ANSWER_LEAK" in reasons, "oov": "OOV" in reasons, "calls": len(t.drafts),
+            "latency": [d.completion.latency_ms for d in t.drafts],
+            "tokens": [(d.completion.prompt_tokens or 0) + (d.completion.completion_tokens or 0) for d in t.drafts]}
+
+
+def summarise(all_rows: list[dict]) -> dict:
+    rows = [r for r in all_rows if r["evaluable"]]  # a case with no model reply says nothing
+    out = {"cases": len(all_rows), "evaluable": len(rows),
+           "provider_errors": sum(r["provider_errors"] for r in all_rows)}
+    if not rows:
+        return out | {"status": "not_evaluable: no model reply (provider errors only)"}
+    n = len(rows)
+    return out | {"n": n, "valid_rate": sum(r["valid"] for r in rows) / n,
+                  "planting_precision": (sum(r["planted"] for r in rows) / max(1, sum(r["valid"] for r in rows))),
+                  "leak_rate": sum(r["leak"] for r in rows) / n, "oov_rate": sum(r["oov"] for r in rows) / n,
+                  "fallback_rate": 1 - sum(r["valid"] for r in rows) / n,
+                  "calls_per_case": sum(r["calls"] for r in rows) / n,
+                  "median_latency_ms": statistics.median([x for r in rows for x in r["latency"]]),
+                  "tokens_per_case": sum(sum(r["tokens"]) for r in rows) / n}
+
+
 def run(provider) -> dict:
     out = {}
     for method in classmate.METHODS:
@@ -65,28 +92,8 @@ def run(provider) -> dict:
         for rule, it, ctx in cases():
             t = classmate.propose(provider, ctx, rule_title=rule.get("title_l1") or "", hindi_meaning=it["l1_meaning"],
                                   bank_sentence=it["wrong_form"], method=method)
-            reasons = [r for d in t.drafts for r in d.reasons]
-            answered = [d for d in t.drafts if d.completion.ok]
-            rows.append({"evaluable": bool(answered), "provider_errors": len(t.drafts) - len(answered),
-                         "valid": t.source == "model", "planted": t.source == "model" and t.text == it["wrong_form"],
-                         "leak": "ANSWER_LEAK" in reasons, "oov": "OOV" in reasons, "calls": len(t.drafts),
-                         "latency": [d.completion.latency_ms for d in t.drafts],
-                         "tokens": [(d.completion.prompt_tokens or 0) + (d.completion.completion_tokens or 0)
-                                    for d in t.drafts]})
-        all_rows, rows = rows, [r for r in rows if r["evaluable"]]  # a case with no model reply says nothing
-        out[method] = {"cases": len(all_rows), "evaluable": len(rows),
-                       "provider_errors": sum(r["provider_errors"] for r in all_rows)}
-        if not rows:
-            out[method]["status"] = "not_evaluable: no model reply (provider errors only)"
-            continue
-        n = len(rows)
-        out[method] |= {"n": n, "valid_rate": sum(r["valid"] for r in rows) / n,
-                       "planting_precision": (sum(r["planted"] for r in rows) / max(1, sum(r["valid"] for r in rows))),
-                       "leak_rate": sum(r["leak"] for r in rows) / n, "oov_rate": sum(r["oov"] for r in rows) / n,
-                       "fallback_rate": 1 - sum(r["valid"] for r in rows) / n,
-                       "calls_per_case": sum(r["calls"] for r in rows) / n,
-                       "median_latency_ms": statistics.median([x for r in rows for x in r["latency"]]),
-                       "tokens_per_case": sum(sum(r["tokens"]) for r in rows) / n}
+            rows.append(raju_row(t, it))
+        out[method] = summarise(rows)
     return out
 
 
