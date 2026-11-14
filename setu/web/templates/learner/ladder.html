@@ -1,8 +1,10 @@
 {% extends "base.html" %}
+{% from "learner/_path.html" import learning_path %}
 {# The ladder view: what the learner can do, what is in progress, what comes later. No scores. #}
-{% macro name(x) %}{% if x.get("name_key") %}{{ t(x.name_key) }}{% else %}{{ x.name }}{% endif %}{% endmacro %}
+{% macro name(x) %}{% if x.get("name_key") %}{{ t(x.name_key) }}{% elif x.family == "word" %}{{ te(x.name) }}{% else %}{{ x.name }}{% endif %}{% endmacro %}
 {% block content %}
 <h1>{{ t("ladder.title") }}</h1>
+{{ learning_path(path) }}
 {% if nxt %}
 <p><strong>{{ t("ladder.next", name=name(nxt)) }}</strong>
 {% if nxt.after %}{{ t("ladder.because_after", name=name(nxt.after)) }}{% elif nxt.learning %}{{ t("ladder.because_learning") }}{% else %}{{ t("ladder.because_start") }}{% endif %}</p>

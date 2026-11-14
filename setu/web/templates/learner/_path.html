@@ -1,0 +1,15 @@
+{# The learning path: six stages, one marked "you are here". `path` comes from setu/web/path.py. #}
+{% macro learning_path(path) %}
+<ol class="path" aria-label="{{ t('path.title') }}">
+  {% for s in path %}
+  <li class="path-step {% if s.state == 'done' %}is-done{% elif s.state == 'now' %}is-now{% else %}is-soon{% endif %}"{% if s.state == "now" %} aria-current="step"{% endif %}>
+    <span class="path-node" aria-hidden="true">{% if s.state == "done" %}<svg viewBox="0 0 24 24" class="ico"><path d="M6 12.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>{% else %}{{ num(loop.index) }}{% endif %}</span>
+    <span class="path-text">
+      <strong>{{ t(s.stage_key) }}</strong>
+      <span class="help">{{ t(s.hint_key) }}</span>
+      <span class="path-state">{% if s.state == "done" %}{{ t("path.done") }}{% elif s.state == "now" %}{{ t("path.here") }}{% else %}{{ t("path.soon") }}{% endif %}</span>
+    </span>
+  </li>
+  {% endfor %}
+</ol>
+{% endmacro %}

@@ -41,16 +41,20 @@ def home(request: Request):
         return RedirectResponse("/login", status_code=303)
     if user.role == "teacher":
         return RedirectResponse("/teacher", status_code=303)
-    from . import next_lesson
+    from setu.domain import matching
+
+    from . import next_lesson, routes_match
 
     with request.app.state.db.tx() as c:
         h = next_lesson.home(c, user.learner_id)
+        can_match = len(routes_match._met_words(c, user.learner_id)[0]) >= matching.MIN_WORDS
     t = request.app.state.templates.globals["t"]
     why = None
     if h.lesson is not None:
         args = {k: (t(v) if k.endswith("_key") else v) for k, v in h.lesson.reason_args.items()}
         why = t(h.lesson.reason_key, **{k.removesuffix("_key"): v for k, v in args.items()})
-    return render(request, "learner/home.html", title_key="page.home", user=user, home=h, why=why, nav="today")
+    return render(request, "learner/home.html", title_key="page.home", user=user, home=h, why=why, can_match=can_match,
+                  nav="today")
 
 
 @router.get("/review", response_class=HTMLResponse)

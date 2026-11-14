@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% import "learner/_voice.html" as v with context %}
+{% block content %}
+<div class="feedback {% if tone == 'great' %}good celebrate{% elif tone == 'good' %}unsure{% else %}bad{% endif %}" role="status">
+  <h1>{{ t("match.score", n=num(right), total=num(total)) }}</h1>
+  <p>{{ t("match." ~ tone) }}</p>
+</div>
+<ul class="plain result-list">
+{% for x in results %}
+  <li class="result {% if x.ok %}is-right{% else %}is-wrong{% endif %}">
+    <span class="te-big">{{ te(x.unit.telugu) }}</span>{{ v.speak(x.unit.telugu) }}
+    {% if x.ok %}<span class="verdict-ok">{{ t("match.right") }}</span>
+    {% else %}<span class="verdict-fix">{{ t("match.wrong") }} {{ x.unit.label }}</span>{% endif %}
+    {{ v.word_picture(x.unit.telugu) }}
+  </li>
+{% endfor %}
+</ul>
+<p class="help">{{ t("match.note") }}</p>
+<a class="button primary big" href="/learn/match">{{ t("match.again") }}</a>
+<a class="button" href="/">{{ t("nav.home") }}</a>
+{% endblock %}

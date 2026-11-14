@@ -1,10 +1,12 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% from "learner/_persona.html" import persona %}
 {# The learner's own reply. The box starts empty; the hint is the line's approved Hindi hint, never the reply. #}
 {% block content %}
 <p class="eyebrow">{{ script.title_hi }}</p>
 {% call persona("friend") %}
   <p class="letter-big">{{ te(line.telugu) }}</p>
+  <div class="voice-row">{{ v.speak(line.telugu) }}</div>
   <p class="help">{{ t("scene.meant", meaning=line.options_hi[line.answer_index]) }}</p>
 {% endcall %}
 <h1>{{ line.reply_goal_hi }}</h1>

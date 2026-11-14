@@ -15,6 +15,7 @@ import datetime as dt
 
 from sqlalchemy import text
 
+from . import path as learning_path
 from . import routes_learn as RL
 from .routes_ladder import ladder
 
@@ -39,6 +40,7 @@ class Home:
     stage_key: str
     done: int
     total: int
+    path: tuple = ()
 
 
 def _due(c, act, learner_id, now) -> int:
@@ -107,6 +109,11 @@ def recommend(c, learner_id, now: dt.datetime | None = None) -> Lesson | None:
 def home(c, learner_id, now=None) -> Home:
     can, now_learning, later, _ = ladder(c, learner_id)
     total = len(can) + len(now_learning) + len(later)
-    first_open = next((t for t in now_learning + later), None)
-    stage = STAGE.get(first_open["band"] if first_open else "L5", "stage.L0")
-    return Home(recommend(c, learner_id, now), stage, len(can) + sum(1 for t in now_learning if t["placed"]), total)
+    path = learning_path.build(can, now_learning, later)
+    # "you are here" is the stage the path marks as current, so the home line and the path never disagree
+    band = next((x["band"] for x in path if x["state"] == "now"), None) or next(
+        (x["band"] for x in path if x["state"] == "soon"), "L5")
+    if all(x["state"] == "done" for x in path if x["total"]):
+        band = "L5"
+    return Home(recommend(c, learner_id, now), STAGE[band], len(can) + sum(1 for t in now_learning if t["placed"]),
+                total, tuple(path))

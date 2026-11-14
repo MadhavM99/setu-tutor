@@ -20,6 +20,7 @@ from setu.domain import placement as P
 from setu.domain.normalise import to_devanagari
 from setu.store.outcome_writer import CardTarget
 
+from . import path as learning_path
 from .routes_ui import form_data, optional_user, render
 
 router = APIRouter()
@@ -267,4 +268,4 @@ def ladder_page(request: Request):
     with request.app.state.db.tx() as c:
         can, now, later, nxt = ladder(c, user.learner_id)
     return render(request, "learner/ladder.html", title_key="page.ladder", user=user, can=can, now=now, later=later,
-                  nxt=nxt, nav="progress")
+                  nxt=nxt, path=learning_path.build(can, now, later), nav="progress")

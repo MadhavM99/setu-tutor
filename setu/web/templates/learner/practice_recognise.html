@@ -1,7 +1,8 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% block content %}
 <p class="eyebrow">{{ t("lesson.independent") }}</p>
 <h1>{{ t("learn.recognise_prompt") }}</h1>
-<div class="exercise-card"><p class="letter-big">{{ te(unit.telugu) }}</p></div>
+<div class="exercise-card"><p class="letter-big">{{ te(unit.telugu) }}</p><div class="voice-row">{{ v.speak(unit.telugu) }}</div></div>
 {% set telugu = false %}{% include "learner/_keyboard.html" %}
 {% endblock %}

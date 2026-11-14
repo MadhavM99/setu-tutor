@@ -1,9 +1,10 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% from "learner/_persona.html" import persona %}
 {# The friend's approved line, then a comprehension question in Hindi (multiple choice: recognition only). #}
 {% block content %}
 <p class="eyebrow">{{ script.title_hi }}</p>
-{% call persona("friend") %}<p class="letter-big">{{ te(shown) }}</p>{% endcall %}
+{% call persona("friend") %}<p class="letter-big">{{ te(shown) }}</p><div class="voice-row">{{ v.speak(shown) }}</div>{% endcall %}
 <h1>{{ line.question_hi }}</h1>
 <form method="post" action="{{ act.path }}/answer" class="options">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">

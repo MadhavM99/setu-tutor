@@ -1,9 +1,12 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% block content %}
 <p class="eyebrow">{{ meta.group_hi if act.intro_per_group or meta.setup_hi else t(act.text.new) }}</p>
 <div class="exercise-card">
   <p class="letter-big">{{ te(unit.telugu) }}</p>
   <p class="prompt" style="text-align:center">{{ t(act.text.twin_is, twin=unit.label) }}</p>
+  {{ v.word_picture(unit.telugu) }}
+  <div class="voice-row">{{ v.speak(unit.telugu, big=True) }}{{ v.say_it(unit.telugu) }}{{ v.slow() }}</div>
 </div>
 {% if meta.setup_hi %}<p>{{ meta.setup_hi }}</p>{% endif %}
 {% if meta.cognate_of %}<p>{{ t("word.cognate", hindi=meta.cognate_of) }}</p>{% endif %}

@@ -16,12 +16,14 @@ from setu import __version__
 from setu.agents import friend
 from setu.agents.llm import NotLocal, OpenAICompatible
 
+from . import pictures
 from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
 from .i18n import Catalog
 from .routes_auth import router as auth_router
 from .routes_ladder import router as ladder_router
 from .routes_learn import router as learn_router
+from .routes_match import router as match_router
 from .routes_rules import router as rules_router
 from .routes_scenes import router as scenes_router
 from .routes_teacher import router as teacher_router
@@ -45,6 +47,7 @@ def _templates(catalog: Catalog) -> Environment:
         t=catalog.get,
         num=catalog.number,
         # Telugu always sits in an element marked lang="te" (screen readers, fonts).
+        pic=lambda word: pictures.picture(word, catalog.get),
         te=lambda s: Markup('<span lang="te">') + escape(s) + Markup("</span>"),
         demo=os.environ.get("SETU_DEMO") == "1",  # a demo database: content approved by demo reviewers only
     )
@@ -99,6 +102,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.include_router(rules_router)  # before /learn/{name}
     app.include_router(ladder_router)
     app.include_router(scenes_router)  # before /learn/{name}
+    app.include_router(match_router)  # before /learn/{name}
     app.include_router(learn_router)
     return app
 
