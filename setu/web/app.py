@@ -45,10 +45,13 @@ def _templates(catalog: Catalog) -> Environment:
                       undefined=StrictUndefined)
     env.globals.update(
         t=catalog.get,
+        t_rich=catalog.get_rich,  # for a parameter that is markup, e.g. a Telugu word in lang="te"
         num=catalog.number,
         # Telugu always sits in an element marked lang="te" (screen readers, fonts).
         pic=lambda word: pictures.picture(word, catalog.get),
         te=lambda s: Markup('<span lang="te">') + escape(s) + Markup("</span>"),
+        # Speech flags (architecture.md §7): off unless the environment turns them on, read at each render.
+        flag=lambda name: os.environ.get({"speech_input": "SETU_SPEECH_INPUT", "tts_synthetic": "SETU_TTS_SYNTHETIC"}[name]) == "1",
         demo=os.environ.get("SETU_DEMO") == "1",  # a demo database: content approved by demo reviewers only
     )
     return env

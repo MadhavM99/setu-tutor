@@ -248,7 +248,7 @@ button, .button { min-height: 3.1rem; }
 .path-state { font-size: .8rem; font-weight: 700; color: var(--muted); }
 .path-step.is-now .path-state { color: #6a4a00; }
 .path-step.is-done .path-state { color: var(--primary); }
-.path-step.is-soon { opacity: .72; }
+.path-step.is-soon .path-node { border-style: dashed; background: transparent; }  /* not faded text: WCAG AA contrast */
 .path-section, .play { margin-top: 1.75rem; }
 .play { background: var(--accent-soft); border-radius: var(--radius); padding: 1rem 1.25rem 1.25rem; }
 .play h2 { margin-top: 0; }

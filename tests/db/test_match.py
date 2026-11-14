@@ -73,9 +73,10 @@ def test_a_round_is_the_met_words_and_a_reload_does_not_re_roll_it(engine, appro
     assert [r.id for r in open_round(engine, learner)] == [r.id for r in rows]
 
 
-def test_right_answers_are_marked_by_the_checker_and_feed_the_card_schedule_only(engine, approved_words):  # noqa: F811
+def test_right_answers_are_marked_by_the_checker_and_feed_the_card_schedule_only(engine, approved_words, monkeypatch):  # noqa: F811
     c, learner = client(engine)
     learn_three_words(engine, c)
+    monkeypatch.setattr(matching, "round_mode", lambda chosen, seed: "meaning")
     c.get("/learn/match")
     rows = open_round(engine, learner)
     skills_before = skill_snapshot(engine, learner)
@@ -141,6 +142,11 @@ def test_picture_rounds_show_pictures_in_the_answers_and_meaning_rounds_show_hin
     assert "chip-pic" in page.text and page.text.count('class="pic"') >= 3 * 3  # a picture per answer, per word
     assert "तस्वीर" in page.text  # the screen-reader labels are Hindi
     c.post("/learn/match/answer", data={f"pair_{r.id}": r.task["letter_id"] for r in open_round(engine, learner)})
+    with engine.connect() as x:  # X-INPUT-08: the picture was the answer, so the attempt says an illustration helped
+        aids = x.execute(text("SELECT a.assistance FROM attempt a JOIN exchange e ON e.id = a.exchange_id "
+                              "JOIN session s ON s.id = e.session_id WHERE s.learner_id = :l "
+                              "AND e.task->>'activity' = 'match'"), {"l": learner}).scalars().all()
+    assert aids and all(sorted(a) == ["choices", "illustration"] for a in aids)
     monkeypatch.setattr(matching, "round_mode", lambda chosen, seed: "meaning")
     page = c.get("/learn/match")
     assert "chip-pic" not in page.text and "दो (2)" in page.text
@@ -157,8 +163,9 @@ def test_another_learner_cannot_answer_someone_elses_round(engine, approved_word
     assert r.status_code == 303 and len(open_round(engine, learner)) == 3
 
 
-def test_the_word_pages_and_home_carry_voice_pictures_and_the_path(engine, approved_words):  # noqa: F811
-    c, learner = client(engine)
+def test_the_word_pages_and_home_carry_voice_pictures_and_the_path(engine, approved_words, monkeypatch):  # noqa: F811
+    monkeypatch.setenv("SETU_TTS_SYNTHETIC", "1")
+    c, _ = client(engine)
     home = c.get("/")
     assert_hindi_page(home)
     assert 'class="path"' in home.text and "आप यहाँ हैं" in home.text and "/learn/match" not in home.text
@@ -170,7 +177,40 @@ def test_the_word_pages_and_home_carry_voice_pictures_and_the_path(engine, appro
     assert_hindi_page(c.get("/ladder"))
 
 
-def test_the_word_intro_and_feedback_cards_carry_a_picture_and_voice_controls(engine, approved_words):  # noqa: F811
+def test_speech_is_off_by_default_and_the_lesson_still_works_in_text(engine, approved_words, monkeypatch):  # noqa: F811
+    """architecture.md §7: both speech flags are off until their gates pass; with them off no control or script is sent."""
+    monkeypatch.delenv("SETU_TTS_SYNTHETIC", raising=False)
+    monkeypatch.delenv("SETU_SPEECH_INPUT", raising=False)
+    only_letters(engine, "కతపస")
+    c, _ = client(engine)
+    for ch in "కతపస":
+        recall_letter(c, ch)
+    page = c.get("/learn/words")
+    assert_hindi_page(page)
+    assert "పుస్తకం" in page.text and 'class="pic"' in page.text  # the picture and the word are still there
+    for gone in ("speak", "say-it", "slow-toggle", "/static/js/voice.js", "data-say="):
+        assert gone not in page.text, gone
+    assert "/static/js/voice.js" not in c.get("/").text
+
+
+def test_each_speech_flag_turns_on_only_its_own_controls(engine, approved_words, monkeypatch):  # noqa: F811
+    only_letters(engine, "కతపస")
+    c, _ = client(engine)
+    for ch in "కతపస":
+        recall_letter(c, ch)
+    monkeypatch.setenv("SETU_TTS_SYNTHETIC", "1")
+    monkeypatch.delenv("SETU_SPEECH_INPUT", raising=False)
+    page = c.get("/learn/words")
+    assert 'data-voice="synthetic"' in page.text and 'class="say-it"' not in page.text  # listening only
+    monkeypatch.delenv("SETU_TTS_SYNTHETIC")
+    monkeypatch.setenv("SETU_SPEECH_INPUT", "1")
+    page = c.get("/learn/words")
+    assert 'class="say-it"' in page.text and 'class="speak' not in page.text  # speaking only
+
+
+def test_the_word_intro_and_feedback_cards_carry_a_picture_and_voice_controls(engine, approved_words, monkeypatch):  # noqa: F811
+    monkeypatch.setenv("SETU_TTS_SYNTHETIC", "1")
+    monkeypatch.setenv("SETU_SPEECH_INPUT", "1")
     only_letters(engine, "కతపస")
     c, _ = client(engine)
     for ch in "కతపస":
@@ -178,7 +218,7 @@ def test_the_word_intro_and_feedback_cards_carry_a_picture_and_voice_controls(en
     page = c.get("/learn/words")
     assert_hindi_page(page)
     assert "పుస్తకం" in page.text and 'class="pic"' in page.text and "खुली किताब की तस्वीर" in page.text
-    assert 'class="speak speak-big" data-say="పుస్తకం"' in page.text and 'class="say-it"' in page.text
+    assert 'class="speak speak-big" data-say="పుస్తకం" data-voice="synthetic"' in page.text and 'class="say-it"' in page.text
     assert 'class="slow-toggle"' in page.text and "तस्वीर बस याद रखने में मदद के लिए है" in page.text
     assert page.text.count(" hidden>") >= 3  # every voice control starts hidden; voice.js shows what the browser can do
     c.post("/learn/words/continue", data={"exchange_id": exchange_id(page.text)})
@@ -190,3 +230,27 @@ def test_the_word_intro_and_feedback_cards_carry_a_picture_and_voice_controls(en
     assert 'class="pic"' in fb.text and "data-say=" in fb.text and "celebrate" in fb.text
     meaning = c.get("/learn/words")
     assert 'class="pic"' not in meaning.text  # no picture on a question about what the word means
+
+
+def test_the_ladder_names_a_word_as_the_next_step_and_still_renders(engine, approved_words, monkeypatch):  # noqa: F811
+    """The next-step line can name a word group (the demo learner's case). The Telugu sits in lang="te" inside a
+    Hindi sentence, and the tag name used to count as Latin script: the page crashed with LatinInText until the
+    catalog gained a markup-aware lookup (t_rich). Real ladder data, with the next step and what it comes after
+    swapped for word groups."""
+    from setu.web import routes_ladder
+
+    c, learner = client(engine)
+    learn_three_words(engine, c)
+    with engine.connect() as x:
+        can, now, later, _ = routes_ladder.ladder(x, learner)
+    word = dict(next(iter(t for t in [*can, *now, *later])), family="word", name="ఒకటి · రెండు", learning=True,
+                placed=False, name_key=None)
+    word_after = dict(word, name="మూడు", after=None, needs=None)
+    word["after"] = word_after
+    hungry = dict(word, name="నాలుగు", after=None, needs=word_after)
+    monkeypatch.setattr(routes_ladder, "ladder", lambda conn, lid: (can, now, [*later, hungry], word))
+    page = c.get("/ladder")
+    assert page.status_code == 200
+    assert_hindi_page(page)
+    assert "अगला:" in page.text and '<span lang="te">ఒకటి · రెండు</span>' in page.text
+    assert '<span lang="te">నాలుగు</span>' in page.text and '<span lang="te">మూడు</span>' in page.text  # needs/after

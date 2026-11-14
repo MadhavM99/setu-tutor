@@ -16,6 +16,16 @@ Full stack (app + Postgres 16):
 
     docker compose up --build
 
+## Speech flags (off by default)
+
+Listen and say-it buttons are behind the two flags of `docs/specs/architecture.md` §7. With both off the pages carry no
+speech control and send no speech script. Turn them on with environment variables, per process:
+
+    SETU_TTS_SYNTHETIC=1   # "Listen" buttons and the slow-voice switch (browser voice, marked data-voice="synthetic")
+    SETU_SPEECH_INPUT=1    # "Say it" button (browser speech recognition; in Chrome the audio goes to Google)
+
+Speech never grades anything. Do not turn these on for real learners before the speech gate (M-25) and speaker review.
+
 ## Legacy app
 
     cd legacy

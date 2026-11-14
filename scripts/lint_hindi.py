@@ -25,7 +25,7 @@ JINJA_COMMENT = re.compile(r"\{#.*?#\}", re.DOTALL)
 JINJA_EXPR = re.compile(r"\{\{(.*?)\}\}", re.DOTALL)
 JINJA_STMT = re.compile(r"\{%.*?%\}", re.DOTALL)
 PLACEHOLDER = re.compile(r"\{[a-z_]+\}")  # format parameters such as {handle}; their values are checked at render
-STRING = re.compile(r"""(?P<prefix>\bt\(\s*)?(?P<q>["'])(?P<s>(?:\\.|(?!(?P=q)).)*)(?P=q)""")
+STRING = re.compile(r"""(?P<prefix>\bt(?:_rich)?\(\s*)?(?P<q>["'])(?P<s>(?:\\.|(?!(?P=q)).)*)(?P=q)""")
 
 
 @dataclasses.dataclass(frozen=True)

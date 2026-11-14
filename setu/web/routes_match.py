@@ -121,7 +121,8 @@ async def match_answer(request: Request):
                 "INSERT INTO attempt (id, exchange_id, n, raw_text, response_mode, cue_level, assistance, after_reveal, "
                 "idempotency_key) VALUES (:id, :e, 1, :raw, 'multiple_choice', 1, CAST(:aids AS jsonb), false, :k) "
                 "ON CONFLICT (idempotency_key) DO NOTHING RETURNING id"),
-                {"id": attempt_id, "e": r.id, "raw": pick, "aids": json.dumps(["choices"]),
+                {"id": attempt_id, "e": r.id, "raw": pick,
+                 "aids": json.dumps(["choices", "illustration"] if r.task["mode"] == "picture" else ["choices"]),
                  "k": f"{r.id}:1"}).scalar()
         if inserted is not None:  # card review only: no skill evidence from a game with a shared answer list
             request.app.state.writer.record_verdict(result.verdict, card=CardTarget("lexeme", unit.id, "REC"),

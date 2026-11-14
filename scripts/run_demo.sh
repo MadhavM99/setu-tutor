@@ -2,6 +2,9 @@
 # Start the SETU demo (development only): Postgres in Docker, the isolated demo database, the app on :8000.
 # Optional self-hosted model: start LM Studio's server (`lms server start; lms load qwen/qwen3.5-9b`) and export
 #   SETU_LLM_URL=http://localhost:1234/v1 SETU_LLM_MODEL=qwen/qwen3.5-9b
+# Speech is OFF by default (architecture.md §7, flags speech_input and tts_synthetic). To show the listen and say-it
+# buttons in a demo (browser voices, synthetic; Chrome sends say-it audio to Google), start with:
+#   SETU_TTS_SYNTHETIC=1 SETU_SPEECH_INPUT=1 scripts/run_demo.sh
 set -euo pipefail
 cd "$(dirname "$0")/.."
 docker compose up -d db
