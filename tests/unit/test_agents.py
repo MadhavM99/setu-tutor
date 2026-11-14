@@ -128,6 +128,56 @@ def test_prompt_only_makes_one_draft_and_a_no_error_turn_needs_the_correct_form(
     assert ok.source == "model"
 
 
+def call(tool, **args):
+    return json.dumps({"tool": tool, "args": args}, ensure_ascii=False)
+
+
+def final(s):
+    return json.dumps({"final": s}, ensure_ascii=False)
+
+
+def agentic(replies):
+    p = llm.MockProvider(replies)
+    t = classmate.propose(p, ctx(), rule_title="सवाल", hindi_meaning="तुम आओगे?", bank_sentence="BANK",
+                          method="agentic_tools")
+    return t, p
+
+
+def test_agentic_raju_checks_with_a_tool_then_submits_and_every_step_is_logged():
+    t, p = agentic([call("check_classmate_sentence", item_id="HI-TE-001-a", sentence="నువ్వు వస్తావా"),
+                    "```json\n" + call("check_classmate_sentence", item_id="HI-TE-001-a",
+                                        sentence="క్యా నువ్వు వస్తావు") + "\n```",
+                    final("క్యా నువ్వు వస్తావు")])
+    assert (t.text, t.source, t.method) == ("క్యా నువ్వు వస్తావు", "model", "agentic_tools")
+    assert [s.kind for s in t.steps] == ["tool_call", "tool_call", "final"] and len(t.drafts) == 3
+    assert t.steps[0].tool == "check_classmate_sentence" and "ANSWER_LEAK" in t.steps[0].result["reasons"]
+    assert t.steps[1].result == {"ok": True, "reasons": []}
+    assert "ANSWER_LEAK" in p.calls[1][-1]["content"] and p.calls[1][-1]["content"].startswith("TOOL RESULT: ")
+
+
+def test_agentic_raju_gets_exact_errors_for_bad_calls_and_can_recover():
+    t, p = agentic([call("update_mastery", rule_id="HI-TE-001", value=1.0),
+                    call("check_classmate_sentence", item_id="HI-TE-002-a", sentence="క్యా నువ్వు వస్తావు"),
+                    "Sure! here it is",
+                    final("క్యా నువ్వు వస్తావు")])
+    assert t.source == "model"
+    assert [s.result.split(":")[0] for s in t.steps[:3]] == ["ERROR unknown_tool", "ERROR invalid_argument item_id",
+                                                            "ERROR malformed_json"]
+    assert p.calls[1][-1]["content"].startswith("TOOL RESULT: ERROR unknown_tool")
+
+
+def test_agentic_final_is_rechecked_by_the_filter_whatever_the_tools_said():
+    t, p = agentic([final("నువ్వు వస్తావా"), final("క్యా నువ్వు వస్తావు")])
+    assert t.source == "model" and t.steps[0].kind == "final" and "ANSWER_LEAK" in t.steps[0].result
+    assert "ANSWER_LEAK" in p.calls[1][-1]["content"]
+
+
+def test_agentic_raju_stops_at_the_step_cap_and_falls_back_to_the_bank():
+    t, p = agentic([call("check_classmate_sentence", item_id="HI-TE-001-a", sentence="నువ్వు వస్తావా")] * 10)
+    assert len(p.calls) == classmate.MAX_STEPS and t.source == "bank" and t.text == "BANK"
+    assert len(t.steps) == classmate.MAX_STEPS == len(t.drafts)
+
+
 # ---------------------------------------------------------------- coach
 
 
