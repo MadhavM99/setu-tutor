@@ -1,0 +1,69 @@
+{
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+ "hosted": true,
+ "reasoning_effort": "none",
+ "cases": 29,
+ "methods": {
+  "tool": {
+   "cases": 29,
+   "evaluable": 13,
+   "provider_errors": 50,
+   "n": 13,
+   "valid_rate": 0.6153846153846154,
+   "planting_precision": 1.0,
+   "leak_rate": 0.23076923076923078,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.3846153846153846,
+   "calls_per_case": 1.8461538461538463,
+   "median_latency_ms": 1756.5,
+   "tokens_per_case": 256.6923076923077
+  },
+  "resample": {
+   "cases": 29,
+   "evaluable": 0,
+   "provider_errors": 87,
+   "status": "not_evaluable: no model reply (provider errors only)"
+  },
+  "prompt_only": {
+   "cases": 29,
+   "evaluable": 0,
+   "provider_errors": 29,
+   "status": "not_evaluable: no model reply (provider errors only)"
+  }
+ },
+ "coach": {
+  "cases": 29,
+  "evaluable": 0,
+  "status": "not_evaluable: no model reply"
+ },
+ "friend": {
+  "plain": {
+   "cases": 12,
+   "evaluable": 0,
+   "learner_saw_only_approved": true,
+   "status": "not_evaluable: no model reply"
+  },
+  "injection": {
+   "cases": 12,
+   "evaluable": 0,
+   "learner_saw_only_approved": true,
+   "status": "not_evaluable: no model reply"
+  }
+ },
+ "outage": {
+  "raju_fell_back_to_bank": true,
+  "coach_fell_back": true,
+  "friend_showed_approved": true,
+  "errors": [
+   "HTTPStatusError: 400"
+  ]
+ },
+ "provider_calls": {
+  "ok": 22,
+  "errors": {
+   "HTTPStatusError: 429": 219
+  }
+ }
+}

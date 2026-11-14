@@ -1,0 +1,118 @@
+{
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+ "hosted": true,
+ "reasoning_effort": "none",
+ "cases": 29,
+ "methods": {
+  "tool": {
+   "cases": 29,
+   "evaluable": 29,
+   "provider_errors": 0,
+   "n": 29,
+   "valid_rate": 0.7586206896551724,
+   "planting_precision": 1.0,
+   "leak_rate": 0.13793103448275862,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.24137931034482762,
+   "calls_per_case": 1.5172413793103448,
+   "median_latency_ms": 1096.5,
+   "tokens_per_case": 227.0
+  },
+  "resample": {
+   "cases": 29,
+   "evaluable": 29,
+   "provider_errors": 0,
+   "n": 29,
+   "valid_rate": 0.7586206896551724,
+   "planting_precision": 1.0,
+   "leak_rate": 0.1724137931034483,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.24137931034482762,
+   "calls_per_case": 1.6551724137931034,
+   "median_latency_ms": 1110.0,
+   "tokens_per_case": 233.9655172413793
+  },
+  "prompt_only": {
+   "cases": 29,
+   "evaluable": 29,
+   "provider_errors": 0,
+   "n": 29,
+   "valid_rate": 0.7241379310344828,
+   "planting_precision": 1.0,
+   "leak_rate": 0.10344827586206896,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.27586206896551724,
+   "calls_per_case": 1.0,
+   "median_latency_ms": 1270,
+   "tokens_per_case": 139.89655172413794
+  },
+  "agentic_tools": {
+   "cases": 29,
+   "evaluable": 29,
+   "provider_errors": 0,
+   "n": 29,
+   "valid_rate": 0.9310344827586207,
+   "planting_precision": 1.0,
+   "leak_rate": 0.0,
+   "oov_rate": 0.0,
+   "fallback_rate": 0.06896551724137934,
+   "calls_per_case": 2.6206896551724137,
+   "median_latency_ms": 1179.0,
+   "tokens_per_case": 1054.344827586207
+  }
+ },
+ "coach": {
+  "cases": 29,
+  "evaluable": 29,
+  "telugu_in_hint_rate": 0.3448275862068966,
+  "n": 29,
+  "model_hint_shown_rate": 0.41379310344827586,
+  "answer_leak_rate": 0.0,
+  "not_hindi_rate": 0.3103448275862069,
+  "no_reply_rate": 0.034482758620689655,
+  "fallback_rate": 0.5862068965517242,
+  "median_latency_ms": 1372,
+  "tokens_per_case": 124.75862068965517,
+  "examples": [
+   "शुरुआती शब्द और नियम में दिए गए बदलाव पर फिर से ध्यान दो।",
+   "नियम को दोबारा ध्यान से पढ़ें—सवाल के अंत और शुरुआत में दिए गए शब्दों पर गौर करें।",
+   "अपने वाक्य के आखिरी शब्द पर ध्यान दो और नियम को फिर से पढ़ो।",
+   "वाक्य की शुरुआत में राजू ने सर्वनाम के जिस रूप का प्रयोग किया है, उस पर ध्यान दीजिए।",
+   "स्थान दर्शाने वाले शब्द और 'लो' के बीच की दूरी को ध्यान से देखें।"
+  ]
+ },
+ "friend": {
+  "plain": {
+   "cases": 12,
+   "evaluable": 12,
+   "learner_saw_only_approved": true,
+   "n": 12,
+   "model_pick_rate": 1.0,
+   "shown_approved_rate": 1.0,
+   "median_latency_ms": 1071.0
+  },
+  "injection": {
+   "cases": 12,
+   "evaluable": 12,
+   "learner_saw_only_approved": true,
+   "n": 12,
+   "model_pick_rate": 1.0,
+   "shown_approved_rate": 1.0,
+   "median_latency_ms": 1124.5
+  }
+ },
+ "outage": {
+  "raju_fell_back_to_bank": true,
+  "coach_fell_back": true,
+  "friend_showed_approved": true,
+  "errors": [
+   "HTTPStatusError: 400"
+  ]
+ },
+ "provider_calls": {
+  "ok": 250,
+  "errors": {}
+ }
+}

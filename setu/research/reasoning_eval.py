@@ -13,11 +13,12 @@ right), valid-answer rate, agreement of the error type with the checker (`CHECKE
 often the self-check revised an answer and whether the revision fixed or broke it. Baseline `direct`, ablation
 `no_self_check`.
 
-    set -a; source .env; set +a; python -m setu.research.reasoning_eval
+    set -a; source .env; set +a; python -m setu.research.reasoning_eval [stage_a] [extended]
 """
 import json
 import os
 import statistics
+import sys
 import uuid
 from pathlib import Path
 
@@ -164,8 +165,11 @@ def run(provider, sets: dict[str, list[dict]] | None = None) -> dict:
     return out
 
 
-def main() -> int:
-    sets = {"stage_a": stage_a_cases(), "extended": extended_cases()}
+def main(argv=None) -> int:
+    """`python -m setu.research.reasoning_eval [stage_a] [extended]`: the sets to run (default both)."""
+    names = (argv if argv is not None else sys.argv[1:]) or ["stage_a", "extended"]
+    build = {"stage_a": stage_a_cases, "extended": extended_cases}
+    sets = {n: build[n]() for n in names}
     report = {"cases": {k: len(v) for k, v in sets.items()}}
     provider = OpenAICompatible.from_environment()
     if provider is None:

@@ -1,0 +1,345 @@
+{
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "reasoning_effort": "none",
+ "labelled_rows": 50,
+ "human_labels": {
+  "correct": 16,
+  "wrong": 8,
+  "partial": 26
+ },
+ "by_batch": {
+  "A": 50
+ },
+ "checker_all_rows": {
+  "n": 50,
+  "kappa": 0.1498405951115834,
+  "kappa_ci95": [
+   -0.03,
+   0.313
+  ],
+  "kappa_binary": 0.23146473779385182,
+  "accuracy": 0.36,
+  "confusion": {
+   "correct->correct": 8,
+   "correct->partial": 6,
+   "correct->wrong": 2,
+   "partial->correct": 9,
+   "partial->partial": 3,
+   "partial->unsure": 9,
+   "partial->wrong": 5,
+   "wrong->unsure": 1,
+   "wrong->wrong": 7
+  }
+ },
+ "judged_rows": 50,
+ "not_evaluable": 0,
+ "judge_invalid_rate": 0.0,
+ "judge_tokens": 53378,
+ "checker": {
+  "n": 50,
+  "kappa": 0.1498405951115834,
+  "kappa_ci95": [
+   -0.03,
+   0.313
+  ],
+  "kappa_binary": 0.23146473779385182,
+  "accuracy": 0.36,
+  "confusion": {
+   "correct->correct": 8,
+   "correct->partial": 6,
+   "correct->wrong": 2,
+   "partial->correct": 9,
+   "partial->partial": 3,
+   "partial->unsure": 9,
+   "partial->wrong": 5,
+   "wrong->unsure": 1,
+   "wrong->wrong": 7
+  }
+ },
+ "llm_judge": {
+  "n": 50,
+  "kappa": 0.4583808437856328,
+  "kappa_ci95": [
+   0.291,
+   0.642
+  ],
+  "kappa_binary": 0.5469522240527184,
+  "accuracy": 0.62,
+  "confusion": {
+   "correct->correct": 14,
+   "correct->wrong": 2,
+   "partial->correct": 9,
+   "partial->partial": 9,
+   "partial->wrong": 8,
+   "wrong->wrong": 8
+  }
+ },
+ "h6": {
+  "checker_kappa_at_least_0_6": false,
+  "checker_better_than_judge": false,
+  "holds": false
+ },
+ "disagreements": [
+  {
+   "row_id": "07d92d2e",
+   "attempt_kind": "fragment",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "correct",
+   "note": "meaning is correct"
+  },
+  {
+   "row_id": "2746cdf0",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "wrong",
+   "note": "Meaning is clear, but home is omitted"
+  },
+  {
+   "row_id": "c4ee3d93",
+   "attempt_kind": "fragment",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "correct",
+   "note": "meaning is correct"
+  },
+  {
+   "row_id": "93d3f52e",
+   "attempt_kind": "other_script_typing",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "written in Roman script"
+  },
+  {
+   "row_id": "53f91b39",
+   "attempt_kind": "fragment",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "wrong",
+   "note": "Says there is something, but omits the book and possession"
+  },
+  {
+   "row_id": "995746a2",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "wrong",
+   "note": "Verb is missing"
+  },
+  {
+   "row_id": "5eb8f8eb",
+   "attempt_kind": "variant_0",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "partial",
+   "note": "Correct inclusive pronoun, but tense differs"
+  },
+  {
+   "row_id": "dfa2e84b",
+   "attempt_kind": "variant_1",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "Correct meaning, but wording is informal"
+  },
+  {
+   "row_id": "1665d03b",
+   "attempt_kind": "fragment",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "partial",
+   "note": "Home is missing"
+  },
+  {
+   "row_id": "38b827d8",
+   "attempt_kind": "fragment",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "correct",
+   "note": "Father is not mentioned"
+  },
+  {
+   "row_id": "b4e20b4e",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "wrong",
+   "judge": "partial",
+   "note": "Home is missing"
+  },
+  {
+   "row_id": "e64aca18",
+   "attempt_kind": "other_script_typing",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "written in roman script"
+  },
+  {
+   "row_id": "92d368f1",
+   "attempt_kind": "spelling_slip",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "wrong",
+   "note": "coreect meaning"
+  },
+  {
+   "row_id": "fa208e5a",
+   "attempt_kind": "variant_1",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "partial",
+   "note": "Tense differs; expected \"we are going\""
+  },
+  {
+   "row_id": "e485e71d",
+   "attempt_kind": "other_script_typing",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "written in Roman script"
+  },
+  {
+   "row_id": "e12b0d4c",
+   "attempt_kind": "variant_2",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "Meaning correct, but informal wording"
+  },
+  {
+   "row_id": "4e9bc349",
+   "attempt_kind": "planted_unchanged",
+   "human": "correct",
+   "checker": "wrong",
+   "judge": "wrong",
+   "note": "Correct meaning"
+  },
+  {
+   "row_id": "03e35b06",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "wrong",
+   "note": "Says home instead of school"
+  },
+  {
+   "row_id": "c5f1040e",
+   "attempt_kind": "planted_unchanged",
+   "human": "partial",
+   "checker": "wrong",
+   "judge": "wrong",
+   "note": "Incorrect sentence structure"
+  },
+  {
+   "row_id": "664be30f",
+   "attempt_kind": "planted_unchanged",
+   "human": "partial",
+   "checker": "wrong",
+   "judge": "wrong",
+   "note": "Awkward construction"
+  },
+  {
+   "row_id": "290ccae2",
+   "attempt_kind": "fragment",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "correct",
+   "note": "correct meaning"
+  },
+  {
+   "row_id": "a6e24f47",
+   "attempt_kind": "fragment",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "correct",
+   "note": "room is missing"
+  },
+  {
+   "row_id": "aa446665",
+   "attempt_kind": "fragment",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "correct",
+   "note": "correct meaning"
+  },
+  {
+   "row_id": "114a7ff2",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "partial",
+   "note": "You have is missing"
+  },
+  {
+   "row_id": "a188fbf5",
+   "attempt_kind": "other_script_typing",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "correct",
+   "note": "roman script is used"
+  },
+  {
+   "row_id": "e2eba3d1",
+   "attempt_kind": "fragment",
+   "human": "wrong",
+   "checker": "unsure",
+   "judge": "wrong",
+   "note": "You have\" is missing"
+  },
+  {
+   "row_id": "c92c5458",
+   "attempt_kind": "variant_1",
+   "human": "partial",
+   "checker": "correct",
+   "judge": "partial",
+   "note": "Tense differs from the original"
+  },
+  {
+   "row_id": "783e3217",
+   "attempt_kind": "fixed_but_habit_kept",
+   "human": "partial",
+   "checker": "wrong",
+   "judge": "wrong",
+   "note": "Repetitive and unnatural wording"
+  },
+  {
+   "row_id": "b5006e60",
+   "attempt_kind": "fragment",
+   "human": "correct",
+   "checker": "partial",
+   "judge": "correct",
+   "note": "correct meaning"
+  },
+  {
+   "row_id": "fb6fee1a",
+   "attempt_kind": "planted_unchanged",
+   "human": "correct",
+   "checker": "wrong",
+   "judge": "correct",
+   "note": "correct meaning"
+  },
+  {
+   "row_id": "22e59af3",
+   "attempt_kind": "fixed_but_habit_kept",
+   "human": "partial",
+   "checker": "wrong",
+   "judge": "wrong",
+   "note": "Repeated word makes it unnatural"
+  },
+  {
+   "row_id": "5be4eaf2",
+   "attempt_kind": "habit_removed_only",
+   "human": "partial",
+   "checker": "unsure",
+   "judge": "correct",
+   "note": "Omits \"without you\""
+  }
+ ],
+ "provider_calls": {
+  "ok": 50,
+  "errors": {}
+ }
+}

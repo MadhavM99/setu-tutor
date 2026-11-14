@@ -2,7 +2,8 @@
 
 Joins the labelled teacher sheet with its key (`research/labels/`), then scores two raters against the human:
 - the deterministic checker (its verdict is in the key, computed when the sheet was built);
-- a prompt-only LLM judge, given exactly the labeller's instructions (README) and nothing else.
+- a prompt-only LLM judge, given exactly the labeller's instructions (`docs/research/annotator_guide_batch_a.md`,
+  sections 1 and 3) and nothing else.
 
 Reports Cohen's κ on the four labels (correct / partial / wrong / unsure) with a bootstrap 95% CI, κ on the binary
 correct vs not-correct split, accuracy and confusion tables, on the same rows for both raters. H6 holds when the
@@ -31,16 +32,17 @@ OUT = ROOT / "reports/judge_eval.json"
 LABEL_SET = ("correct", "partial", "wrong", "unsure")
 H6_KAPPA = 0.6
 BOOT, SEED = 1000, 20261113
-JUDGE_SYSTEM = (
-    "A Hindi-speaking learner is learning {lang}. A classmate wrote a sentence that is meant to say the given Hindi "
-    "meaning but contains a mistake. The learner typed a correction to fix it. Label the learner's correction with "
-    "exactly one of:\n"
-    "- correct: a natural, correct sentence for the meaning. Other script is fine (e.g. Telugu typed in Devanagari "
-    "letters)\n"
-    "- partial: the main mistake is fixed, but there is a small slip (a spelling slip, a missing or extra word)\n"
-    "- wrong: the mistake is still there, it means something else, or it is not a sentence for this meaning\n"
-    "- unsure: you can't tell, or several readings are possible\n"
-    "Judge the learner's sentence on its own. Reply with one JSON object only: {{\"label\": \"<label>\"}}")
+GUIDE = ROOT / "docs/research/annotator_guide_batch_a.md"  # what the batch A labeller was given
+REPLY = '\nReply with one JSON object only: {"label": "<correct | partial | wrong | unsure>"}'
+
+
+def judge_system() -> str:
+    """The labeller's guide, sections 1 (context) and 3 (labels): the judge gets the human's instructions, minus the
+    column list and the CSV-handling rules, plus the reply format."""
+    text = GUIDE.read_text(encoding="utf-8")
+    context = text[text.index("\n## 1."):text.index("\n## 2.")]
+    labels = text[text.index("\n## 3."):text.index("\n## 4.")]
+    return (context + labels).replace("---", "").strip() + REPLY
 
 
 def _read(path: Path) -> list[dict]:
@@ -64,7 +66,7 @@ def load(sheet: Path = LABELS / "teacher_label_sheet.csv", key: Path = LABELS / 
 
 def judge(provider, row: dict) -> tuple[str | None, object]:
     """The judge's label (or "invalid" for an unusable reply), and the completion. None means no model reply."""
-    msgs = [{"role": "system", "content": JUDGE_SYSTEM.format(lang=row["target_language"])},
+    msgs = [{"role": "system", "content": judge_system()},
             {"role": "user", "content": f"Hindi meaning: {row['hindi_meaning']}\nClassmate's sentence: "
                                         f"{row['classmate_sentence']}\nLearner's correction: {row['learner_correction']}"}]
     c = provider.complete(msgs, max_tokens=40, temperature=0.0)
