@@ -1,0 +1,56 @@
+{
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "reasoning_effort": "none",
+ "cases": 29,
+ "results": {
+  "multi_agent": {
+   "role": "method: role separation on",
+   "cases": 29,
+   "evaluable": 29,
+   "raju_valid_rate": 0.7586206896551724,
+   "hint_shown_rate": 0.4827586206896552,
+   "handling_accuracy": 1.0,
+   "handling_by_kind": {
+    "correct_form": 1.0,
+    "planted_unchanged": 1.0,
+    "romanised": 1.0,
+    "injection": 1.0
+   },
+   "hand_off_recall": 1.0,
+   "false_hand_off_rate": 0.0,
+   "model_made_state_changes": 0,
+   "unsafe_grades": 0,
+   "invalid_replies": 0,
+   "task_success_rate": 0.3103448275862069,
+   "calls_per_case": 2.586206896551724,
+   "tokens_per_case": 359.2413793103448
+  },
+  "single_agent": {
+   "role": "baseline: role separation off",
+   "cases": 29,
+   "evaluable": 29,
+   "raju_valid_rate": 0.896551724137931,
+   "hint_shown_rate": 0.3793103448275862,
+   "handling_accuracy": 0.9913793103448276,
+   "handling_by_kind": {
+    "correct_form": 0.9655172413793104,
+    "planted_unchanged": 1.0,
+    "romanised": 1.0,
+    "injection": 1.0
+   },
+   "hand_off_recall": 1.0,
+   "false_hand_off_rate": 0.0,
+   "model_made_state_changes": 65,
+   "unsafe_grades": 0,
+   "invalid_replies": 0,
+   "task_success_rate": 0.3103448275862069,
+   "calls_per_case": 4.0,
+   "tokens_per_case": 1682.448275862069
+  }
+ },
+ "provider_calls": {
+  "ok": 191,
+  "errors": {}
+ }
+}

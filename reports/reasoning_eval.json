@@ -1,0 +1,5299 @@
+{
+ "cases": {
+  "stage_a": 58
+ },
+ "status": "run",
+ "model": "gemini-3.5-flash",
+ "reasoning_effort": "none",
+ "results": {
+  "stage_a": {
+   "stepwise": {
+    "role": "method",
+    "cases": 58,
+    "evaluable": 58,
+    "wrong_word_accuracy": 0.7142857142857143,
+    "rule_id_accuracy": 0.6206896551724138,
+    "error_type_accuracy": 0.7241379310344828,
+    "final_accuracy": 0.3620689655172414,
+    "valid_step_rate": 0.8879310344827587,
+    "checker_agreement": 0.4827586206896552,
+    "calls_per_case": 4.0,
+    "tokens_per_case": 2290.0,
+    "median_latency_ms": 1212.0,
+    "by_kind": {
+     "fragment": 0.06896551724137931,
+     "planted_unchanged": 0.6551724137931034
+    },
+    "self_check_revised_rate": 0.034482758620689655,
+    "revisions_fixed": 0,
+    "revisions_broke": 2,
+    "rows": [
+     {
+      "id": "HI-TE-001-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2319,
+      "latency": [
+       1174,
+       1254,
+       1062,
+       1335
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-001-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2296,
+      "latency": [
+       1521,
+       1165,
+       1112,
+       1439
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-001",
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-001-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2291,
+      "latency": [
+       1182,
+       752,
+       1160,
+       1266
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-001-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2252,
+      "latency": [
+       1284,
+       1188,
+       1227,
+       1163
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-002-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1159,
+       1071,
+       1319,
+       1482
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-002-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2296,
+      "latency": [
+       1569,
+       1297,
+       1216,
+       1397
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-002-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1235,
+       1028,
+       1087,
+       1110
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-002-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": true,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1245,
+       1107,
+       1367,
+       967
+      ],
+      "answer": {
+       "wrong_word": "పెన్ను",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 1
+     },
+     {
+      "id": "HI-TE-003-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2303,
+      "latency": [
+       1248,
+       1097,
+       1583,
+       1047
+      ],
+      "answer": {
+       "wrong_word": "నేను",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-003-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1080,
+       1348,
+       1170,
+       957
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-003-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2311,
+      "latency": [
+       1069,
+       1147,
+       896,
+       946
+      ],
+      "answer": {
+       "wrong_word": "నువ్వు",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-003-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2291,
+      "latency": [
+       952,
+       889,
+       1410,
+       1199
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-004-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2307,
+      "latency": [
+       1101,
+       1224,
+       1060,
+       1059
+      ],
+      "answer": {
+       "wrong_word": "ఇల్లు",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-004-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2296,
+      "latency": [
+       1501,
+       1216,
+       1046,
+       995
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-004-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       false,
+       true,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2312,
+      "latency": [
+       944,
+       1542,
+       1053,
+       1662
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-004-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2308,
+      "latency": [
+       1212,
+       1569,
+       1476,
+       1066
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-005-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2208,
+      "latency": [
+       1063,
+       888,
+       849,
+       1138
+      ],
+      "answer": {
+       "wrong_word": "వస్తాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-005-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2260,
+      "latency": [
+       1055,
+       1622,
+       1060,
+       1066
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-005-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2300,
+      "latency": [
+       1115,
+       1157,
+       3082,
+       1069
+      ],
+      "answer": {
+       "wrong_word": "వస్తాడు",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-005-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2248,
+      "latency": [
+       1272,
+       1279,
+       1323,
+       1252
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-006-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2323,
+      "latency": [
+       1229,
+       1105,
+       1540,
+       1274
+      ],
+      "answer": {
+       "wrong_word": "మనం",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-006-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2302,
+      "latency": [
+       1374,
+       1117,
+       913,
+       1649
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-006-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2319,
+      "latency": [
+       1093,
+       1285,
+       1472,
+       5727
+      ],
+      "answer": {
+       "wrong_word": "మేము",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-006-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2218,
+      "latency": [
+       1531,
+       1271,
+       1068,
+       1276
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-006",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-007-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2296,
+      "latency": [
+       984,
+       781,
+       984,
+       1311
+      ],
+      "answer": {
+       "wrong_word": "అతను",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-007-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2304,
+      "latency": [
+       1162,
+       1586,
+       1207,
+       1335
+      ],
+      "answer": {
+       "wrong_word": "టీచరు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-007-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2260,
+      "latency": [
+       1217,
+       1171,
+       1327,
+       1065
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-007-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2313,
+      "latency": [
+       975,
+       1205,
+       1333,
+       941
+      ],
+      "answer": {
+       "wrong_word": "డాక్టరు",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-008-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2292,
+      "latency": [
+       1174,
+       1196,
+       1370,
+       1274
+      ],
+      "answer": {
+       "wrong_word": "వస్తాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-008-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2244,
+      "latency": [
+       1018,
+       1049,
+       1031,
+       1166
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-008-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2279,
+      "latency": [
+       1131,
+       1007,
+       963,
+       1075
+      ],
+      "answer": {
+       "wrong_word": "వస్తుంది",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-008-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2244,
+      "latency": [
+       961,
+       1232,
+       1313,
+       1476
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-009-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2309,
+      "latency": [
+       1474,
+       1377,
+       1332,
+       1213
+      ],
+      "answer": {
+       "wrong_word": "వస్తావా",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-009-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2280,
+      "latency": [
+       1269,
+       1255,
+       1171,
+       1187
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-001",
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-009-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2281,
+      "latency": [
+       1157,
+       1207,
+       1346,
+       1368
+      ],
+      "answer": {
+       "wrong_word": "తింటావు",
+       "rule_id": null,
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-009-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2248,
+      "latency": [
+       1178,
+       1165,
+       1179,
+       1370
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-010-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2343,
+      "latency": [
+       1578,
+       1377,
+       863,
+       1374
+      ],
+      "answer": {
+       "wrong_word": "జో",
+       "rule_id": "HI-TE-010",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-010-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       973,
+       1229,
+       1507,
+       1380
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-010",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-011-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2324,
+      "latency": [
+       1260,
+       1581,
+       755,
+       1271
+      ],
+      "answer": {
+       "wrong_word": "అతనికి",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-011-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2221,
+      "latency": [
+       1168,
+       1060,
+       1167,
+       1015
+      ],
+      "answer": {
+       "wrong_word": "చదివాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-011-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2307,
+      "latency": [
+       1208,
+       1377,
+       1268,
+       1148
+      ],
+      "answer": {
+       "wrong_word": "నాకు",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-011-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2280,
+      "latency": [
+       1407,
+       1263,
+       1671,
+       1255
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-012-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2307,
+      "latency": [
+       1128,
+       1290,
+       1095,
+       1325
+      ],
+      "answer": {
+       "wrong_word": "అమ్మ",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-012-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2321,
+      "latency": [
+       1322,
+       1213,
+       1523,
+       1473
+      ],
+      "answer": {
+       "wrong_word": "పిలిచాను",
+       "rule_id": "HI-TE-012",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-012-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2307,
+      "latency": [
+       1275,
+       1279,
+       1371,
+       1267
+      ],
+      "answer": {
+       "wrong_word": "నాన్న",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-012-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2302,
+      "latency": [
+       1183,
+       1260,
+       1267,
+       1573
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-012",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-013-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2312,
+      "latency": [
+       1099,
+       1337,
+       822,
+       1515
+      ],
+      "answer": {
+       "wrong_word": "తింటాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-013-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2264,
+      "latency": [
+       1061,
+       1266,
+       1266,
+       1282
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-013-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2325,
+      "latency": [
+       1118,
+       1286,
+       1078,
+       1380
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-013-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true,
+       false
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2268,
+      "latency": [
+       1171,
+       1156,
+       1027,
+       1312
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-014-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2283,
+      "latency": [
+       1130,
+       1253,
+       1104,
+       1382
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-014-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1155,
+       1462,
+       1294,
+       1470
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-014-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2283,
+      "latency": [
+       1369,
+       835,
+       1226,
+       1327
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-014-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2287,
+      "latency": [
+       1164,
+       1265,
+       1169,
+       1370
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "word_missing_or_extra"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-015-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2324,
+      "latency": [
+       1220,
+       1342,
+       1244,
+       1177
+      ],
+      "answer": {
+       "wrong_word": "ఇంట్లో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-015-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": true,
+      "calls": 4,
+      "tokens": 2305,
+      "latency": [
+       1064,
+       1165,
+       1212,
+       1142
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తున్నాను",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 1
+     },
+     {
+      "id": "HI-TE-015-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2323,
+      "latency": [
+       1164,
+       992,
+       1190,
+       1090
+      ],
+      "answer": {
+       "wrong_word": "బడిలో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     },
+     {
+      "id": "HI-TE-015-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 4,
+      "tokens": 2302,
+      "latency": [
+       1176,
+       1100,
+       1330,
+       1276
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      },
+      "revision_fixed": 0,
+      "revision_broke": 0
+     }
+    ]
+   },
+   "no_self_check": {
+    "role": "ablation",
+    "cases": 58,
+    "evaluable": 58,
+    "wrong_word_accuracy": 0.7142857142857143,
+    "rule_id_accuracy": 0.6379310344827587,
+    "error_type_accuracy": 0.7068965517241379,
+    "final_accuracy": 0.3793103448275862,
+    "valid_step_rate": 0.9195402298850575,
+    "checker_agreement": 0.4827586206896552,
+    "calls_per_case": 3.0,
+    "tokens_per_case": 1569.0172413793102,
+    "median_latency_ms": 1188.0,
+    "by_kind": {
+     "fragment": 0.10344827586206896,
+     "planted_unchanged": 0.6551724137931034
+    },
+    "rows": [
+     {
+      "id": "HI-TE-001-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1588,
+      "latency": [
+       1162,
+       1144,
+       1198
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-001-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1574,
+      "latency": [
+       1370,
+       1301,
+       1233
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-001",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-001-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1567,
+      "latency": [
+       1269,
+       1178,
+       1104
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-001-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1547,
+      "latency": [
+       1109,
+       1383,
+       1167
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-002-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1564,
+      "latency": [
+       1415,
+       1435,
+       1214
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-002-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1565,
+      "latency": [
+       1217,
+       1269,
+       1371
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-002-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1564,
+      "latency": [
+       1679,
+       1252,
+       1158
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-002-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1559,
+      "latency": [
+       1329,
+       1441,
+       1178
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-003-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1576,
+      "latency": [
+       1470,
+       1105,
+       1261
+      ],
+      "answer": {
+       "wrong_word": "నేను",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1564,
+      "latency": [
+       1332,
+       1197,
+       1334
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1582,
+      "latency": [
+       1085,
+       1126,
+       1184
+      ],
+      "answer": {
+       "wrong_word": "నువ్వు",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1567,
+      "latency": [
+       1475,
+       1473,
+       1181
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1579,
+      "latency": [
+       1194,
+       1504,
+       1300
+      ],
+      "answer": {
+       "wrong_word": "ఇల్లు",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1574,
+      "latency": [
+       1173,
+       1206,
+       1102
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-004-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       false,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1582,
+      "latency": [
+       1097,
+       1117,
+       1316
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1574,
+      "latency": [
+       1173,
+       1479,
+       1086
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-005-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1519,
+      "latency": [
+       1248,
+       1232,
+       1006
+      ],
+      "answer": {
+       "wrong_word": "కాదు",
+       "rule_id": "HI-TE-011",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-005-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1553,
+      "latency": [
+       1232,
+       1193,
+       1135
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-005-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1558,
+      "latency": [
+       1203,
+       1083,
+       1245
+      ],
+      "answer": {
+       "wrong_word": "కాదు",
+       "rule_id": null,
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-005-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1544,
+      "latency": [
+       1398,
+       1097,
+       1211
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-006-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1591,
+      "latency": [
+       1206,
+       1223,
+       1166
+      ],
+      "answer": {
+       "wrong_word": "మనం",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-006-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1589,
+      "latency": [
+       1271,
+       1286,
+       1192
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-006",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-006-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1588,
+      "latency": [
+       1226,
+       1116,
+       1229
+      ],
+      "answer": {
+       "wrong_word": "మేము",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-006-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1582,
+      "latency": [
+       1176,
+       1157,
+       1267
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-007-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1570,
+      "latency": [
+       1730,
+       1171,
+       1211
+      ],
+      "answer": {
+       "wrong_word": "అతను",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-007-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1571,
+      "latency": [
+       1270,
+       1469,
+       1122
+      ],
+      "answer": {
+       "wrong_word": "టీచరు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-007-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1553,
+      "latency": [
+       1115,
+       1062,
+       1166
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-007-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1577,
+      "latency": [
+       1130,
+       1075,
+       1287
+      ],
+      "answer": {
+       "wrong_word": "డాక్టరు",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-008-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1567,
+      "latency": [
+       1272,
+       1109,
+       1147
+      ],
+      "answer": {
+       "wrong_word": "వస్తాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-008-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1541,
+      "latency": [
+       1142,
+       1479,
+       1198
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-008-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1558,
+      "latency": [
+       1237,
+       1367,
+       1267
+      ],
+      "answer": {
+       "wrong_word": "వస్తుంది",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-008-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1541,
+      "latency": [
+       1235,
+       1209,
+       1060
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-009-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1579,
+      "latency": [
+       1166,
+       1225,
+       1506
+      ],
+      "answer": {
+       "wrong_word": "వస్తావా",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-009-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1550,
+      "latency": [
+       1367,
+       1169,
+       1271
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-009-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1564,
+      "latency": [
+       1470,
+       1134,
+       1645
+      ],
+      "answer": {
+       "wrong_word": "తింటావు",
+       "rule_id": null,
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-009-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1544,
+      "latency": [
+       1153,
+       1848,
+       1206
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-010-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1606,
+      "latency": [
+       1167,
+       1058,
+       1039
+      ],
+      "answer": {
+       "wrong_word": "జో",
+       "rule_id": "HI-TE-010",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-010-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1592,
+      "latency": [
+       1299,
+       1174,
+       1197
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-010",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-011-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1591,
+      "latency": [
+       1243,
+       1166,
+       1127
+      ],
+      "answer": {
+       "wrong_word": "అతనికి",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-011-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1526,
+      "latency": [
+       1277,
+       1245,
+       1118
+      ],
+      "answer": {
+       "wrong_word": "చదివాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-011-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1579,
+      "latency": [
+       1117,
+       1317,
+       1372
+      ],
+      "answer": {
+       "wrong_word": "నాకు",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-011-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1565,
+      "latency": [
+       1276,
+       1081,
+       1453
+      ],
+      "answer": {
+       "wrong_word": "తిన్నాను",
+       "rule_id": null,
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-012-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1579,
+      "latency": [
+       1164,
+       1184,
+       1490
+      ],
+      "answer": {
+       "wrong_word": "అమ్మ",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-012-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1583,
+      "latency": [
+       1162,
+       1093,
+       1316
+      ],
+      "answer": {
+       "wrong_word": "పిలిచాను",
+       "rule_id": "HI-TE-012",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-012-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1579,
+      "latency": [
+       1156,
+       1414,
+       1281
+      ],
+      "answer": {
+       "wrong_word": "నాన్న",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-012-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1571,
+      "latency": [
+       1227,
+       953,
+       1105
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-012",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-013-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1582,
+      "latency": [
+       1001,
+       695,
+       1052
+      ],
+      "answer": {
+       "wrong_word": "తింటాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-013-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1556,
+      "latency": [
+       1174,
+       1008,
+       1226
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-013-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1591,
+      "latency": [
+       1171,
+       1270,
+       1095
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-013-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       false,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1559,
+      "latency": [
+       1182,
+       1005,
+       750
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": null,
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-014-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1561,
+      "latency": [
+       1283,
+       1476,
+       1069
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1555,
+      "latency": [
+       1054,
+       1182,
+       1125
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1561,
+      "latency": [
+       749,
+       743,
+       1116
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1559,
+      "latency": [
+       1273,
+       1154,
+       1178
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-015-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1591,
+      "latency": [
+       1330,
+       997,
+       1042
+      ],
+      "answer": {
+       "wrong_word": "ఇంట్లో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1576,
+      "latency": [
+       1126,
+       1111,
+       1154
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1591,
+      "latency": [
+       1094,
+       1058,
+       1174
+      ],
+      "answer": {
+       "wrong_word": "బడిలో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true,
+       true,
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 3,
+      "tokens": 1585,
+      "latency": [
+       1134,
+       1199,
+       964
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తాను",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     }
+    ]
+   },
+   "direct": {
+    "role": "baseline",
+    "cases": 58,
+    "evaluable": 58,
+    "wrong_word_accuracy": 0.5892857142857143,
+    "rule_id_accuracy": 0.6551724137931034,
+    "error_type_accuracy": 0.7241379310344828,
+    "final_accuracy": 0.39655172413793105,
+    "valid_step_rate": 0.896551724137931,
+    "checker_agreement": 0.5,
+    "calls_per_case": 1.0,
+    "tokens_per_case": 566.8793103448276,
+    "median_latency_ms": 1268.0,
+    "by_kind": {
+     "fragment": 0.10344827586206896,
+     "planted_unchanged": 0.6896551724137931
+    },
+    "rows": [
+     {
+      "id": "HI-TE-001-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 578,
+      "latency": [
+       1468
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-001-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 565,
+      "latency": [
+       993
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-001-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 557,
+      "latency": [
+       1346
+      ],
+      "answer": {
+       "wrong_word": "క్యా",
+       "rule_id": "HI-TE-001",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-001-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 576,
+      "latency": [
+       1205
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకమా",
+       "rule_id": "HI-TE-001",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-002-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 556,
+      "latency": [
+       1032
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-002-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 573,
+      "latency": [
+       1267
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-002-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 570,
+      "latency": [
+       1324
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-002",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-002-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 557,
+      "latency": [
+       1213
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-003-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 574,
+      "latency": [
+       1272
+      ],
+      "answer": {
+       "wrong_word": "నేను",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 570,
+      "latency": [
+       1172
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 562,
+      "latency": [
+       988
+      ],
+      "answer": {
+       "wrong_word": "నువ్వు",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-003-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 571,
+      "latency": [
+       1197
+      ],
+      "answer": {
+       "wrong_word": "ఉంది",
+       "rule_id": "HI-TE-003",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 561,
+      "latency": [
+       1304
+      ],
+      "answer": {
+       "wrong_word": "ఇల్లు",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 558,
+      "latency": [
+       1003
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 560,
+      "latency": [
+       1234
+      ],
+      "answer": {
+       "wrong_word": "లో",
+       "rule_id": "HI-TE-004",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-004-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 576,
+      "latency": [
+       1224
+      ],
+      "answer": {
+       "wrong_word": "ఉన్నాను",
+       "rule_id": "HI-TE-004",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-005-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 566,
+      "latency": [
+       1215
+      ],
+      "answer": {
+       "wrong_word": "కాదు",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-005-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 563,
+      "latency": [
+       1266
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-005-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 558,
+      "latency": [
+       865
+      ],
+      "answer": {
+       "wrong_word": "కాదు",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-005-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 560,
+      "latency": [
+       1364
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-006-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 579,
+      "latency": [
+       1473
+      ],
+      "answer": {
+       "wrong_word": "మనం",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-006-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 572,
+      "latency": [
+       1368
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-006",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-006-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 569,
+      "latency": [
+       1368
+      ],
+      "answer": {
+       "wrong_word": "మేము",
+       "rule_id": "HI-TE-006",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-006-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 571,
+      "latency": [
+       1197
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-006",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-007-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 558,
+      "latency": [
+       1341
+      ],
+      "answer": {
+       "wrong_word": "అతను",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-007-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 561,
+      "latency": [
+       1111
+      ],
+      "answer": {
+       "wrong_word": "టీచరు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-007-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 555,
+      "latency": [
+       1323
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-002",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-007-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 577,
+      "latency": [
+       1286
+      ],
+      "answer": {
+       "wrong_word": "డాక్టరు",
+       "rule_id": "HI-TE-002",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-008-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 571,
+      "latency": [
+       1355
+      ],
+      "answer": {
+       "wrong_word": "వస్తాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-008-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 571,
+      "latency": [
+       1478
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-008-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 568,
+      "latency": [
+       976
+      ],
+      "answer": {
+       "wrong_word": "వస్తుంది",
+       "rule_id": "HI-TE-007",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-008-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 556,
+      "latency": [
+       1256
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-007",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-009-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 561,
+      "latency": [
+       1128
+      ],
+      "answer": {
+       "wrong_word": "వస్తావా",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-009-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 568,
+      "latency": [
+       1095
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-001",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-009-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 560,
+      "latency": [
+       1165
+      ],
+      "answer": {
+       "wrong_word": "తింటావు",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-009-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 551,
+      "latency": [
+       1220
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-010-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 584,
+      "latency": [
+       1318
+      ],
+      "answer": {
+       "wrong_word": "జో",
+       "rule_id": "HI-TE-010",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-010-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 582,
+      "latency": [
+       1294
+      ],
+      "answer": {
+       "wrong_word": "పుస్తకం",
+       "rule_id": "HI-TE-010",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-011-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 579,
+      "latency": [
+       1253
+      ],
+      "answer": {
+       "wrong_word": "అతనికి",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-011-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 571,
+      "latency": [
+       1378
+      ],
+      "answer": {
+       "wrong_word": "చదివాడు",
+       "rule_id": "HI-TE-007",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-011-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 568,
+      "latency": [
+       1271
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-011-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 577,
+      "latency": [
+       1377
+      ],
+      "answer": {
+       "wrong_word": "తిన్నాను",
+       "rule_id": "HI-TE-003",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-012-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 566,
+      "latency": [
+       1071
+      ],
+      "answer": {
+       "wrong_word": "అమ్మ",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-012-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 570,
+      "latency": [
+       1268
+      ],
+      "answer": {
+       "wrong_word": "పిలిచాను",
+       "rule_id": "HI-TE-012",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-012-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 561,
+      "latency": [
+       1475
+      ],
+      "answer": {
+       "wrong_word": "నాన్న",
+       "rule_id": "HI-TE-012",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-012-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       false
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": false,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 572,
+      "latency": [
+       1578
+      ],
+      "answer": {
+       "wrong_word": null,
+       "rule_id": null,
+       "error_type": null
+      }
+     },
+     {
+      "id": "HI-TE-013-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 562,
+      "latency": [
+       1374
+      ],
+      "answer": {
+       "wrong_word": "తింటాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-013-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 556,
+      "latency": [
+       1200
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-013",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-013-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 565,
+      "latency": [
+       1241
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తాను",
+       "rule_id": "HI-TE-013",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-013-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 557,
+      "latency": [
+       1481
+      ],
+      "answer": {
+       "wrong_word": "none",
+       "rule_id": "HI-TE-013",
+       "error_type": "correct"
+      }
+     },
+     {
+      "id": "HI-TE-014-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 569,
+      "latency": [
+       1268
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 567,
+      "latency": [
+       1377
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": null,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 555,
+      "latency": [
+       1375
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-014-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": false
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 567,
+      "latency": [
+       1372
+      ],
+      "answer": {
+       "wrong_word": "కోసం",
+       "rule_id": "HI-TE-014",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-a:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 579,
+      "latency": [
+       1577
+      ],
+      "answer": {
+       "wrong_word": "ఇంట్లో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-a:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 581,
+      "latency": [
+       1379
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తున్నాను",
+       "rule_id": "HI-TE-015",
+       "error_type": "word_missing_or_extra"
+      }
+     },
+     {
+      "id": "HI-TE-015-b:planted_unchanged",
+      "kind": "planted_unchanged",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": true,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": true,
+      "agrees_with_checker": true,
+      "revised": false,
+      "calls": 1,
+      "tokens": 565,
+      "latency": [
+       1268
+      ],
+      "answer": {
+       "wrong_word": "బడిలో",
+       "rule_id": "HI-TE-015",
+       "error_type": "habit_kept"
+      }
+     },
+     {
+      "id": "HI-TE-015-b:fragment",
+      "kind": "fragment",
+      "evaluable": true,
+      "steps_valid": [
+       true
+      ],
+      "marks": {
+       "wrong_word": false,
+       "rule_id": true,
+       "error_type": true
+      },
+      "final_correct": false,
+      "agrees_with_checker": false,
+      "revised": false,
+      "calls": 1,
+      "tokens": 567,
+      "latency": [
+       1215
+      ],
+      "answer": {
+       "wrong_word": "వెళ్తాను",
+       "rule_id": "HI-TE-015",
+       "error_type": "word_missing_or_extra"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "provider_calls": {
+  "ok": 464,
+  "errors": {}
+ }
+}
