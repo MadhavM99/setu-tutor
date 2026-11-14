@@ -41,6 +41,7 @@ class Home:
     done: int
     total: int
     path: tuple = ()
+    raju: dict | None = None
 
 
 def _due(c, act, learner_id, now) -> int:
@@ -106,6 +107,19 @@ def recommend(c, learner_id, now: dt.datetime | None = None) -> Lesson | None:
     return None
 
 
+def raju_summary(c, learner_id, path) -> dict:
+    """What the Raju card and the progress page show: has the learner reached the stage where he appears, and which
+    rules he has learned from them or forgotten. Read-only; the rule states are written only by the OutcomeWriter."""
+    rows = c.execute(text(
+        "SELECT DISTINCT ON (cs.rule_id) rv.title_hi AS title, cs.state FROM classmate_rule_state cs "
+        "JOIN learner_rule_version rv ON rv.rule_id = cs.rule_id WHERE cs.learner_id = :l "
+        "AND cs.state IN ('taught', 'forgotten') ORDER BY cs.rule_id, rv.id DESC"), {"l": learner_id}).all()
+    taught = [r.title for r in rows if r.state == "taught"]
+    forgotten = [r.title for r in rows if r.state == "forgotten"]
+    reached = any(x["band"] == "L4" and x["state"] in ("now", "done") for x in path)
+    return {"reached": reached or bool(taught or forgotten), "taught": taught, "forgotten": forgotten}
+
+
 def home(c, learner_id, now=None) -> Home:
     can, now_learning, later, _ = ladder(c, learner_id)
     total = len(can) + len(now_learning) + len(later)
@@ -116,4 +130,4 @@ def home(c, learner_id, now=None) -> Home:
     if all(x["state"] == "done" for x in path if x["total"]):
         band = "L5"
     return Home(recommend(c, learner_id, now), STAGE[band], len(can) + sum(1 for t in now_learning if t["placed"]),
-                total, tuple(path))
+                total, tuple(path), raju_summary(c, learner_id, path))

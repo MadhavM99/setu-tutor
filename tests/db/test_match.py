@@ -254,3 +254,28 @@ def test_the_ladder_names_a_word_as_the_next_step_and_still_renders(engine, appr
     assert_hindi_page(page)
     assert "अगला:" in page.text and '<span lang="te">ఒకటి · రెండు</span>' in page.text
     assert '<span lang="te">నాలుగు</span>' in page.text and '<span lang="te">మూడు</span>' in page.text  # needs/after
+
+
+def test_a_beginner_is_introduced_to_raju_on_home_and_progress_shows_what_he_learned(engine, approved_words, monkeypatch):  # noqa: F811
+    """Before the sentence stage the home page says who Raju is and when he arrives; the progress page says he has
+    learned nothing yet. Once he has rules (patched here: the real states are written only by the OutcomeWriter) the
+    card counts them and links to practice, and the progress page lists them."""
+    from setu.web import next_lesson
+
+    c, _ = client(engine)
+    home = c.get("/")
+    assert_hindi_page(home)
+    assert "राजू से मिलिए" in home.text and "/learn/rules" not in home.text
+    page = c.get("/ladder")
+    assert_hindi_page(page)
+    assert "राजू ने आपसे क्या सीखा" in page.text and "अभी राजू ने कोई नियम नहीं सीखा" in page.text
+
+    monkeypatch.setattr(next_lesson, "raju_summary", lambda cn, lid, path: {
+        "reached": True, "taught": ["सवाल बनाना", "नकार"], "forgotten": ["लिंग"]})
+    home = c.get("/")
+    assert_hindi_page(home)
+    assert "राजू आपका इंतज़ार कर रहा है" in home.text and "२ नियम" in home.text and "१ नियम वह भूल गया" in home.text
+    assert 'href="/learn/rules"' in home.text and "राजू से मिलिए" not in home.text
+    page = c.get("/ladder")
+    assert_hindi_page(page)
+    assert "सवाल बनाना" in page.text and "सीख लिया" in page.text and "लिंग — भूल गया" in page.text

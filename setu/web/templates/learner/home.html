@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% from "learner/_path.html" import learning_path %}
+{% from "learner/_raju_card.html" import raju_card %}
 {# One recommended lesson, chosen from the learner's real state (setu/web/next_lesson.py). #}
 {% block content %}
 <section class="hello">
@@ -23,6 +24,7 @@
   <a class="button" href="/ladder">{{ t("nav.progress") }}</a>
 </section>
 {% endif %}
+{{ raju_card(home.raju) }}
 {% if can_match %}
 <section class="play" aria-labelledby="play-title">
   <h2 id="play-title">{{ t("match.title") }}</h2>

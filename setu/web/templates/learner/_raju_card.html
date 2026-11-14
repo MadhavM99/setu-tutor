@@ -1,0 +1,21 @@
+{# Raju on the home page. Before the sentence stage he is introduced (so a beginner knows what the app is for);
+   afterwards the card says how he is doing and links to practice. `raju` comes from next_lesson.raju_summary. #}
+{% from "learner/_persona.html" import persona %}
+{% macro raju_card(raju) %}
+<section class="raju-card" aria-labelledby="raju-title">
+{% if raju.reached %}
+  {% call persona("raju") %}
+    <h2 id="raju-title">{{ t("raju.card_title") }}</h2>
+    {% if raju.taught %}<p>{{ t("raju.card_taught", n=num(raju.taught|length)) }}</p>{% endif %}
+    {% if raju.forgotten %}<p>{{ t("raju.card_forgot", n=num(raju.forgotten|length)) }}</p>{% endif %}
+    <p><a class="button" href="/learn/rules">{{ t("raju.card_go") }}</a></p>
+  {% endcall %}
+{% else %}
+  {% call persona("raju") %}
+    <h2 id="raju-title">{{ t("raju.meet_title") }}</h2>
+    <p>{{ t("raju.meet_text") }}</p>
+    <p class="help">{{ t("raju.meet_when") }}</p>
+  {% endcall %}
+{% endif %}
+</section>
+{% endmacro %}

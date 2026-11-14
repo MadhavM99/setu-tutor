@@ -265,3 +265,8 @@ button, .button { min-height: 3.1rem; }
 .result-list .result { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
 .result-list .result .pic { width: 3.5rem; height: 3.5rem; margin-left: auto; }
 .result-list .result .verdict-ok, .result-list .result .verdict-fix { flex: 1 1 100%; order: 3; }
+
+/* Raju card on the home page */
+.raju-card { margin-top: 1.5rem; }
+.raju-card h2 { margin: 0 0 .35rem; font-size: 1.15rem; }
+.raju-card .persona { margin: 0; }
