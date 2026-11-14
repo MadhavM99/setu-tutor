@@ -1,0 +1,23 @@
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది భోజనం", "wrong": "ఇది భోజనం ఉంది", "hindi": "यह खाना है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది కారు", "wrong": "అది కారు ఉంది", "hindi": "वह कार है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది గది", "wrong": "ఇది గది ఉంది", "hindi": "यह कमरा है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పాఠం", "wrong": "ఇది పాఠం ఉంది", "hindi": "यह पाठ है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది టీ", "wrong": "అది టీ ఉంది", "hindi": "वह चाय है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ప్లేట్", "wrong": "ఇది ప్లేట్ ఉంది", "hindi": "यह प्लेट है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది చరిత్ర", "wrong": "ఇది చరిత్ర ఉంది", "hindi": "यह इतिहास है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది దేశం", "wrong": "ఇది దేశం ఉంది", "hindi": "यह देश है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది చార్మినార్", "wrong": "అది చార్మినార్ ఉంది", "hindi": "वह चारमीनार है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పేరు", "wrong": "ఇది పేరు ఉంది", "hindi": "यह नाम है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది కూర", "wrong": "ఇది కూర ఉంది", "hindi": "यह सब्जी है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది డాక్టర్", "wrong": "అది డాక్టర్ ఉంది", "hindi": "वह डॉक्टर है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది టీ", "wrong": "ఇది టీ ఉంది", "hindi": "यह चाय है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది ప్లేట్", "wrong": "అది ప్లేట్ ఉంది", "hindi": "वह प्लेट है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది టీచరు", "wrong": "ఇది టీచరు ఉంది", "hindi": "यह टीचर हैं।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఎర్రగా", "wrong": "ఇది ఎర్రగా ఉంది", "hindi": "यह लाल है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఏమిటి", "wrong": "ఇది ఏమిటి ఉంది", "hindi": "यह क्या है?", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది గది", "wrong": "అది గది ఉంది", "hindi": "वह रूम है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది కారు", "wrong": "ఇది కారు ఉంది", "hindi": "यह गाड़ी है।", "reasons": []}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది చార్మినార్", "wrong": "ఇది చార్మినార్ ఉంది", "hindi": "यह चारమినార్ है।", "reasons": []}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నాకు ఒక గది ఉంది", "wrong": "నేను ఒక గది ఉంది", "hindi": "मेरे पास एक कमरा है।", "reasons": []}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నాకు ఒక కారు ఉంది", "wrong": "నేను ఒక కారు ఉంది", "hindi": "मेरे पास एक कार है।", "reasons": []}

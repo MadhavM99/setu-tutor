@@ -1,0 +1,371 @@
+{
+ "sentences": [
+  "చార్మినార్ వెళ్తారా?",
+  "మీటర్ వేయండి",
+  "ఇక్కడ ఆపండి",
+  "చాలా ఎక్కువ",
+  "ఎంత దూరం?",
+  "స్టేషన్ ఎక్కడ?",
+  "ప్లేట్ ఉందా?",
+  "అన్నం కావాలి",
+  "ఇంకొంచెం ఇవ్వండి",
+  "నీళ్ళు ఎక్కడ?",
+  "భోజనం అయిందా?",
+  "చాలా బాగుంది",
+  "కారం ఎక్కువ",
+  "నమస్కారం అండీ",
+  "గది ఖాళీగా ఉందా?",
+  "అద్దె ఎంత?",
+  "ఒకసారి చూడొచ్చా?",
+  "ఎప్పుడు రావచ్చు?",
+  "ధన్యవాదాలు అండీ",
+  "మళ్ళీ వస్తాను"
+ ],
+ "instruction": "Repeat this Telugu sentence exactly, character for character. Write only the sentence.\n\n",
+ "models": {
+  "Gemma-3-1B-it": {
+   "hf_id": "unsloth/gemma-3-1b-it",
+   "device": "cpu",
+   "seconds": 40.9,
+   "n": 20,
+   "exact_match": 20,
+   "exact_match_rate": 1.0,
+   "mean_char_edit_distance": 0.0,
+   "mean_norm_edit_distance": 0.0,
+   "rows": [
+    {
+     "ref": "చార్మినార్ వెళ్తారా?",
+     "output": "చార్మినార్ వెళ్తారా?",
+     "first_line": "చార్మినార్ వెళ్తారా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "మీటర్ వేయండి",
+     "output": "మీటర్ వేయండి",
+     "first_line": "మీటర్ వేయండి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఇక్కడ ఆపండి",
+     "output": "ఇక్కడ ఆపండి",
+     "first_line": "ఇక్కడ ఆపండి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "చాలా ఎక్కువ",
+     "output": "చాలా ఎక్కువ",
+     "first_line": "చాలా ఎక్కువ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఎంత దూరం?",
+     "output": "ఎంత దూరం?",
+     "first_line": "ఎంత దూరం?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "స్టేషన్ ఎక్కడ?",
+     "output": "స్టేషన్ ఎక్కడ?",
+     "first_line": "స్టేషన్ ఎక్కడ?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ప్లేట్ ఉందా?",
+     "output": "ప్లేట్ ఉందా?",
+     "first_line": "ప్లేట్ ఉందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "అన్నం కావాలి",
+     "output": "అన్నం కావాలి",
+     "first_line": "అన్నం కావాలి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఇంకొంచెం ఇవ్వండి",
+     "output": "ఇంకొంచెం ఇవ్వండి",
+     "first_line": "ఇంకొంచెం ఇవ్వండి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "నీళ్ళు ఎక్కడ?",
+     "output": "నీళ్ళు ఎక్కడ?",
+     "first_line": "నీళ్ళు ఎక్కడ?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "భోజనం అయిందా?",
+     "output": "భోజనం అయిందా?",
+     "first_line": "భోజనం అయిందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "చాలా బాగుంది",
+     "output": "చాలా బాగుంది",
+     "first_line": "చాలా బాగుంది",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "కారం ఎక్కువ",
+     "output": "కారం ఎక్కువ",
+     "first_line": "కారం ఎక్కువ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "నమస్కారం అండీ",
+     "output": "నమస్కారం అండీ",
+     "first_line": "నమస్కారం అండీ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "గది ఖాళీగా ఉందా?",
+     "output": "గది ఖాళీగా ఉందా?",
+     "first_line": "గది ఖాళీగా ఉందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "అద్దె ఎంత?",
+     "output": "అద్దె ఎంత?",
+     "first_line": "అద్దె ఎంత?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఒకసారి చూడొచ్చా?",
+     "output": "ఒకసారి చూడొచ్చా?",
+     "first_line": "ఒకసారి చూడొచ్చా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఎప్పుడు రావచ్చు?",
+     "output": "ఎప్పుడు రావచ్చు?",
+     "first_line": "ఎప్పుడు రావచ్చు?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ధన్యవాదాలు అండీ",
+     "output": "ధన్యవాదాలు అండీ",
+     "first_line": "ధన్యవాదాలు అండీ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "మళ్ళీ వస్తాను",
+     "output": "మళ్ళీ వస్తాను",
+     "first_line": "మళ్ళీ వస్తాను",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    }
+   ]
+  },
+  "Qwen2.5-1.5B-Instruct": {
+   "hf_id": "Qwen/Qwen2.5-1.5B-Instruct",
+   "device": "cpu",
+   "seconds": 205.4,
+   "n": 20,
+   "exact_match": 17,
+   "exact_match_rate": 0.85,
+   "mean_char_edit_distance": 1.7,
+   "mean_norm_edit_distance": 0.082,
+   "rows": [
+    {
+     "ref": "చార్మినార్ వెళ్తారా?",
+     "output": "చార్మినార్ వెళ్తారా?",
+     "first_line": "చార్మినార్ వెళ్తారా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "మీటర్ వేయండి",
+     "output": "మీటర్ వేయండి",
+     "first_line": "మీటర్ వేయండి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఇక్కడ ఆపండి",
+     "output": "ఇక్కడ ఆపండి",
+     "first_line": "ఇక్కడ ఆపండి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "చాలా ఎక్కువ",
+     "output": "చాలా ఎక్కువ",
+     "first_line": "చాలా ఎక్కువ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఎంత దూరం?",
+     "output": "ఎంత దూరం?",
+     "first_line": "ఎంత దూరం?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "స్టేషన్ ఎక్కడ?",
+     "output": "స్టేషన్ ఎక్కడ?",
+     "first_line": "స్టేషన్ ఎక్కడ?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ప్లేట్ ఉందా?",
+     "output": "ప్లేట్ ఉందా?",
+     "first_line": "ప్లేట్ ఉందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "అన్నం కావాలి",
+     "output": "అన్నం కావాలి",
+     "first_line": "అన్నం కావాలి",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఇంకొంచెం ఇవ్వండి",
+     "output": "ఈనోమొంచెం ఈవ్వండి",
+     "first_line": "ఈనోమొంచెం ఈవ్వండి",
+     "exact": false,
+     "char_edit_distance": 5,
+     "norm_edit_distance": 0.294
+    },
+    {
+     "ref": "నీళ్ళు ఎక్కడ?",
+     "output": "నీళ్ళు ఎక్కడ?",
+     "first_line": "నీళ్ళు ఎక్కడ?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "భోజనం అయిందా?",
+     "output": "భోజనం అయిందా?",
+     "first_line": "భోజనం అయిందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "చాలా బాగుంది",
+     "output": "చాలా బాగుంది",
+     "first_line": "చాలా బాగుంది",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "కారం ఎక్కువ",
+     "output": "కారం ఎక్కువ",
+     "first_line": "కారం ఎక్కువ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "నమస్కారం అండీ",
+     "output": "నమస్కారం అండీ",
+     "first_line": "నమస్కారం అండీ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "గది ఖాళీగా ఉందా?",
+     "output": "గది ఖాళీగా ఉందా?",
+     "first_line": "గది ఖాళీగా ఉందా?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "అద్దె ఎంత?",
+     "output": "అద్దె ఎంత?",
+     "first_line": "అద్దె ఎంత?",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "ఒకసారి చూడొచ్చా?",
+     "output": "కోనెట్లపై ముఖ్యంగా కేవలం",
+     "first_line": "కోనెట్లపై ముఖ్యంగా కేవలం",
+     "exact": false,
+     "char_edit_distance": 22,
+     "norm_edit_distance": 0.917
+    },
+    {
+     "ref": "ఎప్పుడు రావచ్చు?",
+     "output": "ఈ పూర్తి రావచ్చు?",
+     "first_line": "ఈ పూర్తి రావచ్చు?",
+     "exact": false,
+     "char_edit_distance": 7,
+     "norm_edit_distance": 0.438
+    },
+    {
+     "ref": "ధన్యవాదాలు అండీ",
+     "output": "ధన్యవాదాలు అండీ",
+     "first_line": "ధన్యవాదాలు అండీ",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    },
+    {
+     "ref": "మళ్ళీ వస్తాను",
+     "output": "మళ్ళీ వస్తాను",
+     "first_line": "మళ్ళీ వస్తాను",
+     "exact": true,
+     "char_edit_distance": 0,
+     "norm_edit_distance": 0.0
+    }
+   ]
+  }
+ }
+}

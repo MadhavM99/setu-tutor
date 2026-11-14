@@ -1,0 +1,1303 @@
+{
+ "tag": "",
+ "threshold": 0.5,
+ "note": "The title-given coach (a') works only for Raju's planted mistakes, where the planted rule is known. For the learner's own sentences there is no planted rule; that is the case retrieval is for.",
+ "model": "gemini-3.5-flash",
+ "endpoint": "https://generativelanguage.googleapis.com/v1beta/openai",
+ "hosted": true,
+ "reasoning_effort": "none",
+ "status": "run",
+ "retrieval": {
+  "indexes": {
+   "all_25": {
+    "hit@1": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "hit@3": {
+     "k": 24,
+     "n": 29,
+     "rate": 0.8275862068965517,
+     "lo": 0.6545155995497876,
+     "hi": 0.9240214279517815
+    }
+   },
+   "all_25_explanations_only": {
+    "hit@1": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "hit@3": {
+     "k": 26,
+     "n": 29,
+     "rate": 0.896551724137931,
+     "lo": 0.7361491875205077,
+     "hi": 0.9641851089287603
+    }
+   },
+   "hi_te_15": {
+    "hit@1": {
+     "k": 18,
+     "n": 29,
+     "rate": 0.6206896551724138,
+     "lo": 0.4400254406948544,
+     "hi": 0.7731197799636186
+    },
+    "hit@3": {
+     "k": 26,
+     "n": 29,
+     "rate": 0.896551724137931,
+     "lo": 0.7361491875205077,
+     "hi": 0.9641851089287603
+    }
+   },
+   "hi_te_15_explanations_only": {
+    "hit@1": {
+     "k": 17,
+     "n": 29,
+     "rate": 0.5862068965517241,
+     "lo": 0.40737835855877247,
+     "hi": 0.7448682276258509
+    },
+    "hit@3": {
+     "k": 26,
+     "n": 29,
+     "rate": 0.896551724137931,
+     "lo": 0.7361491875205077,
+     "hi": 0.9641851089287603
+    }
+   },
+   "oracle_upper_bound": {
+    "hit@1": {
+     "k": 29,
+     "n": 29,
+     "rate": 1.0,
+     "lo": 0.8830301998708162,
+     "hi": 1.0
+    },
+    "hit@3": {
+     "k": 29,
+     "n": 29,
+     "rate": 1.0,
+     "lo": 0.8830301998708162,
+     "hi": 1.0
+    }
+   }
+  },
+  "sweep": [
+   {
+    "threshold": 0.0,
+    "abstain_planted": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_attack": {
+     "k": 0,
+     "n": 11,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.25883296999442634
+    }
+   },
+   {
+    "threshold": 0.25,
+    "abstain_planted": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_attack": {
+     "k": 5,
+     "n": 11,
+     "rate": 0.45454545454545453,
+     "lo": 0.21271271487637833,
+     "hi": 0.7199084642140241
+    }
+   },
+   {
+    "threshold": 0.5,
+    "abstain_planted": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "abstain_attack": {
+     "k": 9,
+     "n": 11,
+     "rate": 0.8181818181818182,
+     "lo": 0.5230194356457672,
+     "hi": 0.9486323107214162
+    }
+   },
+   {
+    "threshold": 0.75,
+    "abstain_planted": {
+     "k": 1,
+     "n": 29,
+     "rate": 0.034482758620689655,
+     "lo": 0.006113214225076519,
+     "hi": 0.17175522037795662
+    },
+    "abstain_correct_sentence": {
+     "k": 2,
+     "n": 29,
+     "rate": 0.06896551724137931,
+     "lo": 0.01912126599683843,
+     "hi": 0.2196458030800441
+    },
+    "abstain_attack": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411670300055737,
+     "hi": 1.0
+    }
+   },
+   {
+    "threshold": 1.0,
+    "abstain_planted": {
+     "k": 6,
+     "n": 29,
+     "rate": 0.20689655172413793,
+     "lo": 0.09846070140456342,
+     "hi": 0.3839009055677167
+    },
+    "abstain_correct_sentence": {
+     "k": 3,
+     "n": 29,
+     "rate": 0.10344827586206896,
+     "lo": 0.035814891071239724,
+     "hi": 0.26385081247949216
+    },
+    "abstain_attack": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411670300055737,
+     "hi": 1.0
+    }
+   },
+   {
+    "threshold": 1.25,
+    "abstain_planted": {
+     "k": 10,
+     "n": 29,
+     "rate": 0.3448275862068966,
+     "lo": 0.19940718436625743,
+     "hi": 0.5265489605014202
+    },
+    "abstain_correct_sentence": {
+     "k": 10,
+     "n": 29,
+     "rate": 0.3448275862068966,
+     "lo": 0.19940718436625743,
+     "hi": 0.5265489605014202
+    },
+    "abstain_attack": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411670300055737,
+     "hi": 1.0
+    }
+   },
+   {
+    "threshold": 1.5,
+    "abstain_planted": {
+     "k": 17,
+     "n": 29,
+     "rate": 0.5862068965517241,
+     "lo": 0.40737835855877247,
+     "hi": 0.7448682276258509
+    },
+    "abstain_correct_sentence": {
+     "k": 17,
+     "n": 29,
+     "rate": 0.5862068965517241,
+     "lo": 0.40737835855877247,
+     "hi": 0.7448682276258509
+    },
+    "abstain_attack": {
+     "k": 11,
+     "n": 11,
+     "rate": 1.0,
+     "lo": 0.7411670300055737,
+     "hi": 1.0
+    }
+   }
+  ],
+  "misses": [
+   {
+    "case_id": "pos:HI-TE-001-a",
+    "planted": "HI-TE-001",
+    "query": "క్యా నువ్వు వస్తావు",
+    "top3": [
+     [
+      "HI-TE-009",
+      0.823
+     ],
+     [
+      "HI-TE-001",
+      0.775
+     ],
+     [
+      "TE-HI-008",
+      0.574
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-001-b",
+    "planted": "HI-TE-001",
+    "query": "క్యా ఇది పుస్తకం",
+    "top3": [
+     [
+      "TE-HI-001",
+      0.995
+     ],
+     [
+      "TE-HI-009",
+      0.994
+     ],
+     [
+      "HI-TE-002",
+      0.992
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-002-a",
+    "planted": "HI-TE-002",
+    "query": "ఇది పుస్తకం ఉంది",
+    "top3": [
+     [
+      "TE-HI-001",
+      1.368
+     ],
+     [
+      "HI-TE-002",
+      1.169
+     ],
+     [
+      "HI-TE-003",
+      1.083
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-002-b",
+    "planted": "HI-TE-002",
+    "query": "అది పెన్ను ఉంది",
+    "top3": [
+     [
+      "HI-TE-003",
+      1.529
+     ],
+     [
+      "TE-HI-001",
+      0.697
+     ],
+     [
+      "HI-TE-002",
+      0.608
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-003-a",
+    "planted": "HI-TE-003",
+    "query": "నేను ఒక పుస్తకం ఉంది",
+    "top3": [
+     [
+      "TE-HI-006",
+      1.052
+     ],
+     [
+      "TE-HI-001",
+      0.946
+     ],
+     [
+      "HI-TE-002",
+      0.918
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-003-b",
+    "planted": "HI-TE-003",
+    "query": "నువ్వు ఒక పెన్ను ఉంది",
+    "top3": [
+     [
+      "HI-TE-002",
+      0.98
+     ],
+     [
+      "HI-TE-003",
+      0.775
+     ],
+     [
+      "HI-TE-001",
+      0.586
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-005-b",
+    "planted": "HI-TE-005",
+    "query": "అతను వస్తాడు కాదు",
+    "top3": [
+     [
+      "HI-TE-008",
+      1.327
+     ],
+     [
+      "HI-TE-005",
+      0.943
+     ],
+     [
+      "HI-TE-011",
+      0.772
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-007-a",
+    "planted": "HI-TE-007",
+    "query": "అతను టీచరు",
+    "top3": [
+     [
+      "TE-HI-009",
+      2.538
+     ],
+     [
+      "TE-HI-006",
+      0.918
+     ],
+     [
+      "HI-TE-007",
+      0.913
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-010-a",
+    "planted": "HI-TE-010",
+    "query": "ఇది జో పుస్తకం నేను చదివాను",
+    "top3": [
+     [
+      "TE-HI-010",
+      0.927
+     ],
+     [
+      "HI-TE-011",
+      0.904
+     ],
+     [
+      "TE-HI-006",
+      0.898
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-011-b",
+    "planted": "HI-TE-011",
+    "query": "నాకు అన్నం తిన్నాను",
+    "top3": [
+     [
+      "TE-HI-005",
+      1.682
+     ],
+     [
+      "HI-TE-003",
+      0.777
+     ],
+     [
+      "HI-TE-013",
+      0.737
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-012-b",
+    "planted": "HI-TE-012",
+    "query": "నేను నాన్న చూశాను",
+    "top3": [
+     [
+      "TE-HI-010",
+      0.6
+     ],
+     [
+      "TE-HI-003",
+      0.6
+     ],
+     [
+      "HI-TE-013",
+      0.596
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-013-b",
+    "planted": "HI-TE-013",
+    "query": "నేను వెళ్తాను ఉన్నాను",
+    "top3": [
+     [
+      "TE-HI-003",
+      1.327
+     ],
+     [
+      "HI-TE-015",
+      1.245
+     ],
+     [
+      "HI-TE-013",
+      0.818
+     ]
+    ]
+   },
+   {
+    "case_id": "pos:HI-TE-015-b",
+    "planted": "HI-TE-015",
+    "query": "నేను బడిలో వెళ్తాను",
+    "top3": [
+     [
+      "TE-HI-003",
+      1.119
+     ],
+     [
+      "HI-TE-015",
+      0.849
+     ],
+     [
+      "HI-TE-013",
+      0.667
+     ]
+    ]
+   }
+  ],
+  "rag_vs_oracle_hit@1": {
+   "n_pairs": 29,
+   "x_only": 0,
+   "y_only": 13,
+   "p_exact": 0.000244140625
+  },
+  "top_score": {
+   "planted": {
+    "min": 0.6,
+    "median": 1.388,
+    "max": 2.991
+   },
+   "correct_sentence": {
+    "min": 0.565,
+    "median": 1.434,
+    "max": 2.97
+   },
+   "attack": {
+    "min": 0.022,
+    "median": 0.295,
+    "max": 0.66
+   }
+  }
+ },
+ "conditions": {
+  "a_blind": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 10,
+     "n": 29,
+     "rate": 0.3448275862068966,
+     "lo": 0.19940718436625743,
+     "hi": 0.5265489605014202
+    },
+    "shown_with_numbered_source": {
+     "k": 0,
+     "of_shown": 10
+    },
+    "shown_and_usable": {
+     "k": 10,
+     "n": 29,
+     "rate": 0.3448275862068966,
+     "lo": 0.19940718436625743,
+     "hi": 0.5265489605014202
+    },
+    "answer_leak": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "telugu_in_hint": {
+     "k": 12,
+     "n": 29,
+     "rate": 0.41379310344827586,
+     "lo": 0.25513177237414897,
+     "hi": 0.5926216414412274
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    }
+   },
+   "negatives": {
+    "cases": 40,
+    "evaluable": 40,
+    "provider_errors": 0,
+    "correct_abstention": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762160245846368
+    },
+    "no_rule_hint_shown": {
+     "k": 12,
+     "n": 40,
+     "rate": 0.3,
+     "lo": 0.18074845154920366,
+     "hi": 0.45430018943418177
+    },
+    "correct_abstention_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "correct_abstention_attack": {
+     "k": 0,
+     "n": 11,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.25883296999442634
+    }
+   },
+   "compute": {
+    "model_calls": 69,
+    "ok_calls": 69,
+    "tokens": 8808,
+    "median_latency_ms": 982
+   },
+   "planned_cases": 69,
+   "evaluable_cases": 69,
+   "reduced_n": false
+  },
+  "b_rag": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 20,
+     "n": 29,
+     "rate": 0.6896551724137931,
+     "lo": 0.5076986562257293,
+     "hi": 0.8272438333804424
+    },
+    "shown_with_numbered_source": {
+     "k": 8,
+     "of_shown": 20
+    },
+    "shown_and_usable": {
+     "k": 12,
+     "n": 29,
+     "rate": 0.41379310344827586,
+     "lo": 0.25513177237414897,
+     "hi": 0.5926216414412274
+    },
+    "answer_leak": {
+     "k": 2,
+     "n": 29,
+     "rate": 0.06896551724137931,
+     "lo": 0.01912126599683843,
+     "hi": 0.2196458030800441
+    },
+    "telugu_in_hint": {
+     "k": 5,
+     "n": 29,
+     "rate": 0.1724137931034483,
+     "lo": 0.07597857204821831,
+     "hi": 0.34548440045021234
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "top1_retrieved_is_planted": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "citation_faithful": {
+     "k": 24,
+     "n": 29,
+     "rate": 0.8275862068965517,
+     "lo": 0.6545155995497876,
+     "hi": 0.9240214279517815
+    },
+    "faithful_hint_shown": {
+     "k": 17,
+     "n": 29,
+     "rate": 0.5862068965517241,
+     "lo": 0.40737835855877247,
+     "hi": 0.7448682276258509
+    }
+   },
+   "negatives": {
+    "cases": 40,
+    "evaluable": 40,
+    "provider_errors": 0,
+    "correct_abstention": {
+     "k": 9,
+     "n": 40,
+     "rate": 0.225,
+     "lo": 0.12316091264273149,
+     "hi": 0.37503096870942354
+    },
+    "no_rule_hint_shown": {
+     "k": 11,
+     "n": 40,
+     "rate": 0.275,
+     "lo": 0.16108016177777446,
+     "hi": 0.4283495593285342
+    },
+    "correct_abstention_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "correct_abstention_attack": {
+     "k": 9,
+     "n": 11,
+     "rate": 0.8181818181818182,
+     "lo": 0.5230194356457672,
+     "hi": 0.9486323107214162
+    }
+   },
+   "compute": {
+    "model_calls": 60,
+    "ok_calls": 60,
+    "tokens": 21964,
+    "median_latency_ms": 1276.0
+   },
+   "planned_cases": 69,
+   "evaluable_cases": 69,
+   "reduced_n": false
+  },
+  "c_oracle_retrieval": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 22,
+     "n": 29,
+     "rate": 0.7586206896551724,
+     "lo": 0.5789239823169033,
+     "hi": 0.877815776236967
+    },
+    "shown_with_numbered_source": {
+     "k": 3,
+     "of_shown": 22
+    },
+    "shown_and_usable": {
+     "k": 19,
+     "n": 29,
+     "rate": 0.6551724137931034,
+     "lo": 0.47345103949857975,
+     "hi": 0.8005928156337425
+    },
+    "answer_leak": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "telugu_in_hint": {
+     "k": 5,
+     "n": 29,
+     "rate": 0.1724137931034483,
+     "lo": 0.07597857204821831,
+     "hi": 0.34548440045021234
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "top1_retrieved_is_planted": {
+     "k": 29,
+     "n": 29,
+     "rate": 1.0,
+     "lo": 0.8830301998708162,
+     "hi": 1.0
+    },
+    "citation_faithful": {
+     "k": 29,
+     "n": 29,
+     "rate": 1.0,
+     "lo": 0.8830301998708162,
+     "hi": 1.0
+    },
+    "faithful_hint_shown": {
+     "k": 22,
+     "n": 29,
+     "rate": 0.7586206896551724,
+     "lo": 0.5789239823169033,
+     "hi": 0.877815776236967
+    }
+   },
+   "compute": {
+    "model_calls": 29,
+    "ok_calls": 29,
+    "tokens": 7181,
+    "median_latency_ms": 1164
+   },
+   "planned_cases": 29,
+   "evaluable_cases": 29,
+   "reduced_n": false
+  },
+  "a_prime_oracle_title": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "shown_with_numbered_source": {
+     "k": 0,
+     "of_shown": 16
+    },
+    "shown_and_usable": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "answer_leak": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "telugu_in_hint": {
+     "k": 5,
+     "n": 29,
+     "rate": 0.1724137931034483,
+     "lo": 0.07597857204821831,
+     "hi": 0.34548440045021234
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    }
+   },
+   "negatives": {
+    "cases": 40,
+    "evaluable": 40,
+    "provider_errors": 0,
+    "correct_abstention": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762160245846368
+    },
+    "no_rule_hint_shown": {
+     "k": 14,
+     "n": 40,
+     "rate": 0.35,
+     "lo": 0.22134528789169125,
+     "hi": 0.5049411928458477
+    },
+    "correct_abstention_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "correct_abstention_attack": {
+     "k": 0,
+     "n": 11,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.25883296999442634
+    }
+   },
+   "compute": {
+    "model_calls": 69,
+    "ok_calls": 69,
+    "tokens": 8416,
+    "median_latency_ms": 1075
+   },
+   "planned_cases": 69,
+   "evaluable_cases": 69,
+   "reduced_n": false
+  },
+  "d_rag_explanations_only": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 23,
+     "n": 29,
+     "rate": 0.7931034482758621,
+     "lo": 0.6160990944322833,
+     "hi": 0.9015392985954367
+    },
+    "shown_with_numbered_source": {
+     "k": 3,
+     "of_shown": 23
+    },
+    "shown_and_usable": {
+     "k": 20,
+     "n": 29,
+     "rate": 0.6896551724137931,
+     "lo": 0.5076986562257293,
+     "hi": 0.8272438333804424
+    },
+    "answer_leak": {
+     "k": 1,
+     "n": 29,
+     "rate": 0.034482758620689655,
+     "lo": 0.006113214225076519,
+     "hi": 0.17175522037795662
+    },
+    "telugu_in_hint": {
+     "k": 3,
+     "n": 29,
+     "rate": 0.10344827586206896,
+     "lo": 0.035814891071239724,
+     "hi": 0.26385081247949216
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "top1_retrieved_is_planted": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "citation_faithful": {
+     "k": 25,
+     "n": 29,
+     "rate": 0.8620689655172413,
+     "lo": 0.6944100612340133,
+     "hi": 0.9450256007414052
+    },
+    "faithful_hint_shown": {
+     "k": 19,
+     "n": 29,
+     "rate": 0.6551724137931034,
+     "lo": 0.47345103949857975,
+     "hi": 0.8005928156337425
+    }
+   },
+   "compute": {
+    "model_calls": 29,
+    "ok_calls": 29,
+    "tokens": 10254,
+    "median_latency_ms": 1094
+   },
+   "planned_cases": 29,
+   "evaluable_cases": 29,
+   "reduced_n": false
+  },
+  "e_rag_no_threshold": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 22,
+     "n": 29,
+     "rate": 0.7586206896551724,
+     "lo": 0.5789239823169033,
+     "hi": 0.877815776236967
+    },
+    "shown_with_numbered_source": {
+     "k": 6,
+     "of_shown": 22
+    },
+    "shown_and_usable": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "answer_leak": {
+     "k": 2,
+     "n": 29,
+     "rate": 0.06896551724137931,
+     "lo": 0.01912126599683843,
+     "hi": 0.2196458030800441
+    },
+    "telugu_in_hint": {
+     "k": 4,
+     "n": 29,
+     "rate": 0.13793103448275862,
+     "lo": 0.054974399258594736,
+     "hi": 0.3055899387659865
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "top1_retrieved_is_planted": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "citation_faithful": {
+     "k": 23,
+     "n": 29,
+     "rate": 0.7931034482758621,
+     "lo": 0.6160990944322833,
+     "hi": 0.9015392985954367
+    },
+    "faithful_hint_shown": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    }
+   },
+   "negatives": {
+    "cases": 40,
+    "evaluable": 40,
+    "provider_errors": 0,
+    "correct_abstention": {
+     "k": 0,
+     "n": 40,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.08762160245846368
+    },
+    "no_rule_hint_shown": {
+     "k": 3,
+     "n": 40,
+     "rate": 0.075,
+     "lo": 0.025836025573262464,
+     "hi": 0.19864233651643165
+    },
+    "correct_abstention_correct_sentence": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "correct_abstention_attack": {
+     "k": 0,
+     "n": 11,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.25883296999442634
+    }
+   },
+   "compute": {
+    "model_calls": 69,
+    "ok_calls": 69,
+    "tokens": 25717,
+    "median_latency_ms": 1149
+   },
+   "planned_cases": 69,
+   "evaluable_cases": 69,
+   "reduced_n": false
+  },
+  "b_fixed_posthoc": {
+   "positives": {
+    "cases": 29,
+    "evaluable": 29,
+    "provider_errors": 0,
+    "hint_shown": {
+     "k": 25,
+     "n": 29,
+     "rate": 0.8620689655172413,
+     "lo": 0.6944100612340133,
+     "hi": 0.9450256007414052
+    },
+    "shown_with_numbered_source": {
+     "k": 0,
+     "of_shown": 25
+    },
+    "shown_and_usable": {
+     "k": 25,
+     "n": 29,
+     "rate": 0.8620689655172413,
+     "lo": 0.6944100612340133,
+     "hi": 0.9450256007414052
+    },
+    "answer_leak": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "telugu_in_hint": {
+     "k": 1,
+     "n": 29,
+     "rate": 0.034482758620689655,
+     "lo": 0.006113214225076519,
+     "hi": 0.17175522037795662
+    },
+    "false_abstention": {
+     "k": 0,
+     "n": 29,
+     "rate": 0.0,
+     "lo": 0.0,
+     "hi": 0.11696980012918376
+    },
+    "top1_retrieved_is_planted": {
+     "k": 16,
+     "n": 29,
+     "rate": 0.5517241379310345,
+     "lo": 0.3754796308384869,
+     "hi": 0.7158683208722871
+    },
+    "citation_faithful": {
+     "k": 24,
+     "n": 29,
+     "rate": 0.8275862068965517,
+     "lo": 0.6545155995497876,
+     "hi": 0.9240214279517815
+    },
+    "faithful_hint_shown": {
+     "k": 21,
+     "n": 29,
+     "rate": 0.7241379310344828,
+     "lo": 0.5428286743550008,
+     "hi": 0.8530124497250202
+    }
+   },
+   "compute": {
+    "model_calls": 29,
+    "ok_calls": 29,
+    "tokens": 12461,
+    "median_latency_ms": 1067
+   },
+   "planned_cases": 29,
+   "evaluable_cases": 29,
+   "reduced_n": false
+  }
+ },
+ "comparisons": [
+  {
+   "x": "b_rag",
+   "y": "a_blind",
+   "outcome": "hint_shown",
+   "n_pairs": 29,
+   "x_only": 13,
+   "y_only": 3,
+   "p_exact": 0.021270751953125
+  },
+  {
+   "x": "b_rag",
+   "y": "a_blind",
+   "outcome": "shown_and_usable",
+   "n_pairs": 29,
+   "x_only": 8,
+   "y_only": 6,
+   "p_exact": 0.79052734375
+  },
+  {
+   "x": "b_rag",
+   "y": "a_prime_oracle_title",
+   "outcome": "hint_shown",
+   "n_pairs": 29,
+   "x_only": 9,
+   "y_only": 5,
+   "p_exact": 0.4239501953125
+  },
+  {
+   "x": "b_rag",
+   "y": "c_oracle_retrieval",
+   "outcome": "faithful_hint_shown",
+   "n_pairs": 29,
+   "x_only": 4,
+   "y_only": 9,
+   "p_exact": 0.266845703125
+  },
+  {
+   "x": "d_rag_explanations_only",
+   "y": "b_rag",
+   "outcome": "faithful_hint_shown",
+   "n_pairs": 29,
+   "x_only": 8,
+   "y_only": 6,
+   "p_exact": 0.79052734375
+  },
+  {
+   "x": "e_rag_no_threshold",
+   "y": "b_rag",
+   "outcome": "faithful_hint_shown",
+   "n_pairs": 29,
+   "x_only": 3,
+   "y_only": 4,
+   "p_exact": 1.0
+  },
+  {
+   "x": "b_fixed_posthoc",
+   "y": "b_rag",
+   "outcome": "shown_and_usable",
+   "n_pairs": 29,
+   "x_only": 14,
+   "y_only": 1,
+   "p_exact": 0.0009765625
+  },
+  {
+   "x": "b_fixed_posthoc",
+   "y": "a_blind",
+   "outcome": "shown_and_usable",
+   "n_pairs": 29,
+   "x_only": 17,
+   "y_only": 2,
+   "p_exact": 0.000728607177734375
+  },
+  {
+   "x": "b_fixed_posthoc",
+   "y": "a_blind",
+   "outcome": "hint_shown",
+   "n_pairs": 29,
+   "x_only": 17,
+   "y_only": 2,
+   "p_exact": 0.000728607177734375
+  }
+ ],
+ "provider_calls": {
+  "calls": 354,
+  "ok": 354,
+  "errors": {},
+  "tokens": 94801,
+  "this_process": {}
+ },
+ "qualitative": {
+  "retrieval_miss": {
+   "case_id": "pos:HI-TE-001-a",
+   "planted": "HI-TE-001",
+   "query": "క్యా నువ్వు వస్తావు",
+   "top3": [
+    [
+     "HI-TE-009",
+     0.823
+    ],
+    [
+     "HI-TE-001",
+     0.775
+    ],
+    [
+     "TE-HI-008",
+     0.574
+    ]
+   ]
+  },
+  "blocked_hint": {
+   "reason": "ANSWER_FORM",
+   "case_id": "neg:correct:HI-TE-001-b",
+   "condition": "a_blind",
+   "model_reply": "```json\n{\"hint\": \"विद्यार्थी के उत्तर पर ध्यान दें—उसने राजू के वाक्य में कोई बदलाव नहीं किया है। प्रश्नवाचक वाक्य (పుస్తకమా) और साधारण वाक्य (పుస్తకం) के अंत में होने वाले बदलाव को देखें।\"}\n```",
+   "all_reasons": [
+    "ANSWER_FORM",
+    "TELUGU_IN_HINT"
+   ]
+  }
+ },
+ "measures": {
+  "hint_shown": {
+   "name": "hint shown",
+   "definition": "a model hint passed every filter and was shown (else the generic hint)"
+  },
+  "shown_and_usable": {
+   "name": "shown and usable",
+   "definition": "shown, and no reference to the coach's numbered sources (coach.NUMBERED_SOURCE); defined after seeing the run (post-hoc)"
+  },
+  "top1_retrieved_is_planted": {
+   "name": "top-1 retrieved = planted",
+   "definition": "the first rule given to the model is the planted rule (retrieval only; oracle: always)"
+  },
+  "citation_faithful": {
+   "name": "model cites planted",
+   "definition": "the rule the model names in its `source` field is the planted rule, whether or not the hint was shown"
+  },
+  "faithful_hint_shown": {
+   "name": "shown hint cites planted",
+   "definition": "hint shown AND the model's `source` is the planted rule"
+  }
+ }
+}

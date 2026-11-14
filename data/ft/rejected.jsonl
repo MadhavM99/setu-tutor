@@ -1,0 +1,139 @@
+{"rule_id": "HI-TE-002", "source": "slot", "from": ["HI-TE-002-b", "HI-TE-002-a"], "correct": "అది పుస్తకం", "wrong": "అది పుస్తకం ఉంది", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-001-b"]}
+{"rule_id": "HI-TE-002", "source": "slot", "from": ["HI-TE-002-b", "HI-TE-002-a"], "correct": "ఇది పెన్ను", "wrong": "ఇది పెన్ను ఉంది", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-002-b"]}
+{"rule_id": "HI-TE-003", "source": "slot", "from": ["HI-TE-003-a", "HI-TE-003-b"], "correct": "నాకు ఒక పెన్ను ఉంది", "wrong": "నేను ఒక పెన్ను ఉంది", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-003-a"]}
+{"rule_id": "HI-TE-003", "source": "slot", "from": ["HI-TE-003-b", "HI-TE-003-a"], "correct": "నీకు ఒక పుస్తకం ఉంది", "wrong": "నువ్వు ఒక పుస్తకం ఉంది", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-003-a"]}
+{"rule_id": "HI-TE-005", "source": "slot", "from": ["HI-TE-005-a", "HI-TE-005-b"], "correct": "అతను రాను", "wrong": "అతను వస్తాను కాదు", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-005-a"]}
+{"rule_id": "HI-TE-005", "source": "slot", "from": ["HI-TE-005-b", "HI-TE-005-a"], "correct": "నేను రాడు", "wrong": "నేను వస్తాడు కాదు", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-005-a"]}
+{"rule_id": "HI-TE-007", "source": "slot", "from": ["HI-TE-007-a", "HI-TE-007-b"], "correct": "ఆమె డాక్టరు", "wrong": "అతను డాక్టరు", "hindi": null, "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-007", "source": "slot", "from": ["HI-TE-007-b", "HI-TE-007-a"], "correct": "అతను టీచరు", "wrong": "ఆమె టీచరు", "hindi": null, "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-008", "source": "slot", "from": ["HI-TE-008-a", "HI-TE-008-b"], "correct": "అతను వస్తుంది", "wrong": "అతను వస్తాడు", "hindi": null, "reasons": ["NOT_RULE_ERROR", "NEAR_FROZEN:HI-TE-005-b"]}
+{"rule_id": "HI-TE-008", "source": "slot", "from": ["HI-TE-008-b", "HI-TE-008-a"], "correct": "ఆమె వస్తాడు", "wrong": "ఆమె వస్తుంది", "hindi": null, "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-011", "source": "slot", "from": ["HI-TE-011-a", "HI-TE-011-b"], "correct": "అతను అన్నం చదివాడు", "wrong": "అతనికి అన్నం చదివాడు", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-011-a"]}
+{"rule_id": "HI-TE-011", "source": "slot", "from": ["HI-TE-011-a", "HI-TE-011-b"], "correct": "అతను పుస్తకం తిన్నాను", "wrong": "అతనికి పుస్తకం తిన్నాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-011-a"]}
+{"rule_id": "HI-TE-011", "source": "slot", "from": ["HI-TE-011-b", "HI-TE-011-a"], "correct": "నేను పుస్తకం తిన్నాను", "wrong": "నాకు పుస్తకం తిన్నాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-011-b"]}
+{"rule_id": "HI-TE-011", "source": "slot", "from": ["HI-TE-011-b", "HI-TE-011-a"], "correct": "నేను అన్నం చదివాడు", "wrong": "నాకు అన్నం చదివాడు", "hindi": null, "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-012", "source": "slot", "from": ["HI-TE-012-a", "HI-TE-012-b"], "correct": "నేను అమ్మను చూశాను", "wrong": "నేను అమ్మ చూశాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-012-a"]}
+{"rule_id": "HI-TE-012", "source": "slot", "from": ["HI-TE-012-b", "HI-TE-012-a"], "correct": "నేను నాన్నను పిలిచాను", "wrong": "నేను నాన్న పిలిచాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-012-a"]}
+{"rule_id": "HI-TE-015", "source": "slot", "from": ["HI-TE-015-a", "HI-TE-015-b"], "correct": "నేను ఇంటికి వెళ్తాను", "wrong": "నేను ఇంట్లో వెళ్తాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-015-a"]}
+{"rule_id": "HI-TE-015", "source": "slot", "from": ["HI-TE-015-b", "HI-TE-015-a"], "correct": "నేను బడికి వెళ్తున్నాను", "wrong": "నేను బడిలో వెళ్తున్నాను", "hindi": null, "reasons": ["NEAR_FROZEN:HI-TE-013-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు వస్తున్నావా", "wrong": "క్యా నువ్వు వస్తున్నావు", "hindi": "क्या तुम जा रहे हो?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తారు", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు చేశారా", "wrong": "క్యా మీరు చేశారు", "hindi": "क्या आपने किया?", "reasons": ["WRONG_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు చేశావా", "wrong": "క్యా నువ్వు చేశావు", "hindi": "क्या तुमने किया?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నేను చూడొచ్చా", "wrong": "క్యా నేను చూడొచ్చు", "hindi": "क्या मैं देख सकता हूँ?", "reasons": ["WRONG_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आएगा?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "వారు వస్తారా", "wrong": "క్యా వారు వస్తారు", "hindi": "क्या वे आएंगे?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నీకు నీళ్ళు కావాలా", "wrong": "క్యా నీకు నీళ్ళు కావాలి", "hindi": "क्या आपको पानी चाहिए?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అయిందా", "wrong": "క్యా అయింది", "hindi": "क्या काम हो गया?", "reasons": ["WRONG_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అర్థం అయిందా", "wrong": "క్యా అర్థం అయింది", "hindi": "क्या आपको समझ आया?", "reasons": ["WRONG_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "బాగుందా", "wrong": "క్యా బాగుంది", "hindi": "क्या यह सही है/अच्छा है?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "టీ చల్లగా ఉందా", "wrong": "క్యా టీ చల్లగా ఉంది", "hindi": "क्या चाय ठंडी है?", "reasons": ["EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను రవియా", "wrong": "క్యా అతను రవి", "hindi": "क्या वह रवि है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు ఖాళీగా ఉన్నారా", "wrong": "క్యా మీరు ఖాళీగా ఉన్నారు", "hindi": "क्या आप खाली हैं?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు ఢిల్లీలో ఉన్నారా", "wrong": "క్యా మీరు ఢిల్లీలో ఉన్నారు", "hindi": "क्या आप ఢిల్లీ में हैं?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు వెళ్తావా", "wrong": "క్యా నువ్వు వెళ్తావు", "hindi": "क्या तुम जाओगे?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తారు", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు తింటారా", "wrong": "క్యా మీరు తింటారు", "hindi": "क्या आप खाएंगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-009-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आएगा?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह (स्त्री) आएगी?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది బాగుందా", "wrong": "క్యా ఇది బాగుంది", "hindi": "क्या यह अच्छा है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నీకు నీళ్ళు కావాలా", "wrong": "క్యా నీకు నీళ్ళు కావాలి", "hindi": "क्या तुम्हें पानी चाहिए?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తార", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను చదివాడా", "wrong": "క్యా అతను చదివాడు", "hindi": "क्या उसने पढ़ा?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు వెళ్తావా", "wrong": "క్యా నువ్వు వెళ్తావు", "hindi": "क्या तुम जाओगे?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह आएगी?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు వస్తున్నావా", "wrong": "క్యా నువ్వు వస్తున్నావు", "hindi": "क्या तुम आ रहे हो?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీకు నీళ్ళు కావాలా", "wrong": "క్యా మీకు నీళ్ళు కావాలి", "hindi": "क्या आपको पानी चाहिए?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "వారు వస్తారా", "wrong": "క్యా వారు వస్తారు", "hindi": "क्या वे आएंगे?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు ఖాళీగా ఉన్నారా", "wrong": "క్యా మీరు ఖాళీగా ఉన్నారు", "hindi": "क्या आप खाली हैं?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తారు", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आता है?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह आती है?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది బాగుందా", "wrong": "క్యా ఇది బాగుంది", "hindi": "क्या यह अच्छा है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నీకు నీళ్ళు కావాలా", "wrong": "క్యా నీకు నీళ్ళు కావాలి", "hindi": "क्या तुम्हें पानी चाहिए?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "టీ చల్లగా ఉందా", "wrong": "క్యా టీ చల్లగా ఉంది", "hindi": "क्या चाय ठंडी है?", "reasons": ["EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లా", "wrong": "క్యా ఇది ఇల్లు", "hindi": "क्या यह घर है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీకు నీళ్ళు కావాలా", "wrong": "క్యా మీకు నీళ్ళు కావాలి", "hindi": "क्या आपको पानी चाहिए?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "టీ చల్లగా ఉందా", "wrong": "క్యా టీ చల్లగా ఉంది", "hindi": "क्या चाय ठंडी है?", "reasons": ["EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आता है?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह (स्त्री) आती है?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తారు", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది బాగుందా", "wrong": "క్యా ఇది బాగుంది", "hindi": "क्या यह अच्छा है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "టీ చల్లగా ఉందా", "wrong": "క్యా టీ చల్లగా ఉంది", "hindi": "क्या यह चाय ठंडी है?", "reasons": ["EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తారు", "hindi": "क्या आप आएंगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आएगा?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది బాగుందా", "wrong": "క్యా ఇది బాగుంది", "hindi": "क्या यह अच्छा है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీకు నీళ్ళు కావాలా", "wrong": "క్యా మీకు నీళ్ళు కావాలి", "hindi": "क्या आपको पानी चाहिए?", "reasons": ["CORRECT_OOV", "WRONG_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు ఖాళీగా ఉన్నారా", "wrong": "క్యా మీరు ఖాళీగా ఉన్నారు", "hindi": "क्या आप खाली हैं?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह आएगी?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు వస్తారా", "wrong": "క్యా మీరు వస్తార", "hindi": "क्या आप आएँगे?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-009-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు తింటావా", "wrong": "క్యా నువ్వు తింటావు", "hindi": "क्या तुम खाओगे?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతను వస్తాడా", "wrong": "క్యా అతను వస్తాడు", "hindi": "क्या वह आएगा?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-b"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె వస్తుందా", "wrong": "క్యా ఆమె వస్తుంది", "hindi": "क्या वह आएगी?", "reasons": ["CORRECT_OOV", "NEAR_FROZEN:HI-TE-008-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "టీ చల్లగా ఉందా", "wrong": "క్యా టీ చల్లగా ఉంది", "hindi": "क्या चाय ठंडी है?", "reasons": ["EDIT_SHAPE"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది బాగుందా", "wrong": "క్యా ఇది బాగుంది", "hindi": "क्या यह अच्छा है?", "reasons": ["CORRECT_OOV"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నువ్వు వస్తున్నావా", "wrong": "క్యా నువ్వు వస్తున్నావు", "hindi": "क्या तुम आ रहे हो?", "reasons": ["WRONG_OOV", "NEAR_FROZEN:HI-TE-001-a"]}
+{"rule_id": "HI-TE-001", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీరు ఖాళీగా ఉన్నారా", "wrong": "క్యా మీరు ఖాళీగా ఉన్నారు", "hindi": "क्या आप खाली हैं?", "reasons": ["CORRECT_OOV", "EDIT_SHAPE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇవి నీళ్ళు", "wrong": "ఇవి నీళ్ళు ఉన్నాయి", "hindi": "यह पानी है।", "reasons": ["CORRECT_OOV", "WRONG_OOV", "NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది బడి", "wrong": "అది బడి ఉంది", "hindi": "वह स्कूल है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఢిల్లీ", "wrong": "ఇది ఢిల్లీ ఉంది", "hindi": "यह दिल्ली है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది భోజనం", "wrong": "ఇది భోజనం ఉంది", "hindi": "यह खाना है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది గదిలో ఉంది", "wrong": "ఇది గదిలో", "hindi": "यह कमरे में है।", "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది డాక్టర్", "wrong": "అది డాక్టర్ ఉంది", "hindi": "वह डॉक्टर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పేరు", "wrong": "ఇది పేరు ఉంది", "hindi": "यह नाम है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ప్లేట్", "wrong": "ఇది ప్లేట్ ఉంది", "hindi": "यह प्लेट है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది కారు", "wrong": "అది కారు ఉంది", "hindi": "वह कार है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది బడి", "wrong": "అది బడి ఉంది", "hindi": "वह स्कूल है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది భోజనం", "wrong": "ఇది భోజనం ఉంది", "hindi": "यह खाना है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది డాక్టర్", "wrong": "అది డాక్టర్ ఉంది", "hindi": "वह डॉक्टर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పేరు", "wrong": "ఇది పేరు ఉంది", "hindi": "यह नाम है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది దేశం", "wrong": "ఇది దేశం ఉంది", "hindi": "यह देश है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పాఠం", "wrong": "ఇది పాఠం ఉంది", "hindi": "यह पाठ है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది కారు", "wrong": "అది కారు ఉంది", "hindi": "वह कार है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది టీ", "wrong": "ఇది టీ ఉంది", "hindi": "यह चाय है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది బడి", "wrong": "అది బడి ఉంది", "hindi": "वह स्कूल है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది గది", "wrong": "ఇది గది ఉంది", "hindi": "यह कमरा है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది అబ్బాయి", "wrong": "అది అబ్బాయి ఉంది", "hindi": "वह लड़का है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పాఠం", "wrong": "ఇది పాఠం ఉంది", "hindi": "यह पाठ है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది బడి", "wrong": "అది బడి ఉంది", "hindi": "वह स्कूल है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది భోజనం", "wrong": "ఇది భోజనం ఉంది", "hindi": "यह खाना है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది డాక్టర్", "wrong": "అది డాక్టర్ ఉంది", "hindi": "वह डॉक्टर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది దేశం", "wrong": "ఇది దేశం ఉంది", "hindi": "यह देश है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పాఠం", "wrong": "ఇది పాఠం ఉంది", "hindi": "यह सबक है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ప్లేట్", "wrong": "ఇది ప్లేట్ ఉంది", "hindi": "यह प्लेट है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది టీ", "wrong": "ఇది టీ ఉంది", "hindi": "यह चाय है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమె డాక్టర్", "wrong": "ఆమె డాక్టర్ ఉంది", "hindi": "वह डॉक्टर हैं।", "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఎవరు అతను", "wrong": "ఎవరు అతను ఉన్నాడు", "hindi": "वह कौन है?", "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఎర్రగా", "wrong": "ఇది ఎర్రగా ఉంది", "hindi": "यह लाल है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అది బడి", "wrong": "అది బడి ఉంది", "hindi": "वह स्कूल है।", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది పేరు", "wrong": "ఇది పేరు ఉంది", "hindi": "यह नाम है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఢిల్లీ", "wrong": "ఇది ఢిల్లీ ఉంది", "hindi": "यह दिल्ली में है। (context: 'यह दिल्ली है')", "reasons": ["CORRECT_OOV", "WRONG_OOV"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ఇల్లు", "wrong": "ఇది ఇల్లు ఉంది", "hindi": "यह घर है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది ప్లేట్", "wrong": "ఇది ప్లేట్ ఉంది", "hindi": "यह प्लेट है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది భోజనం", "wrong": "ఇది భోజనం ఉంది", "hindi": "यह भोजन है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది టీ", "wrong": "ఇది టీ ఉంది", "hindi": "यह चाय है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-002", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఇది దేశం", "wrong": "ఇది దేశం ఉంది", "hindi": "यह देश है।", "reasons": ["DUPLICATE"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతనికి ఒక కారు ఉంది", "wrong": "అతను ఒక కారు ఉంది", "hindi": "उसके पास एक कार है।", "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నాకు ఒక ఇల్లు ఉంది", "wrong": "నేను ఒక ఇల్లు ఉంది", "hindi": "मेरे पास एक घर है।", "reasons": ["NEAR_FROZEN:HI-TE-003-a"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అబ్బాయికి ఒక పెన్ను ఉంది", "wrong": "అబ్బాయి ఒక పెన్ను ఉంది", "hindi": "लड़के के पास एक कलम है।", "reasons": ["WRONG_OOV", "NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "రవికి ఒక పుస్తకం ఉంది", "wrong": "రవి ఒక పుస్తకం ఉంది", "hindi": "रवि के पास एक किताब है।", "reasons": ["NOT_RULE_ERROR", "NEAR_FROZEN:HI-TE-002-a"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీకు ఒక కారు ఉంది", "wrong": "మీరు ఒక కారు ఉంది", "hindi": "आपके पास एक कार है।", "reasons": ["CORRECT_OOV", "NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నీకు ఒక ఇల్లు ఉంది", "wrong": "నువ్వు ఒక ఇల్లు ఉంది", "hindi": "तुम्हारे पास एक घर है।", "reasons": ["NEAR_FROZEN:HI-TE-003-b"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతనికి ఒక పెన్ను ఉంది", "wrong": "అతను ఒక పెన్ను ఉంది", "hindi": "उसके पास एक पेन है।", "reasons": ["NOT_RULE_ERROR", "NEAR_FROZEN:HI-TE-003-b"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "ఆమెకు ఒక ఇల్లు ఉంది", "wrong": "ఆమె ఒక ఇల్లు ఉంది", "hindi": "उसके पास एक घर है।", "reasons": ["CORRECT_OOV", "NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నీకు ఒక పెన్ను ఉంది", "wrong": "నువ్వు ఒక పెన్ను ఉంది", "hindi": "तुम्हारी बहन के पास एक कलम है।", "reasons": ["FROZEN_CASE"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "మీకు ఒక గది ఉంది", "wrong": "మీరు ఒక గది ఉంది", "hindi": "आपके पास एक कमरा है।", "reasons": ["CORRECT_OOV", "NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అబ్బాయికి ఒక పుస్తకం ఉంది", "wrong": "అబ్బాయి ఒక పుస్తకం ఉంది", "hindi": "लड़के के पास एक किताब है।", "reasons": ["WRONG_OOV", "NOT_RULE_ERROR", "NEAR_FROZEN:HI-TE-003-a"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "అతనికి ఒక పుస్తకం ఉంది", "wrong": "అతను ఒక పుస్తకం ఉంది", "hindi": "उसके पास एक किताब है।", "reasons": ["NOT_RULE_ERROR", "NEAR_FROZEN:HI-TE-003-a"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "రవికి ఒక కారు ఉంది", "wrong": "రవి ఒక కారు ఉంది", "hindi": "रवि के पास एक कार है।", "reasons": ["NOT_RULE_ERROR"]}
+{"rule_id": "HI-TE-003", "source": "gemini", "model": "gemini-3.5-flash", "correct": "నాకు ఒక పెన్ను ఉంది", "wrong": "నేను ఒక పెన్ను ఉంది", "hindi": "मेरे पास एक पेन है।", "reasons": ["NEAR_FROZEN:HI-TE-003-a"]}
