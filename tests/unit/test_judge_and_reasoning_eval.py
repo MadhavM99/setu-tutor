@@ -58,10 +58,9 @@ def test_the_judge_gets_the_labellers_instructions_and_no_checker_verdict(tmp_pa
     row = labelled(tmp_path, lambda k: "wrong")[0]
     judge_eval.judge(p, row)
     sent = json.dumps(p.calls[0], ensure_ascii=False)
-    assert "partial: the main mistake is fixed" in sent and row["learner_correction"] in sent
-    assert row["checker_outcome"] not in sent.replace("correct:", "").replace("partial:", "").replace(
-        "wrong:", "").replace("unsure:", "").split("Learner's correction")[0].split("Hindi meaning")[1]
-    assert row["attempt_kind"] not in sent
+    assert "Pronoun Omission (Pro-drop)" in sent and "multiple plausible interpretations" in sent and "CSV Handling" not in sent and row["learner_correction"] in sent
+    user = p.calls[0][1]["content"]  # the only per-row text: no checker verdict, reason or attempt kind
+    assert not any(row[k] in user for k in ("checker_outcome", "checker_reason", "attempt_kind", "item_id"))
 
 
 # ---------------------------------------------------------------- task 15: reasoning
@@ -134,3 +133,20 @@ def test_run_writes_both_sets_and_all_three_methods_with_their_roles():
     assert {m: out["stage_a"][m]["role"] for m in diagnose.METHODS} == {
         "stepwise": "method", "no_self_check": "ablation", "direct": "baseline"}
     assert len(out["stage_a"]["stepwise"]["rows"]) == 2
+
+
+def test_calls_past_the_budget_cap_never_reach_the_provider():
+    from setu.research.generation_baselines import Throttled
+
+    class Counting:
+        model, base_url, hosted, reasoning_effort = "m", "u", True, None
+        n = 0
+
+        def complete(self, messages, **_):
+            Counting.n += 1
+            return llm.Completion("{}", "m", 0)
+
+    t = Throttled(Counting(), 0, max_calls=3)
+    out = [t.complete([]) for _ in range(5)]
+    assert Counting.n == 3 and t.ok == 3 and t.errors == {"budget_cap": 2}
+    assert [c.error for c in out[3:]] == ["budget_cap", "budget_cap"]

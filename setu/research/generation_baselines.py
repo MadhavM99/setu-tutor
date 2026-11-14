@@ -17,7 +17,7 @@ from collections import Counter
 from pathlib import Path
 
 from setu.agents import classmate, coach, friend
-from setu.agents.llm import OpenAICompatible
+from setu.agents.llm import Completion, OpenAICompatible
 from setu.content import validate
 from setu.domain import leakfilter
 from setu.domain.tokenize import tokens
@@ -28,16 +28,24 @@ OUT = Path(__file__).resolve().parents[2] / "reports/generation_baselines.json"
 
 
 class Throttled:
-    """At most one call every `interval` seconds (free-tier rate limits); records every call's error."""
+    """At most one call every `interval` seconds (free-tier rate limits); records every call's error. With
+    `max_calls` (SETU_MAX_CALLS), calls past the cap are refused without contacting the provider (budget guard)."""
 
-    def __init__(self, provider, interval: float):
+    def __init__(self, provider, interval: float, max_calls: int | None = None):
         self.provider, self.interval, self._last = provider, interval, 0.0
         self.model, self.base_url, self.hosted = provider.model, provider.base_url, provider.hosted
         self.reasoning_effort = provider.reasoning_effort
+        if max_calls is None and os.environ.get("SETU_MAX_CALLS"):
+            max_calls = int(os.environ["SETU_MAX_CALLS"])
+        self.max_calls, self.sent = max_calls, 0
         self.errors: Counter = Counter()
         self.ok = 0
 
     def complete(self, messages, **kw):
+        if self.max_calls is not None and self.sent >= self.max_calls:
+            self.errors["budget_cap"] += 1
+            return Completion(None, self.model, 0, error="budget_cap")
+        self.sent += 1
         wait = self._last + self.interval - time.monotonic()
         if wait > 0:
             time.sleep(wait)
