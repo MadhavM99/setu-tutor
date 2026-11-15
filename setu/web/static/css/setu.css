@@ -163,3 +163,113 @@ mark { background: var(--warn-soft); color: var(--warn); border-radius: 4px; pad
 
 @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* ======================================================================= beginner-friendly layer (UI pass 1)
+   Bigger things to tap, pictures, a voice button next to every Telugu word, the match game, the learning path.
+   Same palette, same rules: nothing from another host, reduced motion respected (see the rule above). */
+:root { --accent: #b4632a; --accent-soft: #f6e6d8; --gold: #c58a12; --gold-soft: #fbf0d3; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0; }
+.ico { width: 1.35em; height: 1.35em; flex: none; }
+.te-big { font-family: "Setu Telugu", "Setu Devanagari", system-ui, sans-serif; font-size: 1.9rem; line-height: 1.5; font-weight: 700; }
+
+/* easier tapping: every answer is at least a thumb wide, and keys sit on a clear grid */
+.key { min-width: 3.6rem; min-height: 3.6rem; font-size: 1.5rem; }
+.option { min-height: 3.6rem; font-size: 1.2rem; }
+button, .button { min-height: 3.1rem; }
+.keys { gap: .55rem; }
+
+/* pictures */
+.pic-wrap { display: grid; justify-items: center; margin: .5rem 0 .25rem; }
+.pic { width: 8.5rem; height: 8.5rem; }
+.pic .soft { fill: var(--primary-soft); stroke: var(--primary); stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; }
+.pic .line { fill: none; stroke: var(--primary); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+.pic .dot { fill: var(--primary); }
+.pic .dotfill { fill: var(--accent); }
+.pic-hint { margin: .1rem 0 0; text-align: center; }
+
+/* voice */
+.voice-row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; justify-content: center; margin: .6rem 0; }
+.speak, .say-it, .slow-toggle { min-height: 2.9rem; padding: .5rem 1.1rem; border-radius: 999px; font-weight: 700; }
+.speak { background: var(--primary-soft); color: var(--primary); border-color: var(--primary-soft); }
+.speak-big { min-height: 3.4rem; padding: .6rem 1.5rem; font-size: 1.05rem; }
+.speak.is-playing { background: var(--primary); color: var(--primary-ink); animation: pulse 1s ease-in-out infinite; }
+.say-it { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.say-it.is-listening { background: var(--accent); color: #fff; animation: pulse 1s ease-in-out infinite; }
+.slow-toggle { font-weight: 400; font-size: .9rem; min-height: 2.4rem; border-color: var(--line); color: var(--muted); }
+.slow-toggle[aria-pressed="true"] { background: var(--gold-soft); border-color: var(--gold); color: #6a4a00; font-weight: 700; }
+.say-out { min-height: 1.6rem; text-align: center; color: var(--muted); }
+.say-out.is-close { color: var(--good); font-weight: 700; }
+.say-out.is-off { color: var(--warn); }
+.bubble .voice-row { justify-content: flex-start; margin: .25rem 0; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* match game */
+.match-rows { list-style: none; padding: 0; margin: 1rem 0; display: grid; gap: .9rem; }
+.match-row { background: var(--surface); border: 1.5px solid var(--line); border-radius: var(--radius);
+  padding: .9rem 1rem 1rem; box-shadow: var(--shadow); transition: border-color .2s ease; }
+.match-row.is-answered { border-color: var(--primary); }
+.match-word { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .6rem; }
+.chips { border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: .5rem; }
+.chip-wrap { position: relative; display: block; }
+.chip-wrap input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; z-index: 1; }
+.chip { display: flex; align-items: center; justify-content: center; min-height: 3.2rem; padding: .5rem .75rem; text-align: center;
+  border: 1.5px solid var(--line); border-radius: var(--radius-sm); background: var(--paper); font-size: 1.05rem; line-height: 1.35; }
+.chip-pic { min-height: 5.4rem; padding: .25rem; }
+.chip-pic .pic { width: 4.6rem; height: 4.6rem; }
+.chip-wrap:hover .chip { border-color: var(--primary); background: var(--primary-soft); }
+.chip-wrap input:checked + .chip { border-color: var(--primary); background: var(--primary); color: var(--primary-ink); font-weight: 700; }
+.chip-wrap input:checked + .chip .pic .soft { fill: #fff; }
+.chip-wrap input:focus-visible + .chip { outline: 3px solid var(--primary); outline-offset: 3px; }
+.chip-wrap.is-used .chip { opacity: .45; }
+.match-count { text-align: center; color: var(--muted); margin: .5rem 0; min-height: 1.6rem; }
+.result-list { margin: 1rem 0; }
+.result { display: grid; grid-template-columns: auto auto 1fr; gap: .4rem .75rem; align-items: center; border-inline-start: 6px solid var(--line); }
+.result.is-right { border-inline-start-color: var(--good); }
+.result.is-wrong { border-inline-start-color: var(--bad); background: var(--bad-soft); }
+.result .pic-wrap { grid-column: 1 / -1; }
+.result .pic { width: 5rem; height: 5rem; }
+.result .pic-hint { display: none; }
+.verdict-ok { color: var(--good); font-weight: 700; }
+.verdict-fix { color: var(--bad); font-weight: 700; }
+
+/* learning path */
+.path { list-style: none; margin: .75rem 0 0; padding: 0; display: grid; gap: .25rem; position: relative; }
+.path-step { display: flex; gap: .9rem; align-items: flex-start; padding: .55rem 0; position: relative; }
+.path-step:not(:last-child)::before { content: ""; position: absolute; inset-inline-start: 1.2rem; top: 3rem; bottom: -.4rem; width: 3px;
+  background: var(--line); }
+.path-step.is-done:not(:last-child)::before { background: var(--primary); }
+.path-node { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: grid; place-items: center; font-weight: 700;
+  background: var(--paper); border: 2px solid var(--line); color: var(--muted); z-index: 1; }
+.path-step.is-done .path-node { background: var(--primary); border-color: var(--primary); color: var(--primary-ink); }
+.path-step.is-now .path-node { background: var(--gold-soft); border-color: var(--gold); color: #6a4a00; box-shadow: 0 0 0 5px rgba(197, 138, 18, .18); }
+.path-text { display: grid; gap: .1rem; }
+.path-text strong { font-size: 1.05rem; }
+.path-state { font-size: .8rem; font-weight: 700; color: var(--muted); }
+.path-step.is-now .path-state { color: #6a4a00; }
+.path-step.is-done .path-state { color: var(--primary); }
+.path-step.is-soon .path-node { border-style: dashed; background: transparent; }  /* not faded text: WCAG AA contrast */
+.path-section, .play { margin-top: 1.75rem; }
+.play { background: var(--accent-soft); border-radius: var(--radius); padding: 1rem 1.25rem 1.25rem; }
+.play h2 { margin-top: 0; }
+.step-label { font-weight: 700; color: var(--muted); font-size: .9rem; white-space: nowrap; }
+
+/* a small celebration on a right answer */
+.celebrate { animation: pop .45s ease both; }
+.feedback h1 { display: flex; align-items: center; gap: .5rem; }
+.ico-tick { width: 1.6em; height: 1.6em; color: var(--good); }
+@keyframes pop { 0% { transform: scale(.94); opacity: 0; } 60% { transform: scale(1.03); } 100% { transform: none; opacity: 1; } }
+@media (max-width: 640px) { .te-big { font-size: 1.7rem; } .pic { width: 7.5rem; height: 7.5rem; } }
+
+/* match result rows: wrap on narrow screens, small picture */
+.result-list .result { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .75rem; }
+.result-list .result .pic { width: 3.5rem; height: 3.5rem; margin-left: auto; }
+.result-list .result .verdict-ok, .result-list .result .verdict-fix { flex: 1 1 100%; order: 3; }
+
+/* Raju card on the home page */
+.raju-card { margin-top: 1.5rem; }
+.raju-card h2 { margin: 0 0 .35rem; font-size: 1.15rem; }
+.raju-card .persona { margin: 0; }
+
+.gloss-en { margin: .1rem 0 .5rem; color: var(--muted, #4a4a4a); font-size: 1rem; text-align: center; }
+.result-list .gloss-en { margin: 0 .5rem; text-align: left; }

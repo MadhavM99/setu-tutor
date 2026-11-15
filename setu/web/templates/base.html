@@ -17,7 +17,7 @@
     {% if step_n is defined and step_total is defined and step_total %}
     <div class="lesson-progress" role="progressbar" aria-valuemin="0" aria-valuemax="{{ step_total }}" aria-valuenow="{{ step_n }}" aria-label="{{ t('lesson.progress') }}"><span style="width: {{ (100 * step_n / step_total)|round|int }}%"></span></div>
     {% else %}<div class="lesson-progress" aria-hidden="true"><span style="width: 0"></span></div>{% endif %}
-    <span class="brand-mini">{{ t("app.name") }}</span>
+    {% if step_n is defined and step_total is defined and step_total %}<span class="step-label">{{ t("path.step_of", n=num(step_n), total=num(step_total)) }}</span>{% else %}<span class="brand-mini">{{ t("app.name") }}</span>{% endif %}
   </header>
   {% else %}
   <header class="top">
@@ -43,5 +43,6 @@
     {% if error_key is defined and error_key %}<p class="error" role="alert">{{ t(error_key) }}</p>{% endif %}
     {% block content %}{% endblock %}
   </main>
+  {% if flag("tts_synthetic") or flag("speech_input") %}<script src="/static/js/voice.js" defer></script>{% endif %}
 </body>
 </html>

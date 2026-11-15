@@ -1,16 +1,25 @@
 {% extends "base.html" %}
+{% from "learner/_path.html" import learning_path %}
 {# The ladder view: what the learner can do, what is in progress, what comes later. No scores. #}
-{% macro name(x) %}{% if x.get("name_key") %}{{ t(x.name_key) }}{% else %}{{ x.name }}{% endif %}{% endmacro %}
+{% macro name(x) %}{% if x.get("name_key") %}{{ t(x.name_key) }}{% elif x.family == "word" %}{{ te(x.name) }}{% else %}{{ x.name }}{% endif %}{% endmacro %}
 {% block content %}
 <h1>{{ t("ladder.title") }}</h1>
+{{ learning_path(path) }}
 {% if nxt %}
-<p><strong>{{ t("ladder.next", name=name(nxt)) }}</strong>
-{% if nxt.after %}{{ t("ladder.because_after", name=name(nxt.after)) }}{% elif nxt.learning %}{{ t("ladder.because_learning") }}{% else %}{{ t("ladder.because_start") }}{% endif %}</p>
+<p><strong>{{ t_rich("ladder.next", name=name(nxt)) }}</strong>
+{% if nxt.after %}{{ t_rich("ladder.because_after", name=name(nxt.after)) }}{% elif nxt.learning %}{{ t("ladder.because_learning") }}{% else %}{{ t("ladder.because_start") }}{% endif %}</p>
 {% endif %}
+<section aria-labelledby="raju-learned">
+<h2 id="raju-learned">{{ t("raju.learned_title") }}</h2>
+{% if raju.taught or raju.forgotten %}<ul class="plain">
+{% for x in raju.taught %}<li>{{ x }} — <strong>{{ t("raju.learned_ok") }}</strong></li>{% endfor %}
+{% for x in raju.forgotten %}<li>{{ x }} — {{ t("raju.learned_forgot") }}</li>{% endfor %}
+</ul>{% else %}<p>{{ t("raju.learned_none") }}</p>{% endif %}
+</section>
 <h2>{{ t("ladder.can") }}</h2>
 {% if can %}<ul class="plain">{% for x in can %}<li>{{ name(x) }}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
 <h2>{{ t("ladder.now") }}</h2>
 {% if now %}<ul class="plain">{% for x in now %}<li>{{ name(x) }}{% if x.placed %} — {{ t("ladder.to_confirm") }}{% endif %}</li>{% endfor %}</ul>{% else %}<p>{{ t("ladder.none_yet") }}</p>{% endif %}
 <h2>{{ t("ladder.later") }}</h2>
-<ul class="plain">{% for x in later %}<li>{{ name(x) }}{% if x.needs %} — {{ t("ladder.needs", name=name(x.needs)) }}{% endif %}</li>{% endfor %}</ul>
+<ul class="plain">{% for x in later %}<li>{{ name(x) }}{% if x.needs %} — {{ t_rich("ladder.needs", name=name(x.needs)) }}{% endif %}</li>{% endfor %}</ul>
 {% endblock %}

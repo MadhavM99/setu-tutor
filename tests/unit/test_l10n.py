@@ -147,6 +147,19 @@ def test_parameters_are_filled_and_must_not_inject_latin(catalog):
         catalog.get("home.signed_in_as", handle="admin")
 
 
+def test_a_markup_parameter_is_checked_on_its_visible_text_not_its_tag_names(catalog):
+    """A Telugu word wrapped in <span lang="te"> has Latin letters in its tag, but none a reader sees."""
+    from markupsafe import Markup
+
+    out = catalog.get_rich("home.signed_in_as", handle=Markup('<span lang="te">ఒకటి</span>'))
+    assert '<span lang="te">ఒకటి</span>' in out  # the markup is kept, not escaped
+    with pytest.raises(i18n.LatinInText):
+        catalog.get_rich("home.signed_in_as", handle=Markup('<span lang="te">admin</span>'))
+    with pytest.raises(i18n.LatinInText):
+        catalog.get_rich("home.signed_in_as", handle="admin")
+    assert "&lt;१&gt;" in catalog.get_rich("home.signed_in_as", handle="<१>")  # plain text is still escaped
+
+
 def test_counts_use_devanagari_digits_by_default(catalog):
     assert catalog.number(15) == "१५"
 

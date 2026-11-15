@@ -1,8 +1,9 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% block content %}
 <p class="eyebrow">{{ t("lesson.guided") }}</p>
 <h1>{{ t(act.text.meaning_prompt) }}</h1>
-<div class="exercise-card"><p class="letter-big">{{ te(unit.telugu) }}</p></div>
+<div class="exercise-card"><p class="letter-big">{{ te(unit.telugu) }}</p><div class="voice-row">{{ v.speak(unit.telugu) }}</div></div>
 <form method="post" action="{{ act.path }}/answer" class="options">
   <input type="hidden" name="exchange_id" value="{{ exchange_id }}">
   {% for value, label in labels %}<button type="submit" name="choice" value="{{ value }}" class="option">{{ label }}</button>{% endfor %}

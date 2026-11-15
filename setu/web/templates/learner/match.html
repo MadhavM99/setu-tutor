@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% import "learner/_voice.html" as v with context %}
+{% block content %}
+<p class="eyebrow">{{ t("match.title") }}</p>
+<h1>{% if mode == "picture" %}{{ t("match.intro_picture") }}{% else %}{{ t("match.intro") }}{% endif %}</h1>
+<p class="help">{{ t("match.note") }}</p>
+<form method="post" action="/learn/match/answer" class="match" data-match data-template="{{ t('match.chosen', n='§1', total='§2') }}" data-total="{{ pairs|length }}">
+  <ol class="match-rows">
+  {% for eid, unit in pairs %}{% set row = loop.index %}
+    <li class="match-row">
+      <div class="match-word"><span class="te-big">{{ te(unit.telugu) }}</span>{{ v.speak(unit.telugu) }}</div>
+      <fieldset class="chips">
+        <legend class="sr-only">{% if mode == "picture" %}{{ t("match.intro_picture") }}{% else %}{{ t("match.intro") }}{% endif %}</legend>
+        {% for oid, ounit in options %}
+        <span class="chip-wrap">
+          <input type="radio" id="p{{ row }}-{{ loop.index }}" name="pair_{{ eid }}" value="{{ oid }}"{% if chosen.get(eid|string) == oid %} checked{% endif %}>
+          <label class="chip{% if mode == 'picture' %} chip-pic{% endif %}" for="p{{ row }}-{{ loop.index }}">{% if mode == "picture" %}{{ pic(ounit.telugu) }}{% else %}{{ ounit.label }}{% endif %}</label>
+        </span>
+        {% endfor %}
+      </fieldset>
+    </li>
+  {% endfor %}
+  </ol>
+  {{ v.slow() }}
+  <p class="match-count" aria-live="polite" data-count></p>
+  <button type="submit" class="big" data-check>{{ t("match.check") }}</button>
+</form>
+<script src="/static/js/match.js" defer></script>
+{% endblock %}

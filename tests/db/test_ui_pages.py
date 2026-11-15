@@ -44,6 +44,8 @@ class Visible(HTMLParser):
     def handle_data(self, data):
         if self._skip or not data.strip():
             return
+        if "en" in self._stack:  # the one allowed Latin: an English gloss marked lang="en" (web/english.py)
+            return
         self.text.append(data)
         if re.search(r"[ఀ-౿]", data) and "te" not in self._stack:
             self.telugu_spans_ok = False

@@ -18,14 +18,14 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 LATIN = re.compile(r"[A-Za-z]")
 GROUPS = {"app", "nav", "page", "a11y", "onb", "form", "btn", "home", "consent", "tch", "err", "fb", "hint",
-          "ladder", "res", "raju", "lang", "learn", "word", "chunk", "place", "scene", "lesson", "persona", "stage"}
+          "ladder", "res", "raju", "lang", "learn", "word", "chunk", "place", "scene", "lesson", "persona", "stage", "pic", "voice", "match", "path"}
 VISIBLE_ATTRS = {"alt", "title", "placeholder", "aria-label", "aria-description"}
 EXTERNAL = re.compile(r"^\s*(https?:)?//", re.IGNORECASE)
 JINJA_COMMENT = re.compile(r"\{#.*?#\}", re.DOTALL)
 JINJA_EXPR = re.compile(r"\{\{(.*?)\}\}", re.DOTALL)
 JINJA_STMT = re.compile(r"\{%.*?%\}", re.DOTALL)
 PLACEHOLDER = re.compile(r"\{[a-z_]+\}")  # format parameters such as {handle}; their values are checked at render
-STRING = re.compile(r"""(?P<prefix>\bt\(\s*)?(?P<q>["'])(?P<s>(?:\\.|(?!(?P=q)).)*)(?P=q)""")
+STRING = re.compile(r"""(?P<prefix>\bt(?:_rich)?\(\s*)?(?P<q>["'])(?P<s>(?:\\.|(?!(?P=q)).)*)(?P=q)""")
 
 
 @dataclasses.dataclass(frozen=True)

@@ -1,4 +1,5 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% from "learner/_persona.html" import persona %}
 {% block content %}
 {% set tone = "unsure" if fallback else ("good" if outcome_key == "fb.correct" else "bad") %}
@@ -6,6 +7,6 @@
   <h1>{{ t("scene.fallback") if fallback else t(outcome_key) }}</h1>
   {% if fallback %}<p>{{ t(outcome_key) }}</p>{% endif %}
 </div>
-{% call persona("friend") %}<p>{{ t("scene.ravi_understands") }}</p><p class="letter-big">{{ te(line.replies[0]) }}</p>{% endcall %}
+{% call persona("friend") %}<p>{{ t("scene.ravi_understands") }}</p><p class="letter-big">{{ te(line.replies[0]) }}</p><div class="voice-row">{{ v.speak(line.replies[0]) }}</div>{% endcall %}
 <a class="button primary big" href="{{ here }}">{{ t("btn.next") }}</a>
 {% endblock %}

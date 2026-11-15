@@ -1,4 +1,5 @@
 {% extends "base.html" %}{% set lesson = true %}
+{% import "learner/_voice.html" as v with context %}
 {% from "learner/_persona.html" import persona %}
 {# One correction, no-error or own-sentence turn. The box always starts empty; the hint never holds the answer. #}
 {% block content %}
@@ -10,6 +11,7 @@
   {% if replant %}<p>{{ t("raju.forgot") }}</p>{% endif %}
   <p>{{ t("raju.wrote") }}</p>
   <p class="letter-big">{{ te(shown) }}</p>
+  <div class="voice-row">{{ v.speak(shown) }}</div>
   <p><strong>{{ t("raju.asks") }}</strong></p>
 {% endcall %}
 {% endif %}

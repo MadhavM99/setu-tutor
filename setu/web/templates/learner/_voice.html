@@ -1,0 +1,21 @@
+{# Voice and picture helpers. Import with context: {% import "learner/_voice.html" as v with context %}.
+   Speech is behind the two flags of architecture.md §7 and both are OFF by default (SETU_TTS_SYNTHETIC=1 and
+   SETU_SPEECH_INPUT=1 turn them on): with a flag off, its controls are not in the page at all and the text carries
+   the lesson. With a flag on, each control starts hidden and /static/js/voice.js shows it only when the browser can
+   do the job. Browser voices are synthetic: data-voice="synthetic" marks them, and they are never called native. #}
+{% macro icon_speaker() %}<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z" fill="currentColor"/><path d="M16 8c1.8 1.4 1.8 6.6 0 8M19 5c3.6 3.2 3.6 11.8 0 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>{% endmacro %}
+{% macro icon_mic() %}<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3" fill="currentColor"/><path d="M5 11c0 4 3 7 7 7s7-3 7-7M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>{% endmacro %}
+
+{% macro icon_tick() %}<svg class="ico ico-tick" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor" opacity=".15"/><path d="M6 12.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>{% endmacro %}
+
+{# Listen button for one Telugu word or sentence. `audio` is an optional recorded file. #}
+{% macro speak(word, audio=None, big=False) %}{% if flag("tts_synthetic") %}<button type="button" class="speak{% if big %} speak-big{% endif %}" data-say="{{ word }}" data-voice="synthetic"{% if audio %} data-audio="{{ audio }}"{% endif %} hidden>{{ icon_speaker() }}<span>{{ t("voice.listen") }}</span></button>{% endif %}{% endmacro %}
+
+{# Slow-voice switch: one per page, remembered on this device. #}
+{% macro slow() %}{% if flag("tts_synthetic") %}<button type="button" class="slow-toggle" aria-pressed="false" hidden>{{ t("voice.slow") }}</button>{% endif %}{% endmacro %}
+
+{# Say-it practice: the browser listens once and shows what it heard. Not a mark. #}
+{% macro say_it(word, out_id="say-out") %}{% if flag("speech_input") %}<button type="button" class="say-it" data-expect="{{ word }}" data-out="{{ out_id }}" data-heard="{{ t('voice.heard') }}" data-close="{{ t('voice.close') }}" data-again="{{ t('voice.again') }}" hidden>{{ icon_mic() }}<span>{{ t("voice.say_it") }}</span></button><p id="{{ out_id }}" class="say-out" aria-live="polite"></p>{% endif %}{% endmacro %}
+
+{# A word with its picture, if it has one. #}
+{% macro word_picture(word) %}{% set p = pic(word) %}{% if p %}<div class="pic-wrap">{{ p }}<p class="help pic-hint">{{ t("pic.hint") }}</p></div>{% endif %}{% endmacro %}

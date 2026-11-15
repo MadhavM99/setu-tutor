@@ -16,12 +16,15 @@ from setu import __version__
 from setu.agents import friend
 from setu.agents.llm import NotLocal, OpenAICompatible
 
+from . import english as english_gloss
+from . import pictures
 from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
 from .i18n import Catalog
 from .routes_auth import router as auth_router
 from .routes_ladder import router as ladder_router
 from .routes_learn import router as learn_router
+from .routes_match import router as match_router
 from .routes_rules import router as rules_router
 from .routes_scenes import router as scenes_router
 from .routes_teacher import router as teacher_router
@@ -43,9 +46,14 @@ def _templates(catalog: Catalog) -> Environment:
                       undefined=StrictUndefined)
     env.globals.update(
         t=catalog.get,
+        t_rich=catalog.get_rich,  # for a parameter that is markup, e.g. a Telugu word in lang="te"
         num=catalog.number,
         # Telugu always sits in an element marked lang="te" (screen readers, fonts).
+        pic=lambda word: pictures.picture(word, catalog.get),
+        en=english_gloss.english,
         te=lambda s: Markup('<span lang="te">') + escape(s) + Markup("</span>"),
+        # Speech flags (architecture.md §7): off unless the environment turns them on, read at each render.
+        flag=lambda name: os.environ.get({"speech_input": "SETU_SPEECH_INPUT", "tts_synthetic": "SETU_TTS_SYNTHETIC"}[name]) == "1",
         demo=os.environ.get("SETU_DEMO") == "1",  # a demo database: content approved by demo reviewers only
     )
     return env
@@ -99,6 +107,7 @@ def create_app(*, engine: Engine | None = None, cookie_secure: bool = True) -> F
     app.include_router(rules_router)  # before /learn/{name}
     app.include_router(ladder_router)
     app.include_router(scenes_router)  # before /learn/{name}
+    app.include_router(match_router)  # before /learn/{name}
     app.include_router(learn_router)
     return app
 

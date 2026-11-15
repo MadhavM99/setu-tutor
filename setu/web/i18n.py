@@ -7,8 +7,10 @@ import re
 from pathlib import Path
 
 import yaml
+from markupsafe import Markup, escape
 
 LATIN = re.compile(r"[A-Za-z]")
+_TAG = re.compile(r"<[^>]*>")
 DEVANAGARI_DIGITS = str.maketrans("0123456789", "०१२३४५६७८९")
 
 
@@ -69,6 +71,20 @@ class Catalog:
             if LATIN.search(str(value)):
                 raise LatinInText(f"parameter {name!r} of {key} contains Latin script")
         return str(self._values[key]).format_map({k: str(v) for k, v in params.items()})
+
+    def get_rich(self, key: str, **params) -> Markup:
+        """Like `get`, for a parameter that is page markup (a Telugu word in <span lang="te">). The Latin check looks
+        at the text a reader sees, not at the tag names; plain-text parameters are HTML-escaped."""
+        if self.is_pending(key):
+            raise PendingText(f"{key}: {self._pending[key]}")
+        if key not in self._values:
+            raise MissingText(key)
+        for name, value in params.items():
+            seen = _TAG.sub("", str(value)) if isinstance(value, Markup) else str(value)
+            if LATIN.search(seen):
+                raise LatinInText(f"parameter {name!r} of {key} contains Latin script")
+        safe = {k: v if isinstance(v, Markup) else escape(v) for k, v in params.items()}
+        return Markup(str(self._values[key]).format_map({k: str(v) for k, v in safe.items()}))
 
     def number(self, n) -> str:
         s = str(n)
