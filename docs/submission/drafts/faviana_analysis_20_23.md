@@ -118,3 +118,48 @@ off by default, and no learner answers or identities are sent to them.
 
 1. Fill in the cost from the Gemini billing export.
 2. Madhav and Kushal should check the numbers I copied from their drafts against their files.
+
+## Appendix: results by team member (taken from their branches)
+
+Checked on GitHub at 06:30 IST on 15 Nov: every commit on `kushal-dev`, `madhav/rag-ft`, `feature/areesh-task-12-19` and
+`redesign/phase0-spec` is already in this branch, so nothing newer exists to pull. If anyone has unpushed work, it is not
+in these numbers. Owner is taken from commit authorship; each person should confirm.
+
+### Madhav Malhotra: coach RAG (16) and fine-tuning (10, 17)
+Full text with every table: `madhav_results.md`. What the final report needs from it:
+- **Retrieval.** Right rule first in 16/29 = 0.55 [0.38, 0.72], top 3 in 24/29 = 0.83 [0.65, 0.92]. An oracle gets 29/29
+  and was right on all 13 cases retrieval missed (exact McNemar p = 0.0002). Limiting the index to the 15 HI→TE rules:
+  18/29 = 0.62 top-1, 26/29 = 0.90 top-3.
+- **Hints.** 8 of the 20 RAG hints shown said "read rule N", which the learner cannot see. Shown-and-usable: RAG 12/29 vs
+  blind 10/29, p = 0.79. After a prompt fix designed on the same 29 cases: 25/29 = 0.86 [0.69, 0.95], so treat 0.86 as
+  optimistic. No shown hint leaked the answer; the filter caught 2 RAG replies that did.
+- **Abstention.** Fires on 9/11 attack messages, 0/29 planted, 0/29 correct sentences. The score measures topic, not
+  error, so the checker must decide first.
+- **Fine-tuning data funnel.** 144 candidate pairs from 18 calls: 73 failed plain-Telugu/vocabulary, 13 not exactly one
+  edit, 4 frozen or near-duplicate, 31 duplicates, **23 accepted** over 2 of 14 rules (bar: 200 over 12). No-go; the
+  validator was not loosened. Gemma-3-1B was chosen for tokenizer fit (1.97 tokens per word vs 6.02 and 7.10).
+- **Untuned vs prompted.** Gemma 7/29 = 0.24 [0.12, 0.42]; Gemini 21/29 = 0.72 [0.54, 0.85]; Gemini passed 14 cases Gemma
+  failed and never the reverse (p < 0.001).
+
+### Kushal Karan (git author `codepley`): generation, tools, reasoning, judge, agents (6, 13, 14, 15, 18)
+Full tables: `reports/results_tables.md`. Headlines are in the Task 20 table above. Points to add:
+- Resampling did not beat one call (valid 0.76 vs 0.72), and its draft leak rate was higher (0.17 vs 0.10).
+- Tool calling: 44 tool calls, all correct with valid arguments; 17/17 harness attacks refused; 0/11 injected messages led to an unsafe action. Tools-off ablation: valid 0.76 vs 0.97 with tools.
+- Reasoning: stepwise 0.36 vs direct 0.40 (McNemar p = 0.625) at about four times the tokens.
+- Outage test (invalid key): Raju fell back to the approved sentence, the coach to the generic hint, and the friend to the approved line. No learner saw a failure.
+- Friend: the model picked an approved scene line 12/12 in plain runs and 12/12 under prompt injection, and the learner saw only approved lines.
+
+### Shaik Areesh: human-system agreement (Batch A, task 13)
+`reports/agreement_batch_a.json`: 50 answers with native labels. Observed agreement 0.36, expected 0.247, **κ = 0.150**,
+against a target of 0.60: **fail** (M-16). Confusion shows where it goes wrong:
+
+| Human label (n) | Checker said correct | partial | wrong | unsure |
+|---|---|---|---|---|
+| correct (16) | 8 | 6 | 2 | 0 |
+| partial (26) | 9 | 3 | 5 | 9 |
+| wrong (8) | 0 | 0 | 7 | 1 |
+
+Reading: the checker is good at "wrong" (recall 0.875, precision 0.50) and weak on "partial" (recall 0.115): of 26 partial
+answers it marked 9 correct, 5 wrong and sent 9 to unsure. Humans used "unsure" 0 times; the checker used it 10 times.
+This is why a rule-only checker needs the teacher queue, and why the prompt-only judge (κ 0.46) agrees better on
+partial answers. Both sit under the 0.60 target.
