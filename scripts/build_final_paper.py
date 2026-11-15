@@ -1,0 +1,224 @@
+"""Build the final-submission paper (two-column, same layout as the mid-submission paper).
+
+    python -m scripts.build_final_paper     # docs/submission/report/SETU_final_paper.{html,pdf}
+
+Numbers come from reports/ (see docs/submission/drafts/faviana_analysis_20_23.md for the file behind each one).
+The recall chart is reused from the mid-submission report; screenshots are in docs/submission/screenshots/.
+"""
+import base64
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / "docs/submission/report"
+SHOTS = ROOT / "docs/submission/screenshots"
+
+CSS = """
+@page { size: Letter; margin: 17mm 15mm; }
+body { font: 10.4pt/1.32 "Liberation Serif", "Times New Roman", "Noto Sans Devanagari", "Noto Sans Telugu", serif; color: #000; margin: 0; }
+header { text-align: center; column-span: all; margin-bottom: 8px; }
+h1 { font-size: 13.5pt; line-height: 1.2; margin: 0 0 6px; }
+.authors { display: flex; justify-content: space-around; font-size: 9.5pt; margin: 4px 0; }
+.authors b { display: block; } .small { font-size: 8.6pt; }
+main { column-count: 2; column-gap: 7mm; text-align: justify; hyphens: auto; }
+h2 { font-size: 10.6pt; margin: 9px 0 3px; break-after: avoid; } h3 { font-size: 9.6pt; margin: 6px 0 2px; break-after: avoid; }
+p { margin: 0 0 4px; } ul { margin: 2px 0 4px 0; padding-left: 14px; } li { margin: 0 0 2px; }
+.abs { margin: 0 8mm 6px; text-align: justify; font-size: 9.6pt; column-span: all; }
+.abs h2 { text-align: center; margin-top: 2px; }
+table { border-collapse: collapse; width: 100%; font-size: 8.6pt; margin: 3px 0 2px; break-inside: avoid; text-align: left; hyphens: manual; }
+th, td { padding: 1.5px 3px; vertical-align: top; } thead th { border-top: 1.2px solid #000; border-bottom: .8px solid #000; }
+tbody tr:last-child td { border-bottom: 1.2px solid #000; }
+.cap { font-size: 8.8pt; margin: 0 0 6px; } code { font-family: "DejaVu Sans Mono", monospace; font-size: 7.6pt; }
+figure { margin: 4px 0 6px; break-inside: avoid; } figure img { width: 100%; } figure.wide { column-span: all; }
+.shots { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; } .shots img { border: .5px solid #999; }
+svg { width: 100%; height: auto; } svg .ax { font-size: 10px; fill: #333; } svg .val { font-size: 10px; fill: #000; font-weight: 700; } svg .grp { font-size: 11px; }
+.legend { display: flex; gap: 8px; flex-wrap: wrap; font-size: 7.5pt; } .key i { display: inline-block; width: 8px; height: 8px; margin-right: 3px; }
+.ref { padding-left: 10px; text-indent: -10px; font-size: 8.3pt; margin: 0 0 2px; text-align: left; }
+"""
+
+
+def img(name, alt):
+    p = SHOTS / name
+    return f'<img alt="{alt}" src="data:image/png;base64,{base64.b64encode(p.read_bytes()).decode()}">'
+
+
+def table(head, rows, cap):
+    h = "".join(f"<th>{x}</th>" for x in head)
+    b = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows)
+    return f'<table><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table><p class="cap">{cap}</p>'
+
+
+def build() -> str:
+    mid = (OUT / "SETU_mid_submission_report.html").read_text(encoding="utf-8")
+    chart = (re.search(r'<div class="legend">.*?</div>', mid, re.DOTALL).group(0)
+             + re.search(r'<svg viewBox="0 0 760 300".*?</svg>', mid, re.DOTALL).group(0))
+    P = []
+    P.append("""<header><h1>SETU: Reverse Learning with a Rule-Governed AI Classmate<br>for Hindi-Speaking Learners of Telugu — Final Report</h1>
+<div class="authors"><div><b>Madhav Malhotra</b>2026900003</div><div><b>Kushal Karan</b>2025204010</div>
+<div><b>Faviana Noronha</b>2025900018</div><div><b>Shaik Areesh</b>2026909008</div></div>
+<div class="small">International Institute of Information Technology, Hyderabad · Language Models and Agents, Monsoon 2026 · Team Token Guessers<br>
+Code: <code>github.com/MadhavM99/setu-tutor</code></div></header>""")
+    P.append("""<div class="abs"><h2>Abstract</h2>SETU is a tutor for Hindi speakers who want to learn Telugu. The learner climbs a ladder from letters to words,
+phrases, sentences and short conversations. At the sentence stage the learner corrects Raju, an AI classmate who makes the mistakes a Hindi speaker
+makes in Telugu. Raju's knowledge sits in a database, not inside a model: language models only write text, and fixed rules decide what is shown and what
+counts as learning (<i>models write, rules decide</i>). Since the mid-submission we measured five model capabilities against baselines on the same frozen
+cases: tool calling, stepwise reasoning, retrieval (RAG), fine-tuning, and one agent against several. Tool calling made Raju's sentences valid 0.93–0.97 of
+the time against 0.72 for prompting alone, at about seven times the tokens. Reasoning steps, retrieval and multi-agent roles did not improve accuracy; a
+fine-tune was a no-go for lack of checked training data. No model decided a grade in the multi-agent setup (0 verdicts, against 65 in a single agent). The
+checker agrees with native-speaker labels less than a prompt-only judge does (κ 0.15 against 0.46), and one of our own checks failed. We also built a
+beginner on-ramp (path map, word pictures, a match game, an early introduction of Raju) and report it as built but not evaluated. Every learner result
+is simulated, and the two simulations disagree.</div>""")
+    P.append("<main>")
+
+    P.append("""<h2>1 Introduction</h2>
+<p>Hindi and Telugu come from different language families, but they share many Sanskrit words and their scripts line up almost letter for letter. A Hindi
+speaker already knows a lot that helps. They also bring habits that hurt: a Hindi question word such as क्या at the start of a yes/no question, a
+Hindi-style negative, carried-over gender agreement. Most language apps ignore both.</p>
+<p>Our idea is reverse learning: people often learn better when they have to teach. The learner spots and fixes Raju's mistakes. Raju is always one step
+behind: he uses only words the learner has seen, each sentence has exactly one mistake, and it is on a rule the learner has shown they know but Raju has
+not learned yet. When the learner fixes it, Raju learns the rule; when the learner forgets a rule, Raju forgets it too.</p>
+<p>Two problems stand in the way. A beginner cannot correct anyone until they know enough Telugu, so the tutor needs an on-ramp. And a language model asked
+to play a weak classmate knows too much, so it leaks correct forms and words the learner has not met. We therefore keep Raju's knowledge as data and let
+the model only phrase sentences that a set of checks accepts or rejects. We ask whether correcting such a classmate improves recall, and which model
+capabilities can be used around him without giving up that control.</p>""")
+
+    P.append("""<h2>2 What We Built</h2>
+<h3>2.1 The main rule: models write, rules decide</h3>
+<p>Every answer goes through a normaliser (which, for example, converts Telugu typed on a Hindi keyboard) and a checker that uses no model. It gives one of
+four verdicts: correct, partial, wrong or unsure. Only one component, the OutcomeWriter, may change what the system believes the learner knows, and it
+accepts only the checker's verdicts or a signed teacher decision. This is enforced by database permissions, by tests that fail if model code imports the
+writer, and by triggers that block illegal changes to Raju's knowledge. Every change goes into an append-only, hash-chained log.</p>
+<p>Anything a model produces is a suggestion. Raju's sentence is shown only if it passes a leak filter (exactly the planned mistake, no answer given, only
+words the learner has seen, reads like a student). If it fails, Raju says a pre-written sentence from our bank. The coach (दीदी) gives one Hindi hint
+that may contain neither the answer nor any Telugu. The Telugu friend in scenes may only pick approved lines.</p>
+<h3>2.2 The learning ladder and stack</h3>
+<p>Six levels: L0 letters, L1 syllables, L2 words (shared Sanskrit words first, look-alikes flagged), L3 phrases, L4 sentence rules where Raju appears
+(after three ready rules), L5 conversations. A skill counts as learned only after correct answers on more than one item and day, without hints, including
+one the learner produced. The app is FastAPI with server-rendered Hindi pages, PostgreSQL 16 and FSRS spaced repetition; a build check fails if any
+English letter appears in learner text.</p>
+<h3>2.3 Beginner on-ramp and interface additions</h3>
+<p>Because Raju appears only after three ready rules, the early levels exist to get a beginner there. We added a learning-path map (L0–L5, "you are here"),
+small word pictures (27 of 28 words, Hindi alt text, never on a question about the same word), a match-the-pairs game, a "meet Raju" card from day one and a
+"what Raju learned from you" section, and, at the learner's request, English text under the Telugu word on intro, feedback and result cards (never on
+questions). Voice buttons exist but are off by default until their gate passes. The match game uses the recognition checker and writes review schedules
+only, so it cannot teach Raju or move a level. An automated accessibility check (axe-core, WCAG 2.0–2.2 A and AA, 8 pages, phone and desktop width) left
+one demo-only finding. <b>None of these additions is evaluated:</b> the simulators do not model them and no learner has used them.</p>""")
+    P.append(f"""<figure class="wide"><div class="shots">{img('final-home.png','Home')}{img('final-ladder.png','Progress')}{img('final-en-word.png','English under the word')}{img('final-match.png','Match game')}</div>
+<p class="cap">Figure 1: Interface additions (running app, demo database): (a) home with path map and Raju card; (b) progress page with what Raju learned; (c) feedback with English under the Telugu word; (d) match game.</p></figure>""")
+
+    P.append("<h2>3 Progress</h2><p>All eight learner slices, the teacher console, the agents and two simulators were complete at mid-submission. Since then:</p>")
+    P.append(table(["Part", "Done since mid-submission", "Status"], [
+        ["Model evaluations", "Tasks 6, 13–18: generation, tool calling, reasoning, judge, RAG, fine-tuning, multi-agent; real-model runs (1,561 hosted calls)", "done"],
+        ["Checker agreement", "50 native-labelled answers compared with checker and judge", "done, below target"],
+        ["Interface", "Path map, pictures, match game, early Raju card, English glosses, speech behind flags", "built, not evaluated"],
+        ["Tests", "1,287 passing (1,039 at mid-submission)", "done"],
+        ["Native review; learner pilot", "Not part of the repository's results; no real-learner data", "not done"],
+    ], "Table 1: Progress at final submission."))
+
+    P.append("""<h2>4 Data</h2><p>Content is still our own draft bank: 25 rules (15 HI→TE, 10 TE→HI), 48 letters, 489 aksharas, 28 words, 32 chunks, 4 scene scripts, all
+without native review. Evaluation sets are small and frozen: 29 planting cases (58 for the reasoning set), 185 held-out checker cases, and a 145-row teacher
+label sheet of which 50 answers carry native labels. IndicCorp, IndicGEC and the other planned corpora remain unused.</p>""")
+
+    P.append("""<h2>5 Methods Compared</h2><p>On the same 29 frozen cases we compared, with Wilson 95% intervals and exact McNemar tests: <b>generation</b> (prompt-only, blind
+resampling, tool-assisted); <b>tool calling</b> (model-chosen read-only tools with a step cap, against prompt-only and tools off, plus 17 harness attacks and
+11 injected messages); <b>stepwise reasoning</b> against a direct answer (58 cases) with a self-check ablation; <b>RAG</b> (BM25 over character n-grams on the
+25 rule documents) against blind, given-the-rule-title and oracle retrieval; <b>fine-tuning</b> Gemma-3-1B-it against prompted Gemini, with a go/no-go bar set
+before generating data; <b>multi-agent</b> roles against a single agent; and a <b>checker/judge</b> comparison on 50 native labels. All hosted calls use
+gemini-3.5-flash with reasoning off.</p>""")
+
+    P.append("<h2>6 Results</h2><h3>6.1 Checker and filters (held-out, 185 cases)</h3>")
+    P.append(table(["Check", "Result", "Target", ""], [
+        ["Correct Raju sentences clean (n=14)", "100%", "100%", "pass"], ["Wrong answers caught (n=34)", "100%", "≥90%", "pass"],
+        ["Correct answers wrongly rejected (n=32)", "0%", "≤5%", "pass"], ["Checker says unsure (n=66)", "18.2%", "≤15%", "<b>fail</b>"],
+        ["Trick inputs accepted (n=25)", "0", "0", "pass"], ["English letters in Hindi UI", "0", "0", "pass"],
+    ], "Table 2: Held-out results (unchanged since mid-submission). The unsure ceiling was not loosened."))
+    P.append("""<p>An "unsure" answer never changes the learner's record; it goes to a teacher. Our cases are team-written, so real input is probably harder.</p>
+<h3>6.2 Does the checker agree with native speakers?</h3>
+<p>On 50 answers labelled by native speakers (16 correct, 26 partial, 8 wrong) the checker reached κ = 0.15 [−0.03, 0.31] (accuracy 0.36) against a target of
+0.60, and a prompt-only LLM judge κ = 0.46 [0.29, 0.64] (accuracy 0.62). The checker is good at "wrong" (recall 0.88) and weak on "partial" (recall 0.12): of 26
+partial answers it called 9 correct, 5 wrong and sent 9 to unsure. Our hypothesis H6 (the checker beats a prompt-only judge) is rejected.</p>
+<h3>6.3 Model capabilities against baselines</h3>""")
+    P.append(table(["Capability", "Method vs baseline", "Result"], [
+        ["Generation", "tool-assisted vs prompt-only", "valid 0.93 [0.78, 0.98] vs 0.72 [0.54, 0.85]; 1,054 vs 140 tokens/case"],
+        ["Tool calling", "tools vs prompt-only vs tools off", "valid 0.97 vs 0.69 vs 0.76; 44 calls all correct; 0 unsafe actions (17/17 attacks refused; 0/11 injections)"],
+        ["Reasoning", "stepwise vs direct (58)", "0.36 vs 0.40, McNemar p = 0.625; 2,290 vs 567 tokens/case"],
+        ["RAG hints", "RAG vs blind", "shown and usable 12/29 vs 10/29, p = 0.79; right rule first 16/29, top 3 24/29"],
+        ["Fine-tuning", "Gemma-3-1B vs prompted Gemini", "7/29 vs 21/29 pass; <b>no-go</b>: 23 usable pairs vs 200 needed"],
+        ["Multi-agent", "multi vs single agent", "success 0.31 vs 0.31; model-decided verdicts 0 vs 65; 359 vs 1,682 tokens/case"],
+    ], "Table 3: Headline results on the frozen sets. Intervals are wide at n = 29."))
+    P.append("""<p>Only tool use improved Raju, and it cost about seven times the tokens. Resampling alone did not beat one call (0.76 vs 0.72). The multi-agent setup is
+no more accurate; its gain is structural: no model decides a verdict. RAG found the right rule first in 55% of cases; a prompt fix that stopped hints from
+naming numbered rules raised shown-and-usable hints to 25/29, but it was designed on the same 29 cases, so treat it as optimistic. Fine-tuning failed on
+data, not compute: of 144 generated pairs, 23 passed our validator (2 of 14 rules).</p>
+<h3>6.4 Simulated learners</h3>
+<p>The first simulator (sim-0.1) had A (correct Raju) beating B (same content, no classmate) but not C (conventional tutor). The improved one (sim-0.2), which
+shares the app's FSRS memory model, reverses it: day-7 recall A .253, B .329, C .306 (A−B −.076 [−.081, −.071]; A−C −.053 [−.060, −.047]), and A stayed last in
+every variation. The simulations disagree because they model memory differently; neither is evidence about people. We report the second because it uses the
+app's own memory model.</p>""")
+    P.append(f'<figure>{chart}<p class="cap">Figure 2: Day-7 recall by condition. The ordering of A, B and C flips between the simulators.</p></figure>')
+    P.append("""<h3>6.5 Failures worth showing</h3><ul>
+<li><b>Success:</b> the live model wrote "నేను నహీ వెళ్తా ను" (Hindi नहीं for the Telugu negative): exactly the planted mistake, passed the filter.</li>
+<li><b>Retrieval miss:</b> for "క్యా నువ్వు వస్తావు" the right rule came second (0.78) behind a TE→HI rule (0.82); 8 of 13 top-1 misses went to such rules.</li>
+<li><b>Unusable hint:</b> 8 of 20 RAG hints said to read a numbered rule the learner never sees.</li>
+<li><b>Small model:</b> untuned Gemma-3-1B added a Devanagari word; the filter rejected it and the app showed the bank sentence.</li>
+<li><b>Not one error:</b> prompted Gemini added a negation to an already-negative verb.</li></ul>
+<p>In every case the filters or the checker handled the failure, so the learner never saw a failing sentence.</p>
+<h3>6.6 Compute</h3>
+<p>Hosted calls: 1,561 sent (1,522 answered), 575,698 tokens, all gemini-3.5-flash; the RAG runs alone were 354 calls and 94,801 tokens. One local run: untuned
+Gemma-3-1B on CPU, 145 s in total. <b>GPU hours: 0</b>, since no fine-tune ran. Hosted models are off by default and no learner data is sent to them. A cost
+figure is not computed here because the price is not in the repository.</p>""")
+
+    P.append("""<h2>7 How We Checked Our Own Work</h2><p>1,287 tests pass, against real PostgreSQL 16, with model keys removed in CI. Every number in this report comes from a
+file in <code>reports/</code>, and the tables regenerate from the saved JSON. We kept the runs we rejected (a rate-limited and a quota-exhausted baseline) and
+did not use them. Several results here are negative (reasoning, RAG, multi-agent accuracy, fine-tuning, checker κ), and we report them as measured.</p>""")
+
+    P.append("<h2>8 Challenges and What Is Left</h2>")
+    P.append(table(["Challenge", "Status / plan"], [
+        ["No native review of Telugu or the new Hindi strings", "reviewers needed before any learner sees content"],
+        ["Checker unsure 18.2% and κ 0.15", "teachers settle unsure answers; count partial answers as wrong only if teacher labels support it"],
+        ["Small frozen sets (29, 58, 50)", "intervals wide; confirm on new cases"],
+        ["Simulators disagree", "calibrate on pilot data; report every variation"],
+        ["Pictures lack teacher review and Hindi audio description", "fold into the memory-aid subsystem or label demo-only"],
+        ["Speech", "off by default; needs word-error-rate and speaker-review gates (Chrome sends speech audio to Google)"],
+    ], "Table 4: Open issues."))
+
+    P.append("""<h2>9 Discussion</h2><p>Three findings are solid enough to defend. First, the control design holds on our cases: no model changed a grade, and every model output either
+passed the checks or was replaced by approved text. Second, among model capabilities, only giving the model tools to check its own draft clearly helped, and the
+others did not beat simple baselines on small frozen sets. Third, honest simulation says correcting Raju, as built, does not give more recall than a normal tutor,
+so learners need more sentences they write from memory. Whether correcting Raju works as real recall for real learners is the question only a pilot can answer.</p>
+<p>We also learned that a test has to be able to fail, and that real model output fails in ways our cases did not predict.</p>""")
+
+    P.append("""<h2>Limitations</h2><p>Every learner result is simulated. No Telugu content has native review. The checker agrees with native labels poorly (κ 0.15) and failed its unsure
+ceiling. Evaluation sets are small and team-made. The interface additions are unevaluated, and the English words and new Hindi strings are drafts. A pilot of five or
+fewer learners could only describe, not prove, an effect.</p>
+<h2>Ethics Statement</h2><p>Pilot learners would be consenting adults. Accounts use random IDs and passphrases; we store no names, emails, phone numbers or IP addresses, and withdrawal
+deletes the learner's text. Unreviewed Telugu is never shown to real learners. Hosted models are off by default and receive no learner data. Browser speech
+recognition can send audio to a third party, so speech is off. We used an AI assistant for coding, testing and drafting; its commits carry a co-author line,
+and every number was checked against a file in <code>reports/</code>.</p>
+<h2>Contributions</h2><p><b>Madhav Malhotra:</b> core system, teacher tools, simulators, coach RAG and the fine-tuning pipeline. <b>Kushal Karan:</b> tool-calling, reasoning, judge and
+agent evaluations, results tables, real-model runs. <b>Shaik Areesh:</b> human-system agreement (Batch A) and annotation validation. <b>Faviana Noronha:</b> beginner
+interface, accessibility check, results analysis, failure analysis, compute report and this write-up. (Roles are from the commit history; each author should confirm.)</p>
+<h2>References</h2>
+<p class="ref">Chase, C., Chin, D., Oppezzo, M., and Schwartz, D. 2009. Teachable agents and the protégé effect. J. Science Education and Technology 18(4).</p>
+<p class="ref">Doddapaneni, S., et al. 2023. Towards leaving no Indic language behind. ACL.</p>
+<p class="ref">Kanojia, D., et al. 2020. Harnessing cross-lingual features to improve cognate detection for low-resource languages. COLING.</p>
+<p class="ref">Madhani, Y., et al. 2023. Aksharantar: Open Indic-language transliteration datasets and models. Findings of EMNLP.</p>
+<p class="ref">Roediger, H. L., and Karpicke, J. D. 2006. Test-enhanced learning. Psychological Science 17(3).</p>
+<p class="ref">Ye, J., Su, J., and Cao, Y. 2022. A stochastic shortest path algorithm for optimizing spaced repetition scheduling. KDD.</p></main>""")
+    return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>SETU final report</title><style>{CSS}</style></head><body>{"".join(P)}</body></html>'
+
+
+def main():
+    (OUT / "SETU_final_paper.html").write_text(build(), encoding="utf-8")
+    from playwright.sync_api import sync_playwright
+    with sync_playwright() as p:
+        b = p.chromium.launch()
+        pg = b.new_page()
+        pg.goto((OUT / "SETU_final_paper.html").as_uri())
+        pg.pdf(path=str(OUT / "SETU_final_paper.pdf"), format="Letter", print_background=True,
+               margin={"top": "17mm", "bottom": "17mm", "left": "15mm", "right": "15mm"})
+        b.close()
+
+
+if __name__ == "__main__":
+    main()
