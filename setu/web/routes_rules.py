@@ -174,7 +174,7 @@ def _raju(c, provider, learner_id, turn_kind, rule, item, rules, items):
     ctx = leakfilter.Context(item=_key(item, items), turn=turn_kind, seen_words=frozenset(seen),
                              unknown_rule_items=unknown)
     turn = classmate.propose(provider, ctx, rule_title=rule.title_hi or "", hindi_meaning=item.hindi_meaning,
-                             bank_sentence=bank, method="tool")
+                             bank_sentence=bank, method="tool_history")
     return turn.text, turn.source, turn
 
 

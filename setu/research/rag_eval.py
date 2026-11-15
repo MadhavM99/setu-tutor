@@ -421,6 +421,9 @@ def main(argv=None) -> int:
     if not args.retrieval_only and provider is None:
         base["status"] = "retrieval_only: no model endpoint (SETU_LLM_URL unset)"
     if provider is None:
+        # A run without a model must never overwrite the model results in rag_eval.json (final audit fix).
+        stem = stem if args.tag else "rag_eval_retrieval"
+        base["tag"] = base["tag"] or "retrieval"
         _write(stem, build_report(base, [], conds))
         print(f"wrote reports/{stem}.json and .md ({base['status']})")
         return 0

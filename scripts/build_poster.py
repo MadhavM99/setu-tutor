@@ -60,61 +60,61 @@ def content() -> dict:
     ratio = A["agentic_tools"]["tokens_per_case"] / A["tool_history"]["tokens_per_case"]
     return {
         "abstract": [
-            "SETU teaches Telugu to Hindi speakers. At the sentence stage the learner corrects Raju, an AI classmate "
+            ("SETU teaches Telugu to Hindi speakers. At the sentence stage the learner corrects Raju, an AI classmate "
             "who makes a Hindi speaker's mistakes. Raju's knowledge is data in a database, kept one step behind the "
-            "learner's.",
-            "One rule governs the design: a language model may write text, but ordinary code decides what is shown, "
-            "how an answer is marked and what the learner's record says.",
-            "We built the tutor, attacked it, compared five model capabilities with simpler baselines, and checked "
-            "the marker against a native speaker. No learner has used it yet: learning outcomes are simulated only.",
+            "learner's."),
+            ("One rule governs the design: a language model may write text, but ordinary code decides what is shown, "
+            "how an answer is marked and what the learner's record says."),
+            ("We built the tutor, attacked it, compared five model capabilities with simpler baselines, and checked "
+            "the marker against a native speaker. No learner has used it yet: learning outcomes are simulated only."),
         ],
         "method": [
             "Ladder: letters → syllables → words → phrases → sentence rules (Raju) → scenes.",
-            "Raju's sentence, the coach's hint and the friend's line are model proposals. Each passes a filter or is "
-            "replaced by teacher-approved text.",
+            ("Raju's sentence, the coach's hint and the friend's line are model proposals. Each passes a filter or is "
+            "replaced by teacher-approved text."),
             "A rule-based checker marks every answer: correct, partial, wrong or unsure. Unsure goes to a teacher.",
             "One writer, under a restricted database role, updates the record. Models have no write tools.",
-            "Evaluation: one hosted model (gemini-3.5-flash), frozen sets of 29–58 cases, Wilson intervals, exact "
-            "McNemar tests, 50 native-speaker labels, two learner simulators.",
+            ("Evaluation: one hosted model (gemini-3.5-flash), frozen sets of 29–58 cases, Wilson intervals, exact "
+            "McNemar tests, 50 native-speaker labels, two learner simulators."),
         ],
         "method_caption": "The running app: Raju's sentence, the coach's hint, the learner's home page.",
         "results": [
-            ("Control held.", f"{ha['n']}/{ha['n']} tool attacks refused; {ia['evaluable']} injected instructions, "
-                              "no unsafe attempt. No model text reached a learner unchecked."),
-            ("The model did not need to choose.", f"A fixed loop that shows the model its own rejected draft: "
+            ("Control held.", (f"{ha['n']}/{ha['n']} tool attacks refused; {ia['evaluable']} injected instructions, "
+                              "no unsafe attempt. No model text reached a learner unchecked.")),
+            ("The model did not need to choose.", (f"A fixed loop that shows the model its own rejected draft: "
                                                   f"{A['tool_history']['pooled_valid_rate']:.2f} valid. Model-chosen tool calls: "
-                                                  f"{A['agentic_tools']['pooled_valid_rate']:.2f}, at {ratio:.1f}× the tokens."),
-            ("Most capabilities did not beat baselines.", f"Stepwise reasoning {reas['stepwise']['final_accuracy']:.2f} vs "
+                                                  f"{A['agentic_tools']['pooled_valid_rate']:.2f}, at {ratio:.1f}× the tokens.")),
+            ("Most capabilities did not beat baselines.", (f"Stepwise reasoning {reas['stepwise']['final_accuracy']:.2f} vs "
                                                           f"{reas['direct']['final_accuracy']:.2f} direct. Retrieval hints "
                                                           f"{rag['b_rag']['positives']['shown_and_usable']['k']}/29 vs "
                                                           f"{rag['a_blind']['positives']['shown_and_usable']['k']}/29. Fine-tuning: stopped, too "
-                                                          "little validated data."),
-            ("The checker is safe but coarse.", f"It never accepted a wrong answer, yet agrees poorly with a native "
-                                                f"speaker: κ = {judge['checker']['kappa']:.2f} (target 0.6)."),
+                                                          "little validated data.")),
+            ("The checker is safe but coarse.", (f"It never accepted a wrong answer, yet agrees poorly with a native "
+                                                f"speaker: κ = {judge['checker']['kappa']:.2f} (target 0.6).")),
         ],
         "arch_caption": "Purple: language model, text only. Teal: deterministic code. Dashed line: the only code that can change learner state.",
         "cap_head": "MODEL CAPABILITIES",
         "cap_text": [
-            f"Prompt only: {A['prompt_only']['pooled_valid_rate']:.2f}. App loop (no memory): {A['tool']['pooled_valid_rate']:.2f}.",
-            f"Add memory of the rejected draft: {A['tool_history']['pooled_valid_rate']:.2f} at "
-            f"{A['tool_history']['tokens_per_case']:.0f} tokens.",
+            f"Prompt only: {A['prompt_only']['pooled_valid_rate']:.2f}. Old app loop (no memory): {A['tool']['pooled_valid_rate']:.2f}.",
+            (f"Add memory of the rejected draft (the app now): {A['tool_history']['pooled_valid_rate']:.2f} at "
+            f"{A['tool_history']['tokens_per_case']:.0f} tokens."),
             f"Model-chosen tools: {A['agentic_tools']['pooled_valid_rate']:.2f} at {A['agentic_tools']['tokens_per_case']:.0f} tokens.",
             "\"Valid\" means equal to the bank's sentence: the model adds no new sentence.",
         ],
-        "chk_head": "CHECKER · SIMULATED LEARNERS",
+        "chk_head": "CHECKER · SIMULATION",
         "chk_text": [
             f"Checker κ {judge['checker']['kappa']:.2f} vs model judge {judge['llm_judge']['kappa']:.2f}; one labeller, 50 answers.",
             "It rejects half the answers the native speaker accepted.",
-            f"Simulation only: correcting Raju (A) ranks last, {c2['A']['recall_day7']['mean']:.2f} vs "
+            (f"Simulation only: correcting Raju (A) ranks last, {c2['A']['recall_day7']['mean']:.2f} vs "
             f"{c2['B']['recall_day7']['mean']:.2f} and {c2['C']['recall_day7']['mean']:.2f}, in "
-            f"{w['cells_where_A_is_last']}/{w['cells']} assumption settings. An older simulator disagrees.",
+            f"{w['cells_where_A_is_last']}/{w['cells']} assumption settings. An older simulator disagrees."),
         ],
         "conclusion": [
             "A model can be confined to proposing text, with marks and records owned by code.",
             "For Raju's sentence, memory of the last draft mattered; model-chosen tool calls did not add to it.",
             "Not shown: that correcting a classmate helps anyone learn. No learner data exists.",
-            "Next: independent native review and a second labeller; move the memory loop into the app; widen "
-            "accepted answers; then a small pilot with consent and clearance.",
+            ("Done after the audit: the app now uses the memory loop; the filter is unchanged. Next: independent native "
+            "review and a second labeller; widen accepted answers; then a small pilot with consent and clearance."),
         ],
     }
 

@@ -39,6 +39,23 @@ def test_a_planted_sentence_from_the_model_is_shown_and_logged(engine, rule_bank
     assert "जाँचने वाले का फ़ैसला:" in done and "मॉडल ने लिखा" in done
 
 
+def test_the_app_shows_raju_his_rejected_draft_on_a_retry(engine, rule_bank):  # noqa: F811
+    # Regression (final audit): the app uses `tool_history`, so the second request carries the first draft.
+    seen = []
+
+    def raju(messages):
+        seen.append(messages)
+        return "ఇది కొత్త వాక్యం బాబు" if len(seen) == 1 else bank_wrong(messages)
+    c, learner = client(engine)
+    c.app.state.llm = provider(raju, "आख़िरी शब्द को ध्यान से देखिए।")
+    page = advance_to(c, "planted")
+    assert "కొత్త" not in page and len(seen) == 2
+    assert seen[1][2]["role"] == "assistant" and "ఇది కొత్త వాక్యం బాబు" in seen[1][2]["content"]
+    ex = one(engine, "SELECT e.source FROM exchange e JOIN session s ON s.id = e.session_id WHERE "
+                     "s.learner_id = :l AND e.kind = 'correction' ORDER BY e.created_at DESC LIMIT 1", l=learner)
+    assert ex.source == "model"
+
+
 def test_an_invented_sentence_and_a_leaky_hint_never_reach_the_learner(engine, rule_bank):  # noqa: F811
     c, learner = client(engine)
     c.app.state.llm = provider(lambda m: "ఇది కొత్త వాక్యం బాబు", "ऐसे लिखिए: " + " ".join(sorted(CORRECT)))

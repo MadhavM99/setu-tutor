@@ -96,6 +96,7 @@ def build() -> str:
                 f"discordant cases, p = {p1['p_exact']:.3f}")
 
     t = tool["methods"]
+    n_cand = max(0, len((R / "generation_paraphrase_candidates.csv").read_text(encoding="utf-8").splitlines()) - 1)
     r = reas["results"]["stage_a"]
     pos = {k: v["positives"] for k, v in rag["conditions"].items()}
     g = ag["results"]
@@ -179,7 +180,7 @@ difficulty-stability-retrievability model (Ye et al., 2022).</p>
 <p><b>Hindi and Telugu.</b> Contrastive analysis, predicting learner errors from differences between languages, has long been criticised for weak
 prediction (Wardhaugh, 1970), although typology can predict error distributions in aggregate (Berzak et al., 2015). Resources exist for Indian
 languages as written by fluent users, including transliteration data (Madhani et al., 2023), language models (Doddapaneni et al., 2023) and a 2025
-grammatical-error-correction shared task covering Hindi and Telugu (BHASHA IndicGEC). We found no corpus of errors made by Hindi speakers learning
+grammatical-error-correction shared task covering Hindi and Telugu (Bhattacharyya et al., 2025). We found no corpus of errors made by Hindi speakers learning
 Telugu, so each predicted error in our bank is a hypothesis.</p>""")
     P.append(table(["Work", "Method", "Evaluation", "Limit for our purpose", "SETU's difference"], [
         ["Chase et al. 2009", "Teachable agent, school biology", "Classroom studies", "Agent is not a language model; science, not language", "Language learning; agent state tied to the learner's own forgetting"],
@@ -191,7 +192,7 @@ Telugu, so each predicted error in our bank is a hypothesis.</p>""")
         ["Ye et al. 2022", "FSRS scheduling", "Review logs", "Built for flashcards", "Used for items; its fit to error correction is questioned in Section 8"]],
         "Table 1: Closest prior work. We make no first-of-its-kind claim; we did not find a tutor for this language pair or a learner-error corpus for it."))
 
-    P.append(f"""<h2>3 Dataset Created and Used</h2>
+    P.append("""<h2>3 Dataset Created and Used</h2>
 <p>All content and all evaluation data were written by the team. None of it comes from learners.</p>""")
     P.append(table(["Set", "Size", "Use", "Status"], [
         ["Rule bank", "25 rules (15 Hindi→Telugu, 10 Telugu→Hindi), 49 items", "Raju's sentences, checker keys", "Draft; one review by a bilingual team member"],
@@ -232,13 +233,13 @@ re-checks each change to Raju's knowledge. Every change is appended to a hash-ch
 passes a filter or is replaced by approved text. For Raju the filter requires exactly the planned mistake, no word the learner has not seen, one
 sentence in Telugu script and a student's voice. For {exact_only} of {len(items)} items "exactly the planned mistake" means the bank's wrong
 sentence, since a paraphrase cannot be verified without a person.</p>""")
-    P.append(fig("fig2_raju_loop", "Figure 2: How Raju's sentence is produced. The app uses the fixed loop (steps 3–4, up to three drafts). The variant in which the model "
-                 "chooses its own tool calls exists only in the evaluation scripts."))
+    P.append(fig("fig2_raju_loop", "Figure 2: How Raju's sentence is produced. Since this revision the app uses the fixed loop with memory (steps 3–4, up to three drafts; "
+                 "the model sees its own rejected draft). The variant in which the model chooses its own tool calls exists only in the evaluation scripts."))
     P.append("""<h3>4.2 Methods compared</h3>
 <p>All model runs use one hosted model, <code>gemini-3.5-flash</code>, through an OpenAI-compatible endpoint, reasoning effort off, temperature 0.4
 for generation and 0 for grading and diagnosis. Each method is scored on the same frozen cases as its baseline.</p>
 <ul><li><b>Generation.</b> <i>Prompt only</i> (one draft); <i>resample</i> (up to three independent drafts); <i>harness feedback</i> (the app's
-loop: the program runs the filter and returns its reason codes); <i>model-chosen tools</i> (the model is told about three read-only checking tools
+loop when these runs were made: the program runs the filter and returns its reason codes); <i>model-chosen tools</i> (the model is told about three read-only checking tools
 and decides when to call one, at most six model calls).</li>
 <li><b>Tool calling.</b> The same generation task scored for tool use, plus two attack sets: 17 model replies that try an unknown or malformed tool
 call, replayed into the tool handler, and 11 learner-style messages injected into Raju's task.</li>
@@ -262,7 +263,7 @@ non-significant difference is never read as equivalence. We do not report a mone
 calls and tokens.</p>""")
 
     P.append(f"""<h2>5 Experiment Runs</h2>
-<p><b>Software checks.</b> 1,300 automated tests pass against PostgreSQL 16 with no model configured; 484 of them are one parametrised test over the
+<p><b>Software checks.</b> 1,309 automated tests pass against PostgreSQL 16 with no model configured; 484 of them are one parametrised test over the
 frozen cases, so the count is not a measure of coverage. On the {score['cases']} held-out cases the checker caught every wrong answer and rejected no
 correct one, the filters passed every clean Raju sentence and rejected every attack, and the checker answered unsure on 18.2% of answers against a
 ceiling of 15% fixed in advance. That check failed and the ceiling was not changed.</p>
@@ -284,7 +285,7 @@ not shown to learners.</p>""")
         ["<b>Total</b>", "", f"<b>{1522 + new_calls:,}</b>", f"<b>{575698 + new_tokens:,}</b>"]],
         "Table 3: Hosted-model use, all with <code>gemini-3.5-flash</code>. One local run: untuned Gemma-3-1B-it on CPU, 29 cases, 145 s. No GPU hours. "
         "Median latency per call was about 1.0–1.4 s. Runs rejected for rate limits are kept in <code>reports/</code> and not used."))
-    P.append(f"""<p><b>Calls per learner turn.</b> In the app's loop a planted turn costs {t['tool']['calls_per_case']:.2f} Raju calls and
+    P.append(f"""<p><b>Calls per learner turn.</b> In the app's loop as it was during these runs (no memory) a planted turn costs {t['tool']['calls_per_case']:.2f} Raju calls and
 {t['tool']['tokens_per_case']:.0f} tokens on average, plus one coach call (about {base['coach']['tokens_per_case']:.0f} tokens) only when the
 learner's first answer is wrong. In our live run the best case was one call (160 tokens) and the worst four calls (639 tokens: three rejected drafts
 and a rejected hint). With no model configured the cost is zero and the learner sees the same approved sentences.</p>""")
@@ -336,8 +337,8 @@ three-draft budget. Two further conditions remove the example sentence from the 
 ablation was designed after seeing the earlier results, on the same cases, so it is exploratory.</p>""")
     P.append(table(["Condition", "Sees own drafts", "Check run by", "Valid, pooled [95%]", "Calls", "Tokens"], [
         [name, mem, who, a_rate(c), f"{A[c]['calls_per_case']:.2f}", f"{A[c]['tokens_per_case']:.0f}"] for c, name, mem, who in (
-            ("prompt_only", "Prompt only", "–", "nobody"), ("tool", "Harness feedback (app)", "no", "program"),
-            ("tool_history", "Harness feedback + memory", "yes", "program"), ("agentic_tools", "Model-chosen tools", "yes", "model"),
+            ("prompt_only", "Prompt only", "–", "nobody"), ("tool", "Harness feedback (old app loop)", "no", "program"),
+            ("tool_history", "Harness feedback + memory (app now)", "yes", "program"), ("agentic_tools", "Model-chosen tools", "yes", "model"),
             ("prompt_only_noex", "Prompt only, no example", "–", "nobody"), ("agentic_noex", "Model-chosen tools, no example", "yes", "model"))],
         f"Table 4: Controlled ablation, 29 cases × {reps} repeats. Intervals are bootstrap intervals that resample cases, because repeats of a case are not "
         "independent. Source: <code>reports/generation_ablation.json</code>."))
@@ -357,7 +358,18 @@ is therefore easier than the app, where the allowed list is the learner's whole 
 <p><b>What "valid" leaves out.</b> Of first drafts in the prompt-only condition, {A['prompt_only']['first_draft_kinds']['other_with_planted_word']} of
 {A['prompt_only']['rows']} were a different sentence containing a word found only in the wrong sentence, such as a different verb form after the
 Hindi negator. The filter rejects them because it cannot verify a paraphrase. Whether some are acceptable planted errors needs a native speaker and
-was not judged.</p>
+was not judged. All {n_cand} distinct drafts of this kind, from every condition, are listed for that review in
+<code>reports/generation_paraphrase_candidates.csv</code>. A draft a reviewer accepts would be added to the item's approved wrong patterns, which
+the filter already honours; nothing is accepted automatically.</p>
+<p><b>Is "valid" a measure of generation?</b> Only partly. With the example in the prompt, a valid sentence can be a copy. The two no-example
+conditions are the closest we have to an independent test: the model never sees the bank's sentence and is scored against it, so a match is
+reproduced, not copied. One draft without the example matched in {A['prompt_only_noex']['pooled_valid_rate']:.2f} of runs. This is a lower bound on
+correct planting, since a correct paraphrase counts as a failure, and it is still scored on the team's own sentences with a short word list. We
+report it beside the original measure and do not merge the two.</p>
+<p><b>Change made after this ablation.</b> The app now uses the fixed loop with memory (method <code>tool_history</code> in
+<code>setu/agents/classmate.py</code>; the ablation's code was moved there unchanged, and the ablation report rebuilds identically). The filter
+was not changed. The old loop is kept under its old name so that the earlier results remain reproducible. All results in this paper for "harness
+feedback" without memory were measured with the old loop.</p>
 <h3>7.2 Other ablations</h3>
 <p>Removing the self-check from stepwise reasoning changed nothing measurable ({r['no_self_check']['final_accuracy']:.2f} against
 {r['stepwise']['final_accuracy']:.2f}). For retrieval, indexing only the rule explanations, restricting the index to Hindi→Telugu rules, and
@@ -389,7 +401,7 @@ forbids, and its false-acceptance rate is no better.</p>
         ["Agreement with a native speaker κ ≥ 0.6", f"{ck['kappa']:.2f}", "<b>failed</b>"],
         ["State changed by an injected instruction: 0", "0 of 17; 0 of 11", "met"],
         ["Answer leaked by a shown Raju sentence &lt; 2%", "0 of 29, upper bound 0.12", "not provable at n = 29"],
-        ["Model calls per turn about 1–2", f"{t['tool']['calls_per_case']:.2f} (app loop); {t['agentic_tools']['calls_per_case']:.2f} (model-chosen tools)", "met for the app loop"],
+        ["Model calls per turn about 1–2", f"{A['tool_history']['calls_per_case']:.2f} (app loop with memory, ablation); {t['tool']['calls_per_case']:.2f} (old loop); {t['agentic_tools']['calls_per_case']:.2f} (model-chosen tools)", "met for the app loop"],
         ["Hint solves the item; tracker accuracy; speech error rate", "not measured", "open"],
         ["Learner outcomes, usability", "no participants", "open"]],
         "Table 5: Targets set in the 28 October plan against what was measured."))
@@ -430,13 +442,13 @@ was run once. One model was tested, so nothing here says how other models behave
 <li><b>A narrow validity measure.</b> A valid Raju sentence is one that matches the bank. The model contributes no new sentence to a planted turn, and
 variants the filter rejects were not judged by a person.</li>
 <li><b>Research code is not the product.</b> Model-chosen tool calls, retrieval for hints, stepwise diagnosis and the model judge are evaluation
-scripts. The app uses the fixed loop without memory, which the ablation shows is its weakest variant.</li>
+scripts. The app's loop with memory was adopted after the ablation and has not yet been measured on new cases.</li>
 <li><b>Post-hoc analyses.</b> The retrieval prompt fix and the generation ablation were designed after seeing results on the same cases.</li>
 <li><b>Interface additions</b> (path map, word pictures, match game, English glosses) were built and passed an automated accessibility check but
 were not evaluated with users. Speech features are off.</li>
 <li><b>Simulation.</b> Both simulators rest on parameters chosen by the team.</li></ul>""")
 
-    P.append(f"""<h2>10 Conclusions</h2>
+    P.append("""<h2>10 Conclusions</h2>
 <p><b>What the experiments establish.</b> (1) In this system a language model can be confined to proposing text: on our attack cases no model output
 reached a learner unchecked or changed a mark, and with the model unavailable the app degraded to approved text. (2) For producing the classmate's
 sentence, the benefit we first attributed to model-chosen tool calls is reproduced almost entirely by a fixed program loop that shows the model its
@@ -447,7 +459,7 @@ answers and agrees poorly with a native speaker.</p>
 <p><b>What remains unknown.</b> Whether correcting a classmate helps anyone learn Telugu. Whether the predicted errors are the ones Hindi speakers
 make. How the checker compares with agreement between two native speakers. Whether any of the capability results hold for other models, more cases
 or sentences outside our bank.</p>
-<p><b>Next steps, in order.</b> Independent native review of the bank and a second labeller; move the memory loop into the app and confirm it on new
+<p><b>Next steps, in order.</b> Independent native review of the bank and a second labeller; confirm the memory loop, now in the app, on new
 cases; widen the accepted forms for pronoun-drop and partial answers and re-measure agreement; then, with clearance, a small descriptive pilot.</p>
 
 <h2>Ethics Statement</h2>
@@ -473,6 +485,7 @@ earlier write-up.</p>
     refs = [
         "Alemdag, E., Eichelmann, A., and Narciss, S. 2025. A framework for learning from erroneous examples and meta-analysis of empirical research. <i>Review of Educational Research</i>. doi:10.3102/00346543251390901.",
         "Berzak, Y., Reichart, R., and Katz, B. 2015. Contrastive analysis with predictive power: typology driven estimation of grammatical error distributions in ESL. <i>CoNLL</i>.",
+        "Bhattacharyya, P., Karthika N J, Terdalkar, H., Jagadeeshan, M. B., Nigam, S. K., Susmitha, A. S., and Bhattacharya, A. 2025. Findings of the IndicGEC and IndicWG shared task at BHASHA 2025. <i>Proc. 1st BHASHA Workshop (IJCNLP-AACL)</i>, 127–134.",
         "Biswas, G., Leelawong, K., Schwartz, D., Vye, N., and TAG-V. 2005. Learning by teaching: a new agent paradigm for educational software. <i>Applied Artificial Intelligence</i> 19(3–4).",
         "Chase, C., Chin, D., Oppezzo, M., and Schwartz, D. 2009. Teachable agents and the protégé effect: increasing the effort towards learning. <i>J. Science Education and Technology</i> 18(4), 334–352. doi:10.1007/s10956-009-9180-4.",
         "Corbett, A., and Anderson, J. 1995. Knowledge tracing: modeling the acquisition of procedural knowledge. <i>User Modeling and User-Adapted Interaction</i> 4.",
@@ -490,7 +503,7 @@ earlier write-up.</p>
         "Wardhaugh, R. 1970. The contrastive analysis hypothesis. <i>TESOL Quarterly</i> 4(2).",
         "Yao, S., Zhao, J., Yu, D., Du, N., Shafran, I., Narasimhan, K., and Cao, Y. 2023. ReAct: synergizing reasoning and acting in language models. <i>ICLR</i>.",
         "Ye, J., Su, J., and Cao, Y. 2022. A stochastic shortest path algorithm for optimizing spaced repetition scheduling. <i>KDD</i>.",
-        "Yuan, Z., et al. 2026. Towards valid student simulation with large language models. arXiv:2601.05473.",
+        "Yuan, Z., Xiao, Y., Li, M., et al. 2026. Towards valid student simulation with large language models. arXiv:2601.05473.",
     ]
     P += [f'<p class="ref">{x}</p>' for x in refs]
     P.append("</main>")
