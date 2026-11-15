@@ -60,8 +60,11 @@ def test_every_lexicon_word_has_a_picture_except_the_one_left_out_on_purpose():
 def test_picture_labels_exist_in_the_hindi_catalog_and_the_svg_is_self_contained():
     cat = Catalog.load(ROOT / "locale/hi.yaml", pending_file=ROOT / "locale/pending.txt")
     for word in pictures.PICTURES:
-        svg = str(pictures.picture(word, cat.get))
-        assert svg.startswith("<svg") and 'role="img"' in svg and "http" not in svg and "<image" not in svg
+        html = str(pictures.picture(word, cat.get))
+        if pictures.photo_file(word):  # a shipped picture file: served from our own static folder, with Hindi alt text
+            assert html.startswith('<img class="pic pic-photo" src="/static/img/words/') and "http" not in html and 'alt="' in html
+        else:
+            assert html.startswith("<svg") and 'role="img"' in html and "http" not in html and "<image" not in html
     assert pictures.picture("అవసరం", cat.get) is None and not pictures.has_picture("అవసరం")
 
 

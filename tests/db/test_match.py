@@ -187,7 +187,7 @@ def test_speech_is_off_by_default_and_the_lesson_still_works_in_text(engine, app
         recall_letter(c, ch)
     page = c.get("/learn/words")
     assert_hindi_page(page)
-    assert "పుస్తకం" in page.text and 'class="pic"' in page.text  # the picture and the word are still there
+    assert "పుస్తకం" in page.text and 'class="pic' in page.text  # the picture and the word are still there
     for gone in ("speak", "say-it", "slow-toggle", "/static/js/voice.js", "data-say="):
         assert gone not in page.text, gone
     assert "/static/js/voice.js" not in c.get("/").text
@@ -217,19 +217,19 @@ def test_the_word_intro_and_feedback_cards_carry_a_picture_and_voice_controls(en
         recall_letter(c, ch)
     page = c.get("/learn/words")
     assert_hindi_page(page)
-    assert "పుస్తకం" in page.text and 'class="pic"' in page.text and "खुली किताब की तस्वीर" in page.text
+    assert "పుస్తకం" in page.text and 'class="pic' in page.text and "खुली किताब की तस्वीर" in page.text
     assert 'class="speak speak-big" data-say="పుస్తకం" data-voice="synthetic"' in page.text and 'class="say-it"' in page.text
     assert 'class="slow-toggle"' in page.text and "तस्वीर बस याद रखने में मदद के लिए है" in page.text
     assert page.text.count(" hidden>") >= 3  # every voice control starts hidden; voice.js shows what the browser can do
     c.post("/learn/words/continue", data={"exchange_id": exchange_id(page.text)})
     choice = c.get("/learn/words")
     assert_hindi_page(choice)
-    assert 'class="pic"' in choice.text  # the target word's picture beside the Hindi prompt
+    assert 'class="pic' in choice.text  # the target word's picture beside the Hindi prompt
     fb = c.post("/learn/words/answer", data={"exchange_id": exchange_id(choice.text), "choice": "te:పుస్తకం"})
     assert_hindi_page(fb)
-    assert 'class="pic"' in fb.text and "data-say=" in fb.text and "celebrate" in fb.text
+    assert 'class="pic' in fb.text and "data-say=" in fb.text and "celebrate" in fb.text
     meaning = c.get("/learn/words")
-    assert 'class="pic"' not in meaning.text  # no picture on a question about what the word means
+    assert 'class="pic' not in meaning.text  # no picture on a question about what the word means
 
 
 def test_the_ladder_names_a_word_as_the_next_step_and_still_renders(engine, approved_words, monkeypatch):  # noqa: F811
