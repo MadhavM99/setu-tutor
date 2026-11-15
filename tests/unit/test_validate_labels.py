@@ -3,13 +3,13 @@
 import copy
 import csv
 from pathlib import Path
+
 import pytest
 
 from setu.research.validate_labels import (
     DEFAULT_BATCH_A_PATH,
     DEFAULT_MASTER_PATH,
     EXPECTED_COLUMNS,
-    ValidationResult,
     main,
     validate_batch_a,
 )

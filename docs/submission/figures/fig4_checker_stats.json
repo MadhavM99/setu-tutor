@@ -1,0 +1,34 @@
+{
+ "checker": {
+  "recall": {
+   "correct": 0.5,
+   "partial": 0.11538461538461539,
+   "wrong": 0.875
+  },
+  "precision": {
+   "correct": 0.47058823529411764,
+   "partial": 0.3333333333333333,
+   "wrong": 0.5
+  },
+  "macro_f1": 0.4308802308802309,
+  "false_accept": 0.2647058823529412,
+  "false_reject": 0.5,
+  "abstain": 0.2
+ },
+ "llm_judge": {
+  "recall": {
+   "correct": 0.875,
+   "partial": 0.34615384615384615,
+   "wrong": 1.0
+  },
+  "precision": {
+   "correct": 0.6086956521739131,
+   "partial": 1.0,
+   "wrong": 0.4444444444444444
+  },
+  "macro_f1": 0.6158730158730159,
+  "false_accept": 0.2647058823529412,
+  "false_reject": 0.125,
+  "abstain": 0.0
+ }
+}

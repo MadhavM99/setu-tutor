@@ -3,17 +3,15 @@
 import csv
 import json
 from pathlib import Path
+
 import pytest
 
 from setu.research import scorecard
 from setu.research.agreement import cohen_kappa
 from setu.research.evaluate_agreement import (
-    ALLOWED_CATEGORIES,
-    CATEGORIES,
     DEFAULT_HUMAN_PATH,
     DEFAULT_KEY_PATH,
     evaluate_batch_a_agreement,
-    get_batch_a_agreement_if_available,
     main,
 )
 

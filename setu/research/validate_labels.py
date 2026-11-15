@@ -8,11 +8,11 @@ leaves no labels or notes blank, and covers exactly the 50 Batch A items.
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import csv
 import dataclasses
-from pathlib import Path
 import sys
+from collections import Counter
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MASTER_PATH = ROOT / "research/labels/teacher_label_sheet.csv"
@@ -101,7 +101,7 @@ def validate_batch_a(
     # 1. Read master sheet to determine expected Batch A items
     try:
         _, master_rows = _read_csv(master_p)
-    except Exception as e:
+    except (OSError, ValueError, KeyError, csv.Error) as e:
         errors.append(f"Failed to read master CSV '{master_p}': {e}")
         return ValidationResult(
             is_valid=False,
@@ -124,7 +124,7 @@ def validate_batch_a(
     # 2. Read annotated CSV
     try:
         cols, rows = _read_csv(annotated_p)
-    except Exception as e:
+    except (OSError, ValueError, KeyError, csv.Error) as e:
         errors.append(f"Failed to read annotated CSV '{annotated_p}': {e}")
         return ValidationResult(
             is_valid=False,
@@ -176,8 +176,8 @@ def validate_batch_a(
         errors.append(f"Duplicate row IDs found ({len(duplicate_ids)}): {duplicate_ids}")
 
     row_id_set = set(row_ids)
-    missing_ids = sorted(list(expected_id_set - row_id_set))
-    unexpected_ids = sorted(list(row_id_set - expected_id_set))
+    missing_ids = sorted(expected_id_set - row_id_set)
+    unexpected_ids = sorted(row_id_set - expected_id_set)
 
     if missing_ids:
         errors.append(f"Missing expected Batch A row IDs ({len(missing_ids)}): {missing_ids}")

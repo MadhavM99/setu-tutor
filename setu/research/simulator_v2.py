@@ -86,6 +86,13 @@ def _review(s: Rule, at, *, outcome: str, cue: int, words: bool = True):
         s.vocab = scheduler.fsrs_review(s.vocab, rating=rating, at=at)
 
 
+def _copy_step(s: Rule, at, p):
+    """Sensitivity only (`feedback_restudy`): after a miss the app shows the answer and the learner types it once
+    (`exchange.step` -> copy). The main runs give that restudy review to condition B only."""
+    if getattr(p, "feedback_restudy", False):
+        _review(s, at + dt.timedelta(seconds=20), outcome="correct", cue=2)
+
+
 def _gain(s: Rule, g: float):
     s.k = min(1.0, s.k + g * (1 - s.k))
 
@@ -93,7 +100,8 @@ def _gain(s: Rule, g: float):
 def simulate(profile, condition, p: Params, seed) -> dict:
     rng = random.Random(f"run:{seed}:{profile[0][0]:.6f}")
     plan_rng = random.Random(f"plan:{seed}:{profile[0][0]:.6f}")
-    st = [Rule(k, h, d) for k, h, d in profile]
+    detect_override = getattr(p, "detect_override", None)  # sensitivity runs only (`sim_sensitivity`)
+    st = [Rule(k, h, d if detect_override is None else detect_override) for k, h, d in profile]
     m = {"hints": 0, "wrong_corrections": 0, "false_alarms": 0, "no_error_turns": 0, "corrections": 0, "own": 0,
          "exchanges": 0, "time_s": 0, "model_calls_expected": 0, "tests": {}}
     fixes = 0
@@ -134,6 +142,7 @@ def simulate(profile, condition, p: Params, seed) -> dict:
                     m["hints"] += 1
                     s.habit = max(0.0, s.habit - p.contrast)
                     _review(s, at_i, outcome="wrong", cue=0)
+                    _copy_step(s, at_i, p)
                     _gain(s, p.hint_gain if p.progressive_hints else p.restudy_gain)
             elif kind == "example":
                 s.habit = max(0.0, s.habit - p.contrast)
@@ -151,8 +160,10 @@ def simulate(profile, condition, p: Params, seed) -> dict:
                 m["model_calls_expected"] += 1
                 s.habit = max(0.0, s.habit - p.contrast)
                 s.detect = min(1.0, s.detect + p.detect_gain * (1 - s.detect))
-                if rng.random() < s.detect and rng.random() < p_correct(s, at_i, p):
-                    _review(s, at_i, outcome="correct", cue=1)  # the rest of the sentence is a cue
+                noticed = rng.random() < s.detect
+                if noticed and rng.random() < p_correct(s, at_i, p):
+                    # the rest of the sentence is a cue (cue 1 = Hard); `planted_cue` is a sensitivity knob
+                    _review(s, at_i, outcome="correct", cue=getattr(p, "planted_cue", 1))
                     _gain(s, p.cued_gain)
                     s.raju, fixes = "taught", fixes + 1
                     if fixes % 3 == 0:
@@ -162,7 +173,11 @@ def simulate(profile, condition, p: Params, seed) -> dict:
                     m["wrong_corrections"] += 1
                     m["hints"] += 1
                     m["model_calls_expected"] += 1
-                    _review(s, at_i, outcome="wrong", cue=0)
+                    # Main runs: any failed fix is a memory lapse (FSRS "Again"), also when the learner simply did
+                    # not notice the error. `unnoticed_is_lapse=False` (sensitivity) rates only noticed failures.
+                    if noticed or getattr(p, "unnoticed_is_lapse", True):
+                        _review(s, at_i, outcome="wrong", cue=0)
+                    _copy_step(s, at_i, p)
                     _gain(s, p.hint_gain if p.progressive_hints else p.restudy_gain)
         m["time_s"] += spent
         if day in DAYS_TEST:

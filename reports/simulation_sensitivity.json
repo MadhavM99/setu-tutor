@@ -1,0 +1,771 @@
+{
+ "version": "sim-0.2",
+ "kind": "sensitivity map (simulation only; no learner data)",
+ "base": "reports/simulation_v2/results.json main_matched_exchanges",
+ "fsrs": "fsrs-6.3.2",
+ "n_per_condition": 100,
+ "detect_values": [
+  "beta(2,4) draw",
+  0.2,
+  0.35,
+  0.5,
+  0.65,
+  0.8,
+  0.95
+ ],
+ "note": "Intervals are simulation noise over 100 simulated learners. They say nothing about how certain the result is for people, and get narrower just by simulating more learners.",
+ "variants": {
+  "sim-0.2 as published": {
+   "changed": {},
+   "rows": [
+    {
+     "detect": "beta(2,4) draw",
+     "recall_day7": {
+      "A": 0.253,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.076,
+     "A_minus_B_ci95": [
+      -0.0813,
+      -0.0708
+     ],
+     "A_minus_C": -0.0532,
+     "A_minus_C_ci95": [
+      -0.0597,
+      -0.0468
+     ],
+     "wrong_corrections_A": 12.72
+    },
+    {
+     "detect": 0.2,
+     "recall_day7": {
+      "A": 0.2451,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0839,
+     "A_minus_B_ci95": [
+      -0.089,
+      -0.0788
+     ],
+     "A_minus_C": -0.0612,
+     "A_minus_C_ci95": [
+      -0.0675,
+      -0.0548
+     ],
+     "wrong_corrections_A": 13.5
+    },
+    {
+     "detect": 0.35,
+     "recall_day7": {
+      "A": 0.2503,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0787,
+     "A_minus_B_ci95": [
+      -0.0836,
+      -0.0738
+     ],
+     "A_minus_C": -0.0559,
+     "A_minus_C_ci95": [
+      -0.0618,
+      -0.05
+     ],
+     "wrong_corrections_A": 12.68
+    },
+    {
+     "detect": 0.5,
+     "recall_day7": {
+      "A": 0.2604,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0687,
+     "A_minus_B_ci95": [
+      -0.0742,
+      -0.0631
+     ],
+     "A_minus_C": -0.0459,
+     "A_minus_C_ci95": [
+      -0.0526,
+      -0.0392
+     ],
+     "wrong_corrections_A": 11.69
+    },
+    {
+     "detect": 0.65,
+     "recall_day7": {
+      "A": 0.2671,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0619,
+     "A_minus_B_ci95": [
+      -0.0672,
+      -0.0566
+     ],
+     "A_minus_C": -0.0391,
+     "A_minus_C_ci95": [
+      -0.0459,
+      -0.0323
+     ],
+     "wrong_corrections_A": 10.9
+    },
+    {
+     "detect": 0.8,
+     "recall_day7": {
+      "A": 0.2714,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0577,
+     "A_minus_B_ci95": [
+      -0.0628,
+      -0.0526
+     ],
+     "A_minus_C": -0.0349,
+     "A_minus_C_ci95": [
+      -0.0419,
+      -0.0279
+     ],
+     "wrong_corrections_A": 10.34
+    },
+    {
+     "detect": 0.95,
+     "recall_day7": {
+      "A": 0.2759,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0531,
+     "A_minus_B_ci95": [
+      -0.0588,
+      -0.0474
+     ],
+     "A_minus_C": -0.0303,
+     "A_minus_C_ci95": [
+      -0.0378,
+      -0.0229
+     ],
+     "wrong_corrections_A": 9.88
+    }
+   ]
+  },
+  "copy step after a miss counts as restudy (as in the app)": {
+   "changed": {
+    "feedback_restudy": true
+   },
+   "rows": [
+    {
+     "detect": "beta(2,4) draw",
+     "recall_day7": {
+      "A": 0.2511,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0768,
+     "A_minus_B_ci95": [
+      -0.082,
+      -0.0716
+     ],
+     "A_minus_C": -0.053,
+     "A_minus_C_ci95": [
+      -0.0593,
+      -0.0466
+     ],
+     "wrong_corrections_A": 12.71
+    },
+    {
+     "detect": 0.2,
+     "recall_day7": {
+      "A": 0.2433,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0846,
+     "A_minus_B_ci95": [
+      -0.0897,
+      -0.0795
+     ],
+     "A_minus_C": -0.0608,
+     "A_minus_C_ci95": [
+      -0.067,
+      -0.0546
+     ],
+     "wrong_corrections_A": 13.5
+    },
+    {
+     "detect": 0.35,
+     "recall_day7": {
+      "A": 0.2482,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0797,
+     "A_minus_B_ci95": [
+      -0.0846,
+      -0.0748
+     ],
+     "A_minus_C": -0.0559,
+     "A_minus_C_ci95": [
+      -0.0617,
+      -0.05
+     ],
+     "wrong_corrections_A": 12.64
+    },
+    {
+     "detect": 0.5,
+     "recall_day7": {
+      "A": 0.2583,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0696,
+     "A_minus_B_ci95": [
+      -0.075,
+      -0.0641
+     ],
+     "A_minus_C": -0.0458,
+     "A_minus_C_ci95": [
+      -0.0522,
+      -0.0393
+     ],
+     "wrong_corrections_A": 11.68
+    },
+    {
+     "detect": 0.65,
+     "recall_day7": {
+      "A": 0.2655,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0625,
+     "A_minus_B_ci95": [
+      -0.0676,
+      -0.0573
+     ],
+     "A_minus_C": -0.0386,
+     "A_minus_C_ci95": [
+      -0.0453,
+      -0.032
+     ],
+     "wrong_corrections_A": 10.86
+    },
+    {
+     "detect": 0.8,
+     "recall_day7": {
+      "A": 0.2697,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0583,
+     "A_minus_B_ci95": [
+      -0.0633,
+      -0.0532
+     ],
+     "A_minus_C": -0.0344,
+     "A_minus_C_ci95": [
+      -0.0411,
+      -0.0277
+     ],
+     "wrong_corrections_A": 10.3
+    },
+    {
+     "detect": 0.95,
+     "recall_day7": {
+      "A": 0.2745,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0534,
+     "A_minus_B_ci95": [
+      -0.0591,
+      -0.0477
+     ],
+     "A_minus_C": -0.0295,
+     "A_minus_C_ci95": [
+      -0.0368,
+      -0.0223
+     ],
+     "wrong_corrections_A": 9.85
+    }
+   ]
+  },
+  "correct fix rated Good (cue-free)": {
+   "changed": {
+    "planted_cue": 0
+   },
+   "rows": [
+    {
+     "detect": "beta(2,4) draw",
+     "recall_day7": {
+      "A": 0.2563,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0727,
+     "A_minus_B_ci95": [
+      -0.0781,
+      -0.0673
+     ],
+     "A_minus_C": -0.0499,
+     "A_minus_C_ci95": [
+      -0.0563,
+      -0.0436
+     ],
+     "wrong_corrections_A": 12.72
+    },
+    {
+     "detect": 0.2,
+     "recall_day7": {
+      "A": 0.2478,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0812,
+     "A_minus_B_ci95": [
+      -0.0864,
+      -0.0761
+     ],
+     "A_minus_C": -0.0585,
+     "A_minus_C_ci95": [
+      -0.0646,
+      -0.0523
+     ],
+     "wrong_corrections_A": 13.47
+    },
+    {
+     "detect": 0.35,
+     "recall_day7": {
+      "A": 0.2544,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0747,
+     "A_minus_B_ci95": [
+      -0.0798,
+      -0.0695
+     ],
+     "A_minus_C": -0.0519,
+     "A_minus_C_ci95": [
+      -0.0577,
+      -0.0461
+     ],
+     "wrong_corrections_A": 12.68
+    },
+    {
+     "detect": 0.5,
+     "recall_day7": {
+      "A": 0.2651,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.064,
+     "A_minus_B_ci95": [
+      -0.0697,
+      -0.0582
+     ],
+     "A_minus_C": -0.0412,
+     "A_minus_C_ci95": [
+      -0.0479,
+      -0.0345
+     ],
+     "wrong_corrections_A": 11.68
+    },
+    {
+     "detect": 0.65,
+     "recall_day7": {
+      "A": 0.2729,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0561,
+     "A_minus_B_ci95": [
+      -0.0616,
+      -0.0506
+     ],
+     "A_minus_C": -0.0333,
+     "A_minus_C_ci95": [
+      -0.0402,
+      -0.0264
+     ],
+     "wrong_corrections_A": 10.9
+    },
+    {
+     "detect": 0.8,
+     "recall_day7": {
+      "A": 0.2789,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0502,
+     "A_minus_B_ci95": [
+      -0.0555,
+      -0.0448
+     ],
+     "A_minus_C": -0.0274,
+     "A_minus_C_ci95": [
+      -0.0345,
+      -0.0203
+     ],
+     "wrong_corrections_A": 10.31
+    },
+    {
+     "detect": 0.95,
+     "recall_day7": {
+      "A": 0.2846,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0444,
+     "A_minus_B_ci95": [
+      -0.0505,
+      -0.0383
+     ],
+     "A_minus_C": -0.0216,
+     "A_minus_C_ci95": [
+      -0.0295,
+      -0.0138
+     ],
+     "wrong_corrections_A": 9.88
+    }
+   ]
+  },
+  "copy step + fix rated Good": {
+   "changed": {
+    "feedback_restudy": true,
+    "planted_cue": 0
+   },
+   "rows": [
+    {
+     "detect": "beta(2,4) draw",
+     "recall_day7": {
+      "A": 0.2544,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0735,
+     "A_minus_B_ci95": [
+      -0.0788,
+      -0.0682
+     ],
+     "A_minus_C": -0.0497,
+     "A_minus_C_ci95": [
+      -0.056,
+      -0.0434
+     ],
+     "wrong_corrections_A": 12.71
+    },
+    {
+     "detect": 0.2,
+     "recall_day7": {
+      "A": 0.246,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.082,
+     "A_minus_B_ci95": [
+      -0.0871,
+      -0.0768
+     ],
+     "A_minus_C": -0.0581,
+     "A_minus_C_ci95": [
+      -0.0642,
+      -0.0521
+     ],
+     "wrong_corrections_A": 13.47
+    },
+    {
+     "detect": 0.35,
+     "recall_day7": {
+      "A": 0.2522,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0757,
+     "A_minus_B_ci95": [
+      -0.0808,
+      -0.0706
+     ],
+     "A_minus_C": -0.0519,
+     "A_minus_C_ci95": [
+      -0.0576,
+      -0.0461
+     ],
+     "wrong_corrections_A": 12.64
+    },
+    {
+     "detect": 0.5,
+     "recall_day7": {
+      "A": 0.2629,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.065,
+     "A_minus_B_ci95": [
+      -0.0706,
+      -0.0593
+     ],
+     "A_minus_C": -0.0412,
+     "A_minus_C_ci95": [
+      -0.0477,
+      -0.0347
+     ],
+     "wrong_corrections_A": 11.67
+    },
+    {
+     "detect": 0.65,
+     "recall_day7": {
+      "A": 0.2712,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0567,
+     "A_minus_B_ci95": [
+      -0.062,
+      -0.0513
+     ],
+     "A_minus_C": -0.0328,
+     "A_minus_C_ci95": [
+      -0.0396,
+      -0.0261
+     ],
+     "wrong_corrections_A": 10.86
+    },
+    {
+     "detect": 0.8,
+     "recall_day7": {
+      "A": 0.2771,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0508,
+     "A_minus_B_ci95": [
+      -0.0562,
+      -0.0455
+     ],
+     "A_minus_C": -0.027,
+     "A_minus_C_ci95": [
+      -0.0339,
+      -0.0202
+     ],
+     "wrong_corrections_A": 10.27
+    },
+    {
+     "detect": 0.95,
+     "recall_day7": {
+      "A": 0.2832,
+      "B": 0.3279,
+      "C": 0.3041
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0448,
+     "A_minus_B_ci95": [
+      -0.0508,
+      -0.0387
+     ],
+     "A_minus_C": -0.0209,
+     "A_minus_C_ci95": [
+      -0.0285,
+      -0.0133
+     ],
+     "wrong_corrections_A": 9.85
+    }
+   ]
+  },
+  "unnoticed error is no memory event (artifact: no decay)": {
+   "changed": {
+    "unnoticed_is_lapse": false
+   },
+   "rows": [
+    {
+     "detect": "beta(2,4) draw",
+     "recall_day7": {
+      "A": 0.3269,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BAC",
+     "A_minus_B": -0.0021,
+     "A_minus_B_ci95": [
+      -0.0091,
+      0.0048
+     ],
+     "A_minus_C": 0.0207,
+     "A_minus_C_ci95": [
+      0.0122,
+      0.0291
+     ],
+     "wrong_corrections_A": 12.74
+    },
+    {
+     "detect": 0.2,
+     "recall_day7": {
+      "A": 0.3382,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "ABC",
+     "A_minus_B": 0.0092,
+     "A_minus_B_ci95": [
+      0.0027,
+      0.0156
+     ],
+     "A_minus_C": 0.0319,
+     "A_minus_C_ci95": [
+      0.0238,
+      0.04
+     ],
+     "wrong_corrections_A": 13.49
+    },
+    {
+     "detect": 0.35,
+     "recall_day7": {
+      "A": 0.3221,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BAC",
+     "A_minus_B": -0.0069,
+     "A_minus_B_ci95": [
+      -0.0133,
+      -0.0005
+     ],
+     "A_minus_C": 0.0159,
+     "A_minus_C_ci95": [
+      0.0081,
+      0.0237
+     ],
+     "wrong_corrections_A": 12.73
+    },
+    {
+     "detect": 0.5,
+     "recall_day7": {
+      "A": 0.3106,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BAC",
+     "A_minus_B": -0.0184,
+     "A_minus_B_ci95": [
+      -0.0252,
+      -0.0117
+     ],
+     "A_minus_C": 0.0043,
+     "A_minus_C_ci95": [
+      -0.0041,
+      0.0128
+     ],
+     "wrong_corrections_A": 11.7
+    },
+    {
+     "detect": 0.65,
+     "recall_day7": {
+      "A": 0.3044,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0247,
+     "A_minus_B_ci95": [
+      -0.0314,
+      -0.0179
+     ],
+     "A_minus_C": -0.0019,
+     "A_minus_C_ci95": [
+      -0.01,
+      0.0062
+     ],
+     "wrong_corrections_A": 10.93
+    },
+    {
+     "detect": 0.8,
+     "recall_day7": {
+      "A": 0.2899,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0391,
+     "A_minus_B_ci95": [
+      -0.0445,
+      -0.0337
+     ],
+     "A_minus_C": -0.0163,
+     "A_minus_C_ci95": [
+      -0.0236,
+      -0.009
+     ],
+     "wrong_corrections_A": 10.39
+    },
+    {
+     "detect": 0.95,
+     "recall_day7": {
+      "A": 0.2814,
+      "B": 0.329,
+      "C": 0.3063
+     },
+     "order": "BCA",
+     "A_minus_B": -0.0477,
+     "A_minus_B_ci95": [
+      -0.0534,
+      -0.042
+     ],
+     "A_minus_C": -0.0249,
+     "A_minus_C_ci95": [
+      -0.0324,
+      -0.0174
+     ],
+     "wrong_corrections_A": 9.89
+    }
+   ]
+  }
+ },
+ "all_variants": {
+  "cells": 35,
+  "orders_seen": {
+   "ABC": 1,
+   "BAC": 3,
+   "BCA": 31
+  },
+  "cells_where_A_is_last": 31,
+  "cells_where_A_is_first": 1
+ },
+ "without_artifact_variant": {
+  "cells": 28,
+  "orders_seen": {
+   "BCA": 28
+  },
+  "cells_where_A_is_last": 28,
+  "cells_where_A_is_first": 0
+ }
+}

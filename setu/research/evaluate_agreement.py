@@ -8,12 +8,13 @@ a 4x4 confusion matrix, and checks against the M-16 release-gate threshold.
 from __future__ import annotations
 
 import argparse
-from collections import Counter
 import csv
 import dataclasses
 import json
-from pathlib import Path
 import sys
+from collections import Counter
+from pathlib import Path
+
 import yaml
 
 from setu.research.agreement import cohen_kappa
@@ -132,9 +133,9 @@ class AgreementEvaluationResult:
         lines.append("")
         lines.append("## Executive Summary")
         lines.append("")
-        lines.append(f"- **Evaluated Batch**: Batch A (50 Telugu learner correction rows)")
-        lines.append(f"- **Annotator**: Native Telugu speaker (blinded human teacher)")
-        lines.append(f"- **Comparator**: Rule-based deterministic checker (`checker-1`)")
+        lines.append("- **Evaluated Batch**: Batch A (50 Telugu learner correction rows)")
+        lines.append("- **Annotator**: Native Telugu speaker (blinded human teacher)")
+        lines.append("- **Comparator**: Rule-based deterministic checker (`checker-1`)")
         lines.append(f"- **Matched Examples (N)**: `{self.n}`")
         lines.append(f"- **Observed Agreement ($p_o$)**: `{self.observed_agreement:.4f}` ({self.observed_agreement * 100:.1f}%)")
         lines.append(f"- **Expected Chance Agreement ($p_e$)**: `{self.expected_agreement:.4f}` ({self.expected_agreement * 100:.1f}%)")
@@ -353,7 +354,7 @@ def get_batch_a_agreement_if_available(
     try:
         res = evaluate_batch_a_agreement(human_path=h_path, key_path=k_path)
         return res if res.n >= 10 and res.kappa is not None else None
-    except Exception:
+    except (OSError, ValueError, KeyError, csv.Error):
         return None
 
 
