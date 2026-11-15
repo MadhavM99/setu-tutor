@@ -1,7 +1,7 @@
 # UI additions (branch `faviana-noronha`): what they are, how they match the spec, what is not done
 
 Status of everything here: **built, tested, not evaluated.** No simulator models it and no real learner has used it.
-Every Telugu word shown is still unreviewed by a native speaker, and the new Hindi strings are drafts.
+Every Telugu word shown has had at most one review, by a bilingual team member (not independent), and the new Hindi strings are drafts.
 
 ## What was added
 

@@ -60,5 +60,5 @@ reasoning steps, retrieval, fine-tuning, one agent or several) can be used aroun
 |---|---|
 | The control design holds on our test cases; no model changed a grade | That learners learn more from correcting Raju |
 | Agentic tool use gave valid Raju sentences 0.93–0.97 of the time vs 0.72 prompt-only, at about 7.5x the tokens | That the pictures, voice or match game help learning |
-| The checker agrees with native labels less than a prompt-only judge does (κ 0.15 vs 0.46) | That our Telugu content is correct (no native review yet) |
+| The checker agrees with native labels less than a prompt-only judge does (κ 0.15 vs 0.46) | That our Telugu content is correct (one non-independent review only) |
 | RAG and stepwise reasoning did not help on our 29 and 58 cases | That the error bank predicts real learner errors |

@@ -80,7 +80,13 @@ not learned yet. When the learner fixes it, Raju learns the rule; when the learn
 <p>Two problems stand in the way. A beginner cannot correct anyone until they know enough Telugu, so the tutor needs an on-ramp. And a language model asked
 to play a weak classmate knows too much, so it leaks correct forms and words the learner has not met. We therefore keep Raju's knowledge as data and let
 the model only phrase sentences that a set of checks accepts or rejects. We ask whether correcting such a classmate improves recall, and which model
-capabilities can be used around him without giving up that control.</p>""")
+capabilities can be used around him without giving up that control.</p>
+<p><b>Background.</b> Prompted language-model "students" know too much and drift back to expert behaviour (the competence paradox; Jin et al., 2024; Yuan et al.,
+2026). Students work harder for an agent they believe they are teaching (Chase et al., 2009), but in a randomised cross-age tutoring trial the tutors gained
+(+0.24) and the tutees did not (−0.07; Thurston et al., 2021), and learning from others' errors helps only weakly on average (g = 0.136; Alemdag et al.,
+2025). Contrastive analysis has long been criticised for weak prediction (Wardhaugh, 1970; Berzak et al., 2015), so every predicted error is a hypothesis.
+We found no Hindi↔Telugu learner-error corpus; the only study we located is a 1978 thesis, which reports difficulty, not errors: 78% of 262 Hindi teachers
+said gender is hard for Telugu speakers (Chinnappa, 1978).</p>""")
 
     P.append("""<h2>2 What We Built</h2>
 <h3>2.1 The main rule: models write, rules decide</h3>
@@ -112,31 +118,47 @@ one demo-only finding. <b>None of these additions is evaluated:</b> the simulato
         ["Checker agreement", "50 native-labelled answers compared with checker and judge", "done, below target"],
         ["Interface", "Path map, pictures, match game, early Raju card, English glosses, speech behind flags", "built, not evaluated"],
         ["Tests", "1,287 passing (1,039 at mid-submission)", "done"],
-        ["Native review; learner pilot", "Not part of the repository's results; no real-learner data", "not done"],
+        ["Native review; learner pilot", "One bilingual team member reviewed the rules (24 of 25 realistic; not independent); no independent review; no pilot data in the repository", "partly / not done"],
     ], "Table 1: Progress at final submission."))
 
-    P.append("""<h2>4 Data</h2><p>Content is still our own draft bank: 25 rules (15 HI→TE, 10 TE→HI), 48 letters, 489 aksharas, 28 words, 32 chunks, 4 scene scripts, all
-without native review. Evaluation sets are small and frozen: 29 planting cases (58 for the reasoning set), 185 held-out checker cases, and a 145-row teacher
-label sheet of which 50 answers carry native labels. IndicCorp, IndicGEC and the other planned corpora remain unused.</p>""")
+    P.append("""<h2>4 Data</h2><p>Content is still our own draft bank: 25 rules (15 HI→TE, 10 TE→HI), 48 letters, 489 aksharas, 28 words, 32 chunks, 4 scene scripts, none independently reviewed (one bilingual team member checked the rules). Evaluation sets are small and frozen: 29 planting cases (58 for the reasoning set), 185 held-out checker cases, and a 145-row teacher
+label sheet of which 50 answers carry native labels. IndicCorp, IndicGEC and the other planned corpora remain unused.</p>
+<h3>4.1 Error bank and typology</h3>
+<p>Before writing rules we asked whether overall similarity could replace a contrast table. It cannot, and the two databases disagree: in WALS Hindi and
+Telugu agree on 32 of 47 shared features (κ = 0.442; Telugu is 38th of 691 languages most like Hindi, but 15 of the 32 agreements are word order); in Grambank
+they agree on 82 of 124 (κ = −0.025, no better than chance; 796th of 2,245). So rules are derived feature by feature and treated as hypotheses.</p>""")
+    P.append(table(["Contrast", "Hindi", "Telugu", "Expected error"], [
+        ["Polar question", "क्या at the start", "marker at the end", "HI→TE: initial particle"],
+        ["Negation", "separate नहीं before the verb", "affix after the stem", "HI→TE: negator as a word"],
+        ["Copula", "है required", "can be omitted", "TE→HI: है dropped"],
+        ["Gender", "agrees on adjectives, verbs", "no agreement on adjectives", "TE→HI: wrong gender"],
+        ["We", "हम (one form)", "మనం / మేము", "HI→TE: one form for both"],
+        ["Ergative ने", "perfective transitive subject", "none", "TE→HI: ने dropped (hard for 76% of teachers, 1978)"],
+    ], "Table 2: Examples from the contrast table (13 areas in all). These are predictions; no rule is yet observed in learner data."))
 
     P.append("""<h2>5 Methods Compared</h2><p>On the same 29 frozen cases we compared, with Wilson 95% intervals and exact McNemar tests: <b>generation</b> (prompt-only, blind
 resampling, tool-assisted); <b>tool calling</b> (model-chosen read-only tools with a step cap, against prompt-only and tools off, plus 17 harness attacks and
 11 injected messages); <b>stepwise reasoning</b> against a direct answer (58 cases) with a self-check ablation; <b>RAG</b> (BM25 over character n-grams on the
 25 rule documents) against blind, given-the-rule-title and oracle retrieval; <b>fine-tuning</b> Gemma-3-1B-it against prompted Gemini, with a go/no-go bar set
 before generating data; <b>multi-agent</b> roles against a single agent; and a <b>checker/judge</b> comparison on 50 native labels. All hosted calls use
-gemini-3.5-flash with reasoning off.</p>""")
+gemini-3.5-flash with reasoning off. The research questions were: (RQ1) does correcting the peer beat matched error examples and a normal tutor on delayed
+and transfer tests; (RQ2) do contrast-based predictions match learners' errors; (RQ3) do effects differ by direction; (RQ4) does the checker judge corrections
+reliably compared with a prompt-only agent. Today: RQ1 is answered only in simulation (and there it does not); RQ2 and RQ3 are open (no learner data; only
+Hindi→Telugu is built); RQ4 is answered (checker κ 0.15, judge 0.46).</p>""")
 
     P.append("<h2>6 Results</h2><h3>6.1 Checker and filters (held-out, 185 cases)</h3>")
     P.append(table(["Check", "Result", "Target", ""], [
         ["Correct Raju sentences clean (n=14)", "100%", "100%", "pass"], ["Wrong answers caught (n=34)", "100%", "≥90%", "pass"],
         ["Correct answers wrongly rejected (n=32)", "0%", "≤5%", "pass"], ["Checker says unsure (n=66)", "18.2%", "≤15%", "<b>fail</b>"],
         ["Trick inputs accepted (n=25)", "0", "0", "pass"], ["English letters in Hindi UI", "0", "0", "pass"],
-    ], "Table 2: Held-out results (unchanged since mid-submission). The unsure ceiling was not loosened."))
+    ], "Table 3: Held-out results (unchanged since mid-submission). The unsure ceiling was not loosened."))
     P.append("""<p>An "unsure" answer never changes the learner's record; it goes to a teacher. Our cases are team-written, so real input is probably harder.</p>
 <h3>6.2 Does the checker agree with native speakers?</h3>
 <p>On 50 answers labelled by native speakers (16 correct, 26 partial, 8 wrong) the checker reached κ = 0.15 [−0.03, 0.31] (accuracy 0.36) against a target of
 0.60, and a prompt-only LLM judge κ = 0.46 [0.29, 0.64] (accuracy 0.62). The checker is good at "wrong" (recall 0.88) and weak on "partial" (recall 0.12): of 26
-partial answers it called 9 correct, 5 wrong and sent 9 to unsure. Our hypothesis H6 (the checker beats a prompt-only judge) is rejected.</p>
+partial answers it called 9 correct, 5 wrong and sent 9 to unsure. Our hypothesis H6 (the checker beats a prompt-only judge) is rejected. An earlier blind marking of 145 answers by a bilingual team member gave κ = 0.32 for
+the earlier checker; one added rule (a correct sentence followed by the tag particle కదా is wrong) raised it to 0.599, but that rule was fitted to the answers
+that suggested it, so we do not count it. Both measurements fall below the 0.6 target.</p>
 <h3>6.3 Model capabilities against baselines</h3>""")
     P.append(table(["Capability", "Method vs baseline", "Result"], [
         ["Generation", "tool-assisted vs prompt-only", "valid 0.93 [0.78, 0.98] vs 0.72 [0.54, 0.85]; 1,054 vs 140 tokens/case"],
@@ -145,25 +167,38 @@ partial answers it called 9 correct, 5 wrong and sent 9 to unsure. Our hypothesi
         ["RAG hints", "RAG vs blind", "shown and usable 12/29 vs 10/29, p = 0.79; right rule first 16/29, top 3 24/29"],
         ["Fine-tuning", "Gemma-3-1B vs prompted Gemini", "7/29 vs 21/29 pass; <b>no-go</b>: 23 usable pairs vs 200 needed"],
         ["Multi-agent", "multi vs single agent", "success 0.31 vs 0.31; model-decided verdicts 0 vs 65; 359 vs 1,682 tokens/case"],
-    ], "Table 3: Headline results on the frozen sets. Intervals are wide at n = 29."))
+    ], "Table 4: Headline results on the frozen sets. Intervals are wide at n = 29."))
     P.append("""<p>Only tool use improved Raju, and it cost about seven times the tokens. Resampling alone did not beat one call (0.76 vs 0.72). The multi-agent setup is
 no more accurate; its gain is structural: no model decides a verdict. RAG found the right rule first in 55% of cases; a prompt fix that stopped hints from
 naming numbered rules raised shown-and-usable hints to 25/29, but it was designed on the same 29 cases, so treat it as optimistic. Fine-tuning failed on
-data, not compute: of 144 generated pairs, 23 passed our validator (2 of 14 rules).</p>
-<h3>6.4 Simulated learners</h3>
+data, not compute: of 144 generated pairs, 23 passed our validator (2 of 14 rules).</p>""")
+    P.append("<h3>6.4 Targets fixed in advance</h3>")
+    P.append(table(["Metric (target)", "Measured", "Outcome"], [
+        ["Leak rate (&lt; 2%, below prompt-only)", "tools 0.00 [0.00, 0.12]; prompt-only 0.10", "below prompt-only; &lt; 2% not provable at n = 29"],
+        ["Planting precision (≥ 0.8)", "1.00, every method", "met"],
+        ["Wrong fixes caught (≥ 0.9) / right fixes rejected (&lt; 5%)", "100% / 0%", "met"],
+        ["Checker unsure (&lt; 15%)", "18.2%", "<b>failed</b>"],
+        ["Agreement with teachers (κ ≥ 0.6)", "0.15 (50); 0.32 earlier (145)", "<b>failed</b>"],
+        ["Prompt injection changing state (0)", "0 of 17 attacks; 0 of 11 injections", "met"],
+        ["Model calls per turn (≈ 1–2)", "2.6 per case, tool-assisted", "slightly above"],
+        ["Coach answer leaks (&lt; 2%)", "0 shown (upper bound 12%)", "not provable at n = 29"],
+        ["Coach solved after a hint; tracker AUC; speech WER; error-bank κ", "not measured", "open"],
+        ["Learner outcomes, copy rate, usability", "no pilot data", "open"],
+    ], "Table 5: The metrics table from the 28 October paper against what we measured."))
+    P.append("""<h3>6.5 Simulated learners</h3>
 <p>The first simulator (sim-0.1) had A (correct Raju) beating B (same content, no classmate) but not C (conventional tutor). The improved one (sim-0.2), which
 shares the app's FSRS memory model, reverses it: day-7 recall A .253, B .329, C .306 (A−B −.076 [−.081, −.071]; A−C −.053 [−.060, −.047]), and A stayed last in
-every variation. The simulations disagree because they model memory differently; neither is evidence about people. We report the second because it uses the
+every variation. A third, parametric simulator (in the team's earlier repository) also had A below C in all five assumption sets (delayed recall 0.50 vs 0.67 under the defaults). The simulations disagree because they model memory differently; neither is evidence about people. We report the second because it uses the
 app's own memory model.</p>""")
     P.append(f'<figure>{chart}<p class="cap">Figure 2: Day-7 recall by condition. The ordering of A, B and C flips between the simulators.</p></figure>')
-    P.append("""<h3>6.5 Failures worth showing</h3><ul>
+    P.append("""<h3>6.6 Failures worth showing</h3><ul>
 <li><b>Success:</b> the live model wrote "నేను నహీ వెళ్తా ను" (Hindi नहीं for the Telugu negative): exactly the planted mistake, passed the filter.</li>
 <li><b>Retrieval miss:</b> for "క్యా నువ్వు వస్తావు" the right rule came second (0.78) behind a TE→HI rule (0.82); 8 of 13 top-1 misses went to such rules.</li>
 <li><b>Unusable hint:</b> 8 of 20 RAG hints said to read a numbered rule the learner never sees.</li>
 <li><b>Small model:</b> untuned Gemma-3-1B added a Devanagari word; the filter rejected it and the app showed the bank sentence.</li>
 <li><b>Not one error:</b> prompted Gemini added a negation to an already-negative verb.</li></ul>
 <p>In every case the filters or the checker handled the failure, so the learner never saw a failing sentence.</p>
-<h3>6.6 Compute</h3>
+<h3>6.7 Compute</h3>
 <p>Hosted calls: 1,561 sent (1,522 answered), 575,698 tokens, all gemini-3.5-flash; the RAG runs alone were 354 calls and 94,801 tokens. One local run: untuned
 Gemma-3-1B on CPU, 145 s in total. <b>GPU hours: 0</b>, since no fine-tune ran. Hosted models are off by default and no learner data is sent to them. A cost
 figure is not computed here because the price is not in the repository.</p>""")
@@ -174,13 +209,13 @@ did not use them. Several results here are negative (reasoning, RAG, multi-agent
 
     P.append("<h2>8 Challenges and What Is Left</h2>")
     P.append(table(["Challenge", "Status / plan"], [
-        ["No native review of Telugu or the new Hindi strings", "reviewers needed before any learner sees content"],
+        ["Only one non-independent review of Telugu; none of the new Hindi strings", "outside reviewers needed before any learner sees content"],
         ["Checker unsure 18.2% and κ 0.15", "teachers settle unsure answers; count partial answers as wrong only if teacher labels support it"],
         ["Small frozen sets (29, 58, 50)", "intervals wide; confirm on new cases"],
         ["Simulators disagree", "calibrate on pilot data; report every variation"],
         ["Pictures lack teacher review and Hindi audio description", "fold into the memory-aid subsystem or label demo-only"],
         ["Speech", "off by default; needs word-error-rate and speaker-review gates (Chrome sends speech audio to Google)"],
-    ], "Table 4: Open issues."))
+    ], "Table 6: Open issues."))
 
     P.append("""<h2>9 Discussion</h2><p>Three findings are solid enough to defend. First, the control design holds on our cases: no model changed a grade, and every model output either
 passed the checks or was replaced by approved text. Second, among model capabilities, only giving the model tools to check its own draft clearly helped, and the
@@ -188,22 +223,28 @@ others did not beat simple baselines on small frozen sets. Third, honest simulat
 so learners need more sentences they write from memory. Whether correcting Raju works as real recall for real learners is the question only a pilot can answer.</p>
 <p>We also learned that a test has to be able to fail, and that real model output fails in ways our cases did not predict.</p>""")
 
-    P.append("""<h2>Limitations</h2><p>Every learner result is simulated. No Telugu content has native review. The checker agrees with native labels poorly (κ 0.15) and failed its unsure
-ceiling. Evaluation sets are small and team-made. The interface additions are unevaluated, and the English words and new Hindi strings are drafts. A pilot of five or
-fewer learners could only describe, not prove, an effect.</p>
+    P.append("""<h2>Limitations</h2><p>Every learner result is simulated. Telugu content has had one review, by a bilingual team member, who is not independent; no outside rater has reviewed it. The checker agrees with native labels poorly (κ 0.15) and failed its unsure
+ceiling. Evaluation sets are small and team-made. The interface additions are unevaluated, and the English words and new Hindi strings are drafts. Spoken Hyderabad forms differ from textbook Telugu, the checker mishandled a tag particle (29 of 53 disagreements) and a missing final vowel sign, and the Devanagari-to-Telugu converter passed 12 of 14 native checks. A pilot of five or fewer learners could only describe, not prove, an effect.</p>
 <h2>Ethics Statement</h2><p>Pilot learners would be consenting adults. Accounts use random IDs and passphrases; we store no names, emails, phone numbers or IP addresses, and withdrawal
-deletes the learner's text. Unreviewed Telugu is never shown to real learners. Hosted models are off by default and receive no learner data. Browser speech
+deletes the learner's text. Unreviewed Telugu is never shown to real learners. The 28 October plan was self-hosted models only; we later used a hosted model (gemini-3.5-flash) for evaluation on team-written cases. It is off by default and receives no learner data. Browser speech
 recognition can send audio to a third party, so speech is off. We used an AI assistant for coding, testing and drafting; its commits carry a co-author line,
 and every number was checked against a file in <code>reports/</code>.</p>
 <h2>Contributions</h2><p><b>Madhav Malhotra:</b> core system, teacher tools, simulators, coach RAG and the fine-tuning pipeline. <b>Kushal Karan:</b> tool-calling, reasoning, judge and
 agent evaluations, results tables, real-model runs. <b>Shaik Areesh:</b> human-system agreement (Batch A) and annotation validation. <b>Faviana Noronha:</b> beginner
 interface, accessibility check, results analysis, failure analysis, compute report and this write-up. (Roles are from the commit history; each author should confirm.)</p>
 <h2>References</h2>
+<p class="ref">Alemdag, E., et al. 2025. Learning from erroneous examples: a meta-analysis.</p>
+<p class="ref">Berzak, Y., Reichart, R., and Katz, B. 2015. Contrastive analysis with predictive power: typology driven estimation of grammatical error distributions in ESL. CoNLL.</p>
+<p class="ref">Chinnappa. 1978. Difficulties of Telugu-speaking students in learning Hindi (thesis, Andhra).</p>
 <p class="ref">Chase, C., Chin, D., Oppezzo, M., and Schwartz, D. 2009. Teachable agents and the protégé effect. J. Science Education and Technology 18(4).</p>
 <p class="ref">Doddapaneni, S., et al. 2023. Towards leaving no Indic language behind. ACL.</p>
+<p class="ref">Jin, H., et al. 2024. Teach AI how to code: using LLMs as teachable agents for programming education. CHI.</p>
 <p class="ref">Kanojia, D., et al. 2020. Harnessing cross-lingual features to improve cognate detection for low-resource languages. COLING.</p>
 <p class="ref">Madhani, Y., et al. 2023. Aksharantar: Open Indic-language transliteration datasets and models. Findings of EMNLP.</p>
 <p class="ref">Roediger, H. L., and Karpicke, J. D. 2006. Test-enhanced learning. Psychological Science 17(3).</p>
+<p class="ref">Thurston, A., et al. 2021. Cross-age reading tutoring: a class-randomised trial.</p>
+<p class="ref">Wardhaugh, R. 1970. The contrastive analysis hypothesis. TESOL Quarterly 4(2).</p>
+<p class="ref">Yuan, et al. 2026. The competence paradox in simulated learners.</p>
 <p class="ref">Ye, J., Su, J., and Cao, Y. 2022. A stochastic shortest path algorithm for optimizing spaced repetition scheduling. KDD.</p></main>""")
     return f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>SETU final report</title><style>{CSS}</style></head><body>{"".join(P)}</body></html>'
 

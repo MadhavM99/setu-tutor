@@ -1,7 +1,7 @@
 # Final report: sections written by Faviana (paste-ready)
 
 Numbers are from `reports/` (see `faviana_analysis_20_23.md` for sources). Everything about learners is a statement about
-the machinery or a simulation; no real learner has used the system, and no Telugu content has had native review.
+the machinery or a simulation; no real learner has used the system, and the Telugu content has had only one review, by a bilingual team member, who is not an independent rater (24 of 25 rules judged realistic).
 
 ## A. The beginner on-ramp and interface (UI work)
 

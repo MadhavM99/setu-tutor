@@ -2,7 +2,7 @@
 
 Draft for Faviana Noronha. Every number comes from a file in `reports/`, named in brackets. Rates are k/n with Wilson
 95% intervals unless stated. The frozen set has 29 cases (58 for the reasoning set, 50 for the human-label batch), so
-intervals are wide and small differences are not evidence. All Telugu content is still unreviewed by a native speaker,
+intervals are wide and small differences are not evidence. Telugu content has had one review, by a bilingual team member (not independent: 24 of 25 rules judged realistic; paper v8, section 8.5), and no independent native review,
 and every learner-facing claim here is about the machinery, not about learners.
 
 ## Task 20: results tables (summary)
