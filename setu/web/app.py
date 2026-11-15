@@ -16,6 +16,7 @@ from setu import __version__
 from setu.agents import friend
 from setu.agents.llm import NotLocal, OpenAICompatible
 
+from . import english as english_gloss
 from . import pictures
 from .db import AppDatabase
 from .errors import ApiError, api_error_handler, body, validation_error_handler
@@ -49,6 +50,7 @@ def _templates(catalog: Catalog) -> Environment:
         num=catalog.number,
         # Telugu always sits in an element marked lang="te" (screen readers, fonts).
         pic=lambda word: pictures.picture(word, catalog.get),
+        en=english_gloss.english,
         te=lambda s: Markup('<span lang="te">') + escape(s) + Markup("</span>"),
         # Speech flags (architecture.md §7): off unless the environment turns them on, read at each render.
         flag=lambda name: os.environ.get({"speech_input": "SETU_SPEECH_INPUT", "tts_synthetic": "SETU_TTS_SYNTHETIC"}[name]) == "1",

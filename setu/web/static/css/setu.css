@@ -270,3 +270,6 @@ button, .button { min-height: 3.1rem; }
 .raju-card { margin-top: 1.5rem; }
 .raju-card h2 { margin: 0 0 .35rem; font-size: 1.15rem; }
 .raju-card .persona { margin: 0; }
+
+.gloss-en { margin: .1rem 0 .5rem; color: var(--muted, #4a4a4a); font-size: 1rem; text-align: center; }
+.result-list .gloss-en { margin: 0 .5rem; text-align: left; }

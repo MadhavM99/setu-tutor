@@ -7,7 +7,7 @@
 <ul class="plain result-list">
 {% for x in results %}
   <li class="result {% if x.ok %}is-right{% else %}is-wrong{% endif %}">
-    <span class="te-big">{{ te(x.unit.telugu) }}</span>{{ v.speak(x.unit.telugu) }}
+    <span class="te-big">{{ te(x.unit.telugu) }}</span>{% if en(x.unit.telugu) %}<span class="gloss-en" lang="en">{{ en(x.unit.telugu) }}</span>{% endif %}{{ v.speak(x.unit.telugu) }}
     {% if x.ok %}<span class="verdict-ok">{{ t("match.right") }}</span>
     {% else %}<span class="verdict-fix">{{ t("match.wrong") }} {{ x.unit.label }}</span>{% endif %}
     {{ v.word_picture(x.unit.telugu) }}

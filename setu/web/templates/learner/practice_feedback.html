@@ -5,6 +5,7 @@
 <div class="feedback {{ tone }}{% if correct %} celebrate{% endif %}" role="status">
   <h1>{% if correct %}{{ v.icon_tick() }}{% endif %}{{ t(outcome_key) }}</h1>
   <p class="letter-big">{{ te(unit.telugu) }}</p>
+  {% if en(unit.telugu) %}<p class="gloss-en" lang="en">{{ en(unit.telugu) }}</p>{% endif %}
   <p>{{ t(act.text.twin_is, twin=unit.label) }}</p>
   {{ v.word_picture(unit.telugu) }}
   <div class="voice-row">{{ v.speak(unit.telugu) }}</div>
