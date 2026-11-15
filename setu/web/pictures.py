@@ -8,7 +8,11 @@ Numbers are drawn as dots so the learner sees the quantity. Concrete words get a
 Sanskrit-origin ones) get a symbol, and a word with no good picture gets none: `picture` returns None and the page
 simply leaves the picture out. The label read by a screen reader comes from the Hindi catalog (`pic.*` keys).
 """
+from pathlib import Path
+
 from markupsafe import Markup, escape
+
+PHOTO_DIR = Path(__file__).resolve().parent / "static" / "img" / "words"
 
 # Telugu word -> (catalog key for the screen-reader label, drawing name)
 PICTURES = {
@@ -66,11 +70,32 @@ def has_picture(telugu: str) -> bool:
     return telugu in PICTURES
 
 
+def photo_file(telugu: str) -> str | None:
+    """File name of a real photo for this word, if one has been added to static/img/words/ (see PHOTO_CREDITS.md)."""
+    from .english import ENGLISH
+    gloss = ENGLISH.get(telugu)
+    if not gloss:
+        return None
+    slug = "".join(c if c.isalnum() else "-" for c in gloss.lower()).strip("-")
+    for ext in ("webp", "jpg", "jpeg", "png"):
+        if (PHOTO_DIR / f"{slug}.{ext}").is_file():
+            return f"{slug}.{ext}"
+    return None
+
+
 def picture(telugu: str, label_for) -> Markup | None:
-    """Inline SVG for a Telugu word, or None. `label_for` is the catalog lookup for the screen-reader label."""
+    """A real photo when one exists for the word, otherwise the drawn SVG, otherwise None.
+
+    `label_for` is the catalog lookup for the screen-reader label. Photos are served from our own /static (E-15: no
+    other host), carry the same Hindi alt text as the drawing, and are shown only where the drawing was.
+    """
     entry = PICTURES.get(telugu)
     if entry is None:
         return None
     key, name = entry
+    photo = photo_file(telugu)
+    if photo and not name.startswith("dots"):
+        return Markup('<img class="pic pic-photo" src="/static/img/words/') + escape(photo) + Markup('" width="240" height="240" alt="') + \
+            escape(label_for(key)) + Markup('" loading="lazy">')
     return Markup('<svg class="pic" viewBox="0 0 120 120" role="img" aria-label="') + escape(label_for(key)) + \
         Markup('">') + Markup(_drawing(name)) + Markup("</svg>")

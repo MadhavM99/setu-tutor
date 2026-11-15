@@ -273,3 +273,6 @@ button, .button { min-height: 3.1rem; }
 
 .gloss-en { margin: .1rem 0 .5rem; color: var(--muted, #4a4a4a); font-size: 1rem; text-align: center; }
 .result-list .gloss-en { margin: 0 .5rem; text-align: left; }
+
+.pic-photo { object-fit: cover; border-radius: .75rem; border: 1px solid var(--line, #e6dfd3); background: #fff; }
+.chip-pic .pic-photo { width: 4.6rem; height: 4.6rem; }
