@@ -7,7 +7,12 @@ can grade, update mastery, change Raju's memory, the ledger or a schedule: it re
 the approved bank sentence whenever no proposal passes.
 
 Methods (P-MODEL ablation; compared in `setu.research.generation_baselines`):
-- `tool`:      up to MAX_DRAFTS drafts; after each rejected draft the filter's reasons are given back to the model;
+- `tool_history` (the app's method since the 15 Nov 2026 audit): up to MAX_DRAFTS drafts in ONE growing
+  conversation. After each rejected draft the model sees its own draft (as its assistant turn) and the filter's
+  result as JSON. Added because `tool` does not show the model what it wrote, so a retry often repeated the same
+  draft (2 of 3 retried cases in the ablation, `reports/generation_ablation.md`). The filter is unchanged.
+- `tool`:      up to MAX_DRAFTS drafts; after each rejected draft the filter's reasons are given back to the model,
+  but not the rejected draft itself. Kept unchanged so the task 6 and task 14 results stay reproducible;
 - `resample`:  up to MAX_DRAFTS independent drafts, no feedback;
 - `prompt_only`: one draft. Used only to measure the baseline; the app never shows an unfiltered draft.
 - `agentic_tools`: the model is told the read-only tools (`tools.TOOLS`) and decides itself when to call one; each
@@ -25,7 +30,7 @@ from .llm import PROMPT_VERSION, Completion, parse_json
 
 MAX_DRAFTS = 3
 MAX_STEPS = 6
-METHODS = ("tool", "resample", "prompt_only", "agentic_tools")
+METHODS = ("tool", "tool_history", "resample", "prompt_only", "agentic_tools")
 SYSTEM = ("तुम राजू हो, तेलुगु सीखने वाला एक हिंदी-भाषी विद्यार्थी। तुम्हें सिर्फ़ एक तेलुगु वाक्य लिखना है, जैसा एक कमज़ोर "
           "विद्यार्थी लिखता। कोई व्याख्या नहीं, कोई अनुवाद नहीं। जवाब सिर्फ़ JSON में दो: {\"sentence\": \"...\"}")
 AGENT_SYSTEM = (
@@ -89,6 +94,8 @@ def propose(provider, ctx: leakfilter.Context, *, rule_title: str, hindi_meaning
         raise ValueError(f"method must be one of {METHODS}")
     if method == "agentic_tools":
         return _agentic(provider, ctx, rule_title, hindi_meaning, bank_sentence)
+    if method == "tool_history":
+        return _with_history(provider, ctx, rule_title, hindi_meaning, bank_sentence)
     drafts: list[Draft] = []
     n = 1 if method == "prompt_only" else MAX_DRAFTS
     feedback = None
@@ -103,6 +110,26 @@ def propose(provider, ctx: leakfilter.Context, *, rule_title: str, hindi_meaning
             return RajuTurn(sentence, "model", tuple(drafts), method)
         feedback = reasons
     return RajuTurn(bank_sentence, "bank", tuple(drafts), method)
+
+
+def _with_history(provider, ctx: leakfilter.Context, rule_title: str, hindi_meaning: str,
+                  bank_sentence: str) -> RajuTurn:
+    """Harness-run check with memory: every draft and the check's JSON result stay in the conversation."""
+    msgs = _prompt(ctx, rule_title, hindi_meaning)
+    drafts: list[Draft] = []
+    for _ in range(MAX_DRAFTS):
+        c = provider.complete(list(msgs), max_tokens=120)
+        obj = parse_json(c.text, ("sentence",)) if c.ok else None
+        sentence = obj["sentence"] if obj and isinstance(obj["sentence"], str) else None
+        reasons = tuple(leakfilter.check_sentence(sentence, ctx)) if sentence else ("NO_SENTENCE",)
+        drafts.append(Draft(sentence, reasons, c))
+        if not reasons:
+            return RajuTurn(sentence, "model", tuple(drafts), "tool_history")
+        if c.ok:
+            msgs.append({"role": "assistant", "content": c.text})
+            msgs.append({"role": "user", "content": "TOOL RESULT: " + json.dumps(
+                {"ok": False, "reasons": list(reasons)}, ensure_ascii=False) + "\nफिर से सिर्फ़ JSON में लिखो।"})
+    return RajuTurn(bank_sentence, "bank", tuple(drafts), "tool_history")
 
 
 def _agentic(provider, ctx: leakfilter.Context, rule_title: str, hindi_meaning: str, bank_sentence: str) -> RajuTurn:

@@ -2,8 +2,12 @@
 
 Written for the four team members and the TA. Every file, function and number here was checked against the code and
 a running app on 15 Nov 2026 (branch `research/final-audit`, based on `origin/redesign/phase0-spec` at `f9faee4`).
-Where the paper and the code differ, the code is described and the difference is listed in
-[01_research_audit.md](01_research_audit.md).
+Where the paper and the code differ, the code is described. (`01_research_audit.md`, written on the machine where the
+audit ran, was never pushed; the changes made since are recorded in [03_audit_and_changes.md](03_audit_and_changes.md).)
+
+**Update, 15 Nov 2026 evening.** The app now calls `classmate.propose(method="tool_history")`: on a retry the model
+sees its own rejected draft. Section 4 below is the trace recorded *before* that change, with the old `method="tool"`,
+and is kept as it was because it is the evidence for the change.
 
 ## 1. The short version
 
@@ -61,7 +65,7 @@ LLM = uses a language model. DET = deterministic code.
 | Exchange ladder | DET | Steps inside one turn: answer → hint → copy → (why) → close | answers so far → next `Step` | `setu/domain/exchange.py` `step`, `choose_hint` | leak filter | – | `test_exchange.py` (23), `tests/db/test_correction.py` |
 | Scheduler | DET | FSRS for cards, Beta tracker for rules, "learned" rule, forgetting | verdict + cue level → rating, new card state, mastery status | `setu/domain/scheduler.py` `fsrs_rating`, `fsrs_review`, `track`, `mastery_status`, `forget_if_due` | `fsrs==6.3.2` | Tracker accuracy (AUC) was never measured | `test_scheduler.py` (27), `tests/db/test_scheduling.py`, `test_reteaching.py` |
 | Leak filter | DET | Gate on every model output | sentence + `Context` → list of reason codes (empty = pass) | `setu/domain/leakfilter.py` `check_sentence`, `check_hint`, `check_level` | checker item key, tokenizer | For 43 of 49 items it accepts only the exact bank sentence, so a valid paraphrase is rejected | `test_leakfilter_and_tools.py` (34), frozen leak cases |
-| Raju | LLM | Write one Telugu sentence with the planned mistake | rule title, Hindi meaning, allowed words, last sentence → `RajuTurn(text, source model/bank)` | `setu/agents/classmate.py` `propose` (app uses `method="tool"`) | model client, leak filter | Drafts a different sentence, or the correct one; falls back to the bank | `test_agents.py` (21), `tests/db/test_agents_app.py` |
+| Raju | LLM | Write one Telugu sentence with the planned mistake | rule title, Hindi meaning, allowed words, last sentence → `RajuTurn(text, source model/bank)` | `setu/agents/classmate.py` `propose` (app uses `method="tool_history"` since 15 Nov; was `"tool"`) | model client, leak filter | Drafts a different sentence, or the correct one; falls back to the bank | `test_agents.py` (21), `tests/db/test_agents_app.py` |
 | Tool envelope | DET | Run a model-requested check; refuse everything else | JSON reply → result dict or exact `ERROR ...` string | `setu/agents/tools.py` `handle_reply` (3 read-only tools) | leak filter | No write tool exists, so an "unsafe" call can only be refused | `test_leakfilter_and_tools.py`, `test_tool_eval.py`, 17 frozen attacks |
 | Coach (दीदी) | LLM | One Hindi hint after a first miss | rule title + Raju's sentence → `CoachHint(text, source model/approved/generic)` | `setu/agents/coach.py` `hint` (research: `hint_with_mode`) | leak filter `check_hint` | Hint in Telugu or with the answer is rejected; generic hint shown (59% fallback in task 6) | `test_agents.py`, `test_coach_rag.py` (32) |
 | Native friend (रवि) | LLM | Pick among approved scene lines | approved line + variants → index | `setu/agents/friend.py` `ModelPicker`, `choose_line` | bank | Anything not exactly an approved form is dropped | `test_friend.py`, `tests/db/test_scenes.py` |
@@ -90,7 +94,8 @@ LLM = uses a language model. DET = deterministic code.
 7. **What makes a mistake valid.** In a planted turn the sentence must equal the item's `wrong_form` or fully match
    an approved `wrong_pattern`, use only seen words, be one sentence in Telugu script, and not look like an assistant
    or a teacher. In practice that is an exact match with the bank for 43 of 49 items.
-8. **When generated text fails.** The reasons go back to the model (up to 3 drafts), then the bank sentence is shown.
+8. **When generated text fails.** The model's own draft and the filter's reasons go back to the model (up to 3 drafts;
+   before 15 Nov only the reasons), then the bank sentence is shown.
    Every draft is logged in `model_call` with why it was rejected.
 9. **How the learner's knowledge changes.** Only through `OutcomeWriter.record_verdict`: the verdict row, a skill
    evidence row, the mastery tracker, the FSRS card. `unsure` changes nothing and opens a teacher queue item.
@@ -172,7 +177,7 @@ What the trace shows about the model's role:
 | Step | Model? | In the shipped app? |
 |---|---|---|
 | Choosing the rule, item and turn type | no | yes |
-| Writing Raju's sentence | yes, proposal only (`method="tool"`: harness runs the check) | yes, if `SETU_LLM_URL` is set |
+| Writing Raju's sentence | yes, proposal only (`method="tool_history"`: harness runs the check, model sees its draft) | yes, if `SETU_LLM_URL` is set |
 | Deciding whether to call a check tool (`agentic_tools`) | yes | **no, research only** |
 | Checking Raju's sentence | no | yes |
 | Marking the learner's answer | no | yes |

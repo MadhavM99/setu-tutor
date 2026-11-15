@@ -119,6 +119,51 @@ def test_the_tool_method_feeds_the_filter_reasons_back_and_resampling_does_not()
     assert "ANSWER_LEAK" not in p2.calls[1][-1]["content"]
 
 
+def test_tool_history_shows_the_model_its_own_rejected_draft_and_the_check_result():
+    # Regression (final audit): `tool` resent only the reason codes, so a retry often repeated the same draft.
+    p = llm.MockProvider([sent("నువ్వు వస్తావా"), sent("క్యా నువ్వు వస్తావు")])
+    t = classmate.propose(p, ctx(), rule_title="सवाल", hindi_meaning="तुम आओगे?", bank_sentence="BANK",
+                          method="tool_history")
+    assert (t.text, t.source, t.method, len(t.drafts)) == ("క్యా నువ్వు వస్తావు", "model", "tool_history", 2)
+    second = p.calls[1]
+    assert second[-2] == {"role": "assistant", "content": sent("నువ్వు వస్తావా")}
+    assert "ANSWER_LEAK" in second[-1]["content"] and second[-1]["content"].startswith("TOOL RESULT: ")
+    assert len(p.calls[0]) == 2  # first call: system + task only
+
+
+def test_the_old_tool_method_still_omits_the_draft_so_earlier_results_stay_reproducible():
+    p = llm.MockProvider([sent("నువ్వు వస్తావా"), sent("క్యా నువ్వు వస్తావు")])
+    classmate.propose(p, ctx(), rule_title="सवाल", hindi_meaning="तुम आओगे?", bank_sentence="BANK", method="tool")
+    assert all(m["role"] != "assistant" for m in p.calls[1])
+
+
+@pytest.mark.parametrize("bad", ["నువ్వు వస్తావా",        # the correct form: answer leak
+                                 "నువ్వు క్యా వస్తావు",    # a plausible paraphrase the filter cannot verify
+                                 "మీరు ఎక్కడ",             # unseen words
+                                 "నేను వెళ్ళను"])          # another rule's correct form
+def test_tool_history_never_loosens_the_filter_and_falls_back_to_the_bank(bad):
+    p = llm.MockProvider([sent(bad)] * 3)
+    t = classmate.propose(p, ctx(), rule_title="सवाल", hindi_meaning="तुम आओगे?", bank_sentence="BANK",
+                          method="tool_history")
+    assert (t.text, t.source, len(t.drafts), len(p.calls)) == ("BANK", "bank", 3, 3)
+    assert all(d.reasons for d in t.drafts)
+
+
+def test_tool_history_skips_a_failed_call_without_adding_an_empty_turn():
+    class Flaky:
+        model, calls, n = "flaky", [], 0
+
+        def complete(self, messages, **_):
+            self.calls.append(messages)
+            self.n += 1
+            if self.n == 1:
+                return llm.Completion(None, self.model, 0, None, None, "HTTPStatusError 500", "h")
+            return llm.Completion(sent("క్యా నువ్వు వస్తావు"), self.model, 0, None, None, None, "h")
+    p = Flaky()
+    t = classmate.propose(p, ctx(), rule_title="", hindi_meaning="", bank_sentence="BANK", method="tool_history")
+    assert t.source == "model" and len(p.calls[1]) == 2 and t.drafts[0].reasons == ("NO_SENTENCE",)
+
+
 def test_prompt_only_makes_one_draft_and_a_no_error_turn_needs_the_correct_form():
     p = llm.MockProvider([sent("మీరు ఎక్కడ")])
     t = classmate.propose(p, ctx(), rule_title="", hindi_meaning="", bank_sentence="BANK", method="prompt_only")

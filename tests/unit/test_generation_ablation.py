@@ -116,3 +116,20 @@ def test_error_rows_are_not_results_and_are_retried(tmp_path):
     ga.collect(llm.MockProvider(scripted_copy), repeats=1, conditions=("prompt_only",), path=path, limit=2)
     rows = ga.load_rows(path)
     assert len(rows) == 2 and all(r["evaluable"] and r["valid"] for r in rows)
+
+
+def test_paraphrase_candidates_are_exported_for_review_but_never_accepted(tmp_path):
+    _, it, ctx = first_case()
+    words = it["wrong_form"].split()
+    para = " ".join([words[-1], *words[:-1]]) if len(words) > 1 else it["wrong_form"] + " " + it["wrong_form"]
+    rows = [{"condition": "tool", "item_id": it["item_id"], "drafts": [para, it["wrong_form"], para]},
+            {"condition": "prompt_only", "item_id": it["item_id"], "drafts": [it["correct_form"]]}]
+    out = tmp_path / "c.csv"
+    n = ga.export_candidates(rows, out)
+    lines = out.read_text(encoding="utf-8").splitlines()
+    if ga.describe(para, it) == "other_with_planted_word":
+        assert n == 1 and para in lines[1] and ",2,tool," in lines[1]
+    else:
+        assert n == 0
+    from setu.domain import leakfilter
+    assert leakfilter.check_sentence(para, ctx)  # the filter still rejects it

@@ -25,7 +25,7 @@ Course project, Language Models and Agents, IIIT Hyderabad, Monsoon 2026 (team T
 | `setu/web/` | FastAPI app, server-rendered Hindi pages, teacher console |
 | `setu/research/` | Evaluation scripts and both simulators |
 | `content/` | The rule and content bank (YAML): 25 rules, 49 items, 48 letters, 489 aksharas, 28 words, 32 chunks, 4 scene scripts |
-| `tests/` | 1,300 tests; `tests/eval_sets/` and `tests/stage_a/` hold the frozen evaluation cases |
+| `tests/` | 1,309 tests; `tests/eval_sets/` and `tests/stage_a/` hold the frozen evaluation cases |
 | `reports/` | Every measured result, as JSON plus a generated Markdown table |
 | `docs/submission/` | Paper, poster, figures, audit and walkthrough |
 | `legacy/` | The earlier Streamlit prototype, kept runnable |
@@ -48,6 +48,11 @@ pytest, ruff. No front-end build step. Any OpenAI-compatible chat endpoint can s
 PostgreSQL 16 runs in Docker (port 5433, so it does not clash with a local Postgres):
 
     docker compose up -d db
+
+No Docker? Any PostgreSQL 16 works. Give the tests a superuser connection with
+`SETU_TEST_ADMIN_URL=postgresql+psycopg://<user>:<password>@localhost:<port>/postgres`; the default matches the compose
+service (`setu_migrate`, port 5433). `scripts/run_demo.sh` calls `docker compose`, so without Docker run its remaining
+lines by hand against your own server.
 
 ## Run the demo
 
@@ -115,7 +120,7 @@ Tests use `MockProvider`, a scripted stand-in that is not a model; no reported n
 
     .venv/bin/ruff check .
     .venv/bin/python -m scripts.lint_hindi          # no English letters in learner-facing text
-    .venv/bin/pytest -q                             # needs Postgres on 5433; about 6 minutes
+    .venv/bin/pytest -q                             # needs Postgres on 5433; about 2 minutes
     SETU_SKIP_DB_TESTS=1 .venv/bin/pytest tests/unit -q   # no database; about 30 seconds
 
 Each test session creates and drops its own database. Tests never call a model.
@@ -127,19 +132,21 @@ resume, and a call that fails is recorded as an error, never as a result.
 
 | Result | Command | Needs | Output |
 |---|---|---|---|
-| Checker and filters on 185 held-out cases | `python -m setu.research.scorecard --split heldout` | nothing | `scorecard-2026-10-31-heldout.{json,md}` |
+| Checker and filters on 185 held-out cases | `python -m setu.research.scorecard --split heldout` | nothing | `scorecard-<today>-heldout.{json,md}`; exit code 1 means a target failed (the unsure rate does) |
 | Raju generation baselines (task 6) | `python -m setu.research.generation_baselines` | model | `generation_baselines.json` |
 | Tool calling, attacks (task 14) | `python -m setu.research.tool_eval` | model (harness replay runs without) | `tool_eval.json` |
-| **Generation ablation: memory, model choice, exemplar** | `python -m setu.research.generation_ablation` | model, about 1,000 calls | `generation_ablation.{json,md}`, `generation_ablation_rows.jsonl` |
+| **Generation ablation: memory, model choice, exemplar** | `python -m setu.research.generation_ablation` (`--report-only` rebuilds from saved rows, no model) | model, about 1,000 calls | `generation_ablation.{json,md}`, `generation_ablation_rows.jsonl`, `generation_paraphrase_candidates.csv` |
 | Stepwise reasoning (task 15) | `python -m setu.research.reasoning_eval` | model | `reasoning_eval.json` |
 | Checker and LLM judge vs native labels (task 13) | `python -m setu.research.judge_eval` | model for the judge | `judge_eval.json`, `agreement_batch_a.json` |
-| Coach retrieval and hints (tasks 9, 16) | `python -m setu.research.rag_eval` (`--retrieval-only` needs nothing) | model | `rag_eval.{json,md}` |
+| Coach retrieval and hints (tasks 9, 16) | `python -m setu.research.rag_eval` (`--retrieval-only` needs nothing and writes `rag_eval_retrieval.*`) | model | `rag_eval.{json,md}` |
 | Fine-tuning data and go/no-go (task 10) | `python -m setu.research.ft_data`, `ft_split`, `ft_eval` | model for generation; torch for Gemma | `ft_*.json` |
 | Role separation vs single agent (task 18) | `python -m setu.research.agentic_eval` | model | `agentic_eval.json` |
 | Simulator v0.1, v0.2 | `python -m setu.research.simulator`, `python -m setu.research.simulator_v2` | nothing | `simulation/`, `simulation_v2/` |
-| **Simulator sensitivity map** | `python -m setu.research.sim_sensitivity` | nothing, 10 s | `simulation_sensitivity.json` |
+| **Simulator sensitivity map** | `python -m setu.research.sim_sensitivity` | nothing, about a minute | `simulation_sensitivity.json` |
 | Result tables | `python -m setu.research.results_tables` | nothing | `results_tables.md` |
 | Figures | `pip install -e ".[figures]" && python -m scripts.make_figures` | matplotlib | `docs/submission/figures/` |
+| Final paper | `python -m scripts.build_final_paper_v2` | Google Chrome (prints the PDF) | `docs/submission/report/SETU_final_paper_v2.{html,pdf}` |
+| Poster | `python -m scripts.build_poster` | python-pptx, Google Chrome | `docs/submission/poster/SETU_poster.{pptx,html,pdf}` |
 
 Frozen evaluation data (do not edit): `tests/eval_sets/manifest.json` (29 planting cases, held-out split),
 `tests/eval_sets/attacks.jsonl` (28 attacks), `tests/stage_a/cases.jsonl` (663 cases), and the label sheets in
@@ -161,7 +168,11 @@ Full tables: `reports/results_tables.md`, `reports/rag_eval.md`, `reports/ft_eva
   `reports/generation_ablation.md` for how much of that is tool choice and how much is simply letting the model see
   its own rejected draft.
 - **"Valid" generation is a narrow measure.** The filter accepts only the bank's wrong sentence for 43 of 49 items,
-  and that sentence is in the prompt, so a valid generation mostly means the model copied it.
+  and that sentence is in the prompt, so a valid generation mostly means the model copied it. Without the example in
+  the prompt, one draft still matched in 0.66 of runs (a lower bound: correct paraphrases count as failures). The
+  rejected paraphrases are listed in `reports/generation_paraphrase_candidates.csv` for native review.
+- **The app now shows Raju his rejected draft** (`method="tool_history"`, since the 15 Nov audit). The old loop
+  (`tool`) did not, and in 2 of 3 retried cases it repeated the same draft. The filter was not changed.
 - **Simulated learners do not support reverse learning.** The first simulator has correcting Raju ahead of the
   same content without him; the second, which uses the app's FSRS memory model, has it last, and it stays last across
   28 changed-assumption runs. Neither is evidence about people.
@@ -173,8 +184,8 @@ Full tables: `reports/results_tables.md`, `reports/rag_eval.md`, `reports/ft_eva
   the Hindi→Telugu direction is built into the app.
 - Native labels come from one labeller (a team member), so there is no human–human agreement ceiling.
 - Evaluation sets are small (29, 58, 50 cases) and team-written; most model results are single runs.
-- The app's Raju loop uses harness feedback (`method="tool"`); model-chosen tool calls and retrieval-based hints
-  exist only in the research scripts.
+- The app's Raju loop is harness feedback with memory (`method="tool_history"`), adopted after the ablation and not
+  yet measured on new cases; model-chosen tool calls and retrieval-based hints exist only in the research scripts.
 - Speech features are off; browser speech recognition would send audio to a third party.
 - The interface additions (path map, word pictures, match game) were built but not evaluated.
 

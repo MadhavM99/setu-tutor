@@ -135,7 +135,7 @@ def fig_raju_loop():
     ax.axis("off")
     _box(ax, 0.2, 3.3, 2.5, 1.9, "1 Plan the turn", "planner.plan_session\nrule the learner knows,\nRaju does not; pick item", TEAL_L, TEAL)
     _box(ax, 3.2, 3.3, 2.7, 1.9, "2 Build the task", "classmate._prompt\nHindi meaning, rule title,\nallowed words, last sentence", GREY_L, GREY)
-    _box(ax, 6.4, 3.3, 2.4, 1.9, "3 Model drafts", "one JSON sentence\n(up to 3 drafts in the app,\nmethod 'tool')", PURPLE_L, PURPLE)
+    _box(ax, 6.4, 3.3, 2.4, 1.9, "3 Model drafts", "one JSON sentence\n(up to 3 drafts in the app,\nmethod 'tool_history')", PURPLE_L, PURPLE)
     _box(ax, 9.3, 3.3, 3.0, 1.9, "4 Leak filter", "exactly the planned mistake?\nno answer, no unseen word,\none sentence, student voice", TEAL_L, TEAL)
     _box(ax, 13.2, 4.3, 2.6, 0.9, "5a Show model\nsentence", "", TEAL_L, TEAL, title_size=7.8)
     _box(ax, 13.2, 3.0, 2.6, 0.9, "5b Show approved\nbank sentence", "", GREY_L, GREY, title_size=7.8)
@@ -144,13 +144,13 @@ def fig_raju_loop():
     _arrow(ax, (8.8, 4.25), (9.3, 4.25), "draft", off=(0, 0.08))
     _arrow(ax, (12.3, 4.75), (13.2, 4.75), "pass", color=TEAL, off=(0, 0.06))
     _arrow(ax, (12.3, 3.6), (13.2, 3.45), "3 fails", color=MUTED, off=(0, -0.42))
-    _arrow(ax, (10.8, 3.3), (7.6, 3.3), "fail: reason codes sent back", color=MUTED, rad=-0.45, off=(0, -1.05))
+    _arrow(ax, (10.8, 3.3), (7.6, 3.3), "fail: own draft + reason codes sent back", color=MUTED, rad=-0.45, off=(0, -1.05))
     _box(ax, 6.4, 0.25, 6.5, 1.25, "Research variant 'agentic_tools' (not in the app)",
          "the model chooses when to call check_classmate_sentence,\nthen submits; the filter still re-checks the final sentence", PURPLE_L, PURPLE, title_size=8)
     _box(ax, 0.2, 0.25, 5.7, 1.25, "Either way", "the learner only ever sees a sentence that passed the filter,\nand nothing a model writes can grade or update state", "#FFFFFF", TEAL, title_size=8)
     if tool:
         t, a = tool["tool"], tool["agentic_tools"]
-        ax.text(14.5, 1.95, f"measured on {t['n']} cases (task 14):\napp loop: {t['valid_rate']:.0%} model, {t['fallback_rate']:.0%} bank\n"
+        ax.text(14.5, 1.95, f"measured on {t['n']} cases (task 14):\nold loop, no memory: {t['valid_rate']:.0%} model, {t['fallback_rate']:.0%} bank\n"
                 f"agentic: {a['valid_rate']:.0%} model, {a['fallback_rate']:.0%} bank", ha="center", va="center",
                 fontsize=6.8, color=MUTED, linespacing=1.35)
     ax.text(0.2, 5.75, "Raju's sentence: the model writes, the filter decides", fontsize=10.5, fontweight="bold")
@@ -181,7 +181,7 @@ def fig_generation():
     fig, axes = plt.subplots(1, 2 if have_abl else 1, figsize=(11.2 if have_abl else 6.2, 3.7), squeeze=False,
                              gridspec_kw={"wspace": 0.95})
     names = {"prompt_only": "Prompt only (1 draft)", "resample": "Resample (no feedback)",
-             "tool": "Harness feedback (app loop)", "agentic_tools": "Model-chosen tool calls"}
+             "tool": "Harness feedback, no memory (app until 15 Nov)", "agentic_tools": "Model-chosen tool calls"}
     rows = []
     for run, src in (("task 6", base["methods"]), ("task 14", tool["methods"])):
         for m in ("prompt_only", "resample", "tool", "agentic_tools"):
@@ -195,8 +195,8 @@ def fig_generation():
     _dots(axes[0][0], rows, "Share of cases where a model sentence passed the filter (Wilson 95%)")
     axes[0][0].set_title("a  Earlier runs (single run each, n = 29)", loc="left")
     if have_abl:
-        lab = {"prompt_only": "Prompt only", "tool": "Harness feedback, no memory (app)",
-               "tool_history": "Harness feedback + memory (new)", "agentic_tools": "Model-chosen tool calls",
+        lab = {"prompt_only": "Prompt only", "tool": "Harness feedback, no memory (old app loop)",
+               "tool_history": "Harness feedback + memory (app now)", "agentic_tools": "Model-chosen tool calls",
                "prompt_only_noex": "Prompt only, no example sentence", "agentic_noex": "Tool calls, no example sentence"}
         col = {"prompt_only": GREY, "tool": TEAL, "tool_history": TEAL, "agentic_tools": PURPLE,
                "prompt_only_noex": GREY, "agentic_noex": PURPLE}
@@ -388,8 +388,8 @@ def fig_poster_generation():
         fig, ax = plt.subplots(figsize=(7.4, 4.6))
         rows = []
         if abl and abl.get("summary", {}).get("conditions"):
-            lab = {"prompt_only": "Prompt only", "tool": "Harness check,\nno memory (app)",
-                   "tool_history": "Harness check\n+ memory", "agentic_tools": "Model-chosen\ntool calls",
+            lab = {"prompt_only": "Prompt only", "tool": "Harness check,\nno memory (old app)",
+                   "tool_history": "Harness check\n+ memory (app now)", "agentic_tools": "Model-chosen\ntool calls",
                    "prompt_only_noex": "Prompt only,\nno example", "agentic_noex": "Tool calls,\nno example"}
             col = {"prompt_only": GREY, "tool": TEAL, "tool_history": TEAL, "agentic_tools": PURPLE,
                    "prompt_only_noex": GREY, "agentic_noex": PURPLE}

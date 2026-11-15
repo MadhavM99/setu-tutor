@@ -53,7 +53,7 @@ import statistics
 from pathlib import Path
 
 from setu.agents import classmate
-from setu.agents.llm import OpenAICompatible, parse_json
+from setu.agents.llm import OpenAICompatible
 from setu.domain import leakfilter
 from setu.domain.normalise import canonical
 from setu.domain.tokenize import tokens
@@ -89,22 +89,10 @@ class NoExemplar:
 
 def propose_with_history(provider, ctx: leakfilter.Context, *, rule_title: str, hindi_meaning: str,
                          bank_sentence: str) -> classmate.RajuTurn:
-    """Harness-run check with memory: every draft and the check's JSON result stay in the conversation."""
-    msgs = classmate._prompt(ctx, rule_title, hindi_meaning)
-    drafts = []
-    for _ in range(MAX_DRAFTS):
-        c = provider.complete(list(msgs), max_tokens=120)
-        obj = parse_json(c.text, ("sentence",)) if c.ok else None
-        sentence = obj["sentence"] if obj and isinstance(obj["sentence"], str) else None
-        reasons = tuple(leakfilter.check_sentence(sentence, ctx)) if sentence else ("NO_SENTENCE",)
-        drafts.append(classmate.Draft(sentence, reasons, c))
-        if not reasons:
-            return classmate.RajuTurn(sentence, "model", tuple(drafts), "tool_history")
-        if c.ok:
-            msgs.append({"role": "assistant", "content": c.text})
-            msgs.append({"role": "user", "content": "TOOL RESULT: " + json.dumps(
-                {"ok": False, "reasons": list(reasons)}, ensure_ascii=False) + "\nफिर से सिर्फ़ JSON में लिखो।"})
-    return classmate.RajuTurn(bank_sentence, "bank", tuple(drafts), "tool_history")
+    """Harness-run check with memory. Moved verbatim into `classmate` (method "tool_history") after this ablation ran,
+    when the app switched to it; this name is kept so the rows on disk still point at the code that made them."""
+    return classmate.propose(provider, ctx, rule_title=rule_title, hindi_meaning=hindi_meaning,
+                             bank_sentence=bank_sentence, method="tool_history")
 
 
 def run_condition(provider, condition: str, rule, it, ctx) -> classmate.RajuTurn:
@@ -302,6 +290,36 @@ def build_report(extra: dict | None = None) -> dict:
     return report
 
 
+CANDIDATES = ROOT / "reports/generation_paraphrase_candidates.csv"
+
+
+def export_candidates(rows: list[dict], path: Path = CANDIDATES) -> int:
+    """Every distinct rejected draft that differs from the bank's wrong sentence but keeps a wrong-only word, for a
+    native speaker to judge. Nothing here is accepted by the app: a draft becomes acceptable only if a reviewer adds
+    it to the item's `wrong_patterns`, which the leak filter already honours. Returns the number of drafts."""
+    import csv
+    bank = {it["item_id"]: it for _, it, _ in cases()}
+    seen: dict = {}
+    for r in rows:
+        it = bank[r["item_id"]]
+        for s in r["drafts"]:
+            if describe(s, it) != "other_with_planted_word":
+                continue
+            k = (r["item_id"], canonical(s))
+            e = seen.setdefault(k, {"item_id": r["item_id"], "draft": s, "bank_wrong_form": it["wrong_form"],
+                                    "correct_form": it["correct_form"], "times": 0, "conditions": set()})
+            e["times"] += 1
+            e["conditions"].add(r["condition"])
+    with path.open("w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["item_id", "draft", "bank_wrong_form", "correct_form", "times_drafted", "conditions",
+                    "native_verdict (one planted error of this rule? yes/no/unsure)"])
+        for e in sorted(seen.values(), key=lambda e: (e["item_id"], -e["times"])):
+            w.writerow([e["item_id"], e["draft"], e["bank_wrong_form"], e["correct_form"], e["times"],
+                        " ".join(sorted(e["conditions"])), ""])
+    return len(seen)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--report-only", action="store_true")
@@ -325,6 +343,7 @@ def main(argv=None) -> int:
         old = json.loads(OUT_JSON.read_text(encoding="utf-8"))
         extra = {k: old[k] for k in ("reasoning_effort", "provider_calls") if k in old}
     report = build_report(extra)
+    export_candidates(load_rows())
     print(json.dumps({k: v for k, v in report.items() if k != "summary"}, ensure_ascii=False))
     return 0
 
