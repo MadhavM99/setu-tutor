@@ -128,9 +128,9 @@ a.back{display:inline-block;color:var(--mut);text-decoration:none;font-size:.9re
 .aiinfo .mn{display:block;margin-top:4px}
 .nudge{gap:12px}.nudge .mn{display:block}
 .authgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-form.card label{display:block;font-weight:600;font-size:.9rem;margin:10px 0}
-form.card input{display:block;width:100%;margin-top:4px;font:1rem Inter,sans-serif;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
-form.card button{width:100%;margin-top:6px}
+form label{display:block;font-weight:600;font-size:.9rem;margin:10px 0}
+form input{display:block;width:100%;margin-top:4px;font:1rem Inter,sans-serif;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+form button{width:100%;margin-top:6px}
 .ferr{color:var(--bad);font-size:.85rem;min-height:1.2em;margin-top:6px}
 .tbl2{width:100%;border-collapse:collapse;font:.85rem Inter,sans-serif}
 .tbl2 td,.tbl2 th{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
@@ -146,6 +146,57 @@ a.step.locked .go{font-size:1.1rem}
 .wchip{border:1px dashed var(--line);border-radius:12px;padding:6px 8px;font-size:1.05rem;color:var(--mut);display:block}
 .wchip small{display:block;font:500 .7rem Inter,sans-serif}
 .wchip.on{border:1.5px solid var(--acc);background:var(--soft);color:var(--ink)}
+.stats{display:inline-flex;gap:8px;align-items:center}
+.stat1{display:inline-flex;align-items:center;gap:4px;font:700 .95rem Inter,sans-serif;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surf)}
+.stat1.goal{padding:0 10px 0 2px}.stat1.goal small{font:600 .72rem Inter,sans-serif;color:var(--mut)}
+.ring{display:block;flex:none}
+.goalc .row{gap:14px;flex-wrap:nowrap}
+.xpbadge{display:inline-block;background:#fff3d6;color:#8a5a00;font:700 1rem Inter,sans-serif;border-radius:999px;padding:4px 14px;margin:6px 0}
+.trail{display:flex;flex-direction:column;align-items:center;gap:16px;padding:10px 0 24px}
+.tnode{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--ink);text-align:center;gap:6px;position:relative;width:200px}
+.tcirc{position:relative;width:88px;height:88px;border-radius:50%;background:var(--acc);box-shadow:0 6px 0 rgba(0,0,0,.22);display:grid;place-items:center;transition:transform .12s}
+.tnode:active .tcirc{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.22)}
+.tnode.done .tcirc{background:#f2b134}
+.tnode.locked .tcirc{background:#d9d3c7;box-shadow:0 6px 0 #bdb6a8}
+.tnode.locked img{filter:grayscale(1);opacity:.55}
+.tnode.open .tcirc{background:var(--soft);border:3px solid var(--acc);box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.tnode.cur .tcirc{animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.tnode.cur .tcirc{animation:none}}
+.tcirc .tick{position:absolute;right:-4px;bottom:-4px;width:30px;height:30px;border-radius:50%;background:#fff;display:grid;place-items:center;font:700 .95rem Inter,sans-serif;color:#b9831a;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.tbub{min-height:26px;font:700 .75rem Inter,sans-serif;color:var(--acc);letter-spacing:.06em}
+.tbub:not(:empty){background:var(--surf);border:1.5px solid var(--acc);border-radius:10px;padding:2px 10px}
+.tcirc .gl{font-size:1.35rem;font-weight:700;color:var(--accfg);line-height:1}
+.tnode.open .gl,.tnode.locked .gl{color:var(--acc)}
+.tnode.locked .gl{color:#9b9484}
+.tlab{font-weight:700;font-size:1rem;line-height:1.3}
+.splash{min-height:70vh;display:grid;place-content:center;text-align:center}
+.splash .logo{font-size:3rem;font-weight:700;color:var(--acc)}
+body.landing nav.tabs,body.landing header.top,body.landing .demo{display:none}
+body.landing{padding:0}
+body.landing .app{margin:0;max-width:none;width:100%;padding:0}
+.land{min-height:100vh;display:grid;grid-template-columns:1.15fr 1fr}
+.hero{padding:48px max(24px,6vw);background:linear-gradient(160deg,var(--soft),var(--bg) 70%)}
+.hero .logo{font-size:2rem;font-weight:700;color:var(--acc)}.hero .logo small{font:600 .8rem Inter,sans-serif;color:var(--mut);letter-spacing:.08em}
+.hero h1{font-size:2.6rem;line-height:1.2;margin:28px 0 12px}
+.hero h1 .en{font-size:.45em;font-weight:600;margin-top:10px}
+.lead{font-size:1.05rem;max-width:56ch}
+.how{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:22px 0}
+.how div{display:flex;gap:8px;align-items:center;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:8px 12px;font-size:.88rem;font-weight:600}
+.how b{width:24px;height:24px;border-radius:50%;background:var(--acc);color:var(--accfg);display:grid;place-items:center;font:700 .8rem Inter,sans-serif}
+.how i{color:var(--mut);font-style:normal}
+.hero .feat{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.hero .fcard{background:var(--surf);border:1px solid var(--line);border-radius:16px;padding:12px}
+.authwrap{display:grid;place-items:center;padding:32px max(16px,4vw)}
+.authcard{width:100%;max-width:400px;padding:22px;margin:0}
+.tabs2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.tabs2 button{border-color:var(--line);color:var(--mut);font-weight:600}
+.tabs2 button.on{background:var(--acc);color:var(--accfg);border-color:var(--acc)}
+.tabs2 button.on .en{color:var(--accfg)}
+#authcard[data-tab=login] #signupF,#authcard[data-tab=signup] #loginF{display:none}
+.linkbtn{display:block;width:100%;margin-top:14px;background:none;border:none;color:var(--mut);font-weight:600;text-decoration:underline;min-height:0}
+.linkbtn:hover{background:none;color:var(--ink)}
+@media (max-width:899px){.land{grid-template-columns:1fr}.hero{padding:28px 20px}.hero h1{font-size:2rem}.authwrap{padding:12px 16px 32px}.stats .stat1.goal small{display:none}.goalc .row{flex-wrap:wrap}}
 /* ---- desktop web layout ---- */
 @media (min-width:900px){
  body{padding-left:0;padding-right:0;font-size:18px;background:var(--bg)}
@@ -175,7 +226,7 @@ a.step.locked .go{font-size:1.1rem}
 </style>
 <div class="app">
   <header class="top"><a class="brand" href="#/home">सेतु <small>SETU</small></a>
-    <span class="row"><span id="who"></span><button class="pill ghost" id="enBtn" aria-pressed="true" title="English on/off">English: on</button></span></header>
+    <span class="row"><span id="stats" class="stats"></span><span id="who"></span><button class="pill ghost" id="enBtn" aria-pressed="true" title="English on/off">English: on</button></span></header>
   <div class="demo">डेमो · सामग्री अभी जाँची नहीं गई<span class="en">Demo · content not yet checked by native speakers</span></div>
   <main id="view" tabindex="-1"></main>
 </div>
@@ -207,13 +258,18 @@ function api(path,opt){opt=opt||{};var h={'content-type':'application/json'};if(
  return fetch(API+path,{method:opt.method||'GET',headers:h,body:opt.body?JSON.stringify(opt.body):undefined}).then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok){var e=new Error(j.error||('HTTP '+r.status));e.status=r.status;throw e}return j})})}
 function pushProgress(){if(!ME)return;api('/progress',{method:'PUT',body:{state:S}}).then(function(){SYNC='saved';paintChip()}).catch(function(){SYNC='offline';paintChip()})}
 function streak(){var d=S.days||[],n=0,t=Date.now();for(var i=0;i<400;i++){var k=new Date(t-i*864e5).toISOString().slice(0,10);if(d.indexOf(k)>=0)n++;else if(i>0)break}return n}
+var DAILY_GOAL=30;
+function xpToday(){return S.xpDay&&S.xpDay.d===today()?S.xpDay.n:0}
+function addXP(n,why){if(!n)return;S.xp=(S.xp||0)+n;var d=today();if(!S.xpDay||S.xpDay.d!==d)S.xpDay={d:d,n:0};var was=S.xpDay.n;S.xpDay.n+=n;save();toast('⭐ +'+n+' XP'+(why?' · '+why:'')+(was<DAILY_GOAL&&S.xpDay.n>=DAILY_GOAL?'  🎯 आज का लक्ष्य पूरा! Daily goal done!':''));paintChip()}
+function ring(p,sz){var r=(sz||44)/2-5,c=2*Math.PI*r;return '<svg class="ring" width="'+(sz||44)+'" height="'+(sz||44)+'" viewBox="0 0 '+(sz||44)+' '+(sz||44)+'" aria-hidden="true"><circle cx="'+(sz||44)/2+'" cy="'+(sz||44)/2+'" r="'+r+'" fill="none" stroke="var(--line)" stroke-width="5"/><circle cx="'+(sz||44)/2+'" cy="'+(sz||44)/2+'" r="'+r+'" fill="none" stroke="'+(p>=1?'#f2b134':'var(--acc)')+'" stroke-width="5" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+(c*(1-Math.min(1,p))).toFixed(1)+'" transform="rotate(-90 '+(sz||44)/2+' '+(sz||44)/2+')"/></svg>'}
 function setSession(j){TOKEN=j.token;ME=j.user;try{localStorage.setItem('setu-token',TOKEN)}catch(e){}}
-function logout(){TOKEN=null;ME=null;CALLS=null;try{localStorage.removeItem('setu-token')}catch(e){}S=def();try{localStorage.setItem('setu-v1','{}')}catch(e){}location.hash='#/home';render()}
-function boot(){api('/health').then(function(j){HEALTH=j}).catch(function(){HEALTH={ok:false}}).then(function(){render()});
- if(!TOKEN)return;
- api('/me').then(function(u){ME=u;return api('/progress')}).then(function(p){if(p&&p.state&&(!S.updated||(p.state.updated||0)>S.updated)){S=Object.assign(def(),p.state);try{localStorage.setItem('setu-v1',JSON.stringify(S))}catch(e){}}SYNC='saved';render()})
- .catch(function(e){if(e.status===401){TOKEN=null;ME=null;try{localStorage.removeItem('setu-token')}catch(x){}}render()})}
-function paintChip(){var c=$('#who');if(!c)return;c.innerHTML=ME?'<a class="chip" href="#/account"><span class="avs">'+esc((ME.name||ME.username).slice(0,1).toUpperCase())+'</span>'+esc(ME.name||ME.username)+'<small>'+(SYNC==='saving'?'saving…':SYNC==='offline'?'offline':'synced ✓')+'</small></a>':'<a class="btn primary pill" href="#/account">लॉग इन · Log in</a>'}
+function logout(){TOKEN=null;ME=null;CALLS=null;try{localStorage.removeItem('setu-token')}catch(e){}S=def();try{localStorage.setItem('setu-v1','{}')}catch(e){}location.hash='#/welcome';render()}
+var BOOTED=false;
+function boot(){
+ var h=api('/health').then(function(j){HEALTH=j}).catch(function(){HEALTH={ok:false}});
+ var m=!TOKEN?Promise.resolve():api('/me').then(function(u){ME=u;return api('/progress')}).then(function(p){if(p&&p.state&&(!S.updated||(p.state.updated||0)>S.updated)){S=Object.assign(def(),p.state);try{localStorage.setItem('setu-v1',JSON.stringify(S))}catch(e){}}SYNC='saved'}).catch(function(e){if(e&&e.status===401){TOKEN=null;ME=null;try{localStorage.removeItem('setu-token')}catch(x){}}});
+ Promise.all([h,m]).then(function(){BOOTED=true;render()})}
+function paintChip(){var st=$('#stats');if(st)st.innerHTML=(ME||S.guest)?'<span class="stat1" title="Streak">🔥 '+streak()+'</span><span class="stat1" title="XP">⭐ '+(S.xp||0)+'</span><span class="stat1 goal" title="Daily goal">'+ring(xpToday()/DAILY_GOAL,34)+'<small>'+Math.min(xpToday(),DAILY_GOAL)+'/'+DAILY_GOAL+'</small></span>':'';var c=$('#who');if(!c)return;c.innerHTML=ME?'<a class="chip" href="#/account"><span class="avs">'+esc((ME.name||ME.username).slice(0,1).toUpperCase())+'</span>'+esc(ME.name||ME.username)+'<small>'+(SYNC==='saving'?'saving…':SYNC==='offline'?'offline':'synced ✓')+'</small></a>':(S.guest?'<a class="btn primary pill" href="#/welcome">लॉग इन · Log in</a>':'')}
 function toast(m){var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2600)}
 function speak(t){try{var v=(speechSynthesis.getVoices()||[]).filter(function(v){return /^te/i.test(v.lang)})[0];if(!v){toast('इस ब्राउज़र में तेलुगु आवाज़ नहीं है · No Telugu voice in this browser');return}var u=new SpeechSynthesisUtterance(t);u.lang='te-IN';u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast('Voice not available')}}
 // lookups
@@ -248,6 +304,21 @@ function pathMap(){var here=-1;LEVELS.forEach(function(l,i){if(here<0&&l.f()<1)h
   return '<li><a class="node '+cls+'" href="'+l.href+'"><span class="dot">'+(p>=100?'✓':l.k)+'</span><span>'+B(l.hi,l.en)+'</span><span class="pct">'+p+'%'+(i===here?' · यहाँ':'')+'</span></a></li>'}).join('')+'</ol>'}
 // views
 var V={};
+function trail(){var wl=wordsKnown();
+ var nl0=LET0.filter(function(u){return !unitDone(u.id)})[0]||LET0[0],nl1=LET1.filter(function(u){return !unitDone(u.id)})[0]||LET1[0],nc=CNT.filter(function(u){return !unitDone(u.id)})[0]||CNT[0],nw=WRD.filter(function(u){return !unitDone(u.id)})[0]||WRD[0];
+ var N=[
+  {g:'అ ఆ',hi:'अक्षर',en:'Letters',href:'#/letters/'+nl0.id,f:LEVELS[0].f()},
+  {g:'కా కి',hi:'मात्राएँ',en:'Vowel signs',href:'#/letters/'+nl1.id,f:LEVELS[1].f()},
+  {img:D.ui.mango,hi:'गिनती',en:'Counting',href:'#/words/'+nc.id+'/0',f:LEVELS[2].f()},
+  {img:(ALLW.filter(function(w){return w.img})[0]||{}).img||D.ui.book,hi:'तस्वीरों से शब्द',en:'First words',href:'#/words/'+nw.id+'/0',f:LEVELS[3].f()},
+  {img:D.ui.part,hi:'जोड़ी मिलाइए',en:'Match the pairs',href:'#/match/pic',f:LEVELS[4].f(),lock:wl<NEED_MATCH,why:'🔒 '+wl+'/'+NEED_MATCH+' शब्द · words'},
+  {g:'रा',hi:'राजू को सुधारिए',en:'Fix Raju (AI)',href:'#/raju',f:LEVELS[5].f(),lock:!rajuOpen(),why:'🔒 '+wl+'/'+NEED_RAJU+' शब्द · words'}];
+ var cur=-1;N.forEach(function(n,i){if(cur<0&&n.f<1&&!n.lock)cur=i});
+ var off=[0,46,70,46,0,-46];
+ return '<h2 style="margin-top:18px">आपका रास्ता<span class="en" lang="en">Your path</span></h2><div class="trail">'+N.map(function(n,i){var st=n.f>=1?'done':n.lock?'locked':i===cur?'cur':'open';
+  return '<a class="tnode '+st+'" style="transform:translateX('+off[i%off.length]+'px)" href="'+(n.lock?'#/learn':n.href)+'"><span class="tbub">'+(st==='cur'?'शुरू · START':'')+'</span><span class="tcirc">'+(n.g?'<span class="gl te" lang="te">'+n.g+'</span>':'<img src="'+n.img+'" alt="" width="52" height="52">')+(st==='done'?'<b class="tick">✓</b>':st==='locked'?'<b class="tick lock">🔒</b>':'')+'</span><span class="tlab">'+esc(n.hi)+'<span class="en" lang="en">'+esc(n.en)+'</span></span>'+(n.lock?'<span class="mn" style="font-size:.7rem">'+n.why+'</span>':'')+'</a>'}).join('')+'</div>'}
+function goalCard(){var p=xpToday()/DAILY_GOAL;return '<div class="card goalc"><div class="row">'+ring(p,64)+'<div style="flex:1"><h3 style="margin:0">आज का लक्ष्य<span class="en" lang="en">Daily goal: '+DAILY_GOAL+' XP</span></h3><span class="mn">'+(p>=1?'🎯 पूरा! शाबाश · Done, well played!':Math.min(xpToday(),DAILY_GOAL)+' / '+DAILY_GOAL+' XP · हर पाठ, खेल या सही जवाब XP देता है')+'</span></div></div></div>'}
+
 function nextStage(){
  var l0=LET0.filter(function(u){return !unitDone(u.id)})[0],l1=LET1.filter(function(u){return !unitDone(u.id)})[0],c=CNT.filter(function(u){return !unitDone(u.id)})[0],w=WRD.filter(function(u){return !unitDone(u.id)})[0];
  if(l0)return {n:1,hi:'अगला: '+l0.title,en:'Next: Telugu letters',href:'#/letters/'+l0.id};
@@ -260,7 +331,7 @@ function todayCount(){var d=today();return (S.days||[]).indexOf(d)>=0?1:0}
 function continueCard(){var n=nextStage(),first=!Object.keys(S.units).length&&!Object.keys(S.rules).length&&!(S.days&&S.days.length>1);
  return '<div class="card cont"><div class="eyebrow">'+(first?'पहला कदम · First step':'आज का अगला कदम · Your next step')+'</div><h2 style="margin:4px 0 2px">'+esc(n.hi)+'<span class="en" lang="en" style="font-size:.6em">'+esc(n.en)+'</span></h2>'+
  '<div class="row between" style="margin-top:10px"><a class="btn primary" href="'+n.href+'">'+(first?'शुरू करें':'जारी रखें')+'<span class="en" lang="en" style="color:inherit;opacity:.85">'+(first?'Start':'Continue')+'</span></a>'+
- '<span class="mn">'+(ME?'🔥 '+streak()+' दिन · '+streak()+'-day streak · ':'')+wordsKnown()+' / '+ALLW.length+' शब्द · words</span></div></div>'}
+ '<span class="mn">'+wordsKnown()+' / '+ALLW.length+' शब्द · words</span></div></div>'}
 function activityStrip(){var days=S.days||[],out='';for(var i=13;i>=0;i--){var k=new Date(Date.now()-i*864e5).toISOString().slice(0,10);out+='<i class="'+(days.indexOf(k)>=0?'on':'')+'" title="'+k+'"></i>'}return '<div class="strip">'+out+'</div>'}
 function wordsGrid(){return '<div class="wgrid">'+ALLW.map(function(w){var m=S.mastery[w.te]||0;return '<span class="wchip '+(m>0?'on':'')+'" lang="te">'+esc(w.te)+'<small>'+esc(w.en||w.hi)+'</small></span>'}).join('')+'</div>'}
 
@@ -273,6 +344,20 @@ function pathMini(){return '<div class="pm">'+LEVELS.map(function(l){var p=Math.
 function loginNudge(){return '<div class="card nudge row between"><div><b>अपनी प्रगति सहेजिए<span class="en" lang="en">Save your progress on any device</span></b><span class="mn">Just a name and a 4-digit PIN</span></div><a class="btn primary" href="#/account">Sign up / Log in</a></div>'}
 function features(){var F=[[D.ui.book,'तेलुगु अक्षर','Telugu letters','Mapped to the Hindi letters you already know'],[D.ui.mango,'गिनती और शब्द','Counting & words','Numbers, question words, daily words, with pictures'],[D.ui.part,'जोड़ी का खेल','Match the pairs','By picture, Hindi or English'],[D.ui.speech,'राजू, AI सहपाठी','Raju, AI classmate','You correct him; a rule decides; the AI writes his reply'],[D.ui.book,'बातचीत','Conversations','Reply in real situations'],[D.ui.part,'खाता और प्रगति','Account & progress','Log in, streaks, synced on every device']];
  return '<h2 style="margin-top:22px">सेतु में क्या है<span class="en" lang="en">What SETU offers</span></h2><div class="sp"></div><div class="feat">'+F.map(function(f){return '<div class="card fcard"><img src="'+f[0]+'" alt="" width="44" height="44"><div><b>'+esc(f[1])+'</b><span class="en" lang="en" style="font-weight:600;color:var(--ink)">'+esc(f[2])+'</span><span class="mn" style="display:block;font-size:.8rem;margin-top:2px">'+esc(f[3])+'</span></div></div>'}).join('')+'</div>'}
+
+V.welcome=function(){var off=HEALTH&&!HEALTH.ok;
+ var F=[[D.ui.book,'तेलुगु अक्षर','Letters you already half-know','Telugu script mapped to Hindi letters'],[D.ui.mango,'तस्वीरों से शब्द','Words with pictures','Counting, daily words, quizzes'],[D.ui.part,'जोड़ी का खेल','Match the pairs','Fast, playful repetition'],[D.ui.speech,'राजू, AI सहपाठी','Teach an AI classmate','You fix his Telugu; a rule decides; AI replies'],[D.ui.book,'रोज़ का लक्ष्य','Streaks and daily goal','5 minutes a day, XP and streaks'],[D.ui.part,'हर डिवाइस पर','Saved to your account','Pick up on any phone or laptop']];
+ return '<div class="land"><section class="hero"><div class="logo">सेतु <small>SETU</small></div>'+
+ '<h1>हिंदी से तेलुगु,<br>पुल पार कीजिए।<span class="en" lang="en">Learn Telugu through the Hindi you already know.</span></h1>'+
+ '<p class="lead">आप राजू नाम के AI सहपाठी की ग़लतियाँ ठीक करते हैं, और वह आपसे सीखता है। सीखने का सबसे पक्का तरीका: किसी को सिखाना।<span class="en" lang="en">You correct Raju, an AI classmate who makes the mistakes Hindi speakers make. Teaching someone is the surest way to learn.</span></p>'+
+ '<div class="how"><div><b>1</b><span>अक्षर · Letters</span></div><i>→</i><div><b>2</b><span>शब्द · Words</span></div><i>→</i><div><b>3</b><span>खेल · Games</span></div><i>→</i><div><b>4</b><span>राजू · Raju</span></div></div>'+
+ '<div class="feat">'+F.map(function(f){return '<div class="fcard"><img src="'+f[0]+'" alt="" width="40" height="40"><div><b>'+esc(f[1])+'</b><span class="en" lang="en" style="color:var(--ink);font-weight:600">'+esc(f[2])+'</span><span class="mn" style="display:block;font-size:.78rem">'+esc(f[3])+'</span></div></div>'}).join('')+'</div>'+
+ '<p class="mn" style="margin-top:16px">Models write, rules decide: the AI never marks your answer. Telugu content is a team draft, not yet reviewed by native speakers.</p></section>'+
+ '<section class="authwrap"><div class="card authcard" id="authcard" data-tab="login"><div class="tabs2"><button data-act="authtab" data-t="login" class="on">लॉग इन<span class="en" lang="en">Log in</span></button><button data-act="authtab" data-t="signup">नया खाता<span class="en" lang="en">Sign up</span></button></div>'+
+ (off?'<div class="fb bad" style="margin:0 0 10px">Server not reachable right now. You can still try the app without an account.</div>':'')+
+ '<form id="loginF"><label>Username<input name="username" autocomplete="username" required></label><label>PIN<input name="pin" type="password" inputmode="numeric" autocomplete="current-password" required></label><button class="primary" type="submit">लॉग इन · Log in</button><div class="ferr" role="alert"></div></form>'+
+ '<form id="signupF"><label>Your name<input name="name" autocomplete="name" required></label><label>Username<input name="username" autocomplete="username" required pattern="[A-Za-z0-9_.\\-]{3,40}" title="3+ letters or numbers"></label><label>PIN (4–8 digits)<input name="pin" type="password" inputmode="numeric" pattern="[0-9]{4,8}" autocomplete="new-password" required></label><button class="primary" type="submit">खाता बनाइए · Create account</button><div class="ferr" role="alert"></div></form>'+
+ '<button class="linkbtn" data-act="guest">बिना खाते के आज़माएँ · Try without an account<span class="en" lang="en">Progress stays on this device only</span></button></div></section></div>'};
 V.account=function(){if(ME){var nm=ME.name||ME.username;return '<h1>मेरा खाता<span class="en" lang="en">My account</span></h1><div class="card"><div class="row"><span class="avs big">'+esc(nm.slice(0,1).toUpperCase())+'</span><div><h2 style="margin:0">'+esc(nm)+'</h2><span class="mn">@'+esc(ME.username)+'</span></div></div><div class="sp"></div><table class="tbl2"><tr><td>Joined</td><td>'+esc((ME.created||'').slice(0,10))+'</td></tr><tr><td>Last login</td><td>'+esc((ME.lastLogin||'—').slice(0,16).replace('T',' '))+'</td></tr><tr><td>Sync</td><td>'+esc(SYNC||'—')+'</td></tr><tr><td>Streak</td><td>'+streak()+' days</td></tr><tr><td>AI calls</td><td>'+(S.aiCalls||0)+'</td></tr></table><div class="sp"></div><button class="ghost" data-act="logout">लॉग आउट<span class="en" lang="en">Log out</span></button></div>'}
  var off=HEALTH&&!HEALTH.ok;
  return '<h1>लॉग इन / खाता बनाइए<span class="en" lang="en">Log in or sign up</span></h1>'+(off?'<div class="fb bad">Server not reachable. Open the online site to log in; you can still learn without an account.</div>':'')+
@@ -280,7 +365,7 @@ V.account=function(){if(ME){var nm=ME.name||ME.username;return '<h1>मेरा
  '<form class="card" id="signupF"><h2>नया खाता<span class="en" lang="en">New account</span></h2><label>Your name<input name="name" autocomplete="name" required></label><label>Username<input name="username" autocomplete="username" required pattern="[A-Za-z0-9_.\\-]{3,40}" title="3+ letters or numbers"></label><label>PIN (4–8 digits)<input name="pin" type="password" inputmode="numeric" pattern="[0-9]{4,8}" autocomplete="new-password" required></label><button class="primary" type="submit">Sign up</button><div class="ferr" role="alert"></div></form></div>'+
  '<p class="mn">Progress you made before signing up moves into your new account.</p>'};
 document.addEventListener('submit',function(e){var f=e.target;if(f.id!=='loginF'&&f.id!=='signupF')return;e.preventDefault();var d=Object.fromEntries(new FormData(f));var er=f.querySelector('.ferr');er.textContent='…';
- api(f.id==='loginF'?'/login':'/signup',{method:'POST',body:d}).then(function(j){setSession(j);
+ api(f.id==='loginF'?'/login':'/signup',{method:'POST',body:d}).then(function(j){setSession(j);S.guest=false;
   if(f.id==='signupF'){pushProgress();toast('Account created');location.hash='#/home';render();return}
   return api('/progress').then(function(p){if(p&&p.state){S=Object.assign(def(),p.state);try{localStorage.setItem('setu-v1',JSON.stringify(S))}catch(x){}}else pushProgress();SYNC='saved';toast('Welcome back');location.hash='#/home';render()})})
  .catch(function(x){er.textContent=x.message})});
@@ -296,15 +381,8 @@ V.home=function(){
  function step(n,img,hi,en,hhi,hen,href,primary,locked){return '<a class="step'+(primary?' primary':'')+(locked?' locked':'')+'" href="'+href+'"><span class="sn">'+n+'</span><img src="'+img+'" alt="" width="64" height="64"><span class="st">'+B(hi,en)+'<span class="sh">'+esc(hhi)+'<span class="en" lang="en">'+esc(hen)+'</span></span></span><span class="go" aria-hidden="true">'+(locked?'🔒':'›')+'</span></a>'}
  return statusLine()+'<h1>'+(ME?'नमस्ते, '+esc(ME.name)+'!':first?'नमस्ते! तेलुगु सीखिए, हिंदी के सहारे।':'फिर से स्वागत है!')+'<span class="en" lang="en">'+(ME?'Hello, '+esc(ME.name)+'! Let\'s continue.':first?'Hello! Learn Telugu with the help of Hindi.':'Welcome back.')+'</span></h1>'+
  '<p class="mn" style="margin:4px 0 14px">रोज़ 5 मिनट काफ़ी हैं। यहाँ से शुरू कीजिए:<span class="en" lang="en">Five minutes a day is enough. Start here:</span></p>'+
- continueCard()+(ME?'':loginNudge())+
- '<h2 style="margin-top:18px">आज का रास्ता<span class="en" lang="en">Your path, in order</span></h2><div class="sp"></div>'+
- '<div class="steps">'+
- step(1,D.ui.book,'तेलुगु अक्षर','Telugu letters',nextL.title,'Start here: they look new, but most sound like Hindi letters','#/letters/'+nextL.id,frac(LET0)<1)+
- step(2,D.ui.mango,'गिनती','Counting 1–10',nextC.title_hi,nextC.title_en,'#/words/'+nextC.id+'/0')+
- step(3,D.ui.speech,'तस्वीरों से पहले शब्द','First words with pictures',nextW2.title_hi,nextW2.title_en,'#/words/'+nextW2.id+'/0')+
- step(4,D.ui.part,'खेल: जोड़ी मिलाइए','Match the pairs',wl>=NEED_MATCH?'तस्वीर देखकर तेलुगु शब्द पहचानिए':'पहले '+NEED_MATCH+' शब्द सीखिए ('+wl+'/'+NEED_MATCH+')',wl>=NEED_MATCH?'Spot the Telugu word for each picture':'Learn '+NEED_MATCH+' words first ('+wl+'/'+NEED_MATCH+')','#/match/pic',false,wl<NEED_MATCH)+
- step(5,D.ui.book,'राजू की ग़लती ठीक कीजिए','Fix Raju\'s mistake (AI)',rajuOpen()?'राजू AI से जवाब देता है':'पहले '+NEED_RAJU+' शब्द सीखिए ('+wl+'/'+NEED_RAJU+')',rajuOpen()?'Raju replies using a live AI model':'Learn '+NEED_RAJU+' words first ('+wl+'/'+NEED_RAJU+')','#/raju',false,!rajuOpen())+
- '</div>'+(first&&!ME?features():'')+
+ continueCard()+goalCard()+
+ trail()+(first&&!ME?features():'')+
  '<div class="raju card"><div class="av">रा</div><div><h3>राजू से मिलिए<span class="en" lang="en">Meet Raju, your classmate</span></h3><p style="margin:4px 0 0">राजू भी तेलुगु सीख रहा है और वही ग़लतियाँ करता है जो हम हिंदी बोलने वाले करते हैं। आप उसे सुधारेंगे, वह आपसे सीखेगा।<span class="en" lang="en">Raju is learning Telugu too and makes the mistakes Hindi speakers make. You correct him, and he learns from you.</span></p></div></div>'+
  ''};
 V.learn=function(){
@@ -356,8 +434,8 @@ function wordQuiz(u){var qs=[];var seen={};
  return{title:u.title_hi+' · '+u.title_en,back:'#/words/'+u.id,unit:u.id,qs:shuffle(qs),words:true}}
 function startQuiz(q){Q=q;Q.i=0;Q.score=0;Q.done=false;location.hash=location.hash.replace(/\/quiz$/,'/quiz');renderQuiz()}
 function renderQuiz(){var v=$('#view');if(!Q){return}
- if(Q.i>=Q.qs.length){var pct=Math.round(Q.score/Q.qs.length*100);var prev=S.units[Q.unit]||{best:0,done:false};S.units[Q.unit]={best:Math.max(prev.best,pct),done:prev.done||pct>=60};save();
-  v.innerHTML='<div class="card" style="text-align:center"><div class="eyebrow">नतीजा · Result</div><div class="big-te" style="font-family:Inter">'+Q.score+' / '+Q.qs.length+'</div><p>'+(pct>=60?'बहुत अच्छे! यह पाठ पूरा हुआ।<span class="en" lang="en">Well done. Lesson complete.</span>':'थोड़ा और दोहराइए। 60% पर पाठ पूरा होता है।<span class="en" lang="en">Review once more. The lesson completes at 60%.</span>')+'</p><div class="row" style="justify-content:center"><a class="btn" href="'+Q.back+'">दोहराएँ<span class="en" lang="en">Review</span></a><a class="btn primary" href="#/learn">आगे<span class="en" lang="en" style="color:inherit;opacity:.85">Continue</span></a></div></div>';return}
+ if(Q.i>=Q.qs.length){var pct=Math.round(Q.score/Q.qs.length*100);var prev=S.units[Q.unit]||{best:0,done:false};S.units[Q.unit]={best:Math.max(prev.best,pct),done:prev.done||pct>=60};save();if(!Q.xpGiven){Q.xpGiven=1;Q.xp=Q.score*2+((!prev.done&&pct>=60)?10:0);addXP(Q.xp,'पाठ · lesson')}
+  v.innerHTML='<div class="card" style="text-align:center"><div class="eyebrow">नतीजा · Result</div><div class="xpbadge">⭐ +'+(Q.xp||0)+' XP</div><div class="big-te" style="font-family:Inter">'+Q.score+' / '+Q.qs.length+'</div><p>'+(pct>=60?'बहुत अच्छे! यह पाठ पूरा हुआ।<span class="en" lang="en">Well done. Lesson complete.</span>':'थोड़ा और दोहराइए। 60% पर पाठ पूरा होता है।<span class="en" lang="en">Review once more. The lesson completes at 60%.</span>')+'</p><div class="row" style="justify-content:center"><a class="btn" href="'+Q.back+'">दोहराएँ<span class="en" lang="en">Review</span></a><a class="btn primary" href="#/learn">आगे<span class="en" lang="en" style="color:inherit;opacity:.85">Continue</span></a></div></div>';return}
  var q=Q.qs[Q.i];
  v.innerHTML='<a class="back" href="'+Q.back+'">× '+esc(Q.title)+'</a><div class="bar"><i style="width:'+(Q.i/Q.qs.length*100)+'%"></i></div><div class="sp"></div><div class="card"><div class="mn">'+(Q.i+1)+' / '+Q.qs.length+'</div><p style="margin:2px 0">'+q.ask+'</p>'+q.prompt+
   '<div class="choices '+(q.pics?'two':'')+'" id="ch">'+q.choices.map(function(c,i){return '<button class="opt '+(q.pics?'picopt':c.te?'te':'')+'" data-act="ans" data-i="'+i+'" '+(q.pics?'aria-label="Picture '+(i+1)+'"':'')+'>'+c.html+'</button>'}).join('')+'</div><div id="fb"></div></div>'}
@@ -378,7 +456,7 @@ function newMatch(mode){var pool=shuffle(mode==='pic'?PICW:ALLW).slice(0,5);
  M={mode:mode,pairs:pool,left:shuffle(pool),right:shuffle(pool),sel:null,done:{},miss:0}}
 V.match=function(mode){if(!M||(mode&&mode!==M.mode))newMatch(mode||'hi');var lowNote=wordsKnown()<NEED_MATCH?'<div class="demo">पहले शब्द सीख लें तो खेल आसान होगा।<span class="en" lang="en">Tip: learn a few words first (in Learn) and this game gets much easier.</span> <a href="#/learn">Learn →</a></div>':'';
  var seg=[['hi','हिंदी मतलब','Hindi meaning'],['en','अंग्रेज़ी','English'],['pic','तस्वीर','Picture']].map(function(m){return '<button data-act="mmode" data-m="'+m[0]+'" aria-pressed="'+(M.mode===m[0])+'">'+m[1]+'<span class="en" lang="en" style="color:inherit">'+m[2]+'</span></button>'}).join('');
- if(Object.keys(M.done).length===M.pairs.length){var b=S.matchBest;if(b===null||M.miss<b){S.matchBest=M.miss;save()}
+ if(Object.keys(M.done).length===M.pairs.length){if(!M.xpGiven){M.xpGiven=1;setTimeout(function(){addXP(Math.max(5,15-M.miss*2),'खेल · game')},50)}var b=S.matchBest;if(b===null||M.miss<b){S.matchBest=M.miss;save()}
   return '<h1>जोड़ी मिलाइए<span class="en" lang="en">Match the pairs</span></h1><div class="card" style="text-align:center"><div class="eyebrow">पूरा! · Done</div><p>ग़लत जोड़ियाँ: <b>'+M.miss+'</b><span class="en" lang="en">Wrong tries: '+M.miss+' · best '+S.matchBest+'</span></p><button class="primary" data-act="mnew">फिर खेलें<span class="en" lang="en" style="color:inherit;opacity:.85">Play again</span></button></div>'}
  function right(w){return M.mode==='pic'?'<span class="mpic">'+picOf(w,80)+'</span>':M.mode==='en'?esc(w.en):esc(w.hi)}
  return '<h1>जोड़ी मिलाइए<span class="en" lang="en">Match the pairs</span></h1>'+lowNote+'<p class="mn">पहले तेलुगु शब्द छुइए, फिर उसका जोड़ीदार।<span class="en" lang="en">Tap a Telugu word, then its partner. This game only schedules review; it never changes your level.</span></p><div class="seg">'+seg+'</div><div class="mrow"><div class="choices">'+
@@ -407,7 +485,7 @@ V.rule=function(id,idx){var r=D.rules.filter(function(x){return x.id===id})[0];i
 function checkRule0(){if(!R||R.solved)return;var v=norm($('#ans').value);if(!v){toast('पहले वाक्य लिखिए · Write something first');return}
  var it=R.it;var ok=it.acc.some(function(a){return norm(a)===v})||it.fix.some(function(f){try{return new RegExp(f).test(v)}catch(e){return false}});
  var st=S.rules[R.rule.id]||(S.rules[R.rule.id]={ok:0,miss:0});R.tries++;
- if(ok){R.solved=true;st.ok++;save();$('#fb').innerHTML='<div class="fb good" role="status"><b>सही! राजू ने सीखा। <span lang="en" style="font-weight:500">Correct. Raju learned it.</span></b><div class="te" style="font-size:1.35rem;margin-top:4px">'+esc(it.acc[0])+'</div></div><a class="btn primary" style="width:100%" href="#/raju/'+R.rule.id+'/'+(R.i+1)+'">आगे<span class="en" lang="en" style="color:inherit;opacity:.85">Next</span></a>'}
+ if(ok){R.solved=true;st.ok++;save();addXP(15,'राजू · Raju');$('#fb').innerHTML='<div class="fb good" role="status"><b>सही! राजू ने सीखा। <span lang="en" style="font-weight:500">Correct. Raju learned it.</span></b><div class="te" style="font-size:1.35rem;margin-top:4px">'+esc(it.acc[0])+'</div></div><a class="btn primary" style="width:100%" href="#/raju/'+R.rule.id+'/'+(R.i+1)+'">आगे<span class="en" lang="en" style="color:inherit;opacity:.85">Next</span></a>'}
  else{st.miss++;save();$('#fb').innerHTML='<div class="fb bad" role="status"><b>अभी ठीक नहीं। <span lang="en" style="font-weight:500">Not yet.</span></b><div class="mn">नियम फिर पढ़िए, फिर कोशिश कीजिए।<span class="en" lang="en">Re-read the rule and try again.</span></div></div><div class="row">'+(R.tries>=2?'<button data-act="reveal">उत्तर देखें<span class="en" lang="en">Show answer</span></button>':'')+'<a class="btn ghost" href="#/raju/'+R.rule.id+'">नियम पढ़ें<span class="en" lang="en">Read rule</span></a></div>'}}
 
 // ---- backend: Raju's voice (model writes; the rule above decided) ----
@@ -424,7 +502,7 @@ function askRaju(verdict,learner){var it=R.it,rule=R.rule,box=document.createEle
 var C=null;
 V.talk=function(){return '<h1>बातचीत<span class="en" lang="en">Conversations</span></h1><p class="mn">सामने वाला तेलुगु में बोलता है। पहले समझिए, फिर जवाब बनाइए।<span class="en" lang="en">The other person speaks Telugu. Understand first, then build your reply.</span></p><div class="list">'+D.scenes.map(function(s){return '<a class="item" href="#/talk/'+s.id+'"><span>'+B(s.title_hi,s.title_en)+'<span class="en" lang="en" style="max-width:34ch">'+esc(s.obj_en)+'</span></span><span class="badge '+(S.scenes[s.id]?'':'todo')+'">'+(S.scenes[s.id]?'✓':'नया')+'</span></a>'}).join('')+'</div>'};
 V.scene=function(id,n){var s=D.scenes.filter(function(x){return x.id===id})[0];if(!s)return V.talk();var i=+(n||0);
- if(i>=s.lines.length){S.scenes[id]=1;save();return '<div class="card" style="text-align:center"><h2>बातचीत पूरी!<span class="en" lang="en">Conversation complete.</span></h2><a class="btn primary" href="#/talk">और बातचीत<span class="en" lang="en" style="color:inherit;opacity:.85">More conversations</span></a></div>'}
+ if(i>=s.lines.length){if(!S.scenes[id])setTimeout(function(){addXP(20,'बातचीत · talk')},50);S.scenes[id]=1;save();return '<div class="card" style="text-align:center"><h2>बातचीत पूरी!<span class="en" lang="en">Conversation complete.</span></h2><a class="btn primary" href="#/talk">और बातचीत<span class="en" lang="en" style="color:inherit;opacity:.85">More conversations</span></a></div>'}
  var l=s.lines[i];C={s:s,i:i,l:l,stage:'q',tiles:shuffle(uniq(norm(l.replies[0]).split(' ').concat(s.lines.reduce(function(a,x){return a.concat(norm(x.replies[0]).split(' '))},[]).slice(0,40)).slice(0,1))) };
  var pool=uniq(s.lines.reduce(function(a,x){return a.concat(norm(x.replies[0]).split(' '))},[]));var own=norm(l.replies[0]).split(' ');C.tiles=shuffle(uniq(own.concat(pick(pool,Math.max(0,5-own.length),own))));
  return '<a class="back" href="#/talk">× '+esc(s.title_hi)+' · '+esc(s.title_en)+'</a><div class="bar"><i style="width:'+(i/s.lines.length*100)+'%"></i></div><div class="sp"></div>'+(i===0?'<p class="mn">'+esc(s.obj_hi)+'<span class="en" lang="en">'+esc(s.obj_en)+'</span></p>':'')+
@@ -451,7 +529,11 @@ V.progress=function(){if(ME&&!CALLS)setTimeout(loadCalls,0);
 // router
 var TABS=[['home','आज','Today'],['learn','सीखें','Learn'],['match','जोड़ी','Match'],['raju','राजू','Raju'],['progress','प्रगति','Progress'],['account','खाता','Account']];
 function route(){var h=(location.hash||'#/home').replace(/^#\/?/,'').split('/');return h}
-function render(){var h=route(),k=h[0]||'home',html;Q=(k==='letters'||k==='words')&&h[2]==='quiz'?Q:null;
+function render(){var h=route(),k=h[0]||'home',html;
+ if(!BOOTED){$('#view').innerHTML='<div class="splash"><div class="logo">सेतु</div><p class="mn">loading…</p></div>';document.body.classList.add('landing');return}
+ if(!ME&&!S.guest&&k!=='welcome'){location.hash='#/welcome';return}
+ if(ME&&k==='welcome'){location.hash='#/home';return}
+ document.body.classList.toggle('landing',k==='welcome');Q=(k==='letters'||k==='words')&&h[2]==='quiz'?Q:null;
  if(k==='letters')html=V.letters(h[1],h[2]);else if(k==='words')html=V.words(h[1],h[2]);else if(k==='raju'&&h[1]&&rajuOpen())html=V.rule(h[1],h[2]);else if(k==='talk'&&h[1])html=V.scene(h[1],h[2]);else if(V[k])html=V[k](h[1]);else html=V.home();
  var v=$('#view');
  if(html!==null)v.innerHTML=html;
@@ -462,6 +544,8 @@ function render(){var h=route(),k=h[0]||'home',html;Q=(k==='letters'||k==='words
  if(k==='home'||k==='learn'||k==='progress')window.scrollTo(0,0)}
 window.addEventListener('hashchange',function(){if(M&&route()[0]!=='match'){}render();window.scrollTo(0,0)});
 document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.dataset.act;
+ if(a==='guest'){e.preventDefault();S.guest=true;save();location.hash='#/home';render();return}
+ if(a==='authtab'){e.preventDefault();var ac=document.getElementById('authcard');ac.dataset.tab=b.dataset.t;[].forEach.call(ac.querySelectorAll('.tabs2 button'),function(x){x.classList.toggle('on',x===b)});return}
  if(a==='demounlock'){e.preventDefault();S.demoUnlock=1;save();render();return}
  if(a==='logout'){e.preventDefault();logout();return}
  if(a==='speak'||a==='phr'){e.preventDefault();speak(b.dataset.t);if(a==='phr'){S.phrases[b.dataset.t]=1;save();var bd=b.querySelector('.badge');if(bd){bd.textContent='✓';bd.classList.remove('todo')}}}
