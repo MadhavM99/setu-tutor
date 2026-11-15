@@ -137,6 +137,8 @@ form.card button{width:100%;margin-top:6px}
 .tbl2 th{color:var(--mut);font-weight:600}
 .tbl2 .ok{color:#2fae7d;font-weight:700}.tbl2 .no{color:var(--bad)}
 @media (max-width:899px){.kpis{grid-template-columns:repeat(2,1fr)}nav.tabs a{font-size:.78rem;padding:6px 0}}
+a.step.locked{opacity:.62;border-style:dashed}
+a.step.locked .go{font-size:1.1rem}
 /* ---- desktop web layout ---- */
 @media (min-width:900px){
  body{padding-left:0;padding-right:0;font-size:18px;background:var(--bg)}
@@ -213,6 +215,10 @@ var ALLW=Object.keys(WORD).map(function(k){return WORD[k]});
 var PICW=ALLW.filter(function(w){return w.img||w.pic});
 function picOf(w,sz){return w.img?'<img class="ph" src="'+w.img+'" alt="'+esc(w.en||w.hi)+'" width="'+sz+'" height="'+sz+'">':(w.pic||'')}
 var LET=D.letters, LET0=LET.slice(0,20), LET1=LET.slice(20);
+var CNT=D.words.slice(0,2), WRD=D.words.slice(2);
+var NEED_MATCH=4, NEED_RAJU=8;
+function wordsKnown(){return ALLW.filter(function(w){return (S.mastery[w.te]||0)>0}).length}
+function rajuOpen(){return wordsKnown()>=NEED_RAJU||!!S.demoUnlock}
 function listenBtn(t){return '<button class="pill ghost" data-act="speak" data-t="'+esc(t)+'" aria-label="Listen">🔊 सुनिए<span class="en" lang="en" style="display:inline;margin-left:6px">Listen</span></button>'}
 function wordCard(w,big){return '<div class="card" style="text-align:center">'+'<div class="picwrap">'+picOf(w,200)+'</div>'+'<div class="big-te te" lang="te">'+esc(w.te)+'</div><div style="font-size:1.25rem">'+esc(w.hi)+'</div>'+(w.en?'<div class="en" lang="en" style="font-size:1.05rem">'+esc(w.en)+'</div>':'')+(w.note?'<div class="mn">'+esc(w.note)+'</div>':'')+'<div class="sp"></div>'+listenBtn(w.te)+'</div>'}
 // progress helpers
@@ -223,12 +229,13 @@ function rulesLearned(){return D.rules.filter(function(r){var x=S.rules[r.id];re
 function rulesForgot(){return D.rules.filter(function(r){var x=S.rules[r.id];return x&&x.miss>x.ok}).length}
 function scenesDone(){return D.scenes.filter(function(s){return S.scenes[s.id]}).length}
 var LEVELS=[
- {k:'L0',hi:'अक्षर',en:'Letters',f:function(){return frac(LET0)},href:'#/learn'},
- {k:'L1',hi:'मात्राएँ',en:'Vowel signs',f:function(){return frac(LET1)},href:'#/learn'},
- {k:'L2',hi:'शब्द',en:'Words',f:function(){return frac(D.words)},href:'#/learn'},
- {k:'L3',hi:'वाक्यांश',en:'Phrases',f:function(){return Object.keys(S.phrases).length/D.phrases.length},href:'#/phrases'},
- {k:'L4',hi:'राजू को सुधारो',en:'Fix Raju',f:function(){return rulesLearned()/D.rules.length},href:'#/raju'},
- {k:'L5',hi:'बातचीत',en:'Conversations',f:function(){return scenesDone()/D.scenes.length},href:'#/talk'}];
+ {k:'1',hi:'अक्षर',en:'Letters',f:function(){return frac(LET0)},href:'#/learn'},
+ {k:'2',hi:'मात्राएँ',en:'Vowel signs',f:function(){return frac(LET1)},href:'#/learn'},
+ {k:'3',hi:'गिनती',en:'Counting',f:function(){return frac(CNT)},href:'#/learn'},
+ {k:'4',hi:'तस्वीरों से शब्द',en:'First words',f:function(){return frac(WRD)},href:'#/learn'},
+ {k:'5',hi:'जोड़ी मिलाइए',en:'Match the pairs',f:function(){return S.matchBest===null||S.matchBest===undefined?0:1},href:'#/match/pic'},
+ {k:'6',hi:'राजू को सुधारो',en:'Fix Raju (AI)',f:function(){return rulesLearned()/D.rules.length},href:'#/raju'},
+ {k:'7',hi:'वाक्यांश और बातचीत',en:'Phrases & talk',f:function(){return (Object.keys(S.phrases).length/D.phrases.length+scenesDone()/D.scenes.length)/2},href:'#/talk'}];
 function pathMap(){var here=-1;LEVELS.forEach(function(l,i){if(here<0&&l.f()<1)here=i});
  return '<ol class="map">'+LEVELS.map(function(l,i){var p=Math.round(l.f()*100);var cls=p>=100?'done':i===here?'here':(i>here&&here>=0&&p===0?'locked':'');
   return '<li><a class="node '+cls+'" href="'+l.href+'"><span class="dot">'+(p>=100?'✓':l.k)+'</span><span>'+B(l.hi,l.en)+'</span><span class="pct">'+p+'%'+(i===here?' · यहाँ':'')+'</span></a></li>'}).join('')+'</ol>'}
@@ -262,17 +269,18 @@ V.home=function(){
  var nextW=D.words.filter(function(u){return !unitDone(u.id)})[0]||D.words[0];
  var nextL=LET0.concat(LET1).filter(function(u){return !unitDone(u.id)})[0]||LET[0];
  var first=!Object.keys(S.units).length&&!Object.keys(S.rules).length;
- var wl=ALLW.filter(function(w){return (S.mastery[w.te]||0)>0}).length;var cnt=D.words.filter(function(u){return /count/i.test(u.title_en||'')});var nextC=cnt.filter(function(u){return !unitDone(u.id)})[0]||cnt[0]||nextW;
- function step(n,img,hi,en,hhi,hen,href,primary){return '<a class="step'+(primary?' primary':'')+'" href="'+href+'"><span class="sn">'+n+'</span><img src="'+img+'" alt="" width="64" height="64"><span class="st">'+B(hi,en)+'<span class="sh">'+esc(hhi)+'<span class="en" lang="en">'+esc(hen)+'</span></span></span><span class="go" aria-hidden="true">›</span></a>'}
+ var wl=ALLW.filter(function(w){return (S.mastery[w.te]||0)>0}).length;var nextC=CNT.filter(function(u){return !unitDone(u.id)})[0]||CNT[0];var nextW2=WRD.filter(function(u){return !unitDone(u.id)})[0]||WRD[0];
+ function step(n,img,hi,en,hhi,hen,href,primary,locked){return '<a class="step'+(primary?' primary':'')+(locked?' locked':'')+'" href="'+href+'"><span class="sn">'+n+'</span><img src="'+img+'" alt="" width="64" height="64"><span class="st">'+B(hi,en)+'<span class="sh">'+esc(hhi)+'<span class="en" lang="en">'+esc(hen)+'</span></span></span><span class="go" aria-hidden="true">'+(locked?'🔒':'›')+'</span></a>'}
  return statusLine()+'<h1>'+(ME?'नमस्ते, '+esc(ME.name)+'!':first?'नमस्ते! तेलुगु सीखिए, हिंदी के सहारे।':'फिर से स्वागत है!')+'<span class="en" lang="en">'+(ME?'Hello, '+esc(ME.name)+'! Let\'s continue.':first?'Hello! Learn Telugu with the help of Hindi.':'Welcome back.')+'</span></h1>'+
  '<p class="mn" style="margin:4px 0 14px">रोज़ 5 मिनट काफ़ी हैं। यहाँ से शुरू कीजिए:<span class="en" lang="en">Five minutes a day is enough. Start here:</span></p>'+
  (ME?profileCard():loginNudge())+
  '<h2 style="margin-top:18px">आज का रास्ता<span class="en" lang="en">Your path, in order</span></h2><div class="sp"></div>'+
  '<div class="steps">'+
- step(1,D.ui.book,'तेलुगु अक्षर','Telugu letters',nextL.title,'They look different, but most sound like Hindi letters','#/letters/'+nextL.id,true)+
- step(2,D.ui.mango,'गिनती','Counting',nextC.title_hi,nextC.title_en,'#/words/'+nextC.id+'/0')+
- step(3,D.ui.part,'खेल: जोड़ी मिलाइए','Game: match the pairs','तस्वीर देखकर तेलुगु शब्द पहचानिए','Spot the Telugu word for each picture','#/match/pic')+
- step(4,D.ui.speech,'राजू की ग़लती ठीक कीजिए','Fix Raju\'s mistake (AI)','राजू AI से जवाब देता है','Raju replies using a live AI model','#/raju')+
+ step(1,D.ui.book,'तेलुगु अक्षर','Telugu letters',nextL.title,'Start here: they look new, but most sound like Hindi letters','#/letters/'+nextL.id,frac(LET0)<1)+
+ step(2,D.ui.mango,'गिनती','Counting 1–10',nextC.title_hi,nextC.title_en,'#/words/'+nextC.id+'/0')+
+ step(3,D.ui.speech,'तस्वीरों से पहले शब्द','First words with pictures',nextW2.title_hi,nextW2.title_en,'#/words/'+nextW2.id+'/0')+
+ step(4,D.ui.part,'खेल: जोड़ी मिलाइए','Match the pairs',wl>=NEED_MATCH?'तस्वीर देखकर तेलुगु शब्द पहचानिए':'पहले '+NEED_MATCH+' शब्द सीखिए ('+wl+'/'+NEED_MATCH+')',wl>=NEED_MATCH?'Spot the Telugu word for each picture':'Learn '+NEED_MATCH+' words first ('+wl+'/'+NEED_MATCH+')','#/match/pic',false,wl<NEED_MATCH)+
+ step(5,D.ui.book,'राजू की ग़लती ठीक कीजिए','Fix Raju\'s mistake (AI)',rajuOpen()?'राजू AI से जवाब देता है':'पहले '+NEED_RAJU+' शब्द सीखिए ('+wl+'/'+NEED_RAJU+')',rajuOpen()?'Raju replies using a live AI model':'Learn '+NEED_RAJU+' words first ('+wl+'/'+NEED_RAJU+')','#/raju',false,!rajuOpen())+
  '</div>'+features()+
  '<div class="raju card"><div class="av">रा</div><div><h3>राजू से मिलिए<span class="en" lang="en">Meet Raju, your classmate</span></h3><p style="margin:4px 0 0">राजू भी तेलुगु सीख रहा है और वही ग़लतियाँ करता है जो हम हिंदी बोलने वाले करते हैं। आप उसे सुधारेंगे, वह आपसे सीखेगा।<span class="en" lang="en">Raju is learning Telugu too and makes the mistakes Hindi speakers make. You correct him, and he learns from you.</span></p></div></div>'+
  '<h2>आपकी सीढ़ी<span class="en" lang="en">Your learning path</span></h2><div class="sp"></div>'+pathMap()+'<div class="sp"></div><p class="mn">सीखे शब्द: '+wl+' / '+ALLW.length+'<span class="en" lang="en">Words practised: '+wl+' of '+ALLW.length+'</span></p>'};
@@ -280,9 +288,15 @@ V.learn=function(){
  function rows(list,base,kind){return list.map(function(u){var d=unitDone(u.id);var p=unitPct(u.id);
   var ttl=kind==='w'?B(u.title_hi,u.title_en):'<span class="hi">'+esc(u.title)+'</span><span class="en" lang="en">'+esc(u.cards.map(function(c){return c.roman}).filter(Boolean).join(', '))+'</span>';
   return '<a class="item" href="#/'+base+'/'+u.id+'"><span>'+ttl+'</span><span class="badge '+(d?'':'todo')+'">'+(d?'✓ '+p+'%':'नया · new')+'</span></a>'}).join('')}
- return '<h1>सीखें<span class="en" lang="en">Learn</span></h1><div class="sp"></div><div class="list">'+
- '<h3>शब्द, तस्वीरों के साथ · Words with pictures</h3>'+rows(D.words,'words','w')+'<div class="sp"></div><h3>अक्षर · Letters</h3>'+rows(LET0,'letters','l')+'<div class="sp"></div><h3>मात्राएँ · Vowel signs</h3>'+rows(LET1,'letters','l')+
- '<div class="sp"></div><h3>और · More</h3><a class="item" href="#/phrases"><span>'+B('काम के वाक्यांश','Useful phrases')+'</span><span class="badge todo">'+Object.keys(S.phrases).length+'/'+D.phrases.length+'</span></a>'+
+ function lk(href,hi,en,badge,todo){return '<a class="item" href="'+href+'"><span>'+B(hi,en)+'</span><span class="badge '+(todo?'todo':'')+'">'+badge+'</span></a>'}
+ return '<h1>सीखें<span class="en" lang="en">Learn</span></h1><p class="mn">ऊपर से नीचे, इसी क्रम में सीखिए।<span class="en" lang="en">Go top to bottom. Each step prepares you for the next.</span></p><div class="sp"></div><div class="list">'+
+ '<h3>1 · अक्षर · Letters</h3>'+rows(LET0,'letters','l')+
+ '<h3>2 · मात्राएँ · Vowel signs</h3>'+rows(LET1,'letters','l')+
+ '<h3>3 · गिनती · Counting</h3>'+rows(CNT,'words','w')+
+ '<h3>4 · तस्वीरों से शब्द · First words with pictures</h3>'+rows(WRD,'words','w')+
+ '<h3>5 · खेल · Match the pairs</h3>'+lk('#/match/pic','जोड़ी मिलाइए','Match words and pictures',wordsKnown()>=NEED_MATCH?'खेलें · play':'🔒 '+NEED_MATCH+' शब्द',wordsKnown()<NEED_MATCH)+
+ '<h3>6 · राजू · Raju (AI classmate)</h3>'+lk('#/raju','राजू की ग़लती ठीक कीजिए','Correct Raju',rajuOpen()?'खुला · open':'🔒 '+NEED_RAJU+' शब्द',!rajuOpen())+
+ '<h3>7 · और · More</h3><a class="item" href="#/phrases"><span>'+B('काम के वाक्यांश','Useful phrases')+'</span><span class="badge todo">'+Object.keys(S.phrases).length+'/'+D.phrases.length+'</span></a>'+
  '<a class="item" href="#/talk"><span>'+B('बातचीत','Conversations')+'</span><span class="badge todo">'+scenesDone()+'/'+D.scenes.length+'</span></a></div>'};
 V.letters=function(id,mode){var u=LET.filter(function(x){return x.id===id})[0];if(!u)return V.learn();
  if(mode==='quiz'){startQuiz(letterQuiz(u));return null}
@@ -339,12 +353,12 @@ V.phrases=function(){
 var M=null;
 function newMatch(mode){var pool=shuffle(mode==='pic'?PICW:ALLW).slice(0,5);
  M={mode:mode,pairs:pool,left:shuffle(pool),right:shuffle(pool),sel:null,done:{},miss:0}}
-V.match=function(mode){if(!M||(mode&&mode!==M.mode))newMatch(mode||'hi');
+V.match=function(mode){if(!M||(mode&&mode!==M.mode))newMatch(mode||'hi');var lowNote=wordsKnown()<NEED_MATCH?'<div class="demo">पहले शब्द सीख लें तो खेल आसान होगा।<span class="en" lang="en">Tip: learn a few words first (in Learn) and this game gets much easier.</span> <a href="#/learn">Learn →</a></div>':'';
  var seg=[['hi','हिंदी मतलब','Hindi meaning'],['en','अंग्रेज़ी','English'],['pic','तस्वीर','Picture']].map(function(m){return '<button data-act="mmode" data-m="'+m[0]+'" aria-pressed="'+(M.mode===m[0])+'">'+m[1]+'<span class="en" lang="en" style="color:inherit">'+m[2]+'</span></button>'}).join('');
  if(Object.keys(M.done).length===M.pairs.length){var b=S.matchBest;if(b===null||M.miss<b){S.matchBest=M.miss;save()}
   return '<h1>जोड़ी मिलाइए<span class="en" lang="en">Match the pairs</span></h1><div class="card" style="text-align:center"><div class="eyebrow">पूरा! · Done</div><p>ग़लत जोड़ियाँ: <b>'+M.miss+'</b><span class="en" lang="en">Wrong tries: '+M.miss+' · best '+S.matchBest+'</span></p><button class="primary" data-act="mnew">फिर खेलें<span class="en" lang="en" style="color:inherit;opacity:.85">Play again</span></button></div>'}
  function right(w){return M.mode==='pic'?'<span class="mpic">'+picOf(w,80)+'</span>':M.mode==='en'?esc(w.en):esc(w.hi)}
- return '<h1>जोड़ी मिलाइए<span class="en" lang="en">Match the pairs</span></h1><p class="mn">पहले तेलुगु शब्द छुइए, फिर उसका जोड़ीदार।<span class="en" lang="en">Tap a Telugu word, then its partner. This game only schedules review; it never changes your level.</span></p><div class="seg">'+seg+'</div><div class="mrow"><div class="choices">'+
+ return '<h1>जोड़ी मिलाइए<span class="en" lang="en">Match the pairs</span></h1>'+lowNote+'<p class="mn">पहले तेलुगु शब्द छुइए, फिर उसका जोड़ीदार।<span class="en" lang="en">Tap a Telugu word, then its partner. This game only schedules review; it never changes your level.</span></p><div class="seg">'+seg+'</div><div class="mrow"><div class="choices">'+
   M.left.map(function(w){return '<button class="m te '+(M.done[w.te]?'done':'')+(M.sel&&M.sel.side==='l'&&M.sel.te===w.te?' sel':'')+'" data-act="ml" data-t="'+esc(w.te)+'" lang="te">'+esc(w.te)+'</button>'}).join('')+'</div><div class="choices">'+
   M.right.map(function(w){return '<button class="m '+(M.done[w.te]?'done':'')+(M.sel&&M.sel.side==='r'&&M.sel.te===w.te?' sel':'')+'" data-act="mr" data-t="'+esc(w.te)+'">'+right(w)+'</button>'}).join('')+'</div></div>'};
 function matchTap(side,te,btn){if(!M.sel){M.sel={side:side,te:te};render();return}
@@ -353,6 +367,7 @@ function matchTap(side,te,btn){if(!M.sel){M.sel={side:side,te:te};render();retur
 // Raju
 var R=null;
 V.raju=function(){var learned=rulesLearned(),forgot=rulesForgot();
+ if(!rajuOpen())return '<h1>राजू को सुधारिए<span class="en" lang="en">Correct Raju</span></h1><div class="card"><h3>पहले कुछ शब्द सीखिए<span class="en" lang="en">Learn a few words first</span></h3><p>राजू सिर्फ़ वही शब्द इस्तेमाल करता है जो आप सीख चुके हैं। अभी '+wordsKnown()+' / '+NEED_RAJU+' शब्द हुए हैं।<span class="en" lang="en">Raju only uses words you have already learned, so he does not confuse you. You know '+wordsKnown()+' of '+NEED_RAJU+' words so far.</span></p><div class="bar"><i style="width:'+Math.min(100,Math.round(wordsKnown()/NEED_RAJU*100))+'%"></i></div><div class="sp"></div><div class="row"><a class="btn primary" href="#/learn">शब्द सीखें<span class="en" lang="en" style="color:inherit;opacity:.85">Learn words</span></a><button class="ghost" data-act="demounlock">डेमो के लिए खोलें<span class="en" lang="en">Unlock for demo</span></button></div></div>';
  return '<h1>राजू को सुधारिए<span class="en" lang="en">Correct Raju</span></h1>'+aiInfo()+'<div class="raju card"><div class="av">रा</div><div><p style="margin:0">राजू वही ग़लतियाँ करता है जो हिंदी बोलने वाले तेलुगु में करते हैं। उसका वाक्य ठीक कीजिए।<span class="en" lang="en">Raju makes the mistakes a Hindi speaker makes in Telugu. Fix his sentence. A rule decides if you are right, not a model.</span></p></div></div>'+
  '<div class="card stat"><div><b>'+learned+'</b>'+B('राजू ने सीखा','Raju learned')+'</div><div><b>'+forgot+'</b>'+B('भूल गया','Raju forgot')+'</div><div><b>'+(D.rules.length-learned-forgot)+'</b>'+B('बाकी','Not tried')+'</div></div>'+
  '<div class="list">'+D.rules.map(function(r){var x=S.rules[r.id];var st=!x?'todo':x.ok>0&&x.ok>=x.miss?'':'todo';return '<a class="item" href="#/raju/'+r.id+'"><span>'+B(r.title_hi||r.title_en,r.title_en)+'</span><span class="badge '+st+'">'+(!x?'नया':x.ok>=x.miss&&x.ok>0?'✓ सीखा':'दोहराएँ')+'</span></a>'}).join('')+'</div>'};
@@ -408,7 +423,7 @@ V.progress=function(){var wl=ALLW.filter(function(w){return (S.mastery[w.te]||0)
 var TABS=[['home','आज','Today'],['learn','सीखें','Learn'],['match','जोड़ी','Match'],['raju','राजू','Raju'],['progress','प्रगति','Progress'],['account','खाता','Account']];
 function route(){var h=(location.hash||'#/home').replace(/^#\/?/,'').split('/');return h}
 function render(){var h=route(),k=h[0]||'home',html;Q=(k==='letters'||k==='words')&&h[2]==='quiz'?Q:null;
- if(k==='letters')html=V.letters(h[1],h[2]);else if(k==='words')html=V.words(h[1],h[2]);else if(k==='raju'&&h[1])html=V.rule(h[1],h[2]);else if(k==='talk'&&h[1])html=V.scene(h[1],h[2]);else if(V[k])html=V[k](h[1]);else html=V.home();
+ if(k==='letters')html=V.letters(h[1],h[2]);else if(k==='words')html=V.words(h[1],h[2]);else if(k==='raju'&&h[1]&&rajuOpen())html=V.rule(h[1],h[2]);else if(k==='talk'&&h[1])html=V.scene(h[1],h[2]);else if(V[k])html=V[k](h[1]);else html=V.home();
  var v=$('#view');
  if(html!==null)v.innerHTML=html;
  var cur=({letters:'learn',words:'learn',phrases:'learn',talk:'learn'})[k]||k;if(!V[k]&&k!=='letters'&&k!=='words')cur='home';
@@ -418,6 +433,7 @@ function render(){var h=route(),k=h[0]||'home',html;Q=(k==='letters'||k==='words
  if(k==='home'||k==='learn'||k==='progress')window.scrollTo(0,0)}
 window.addEventListener('hashchange',function(){if(M&&route()[0]!=='match'){}render();window.scrollTo(0,0)});
 document.addEventListener('click',function(e){var b=e.target.closest('[data-act]');if(!b)return;var a=b.dataset.act;
+ if(a==='demounlock'){e.preventDefault();S.demoUnlock=1;save();render();return}
  if(a==='logout'){e.preventDefault();logout();return}
  if(a==='speak'||a==='phr'){e.preventDefault();speak(b.dataset.t);if(a==='phr'){S.phrases[b.dataset.t]=1;save();var bd=b.querySelector('.badge');if(bd){bd.textContent='✓';bd.classList.remove('todo')}}}
  else if(a==='ans'){answer(+b.dataset.i)}
