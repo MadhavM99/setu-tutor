@@ -139,6 +139,13 @@ form.card button{width:100%;margin-top:6px}
 @media (max-width:899px){.kpis{grid-template-columns:repeat(2,1fr)}nav.tabs a{font-size:.78rem;padding:6px 0}}
 a.step.locked{opacity:.62;border-style:dashed}
 a.step.locked .go{font-size:1.1rem}
+.cont{border-color:var(--acc);background:var(--soft)}
+.strip{display:grid;grid-template-columns:repeat(14,1fr);gap:4px;margin-top:8px}
+.strip i{height:22px;border-radius:5px;background:var(--line)}.strip i.on{background:var(--acc)}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.wchip{border:1px dashed var(--line);border-radius:12px;padding:6px 8px;font-size:1.05rem;color:var(--mut);display:block}
+.wchip small{display:block;font:500 .7rem Inter,sans-serif}
+.wchip.on{border:1.5px solid var(--acc);background:var(--soft);color:var(--ink)}
 /* ---- desktop web layout ---- */
 @media (min-width:900px){
  body{padding-left:0;padding-right:0;font-size:18px;background:var(--bg)}
@@ -241,11 +248,27 @@ function pathMap(){var here=-1;LEVELS.forEach(function(l,i){if(here<0&&l.f()<1)h
   return '<li><a class="node '+cls+'" href="'+l.href+'"><span class="dot">'+(p>=100?'✓':l.k)+'</span><span>'+B(l.hi,l.en)+'</span><span class="pct">'+p+'%'+(i===here?' · यहाँ':'')+'</span></a></li>'}).join('')+'</ol>'}
 // views
 var V={};
+function nextStage(){
+ var l0=LET0.filter(function(u){return !unitDone(u.id)})[0],l1=LET1.filter(function(u){return !unitDone(u.id)})[0],c=CNT.filter(function(u){return !unitDone(u.id)})[0],w=WRD.filter(function(u){return !unitDone(u.id)})[0];
+ if(l0)return {n:1,hi:'अगला: '+l0.title,en:'Next: Telugu letters',href:'#/letters/'+l0.id};
+ if(l1)return {n:2,hi:'अगला: '+l1.title,en:'Next: vowel signs',href:'#/letters/'+l1.id};
+ if(c)return {n:3,hi:'अगला: '+c.title_hi,en:'Next: '+c.title_en,href:'#/words/'+c.id+'/0'};
+ if(w)return {n:4,hi:'अगला: '+w.title_hi,en:'Next: '+w.title_en,href:'#/words/'+w.id+'/0'};
+ if(!S.matchBest&&S.matchBest!==0)return {n:5,hi:'खेल: जोड़ी मिलाइए',en:'Next: match the pairs',href:'#/match/pic'};
+ return {n:6,hi:'राजू को सुधारिए',en:'Next: correct Raju',href:'#/raju'}}
+function todayCount(){var d=today();return (S.days||[]).indexOf(d)>=0?1:0}
+function continueCard(){var n=nextStage(),first=!Object.keys(S.units).length&&!Object.keys(S.rules).length&&!(S.days&&S.days.length>1);
+ return '<div class="card cont"><div class="eyebrow">'+(first?'पहला कदम · First step':'आज का अगला कदम · Your next step')+'</div><h2 style="margin:4px 0 2px">'+esc(n.hi)+'<span class="en" lang="en" style="font-size:.6em">'+esc(n.en)+'</span></h2>'+
+ '<div class="row between" style="margin-top:10px"><a class="btn primary" href="'+n.href+'">'+(first?'शुरू करें':'जारी रखें')+'<span class="en" lang="en" style="color:inherit;opacity:.85">'+(first?'Start':'Continue')+'</span></a>'+
+ '<span class="mn">'+(ME?'🔥 '+streak()+' दिन · '+streak()+'-day streak · ':'')+wordsKnown()+' / '+ALLW.length+' शब्द · words</span></div></div>'}
+function activityStrip(){var days=S.days||[],out='';for(var i=13;i>=0;i--){var k=new Date(Date.now()-i*864e5).toISOString().slice(0,10);out+='<i class="'+(days.indexOf(k)>=0?'on':'')+'" title="'+k+'"></i>'}return '<div class="strip">'+out+'</div>'}
+function wordsGrid(){return '<div class="wgrid">'+ALLW.map(function(w){var m=S.mastery[w.te]||0;return '<span class="wchip '+(m>0?'on':'')+'" lang="te">'+esc(w.te)+'<small>'+esc(w.en||w.hi)+'</small></span>'}).join('')+'</div>'}
+
 function statusLine(){var on=HEALTH&&HEALTH.ok,ai=HEALTH&&HEALTH.ai;return '<div class="status"><span class="sdot '+(on?'on':'off')+'"></span>'+(on?'Server online':HEALTH?'Server offline · local mode':'checking server…')+(on?' &nbsp;·&nbsp; <span class="sdot '+(ai?'on':'off')+'"></span>'+(ai?'Raju AI on · '+esc(HEALTH.model):'Raju AI off · no API key'):'')+'</div>'}
 function aiInfo(){return '<div class="card aiinfo"><b>राजू AI कब बुलाया जाता है?<span class="en" lang="en">When is the AI called?</span></b><span class="mn">हर बार जब आप “जाँचिए” दबाते हैं: पहले नियम सही/ग़लत तय करता है, फिर एक AI कॉल राजू का जवाब लिखता है।<span class="en" lang="en">Every time you press Check: the rule decides right or wrong first, then one AI call writes Raju\'s reply. Each call shows a badge and is logged on the Progress page.</span></span><div class="row" style="margin-top:8px">'+statusLine()+'<span class="badge">'+(S.aiCalls||0)+' AI calls by you</span></div></div>'}
 function profileCard(){var lessons=Object.keys(S.units).filter(function(k){return S.units[k].done}).length,wl=ALLW.filter(function(w){return (S.mastery[w.te]||0)>0}).length,nm=ME.name||ME.username;
  return '<div class="card profile"><div class="row between"><div class="row"><span class="avs big">'+esc(nm.slice(0,1).toUpperCase())+'</span><div><h2 style="margin:0">'+esc(nm)+'</h2><span class="mn">@'+esc(ME.username)+' · '+streak()+'-day streak</span></div></div><a class="btn ghost pill" href="#/progress">Full progress</a></div>'+
- '<div class="kpis"><div><b>'+lessons+'</b>'+B('पाठ पूरे','Lessons done')+'</div><div><b>'+wl+'</b>'+B('शब्द सीखे','Words learned')+'</div><div><b>'+rulesLearned()+'/'+D.rules.length+'</b>'+B('राजू के नियम','Raju rules')+'</div><div><b>'+(S.aiCalls||0)+'</b>'+B('AI कॉल','AI calls')+'</div></div>'+pathMini()+'</div>'}
+ '<div class="kpis"><div><b>'+lessons+'</b>'+B('पाठ पूरे','Lessons done')+'</div><div><b>'+wl+'</b>'+B('शब्द सीखे','Words learned')+'</div><div><b>'+rulesLearned()+'/'+D.rules.length+'</b>'+B('राजू के नियम','Raju rules')+'</div><div><b>'+(S.aiCalls||0)+'</b>'+B('AI कॉल','AI calls')+'</div></div></div>'}
 function pathMini(){return '<div class="pm">'+LEVELS.map(function(l){var p=Math.round(l.f()*100);return '<div><div class="row between"><span>'+esc(l.en)+'</span><span class="mn">'+p+'%</span></div><div class="bar"><i style="width:'+p+'%"></i></div></div>'}).join('')+'</div>'}
 function loginNudge(){return '<div class="card nudge row between"><div><b>अपनी प्रगति सहेजिए<span class="en" lang="en">Save your progress on any device</span></b><span class="mn">Just a name and a 4-digit PIN</span></div><a class="btn primary" href="#/account">Sign up / Log in</a></div>'}
 function features(){var F=[[D.ui.book,'तेलुगु अक्षर','Telugu letters','Mapped to the Hindi letters you already know'],[D.ui.mango,'गिनती और शब्द','Counting & words','Numbers, question words, daily words, with pictures'],[D.ui.part,'जोड़ी का खेल','Match the pairs','By picture, Hindi or English'],[D.ui.speech,'राजू, AI सहपाठी','Raju, AI classmate','You correct him; a rule decides; the AI writes his reply'],[D.ui.book,'बातचीत','Conversations','Reply in real situations'],[D.ui.part,'खाता और प्रगति','Account & progress','Log in, streaks, synced on every device']];
@@ -273,7 +296,7 @@ V.home=function(){
  function step(n,img,hi,en,hhi,hen,href,primary,locked){return '<a class="step'+(primary?' primary':'')+(locked?' locked':'')+'" href="'+href+'"><span class="sn">'+n+'</span><img src="'+img+'" alt="" width="64" height="64"><span class="st">'+B(hi,en)+'<span class="sh">'+esc(hhi)+'<span class="en" lang="en">'+esc(hen)+'</span></span></span><span class="go" aria-hidden="true">'+(locked?'🔒':'›')+'</span></a>'}
  return statusLine()+'<h1>'+(ME?'नमस्ते, '+esc(ME.name)+'!':first?'नमस्ते! तेलुगु सीखिए, हिंदी के सहारे।':'फिर से स्वागत है!')+'<span class="en" lang="en">'+(ME?'Hello, '+esc(ME.name)+'! Let\'s continue.':first?'Hello! Learn Telugu with the help of Hindi.':'Welcome back.')+'</span></h1>'+
  '<p class="mn" style="margin:4px 0 14px">रोज़ 5 मिनट काफ़ी हैं। यहाँ से शुरू कीजिए:<span class="en" lang="en">Five minutes a day is enough. Start here:</span></p>'+
- (ME?profileCard():loginNudge())+
+ continueCard()+(ME?'':loginNudge())+
  '<h2 style="margin-top:18px">आज का रास्ता<span class="en" lang="en">Your path, in order</span></h2><div class="sp"></div>'+
  '<div class="steps">'+
  step(1,D.ui.book,'तेलुगु अक्षर','Telugu letters',nextL.title,'Start here: they look new, but most sound like Hindi letters','#/letters/'+nextL.id,frac(LET0)<1)+
@@ -281,9 +304,9 @@ V.home=function(){
  step(3,D.ui.speech,'तस्वीरों से पहले शब्द','First words with pictures',nextW2.title_hi,nextW2.title_en,'#/words/'+nextW2.id+'/0')+
  step(4,D.ui.part,'खेल: जोड़ी मिलाइए','Match the pairs',wl>=NEED_MATCH?'तस्वीर देखकर तेलुगु शब्द पहचानिए':'पहले '+NEED_MATCH+' शब्द सीखिए ('+wl+'/'+NEED_MATCH+')',wl>=NEED_MATCH?'Spot the Telugu word for each picture':'Learn '+NEED_MATCH+' words first ('+wl+'/'+NEED_MATCH+')','#/match/pic',false,wl<NEED_MATCH)+
  step(5,D.ui.book,'राजू की ग़लती ठीक कीजिए','Fix Raju\'s mistake (AI)',rajuOpen()?'राजू AI से जवाब देता है':'पहले '+NEED_RAJU+' शब्द सीखिए ('+wl+'/'+NEED_RAJU+')',rajuOpen()?'Raju replies using a live AI model':'Learn '+NEED_RAJU+' words first ('+wl+'/'+NEED_RAJU+')','#/raju',false,!rajuOpen())+
- '</div>'+features()+
+ '</div>'+(first&&!ME?features():'')+
  '<div class="raju card"><div class="av">रा</div><div><h3>राजू से मिलिए<span class="en" lang="en">Meet Raju, your classmate</span></h3><p style="margin:4px 0 0">राजू भी तेलुगु सीख रहा है और वही ग़लतियाँ करता है जो हम हिंदी बोलने वाले करते हैं। आप उसे सुधारेंगे, वह आपसे सीखेगा।<span class="en" lang="en">Raju is learning Telugu too and makes the mistakes Hindi speakers make. You correct him, and he learns from you.</span></p></div></div>'+
- '<h2>आपकी सीढ़ी<span class="en" lang="en">Your learning path</span></h2><div class="sp"></div>'+pathMap()+'<div class="sp"></div><p class="mn">सीखे शब्द: '+wl+' / '+ALLW.length+'<span class="en" lang="en">Words practised: '+wl+' of '+ALLW.length+'</span></p>'};
+ ''};
 V.learn=function(){
  function rows(list,base,kind){return list.map(function(u){var d=unitDone(u.id);var p=unitPct(u.id);
   var ttl=kind==='w'?B(u.title_hi,u.title_en):'<span class="hi">'+esc(u.title)+'</span><span class="en" lang="en">'+esc(u.cards.map(function(c){return c.roman}).filter(Boolean).join(', '))+'</span>';
@@ -413,12 +436,18 @@ function sceneCheck(){var v=norm($('#ans').value);if(!v){toast('पहले ज
  if(ok){$('#rfb').innerHTML='<div class="fb good" role="status"><b>बढ़िया! <span lang="en" style="font-weight:500">Well said.</span></b><div class="te" style="font-size:1.3rem">'+esc(l.replies[0])+'</div><div class="en" lang="en" style="font-size:1rem">'+esc(l.reply_en||'')+'</div></div><a class="btn primary" style="width:100%" href="#/talk/'+C.s.id+'/'+(C.i+1)+'">आगे<span class="en" lang="en" style="color:inherit;opacity:.85">Next</span></a>'}
  else{$('#rfb').innerHTML='<div class="fb bad" role="status"><b>अभी ठीक नहीं। <span lang="en" style="font-weight:500">Not yet.</span></b></div><button data-act="sreveal">उत्तर देखें<span class="en" lang="en">Show answer</span></button>'}}
 // progress
-V.progress=function(){var wl=ALLW.filter(function(w){return (S.mastery[w.te]||0)>0}).length;if(ME&&!CALLS)setTimeout(loadCalls,0);
- return '<h1>मेरी प्रगति<span class="en" lang="en">My progress</span></h1>'+(ME?profileCard():loginNudge())+'<div class="card"><h3>राजू AI कॉल लॉग<span class="en" lang="en">Raju AI call log (from the server)</span></h3><div id="calls">'+(ME?callsTable():'<p class="mn">लॉग देखने के लिए लॉग इन कीजिए · Log in to see the server log</p>')+'</div></div>'+'<div class="card stat"><div><b>'+Object.keys(S.units).filter(function(k){return S.units[k].done}).length+'</b>'+B('पाठ पूरे','Lessons done')+'</div><div><b>'+wl+'</b>'+B('शब्द','Words')+'</div><div><b>'+rulesLearned()+'</b>'+B('राजू ने सीखे','Raju learned')+'</div></div>'+
- pathMap()+'<div class="sp"></div><div class="card"><h3>राजू ने आपसे क्या सीखा<span class="en" lang="en">What Raju learned from you</span></h3><p style="margin:0">'+(rulesLearned()?D.rules.filter(function(r){var x=S.rules[r.id];return x&&x.ok>0&&x.ok>=x.miss}).map(function(r){return '✓ '+esc(r.title_en)}).join('<br>'):'अभी कुछ नहीं। राजू को ठीक कीजिए।<span class="en" lang="en">Nothing yet. Go correct Raju.</span>')+'</p></div>'+
- '<div class="card"><h3>जोड़ी मिलाना<span class="en" lang="en">Match game</span></h3><p style="margin:0">'+(S.matchBest===null?'अभी नहीं खेला · not played yet':'सबसे कम ग़लतियाँ: '+S.matchBest+' · fewest wrong tries')+'</p></div>'+
+V.progress=function(){if(ME&&!CALLS)setTimeout(loadCalls,0);
+ var wl=wordsKnown(),learned=rulesLearned(),forgot=rulesForgot();
+ var rl=D.rules.filter(function(r){var x=S.rules[r.id];return x&&x.ok>0&&x.ok>=x.miss});
+ return '<h1>मेरी प्रगति<span class="en" lang="en">My progress</span></h1><p class="mn">आपने अब तक क्या सीखा, इसका हिसाब।<span class="en" lang="en">Everything you have learned so far. For what to do next, go to Today.</span></p>'+(ME?profileCard():loginNudge())+
+ '<div class="card"><h3>पिछले 14 दिन<span class="en" lang="en">Last 14 days</span></h3>'+activityStrip()+'</div>'+
+ '<div class="card"><h3>आपकी सीढ़ी<span class="en" lang="en">Your journey, stage by stage</span></h3><div class="sp"></div>'+pathMap()+'</div>'+
+ '<div class="card"><h3>शब्द '+wl+' / '+ALLW.length+'<span class="en" lang="en">Words you have practised</span></h3><div class="sp"></div>'+wordsGrid()+'</div>'+
+ '<div class="card"><h3>राजू ने आपसे क्या सीखा<span class="en" lang="en">What Raju learned from you ('+learned+' learned · '+forgot+' forgot)</span></h3><p style="margin:0">'+(rl.length?rl.map(function(r){return '✓ '+esc(r.title_en)}).join('<br>'):'अभी कुछ नहीं। राजू को ठीक कीजिए।<span class="en" lang="en">Nothing yet. Go correct Raju.</span>')+'</p></div>'+
+ '<div class="card"><h3>राजू AI कॉल लॉग<span class="en" lang="en">Raju AI call log (from the server)</span></h3><div id="calls">'+(ME?callsTable():'<p class="mn">Log in to see the server log</p>')+'</div></div>'+
+ '<div class="card"><h3>जोड़ी मिलाना<span class="en" lang="en">Match game</span></h3><p style="margin:0">'+(S.matchBest===null||S.matchBest===undefined?'अभी नहीं खेला · not played yet':'सबसे कम ग़लतियाँ: '+S.matchBest+' · fewest wrong tries')+'</p></div>'+
  '<p class="mn">'+(ME?'आपकी प्रगति सर्वर पर सहेजी जाती है।<span class="en" lang="en">Progress is saved to your account on the server.</span>':'आपकी प्रगति इसी ब्राउज़र में रहती है।<span class="en" lang="en">Progress is saved in this browser only. Log in to sync.</span>')+'</p><button class="ghost" data-act="reset">सब मिटाएँ<span class="en" lang="en">Reset progress</span></button>'+
- '<div class="card" style="margin-top:14px"><h3>इस डेमो के बारे में<span class="en" lang="en">About this demo</span></h3><p class="mn" style="margin:0">सेतु: हिंदी बोलने वाले तेलुगु सीखते हैं, एक AI सहपाठी राजू को सुधारकर। नियम: मॉडल लिखते हैं, नियम तय करते हैं। यह ब्राउज़र वाला डेमो है; असली ऐप में जाँच नियम-आधारित चेकर करता है और रिकॉर्ड डेटाबेस में रहते हैं। कोई असली छात्र अभी इसे इस्तेमाल नहीं कर चुका है।<span class="en" lang="en">SETU teaches Hindi speakers Telugu by having them correct an AI classmate, Raju. Rule of the design: models write, rules decide. This is a browser demo of the real app (FastAPI + PostgreSQL). No real learner has used it yet, and the Telugu content has not been independently reviewed.</span></p></div>'};
+ '<div class="card" style="margin-top:14px"><h3>इस डेमो के बारे में<span class="en" lang="en">About this demo</span></h3><p class="mn" style="margin:0">SETU teaches Hindi speakers Telugu by having them correct an AI classmate, Raju. Rule of the design: models write, rules decide. No real learner has used it yet, and the Telugu content has not been independently reviewed.</p></div>'};
 // router
 var TABS=[['home','आज','Today'],['learn','सीखें','Learn'],['match','जोड़ी','Match'],['raju','राजू','Raju'],['progress','प्रगति','Progress'],['account','खाता','Account']];
 function route(){var h=(location.hash||'#/home').replace(/^#\/?/,'').split('/');return h}
